@@ -1,19 +1,15 @@
 import React from 'react';
 import ReactDOM from "react-dom";
 import App from "./app/app";
-import {Provider} from "react-redux";
-import {store} from "./store";
+import './styles.global.scss';
 
 async function run() {
-    const {worker} = await import('./core/api/mocks');
-    await worker.start();
+    if (process.env.NODE_ENV === 'development' && process.env.REACT_APP_ENABLE_FAKE_DATA === 'true') {
+        const {worker} = await import('./core/api/mocks');
+        await worker.start({onUnhandledRequest: "bypass"});
+    }
 
-    ReactDOM.render(
-        <Provider store={store}>
-            <App/>
-        </Provider>,
-        document.getElementById('root')
-    );
+    ReactDOM.render(<App/>, document.getElementById('root'));
 }
 
 run();

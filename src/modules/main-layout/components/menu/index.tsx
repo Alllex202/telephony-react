@@ -5,7 +5,7 @@ import routes from "../../../../routing/routes";
 
 
 const Menu = () => {
-    const menuItems: {link: string, label: string}[] = [
+    const menuItems: { link: string, label: string }[] = [
         {link: routes.callingList(), label: 'Обзванивание'},
         {link: routes.scenarioList(), label: 'Сценарии'},
         {link: routes.databaseList(), label: 'Базы данных'},
@@ -14,7 +14,10 @@ const Menu = () => {
 
     return (
         <div className={styles.menu}>
-            {menuItems.map(item => <MenuItem to={item.link} label={item.label}/>)}
+            {
+                menuItems.map((item, ind) =>
+                    <MenuItem key={ind} to={item.link} label={item.label}/>)
+            }
         </div>
     );
 };

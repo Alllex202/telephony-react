@@ -1,8 +1,8 @@
 import {combineReducers} from "redux";
-import {databaseReducer} from "./database.reducer";
+// import {databaseReducer} from "./database.reducer";
 
 export const rootReducer = combineReducers({
-    database: databaseReducer,
+    // database: databaseReducer,
 });
 
 export type RootState = ReturnType<typeof rootReducer>;
