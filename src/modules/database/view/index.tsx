@@ -5,36 +5,33 @@ import routes from "../../../routing/routes";
 import {DatabaseModel} from "../../../core/api/models";
 import {DefaultAxiosError} from "../../../shared/types/base-response-error";
 import {useCancelFetchAxios} from "../../../shared/hoocks";
+import {FetchStatuses} from "../../../shared/types/fetch-statuses";
 
 const DatabaseView = () => {
     const [isDeleting, setDeleting] = useState<boolean>(false);
     const [errDeleting, setErrDeleting] = useState<string>('');
     const {databaseId} = useParams<{ databaseId: string }>();
     const history = useHistory();
-
-    const [isLoading, setLoading] = useState<boolean>(false);
-    const [isError, setIsError] = useState<boolean>(false);
-    const [isSuccess, setSuccess] = useState<boolean>(false);
+    const [fetchStatuses, setFetchStatuses] = useState<FetchStatuses>({
+        isError: false,
+        isLoading: false,
+        isSuccess: false
+    });
     const [error, setError] = useState<string>('');
     const [database, setDatabase] = useState<DatabaseModel | null>(null);
 
     const {token, cancel} = React.useMemo(useCancelFetchAxios, [databaseId]);
 
     useEffect(() => {
-        setLoading(true);
-        getDatabaseById(databaseId, token)
+        setFetchStatuses({isError: false, isLoading: true, isSuccess: false});
+        getDatabaseById(databaseId, {cancelToken: token})
             .then(res => {
                 setDatabase(res.data);
-                setIsError(false);
-                setSuccess(true);
+                setFetchStatuses({isError: false, isLoading: false, isSuccess: true});
             })
             .catch((err: DefaultAxiosError) => {
                 setError(err.response?.data.message || 'Необработанная ошибка');
-                setIsError(true);
-                setSuccess(false);
-            })
-            .finally(() => {
-                setLoading(false);
+                setFetchStatuses({isError: true, isLoading: false, isSuccess: false});
             });
         return () => cancel();
     }, [databaseId, cancel, token]);
@@ -53,19 +50,20 @@ const DatabaseView = () => {
             });
     };
 
-    if (isLoading) {
+    if (fetchStatuses.isLoading) {
         return <h1>Загрузка ...</h1>
     }
-    if (isError) {
+    if (fetchStatuses.isError) {
         return <h1>Ошибка при загрузке данных ({error})</h1>
     }
 
     return (
         <>
-            {isSuccess && !database
+            {fetchStatuses.isSuccess && !database
                 ? <h1>Данные отсутствуют</h1>
                 : <div>
-                    <button disabled={isDeleting} onClick={onDelete}>delete</button> <span>{errDeleting}</span>
+                    <button disabled={isDeleting} onClick={onDelete}>delete</button>
+                    <span>{errDeleting}</span>
                     <div>id: {database?.id}</div>
                     <div>name: {database?.name}</div>
                     <div>callers:

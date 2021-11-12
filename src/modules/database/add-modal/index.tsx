@@ -3,7 +3,9 @@ import styles from "./styles.module.scss";
 import Modal from "../../../components/modal";
 import {uploadDatabase} from "../../../core/api/requests";
 import {DefaultAxiosError} from "../../../shared/types/base-response-error";
-import {DatabaseModel} from "../../../core/api/models";
+import {FetchStatuses} from "../../../shared/types/fetch-statuses";
+import {useHistory} from "react-router-dom";
+import routes from "../../../routing/routes";
 
 type Props = {
     insertDatabase: Function;
@@ -12,14 +14,16 @@ type Props = {
 };
 
 const AddDatabaseModal = ({insertDatabase, openModal, isOpenedModal}: Props) => {
+    const history = useHistory();
     const [name, setName] = useState<string>('');
     const [file, setFile] = useState<File | null>(null);
     const [status, setStatus] = useState<string>('Переместите сюда файл');
-
-    const [isUploaded, setUploading] = useState<boolean>(false);
-    const [isUploadLoading, setUploadLoading] = useState<boolean>(false);
-    const [isUploadError, setIsUploadError] = useState<boolean>(false);
-    const [databaseUploading, setDatabaseUploading] = useState<DatabaseModel | null>(null);
+    const [fetchStatus, setFetchStatus] = useState<FetchStatuses>({
+        isError: false,
+        isLoading: false,
+        isSuccess: false
+    });
+    const [percent, setPercent] = useState<number>(0);
     const [errUploading, setErrUploading] = useState<string>('');
 
     const onDragStart = (e: React.DragEvent) => {
@@ -36,80 +40,61 @@ const AddDatabaseModal = ({insertDatabase, openModal, isOpenedModal}: Props) => 
         e.preventDefault();
         setFile(e.dataTransfer.files[0]);
         setErrUploading('');
-        setIsUploadError(false);
+        setFetchStatus({...fetchStatus, isError: false});
         setStatus('');
     };
 
     const onUpload = () => {
         if (file) {
-            setUploadLoading(true);
+            setFetchStatus({isLoading: true, isError: false, isSuccess: false});
             const formData = new FormData();
             formData.append('file', file);
-            uploadDatabase(formData, name)
+            uploadDatabase(formData, name, {
+                onUploadProgress: (progressEvent: ProgressEvent) => {
+                    const {loaded, total} = progressEvent;
+                    const percent = Math.floor((loaded * 100) / total);
+                    setPercent(percent);
+                    console.log(`${loaded}kb of ${total}kb | ${percent}%`)
+                },
+            })
                 .then(res => {
                     insertDatabase(res.data);
-                    setDatabaseUploading(res.data);
-                    setUploading(true);
-                    setIsUploadError(false);
+                    setFetchStatus({isLoading: false, isError: false, isSuccess: true});
                     setStatus('Файл успешно загружен');
+                    history.push(routes.databaseView(res.data.id));
                 })
                 .catch((err: DefaultAxiosError) => {
                     setErrUploading(err.response?.data.message || 'Необработанная ошибка');
-                    setUploading(false);
-                    setIsUploadError(true);
+                    setFetchStatus({isLoading: false, isError: true, isSuccess: false});
                     setStatus('Исправьте файл и переместите его сюда заного');
-                })
-                .finally(() => {
-                    setUploadLoading(false);
                 });
         }
     };
 
     return (
         <Modal isOpened={isOpenedModal} setOpen={openModal}>
-            {!isUploaded
-                ?
-                <>
-                    <h1>Название</h1>
-                    <input style={{width: '100%', fontSize: 30, margin: '20px 0'}} type="text" name="name"
-                           value={name}
-                           onChange={e => setName(e.target.value)}/>
-                    <div
-                        onDrop={onDrop}
-                        onDragStart={onDragStart}
-                        onDragLeave={onDragLeave}
-                        onDragOver={onDragStart}
-                        className={styles.uploader}>
-                        <div style={{pointerEvents: 'none'}}>
-                            <div>{status}</div>
-                            {file && <div>Выбран файл: {file?.name}</div>}
-                            {isUploadError && <div style={{color: 'red'}}>{errUploading}</div>}
-                        </div>
+            <>
+                <h1>Название</h1>
+                <input style={{width: '100%', fontSize: 30, margin: '20px 0'}} type="text" name="name"
+                       value={name}
+                       onChange={e => setName(e.target.value)}/>
+                <div
+                    onDrop={onDrop}
+                    onDragStart={onDragStart}
+                    onDragLeave={onDragLeave}
+                    onDragOver={onDragStart}
+                    className={styles.uploader}>
+                    <div style={{pointerEvents: 'none'}}>
+                        <div>{status}</div>
+                        {file && <div>Выбран файл: {file?.name}</div>}
+                        {fetchStatus.isError && <div style={{color: 'red'}}>{errUploading}</div>}
                     </div>
-                    <button disabled={!file || !name || isUploadLoading} onClick={onUpload}
-                            style={{width: '100%', fontSize: 30, margin: '20px 0 0'}}>
-                        Отправить
-                    </button>
-                </>
-                :
-                <>
-                    <div style={{color: 'green'}}>{status}</div>
-                    <div>id: {databaseUploading?.id}</div>
-                    <div>name: {databaseUploading?.name}</div>
-                    <div>callers:
-                        <ul style={{marginLeft: 40}}>
-                            {databaseUploading?.callers?.map((call) =>
-                                <li key={call.id}>({call.id}) {call.number} ({String(call.valid)})</li>)}
-                        </ul>
-                    </div>
-                    <div>variablesList:
-                        <ul style={{marginLeft: 40}}>
-                            {databaseUploading?.variablesList.map((variable, ind) =>
-                                <li key={ind}>{variable}</li>)}
-                        </ul>
-                    </div>
-                    <div>created: {new Date(Number(databaseUploading?.created)).toString()}</div>
-                </>}
+                </div>
+                <button disabled={!file || !name || fetchStatus.isLoading} onClick={onUpload}
+                        style={{width: '100%', fontSize: 30, margin: '20px 0 0'}}>
+                    Отправить {fetchStatus.isLoading && <>({percent}%)</>}
+                </button>
+            </>
         </Modal>
     );
 };

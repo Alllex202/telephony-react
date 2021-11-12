@@ -7,34 +7,27 @@ import {DatabaseModel} from "../../../core/api/models";
 import {DefaultAxiosError} from "../../../shared/types/base-response-error";
 import AddDatabaseModal from "../add-modal";
 import {useCancelFetchAxios} from "../../../shared/hoocks";
+import {FetchStatuses} from "../../../shared/types/fetch-statuses";
 
 
 const DatabaseList = () => {
+    const {token, cancel} = React.useMemo(useCancelFetchAxios, []);
     const [isOpenedModal, openModal] = useState<boolean>(false);
-    const [isLoading, setLoading] = useState<boolean>(false);
-    const [isError, setIsError] = useState<boolean>(false);
-    const [isSuccess, setSuccess] = useState<boolean>(false);
+    const [statuses, setStatuses] = useState<FetchStatuses>({isError: false, isLoading: false, isSuccess: false});
     const [error, setError] = useState<string>('');
     const [databases, setDatabases] = useState<DatabaseModel[]>([]);
 
-    const {token, cancel} = React.useMemo(useCancelFetchAxios, []);
-
     useEffect(() => {
-        setLoading(true);
-        getDatabases(token)
+        setStatuses({isSuccess: false, isLoading: true, isError: false});
+        getDatabases({cancelToken: token})
             .then((res) => {
                 setDatabases(res.data);
-                setSuccess(true);
-                setIsError(false);
+                setStatuses({isSuccess: true, isLoading: false, isError: false});
             })
             .catch((err: DefaultAxiosError) => {
                 setError(err.response?.data.message || 'Необработанная ошибка');
-                setIsError(true);
-                setSuccess(false);
-            })
-            .finally(() => {
-                setLoading(false);
-            })
+                setStatuses({isSuccess: false, isLoading: false, isError: true});
+            });
         return () => cancel();
     }, [cancel, token]);
 
@@ -46,17 +39,17 @@ const DatabaseList = () => {
         openModal(true);
     };
 
-    if (isLoading) {
+    if (statuses.isLoading) {
         return <h1>Идет загрузка ...</h1>
     }
-    if (isError) {
+    if (statuses.isError) {
         return <h1>Ошибка при загрузке данных ({error})</h1>
     }
 
     return (
         <>
             <button onClick={onAddDatabase}>ADD</button>
-            {isSuccess && databases.length === 0
+            {statuses.isSuccess && databases.length === 0
                 ? <h1>Нет данных</h1>
                 : <>
                     <div className={styles.list}>
