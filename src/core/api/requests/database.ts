@@ -15,7 +15,7 @@ export const deleteDatabaseById = (id: number | string, config?: AxiosRequestCon
     return axios.delete(apiRoutes.databasesId(id), config);
 }
 
-export const uploadDatabase = (formData: FormData, name: string, config?: AxiosRequestConfig): BaseResponse<DatabaseModel> => {
-    return axios.post(apiRoutes.databasesUpload(), formData, {...config, params: {name}});
+export const uploadDatabase = (formData: FormData, config?: AxiosRequestConfig): BaseResponse<DatabaseModel> => {
+    return axios.post(apiRoutes.databasesUpload(), formData, {...config});
 }
 

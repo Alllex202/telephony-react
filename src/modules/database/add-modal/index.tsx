@@ -50,7 +50,7 @@ const AddDatabaseModal = ({insertDatabase, openModal, isOpenedModal}: Props) => 
             const formData = new FormData();
             formData.append('file', file);
             formData.append('name', name);
-            uploadDatabase(formData, name, {
+            uploadDatabase(formData, {
                 onUploadProgress: (progressEvent: ProgressEvent) => {
                     const {loaded, total} = progressEvent;
                     const percent = Math.floor((loaded * 100) / total);
