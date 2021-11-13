@@ -49,6 +49,7 @@ const AddDatabaseModal = ({insertDatabase, openModal, isOpenedModal}: Props) => 
             setFetchStatus({isLoading: true, isError: false, isSuccess: false});
             const formData = new FormData();
             formData.append('file', file);
+            formData.append('name', name);
             uploadDatabase(formData, name, {
                 onUploadProgress: (progressEvent: ProgressEvent) => {
                     const {loaded, total} = progressEvent;
