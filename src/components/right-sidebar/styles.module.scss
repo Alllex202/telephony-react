@@ -1,0 +1,10 @@
+.sidebar {
+  position: fixed;
+  top: 96px;
+  right: 24px;
+  width: 196px;
+  display: flex;
+  padding: 16px;
+  background-color: var(--sidebar-fill);
+  border-radius: 2px;
+}

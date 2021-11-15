@@ -8,6 +8,7 @@ const routes = {
     scenarioView: (id: string | number) => `/scenario/${id}`,
     settingsView: (): string => '/settings',
     statisticsView: (): string => '/statistics',
+    test: (): string => '/test',
 };
 
 

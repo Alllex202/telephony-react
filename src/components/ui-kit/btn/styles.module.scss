@@ -1,0 +1,22 @@
+.btn {
+  background-color: var(--btn);
+  border-radius: 12px;
+  filter: none;
+  transition: .2s filter;
+
+  &:hover {
+    filter: brightness(0.93);
+  }
+
+  &:active {
+    filter: brightness(0.84);
+  }
+
+  & > * {
+    color: var(--btn-text);
+  }
+
+  //& > div {
+    //font: var(--font-body-bold);
+  //}
+}

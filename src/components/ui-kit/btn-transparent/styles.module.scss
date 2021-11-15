@@ -1,0 +1,18 @@
+.btn {
+  background-color: var(--btn-transparent);
+  border-radius: 4px;
+  filter: none;
+  transition: .2s background-color;
+
+  &:hover {
+    background-color: var(--btn-transparent-hover);
+  }
+
+  &:active {
+    background-color: var(--btn-transparent-active);
+  }
+
+  & > * {
+    color: var(--btn-transparent-text);
+  }
+}

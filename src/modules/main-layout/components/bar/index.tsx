@@ -1,12 +1,27 @@
-import React from 'react';
+import React, {ReactNode, useState} from 'react';
 import styles from './styles.module.scss';
+import Logo from "./components/logo";
+import BtnToggle from "../../../../components/ui-kit/btn-toggle";
 
-const Bar = () => {
+type Props = {
+    children: ReactNode,
+}
+
+const Bar = ({children}: Props) => {
+    const [isOpen, setOpen] = useState<boolean>(false);
+
+    function toggleProfile() {
+        setOpen(!isOpen);
+    }
+
     return (
         <div className={styles.bar}>
-            <div className={styles.container}>
-                Шапка - Используются фейковые данные
+            <Logo/>
+            <div className={styles.actions}>
+                {children}
             </div>
+            <BtnToggle className={styles.profile} isActive={isOpen} onClick={toggleProfile} iconName={'account_circle'}
+                       iconType={'round'}/>
         </div>
     );
 };

@@ -1,0 +1,12 @@
+.test {
+  display: flex;
+  flex-direction: column;
+
+  .input_short {
+    width: 300px;
+  }
+
+  & > * {
+    margin-bottom: 10px;
+  }
+}

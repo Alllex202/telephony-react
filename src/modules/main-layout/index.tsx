@@ -1,20 +1,27 @@
-import React from 'react';
+import React, {ReactNode} from 'react';
 import Bar from "./components/bar";
 import Menu from "./components/menu";
 import styles from './styles.module.scss';
 
 
 type Props = {
-    children: React.ReactNode;
+    childrenBody: ReactNode,
+    childrenHeader: ReactNode,
 }
 
-const MainLayout = ({children}: Props) => {
+const MainLayout = ({childrenBody, childrenHeader}: Props) => {
     return (
         <>
-            <Bar/>
-            <div className={styles.container}>
+            <div className={styles.main}>
                 <Menu/>
-                <div className={styles.content}>{children}</div>
+                <Bar>{childrenHeader}</Bar>
+                <div className={styles.wrapper}>
+                    <div className={styles.container}>
+                        <div className={styles.content}>
+                            {childrenBody}
+                        </div>
+                    </div>
+                </div>
             </div>
         </>
     );

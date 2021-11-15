@@ -10,15 +10,18 @@ const Menu = () => {
         {link: routes.scenarioList(), label: 'Сценарии'},
         {link: routes.databaseList(), label: 'Базы данных'},
         {link: routes.statisticsView(), label: 'Статистика'},
+        {link: routes.test(), label: 'Test'},
     ];
 
     return (
-        <div className={styles.menu}>
-            {
-                menuItems.map((item, ind) =>
-                    <MenuItem key={ind} to={item.link} label={item.label}/>)
-            }
-        </div>
+        <>
+            <div className={styles.menu}>
+                {
+                    menuItems.map((item, ind) =>
+                        <MenuItem key={ind} to={item.link} label={item.label}/>)
+                }
+            </div>
+        </>
     );
 };
 
