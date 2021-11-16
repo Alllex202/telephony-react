@@ -10,12 +10,17 @@
   z-index: 100;
 
   .actions {
-    margin: 0 auto 0 calc(244px - 24px - 139px);
+    .wrapper {
+      display: flex;
+      max-width: var(--max-width-content);
+      width: 100%;
+      margin: 0 auto;
+    }
+    margin: 0 auto 0 calc(244px - 24px - var(--logo-width));
     display: flex;
     width: calc(100vw - 244px - 244px);
     justify-content: space-between;
     align-items: center;
-    max-width: var(--max-width-content);
   }
 
   .profile {

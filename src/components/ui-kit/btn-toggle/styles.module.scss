@@ -1,13 +1,29 @@
-.btn {
-  display: flex;
-  align-items: center;
-  justify-content: center;
+//.btn {
+//  display: flex;
+//  align-items: center;
+//  justify-content: center;
+//  width: fit-content;
+//  height: fit-content;
+//  background-color: var(--btn-toggle);
+//  cursor: pointer;
+//  border: none;
+//  border-radius: 50%;
+//
+//  & > span {
+//    font-size: 48px;
+//    transition: .2s color;
+//    color: var(--btn-toggle-text);
+//  }
+//
+//  &.active > span {
+//    color: var(--btn-toggle-active);
+//  }
+//}
+
+button.btn {
   width: fit-content;
   height: fit-content;
   background-color: var(--btn-toggle);
-  cursor: pointer;
-  border: none;
-  border-radius: 50%;
 
   & > span {
     font-size: 48px;
@@ -15,7 +31,9 @@
     color: var(--btn-toggle-text);
   }
 
-  &.active > span {
-    color: var(--btn-toggle-active);
+  &.active {
+    & > span {
+      color: var(--btn-toggle-active);
+    }
   }
 }

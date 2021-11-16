@@ -1,6 +1,6 @@
 import React, {MouseEventHandler} from 'react';
 import styles from './styles.module.scss';
-import Icon from '../icon';
+import BtnCircleDefault from "../btn-circle-default";
 
 type Props = {
     iconName: string,
@@ -12,11 +12,9 @@ type Props = {
 
 function BtnToggle({iconName, className, onClick, iconType, isActive}: Props) {
     return (
-        <>
-            <button className={[styles.btn, isActive ? styles.active : '', className].join(' ')} onClick={onClick}>
-                <Icon name={iconName} type={iconType}/>
-            </button>
-        </>
+        <BtnCircleDefault iconName={iconName} iconType={iconType}
+                          className={[className, styles.btn, isActive ? styles.active : ''].join(' ')}
+                          isActive={isActive} onClick={onClick}/>
     );
 }
 

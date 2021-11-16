@@ -18,7 +18,9 @@ const Bar = ({children}: Props) => {
         <div className={styles.bar}>
             <Logo/>
             <div className={styles.actions}>
-                {children}
+                <div className={styles.wrapper}>
+                    {children}
+                </div>
             </div>
             <BtnToggle className={styles.profile} isActive={isOpen} onClick={toggleProfile} iconName={'account_circle'}
                        iconType={'round'}/>

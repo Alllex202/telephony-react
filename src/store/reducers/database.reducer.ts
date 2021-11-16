@@ -14,7 +14,7 @@
 //             return {loading: false, error: null, databases: action.payload};
 //         case DatabaseActionTypes.FETCH_DATABASES_ERROR:
 //             return {loading: false, error: action.payload, databases: []};
-//         default:
+//         btn-circle-default:
 //             return state;
 //     }
 // };

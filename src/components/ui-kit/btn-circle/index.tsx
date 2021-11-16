@@ -1,20 +1,20 @@
 import React, {MouseEventHandler} from 'react';
 import styles from "./styles.module.scss";
-import Icon from "../icon";
+import BtnCircleDefault from "../btn-circle-default";
 
 type Props = {
     iconName: string,
     className?: string,
     onClick?: MouseEventHandler,
     iconType?: 'outlined' | 'round' | 'sharp' | 'two-tone',
-    isActive?: boolean,
+    isActive?: boolean
 }
 
-function BtnCircle({className,iconName,iconType, onClick, isActive}: Props) {
+function BtnCircle({className, iconName, iconType, onClick, isActive}: Props) {
     return (
-        <button className={[styles.btn, className, isActive ? styles.active : ''].join(' ')} onClick={onClick}>
-            <Icon name={iconName} type={iconType}/>
-        </button>
+        <BtnCircleDefault iconName={iconName} iconType={iconType}
+                          className={[className, styles.btn, isActive ? styles.active : ''].join(' ')}
+                          isActive={isActive} onClick={onClick}/>
     );
 }
 

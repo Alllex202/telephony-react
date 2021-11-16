@@ -1,0 +1,19 @@
+.header {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: space-between;
+
+  .left {
+
+  }
+
+  .center {
+    min-width: 100px;
+    margin: 0 20px 0 20px;
+  }
+
+  .right {
+
+  }
+}

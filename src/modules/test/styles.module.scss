@@ -9,4 +9,14 @@
   & > * {
     margin-bottom: 10px;
   }
+
+  .default {
+    position: relative;
+    &:after {
+      content: '(default)';
+      position: absolute;
+      right: 0;
+      transform: translateX(120%);
+    }
+  }
 }

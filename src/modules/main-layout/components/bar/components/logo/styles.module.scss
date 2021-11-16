@@ -1,3 +1,4 @@
 .logo {
-  height: 48px;
+  height: var(--logo-height);
+  width: var(--logo-width);
 }

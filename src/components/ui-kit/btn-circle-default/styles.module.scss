@@ -1,0 +1,28 @@
+.btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  //background-color: var(--btn-circle);
+  border-radius: 50%;
+  //transition: .2s background-color;
+
+  & > span {
+    font-size: 32px;
+    //transition: .2s color;
+    //color: var(--btn-circle-text);
+  }
+
+  &.active {
+    //background-color: var(--btn-circle-active);
+  }
+
+  &:hover {
+    //background-color: var(--btn-circle-active);
+
+    & > span {
+
+    }
+  }
+}
