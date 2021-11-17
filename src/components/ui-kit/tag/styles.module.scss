@@ -1,0 +1,9 @@
+.tag {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px;
+  font: var(--font-caption-medium);
+  background-color:var(--black-light-5);
+  border-radius: 4px;
+}

@@ -1,0 +1,40 @@
+.custom.MuiMenuItem-root {
+  display: flex;
+  flex-direction: row;
+  height: 48px;
+  padding: 0 16px;
+  font: var(--font-body-medium);
+  color: var(--dropdown-item-text);
+  background-color: var(--dropdown-item);
+
+  &:hover {
+    background-color: var(--dropdown-item-active);
+  }
+
+  &.danger {
+    color: var(--dropdown-item-danger-text);
+
+    & > * {
+      color: var(--dropdown-item-danger-text);
+    }
+
+    &:hover {
+      background-color: var(--dropdown-item-danger-active);
+    }
+  }
+
+  &.reverse {
+    flex-direction: row-reverse;
+
+    & > span {
+      margin-left: 8px;
+      margin-right: auto;
+    }
+  }
+
+  & > span {
+    font-size: 32px;
+    margin-right: 8px;
+    margin-left: -8px;
+  }
+}

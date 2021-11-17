@@ -9,9 +9,21 @@ import Input from "../../components/ui-kit/input";
 import BtnCircleDefault from "../../components/ui-kit/btn-circle-default";
 import RightSidebar from "../../components/right-sidebar";
 import Modal from "../../components/modal";
+import Card from "../../components/ui-kit/card";
+import Tag from "../../components/ui-kit/tag";
+import PopupMenu from "../../components/ui-kit/popup-menu";
+import MenuItem from "../../components/ui-kit/menu-item";
 
 function Test() {
     const [modal, setModal] = useState<boolean>(false);
+
+    const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+    const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+        setAnchorEl(event.currentTarget);
+    };
+    const handleClose = () => {
+        setAnchorEl(null);
+    };
 
     return (
         <>
@@ -19,16 +31,36 @@ function Test() {
                 Это опциональная менюшка с правой стороны
             </RightSidebar>
             <p>
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequatur cupiditate excepturi incidunt iste neque recusandae soluta vel! A, ab accusamus amet atque doloremque eligendi ex, in itaque iure nulla sunt?
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequatur cupiditate excepturi incidunt iste neque recusandae soluta vel! A, ab accusamus amet atque doloremque eligendi ex, in itaque iure nulla sunt?
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequatur cupiditate excepturi incidunt iste neque recusandae soluta vel! A, ab accusamus amet atque doloremque eligendi ex, in itaque iure nulla sunt?
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequatur cupiditate excepturi incidunt iste neque recusandae soluta vel! A, ab accusamus amet atque doloremque eligendi ex, in itaque iure nulla sunt?
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequatur cupiditate excepturi incidunt iste neque recusandae soluta vel! A, ab accusamus amet atque doloremque eligendi ex, in itaque iure nulla sunt?
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequatur cupiditate excepturi incidunt iste neque recusandae soluta vel! A, ab accusamus amet atque doloremque eligendi ex, in itaque iure nulla sunt?
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequatur cupiditate excepturi incidunt iste neque recusandae soluta vel! A, ab accusamus amet atque doloremque eligendi ex, in itaque iure nulla sunt?
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequatur cupiditate excepturi incidunt iste neque recusandae soluta vel! A, ab accusamus amet atque doloremque eligendi ex, in itaque iure nulla sunt?
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequatur cupiditate excepturi incidunt iste neque recusandae soluta vel! A, ab accusamus amet atque doloremque eligendi ex, in itaque iure nulla sunt?
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequatur cupiditate excepturi incidunt iste neque recusandae soluta vel! A, ab accusamus amet atque doloremque eligendi ex, in itaque iure nulla sunt?
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequatur cupiditate excepturi incidunt iste
+                neque recusandae soluta vel! A, ab accusamus amet atque doloremque eligendi ex, in itaque iure nulla
+                sunt?
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequatur cupiditate excepturi incidunt iste
+                neque recusandae soluta vel! A, ab accusamus amet atque doloremque eligendi ex, in itaque iure nulla
+                sunt?
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequatur cupiditate excepturi incidunt iste
+                neque recusandae soluta vel! A, ab accusamus amet atque doloremque eligendi ex, in itaque iure nulla
+                sunt?
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequatur cupiditate excepturi incidunt iste
+                neque recusandae soluta vel! A, ab accusamus amet atque doloremque eligendi ex, in itaque iure nulla
+                sunt?
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequatur cupiditate excepturi incidunt iste
+                neque recusandae soluta vel! A, ab accusamus amet atque doloremque eligendi ex, in itaque iure nulla
+                sunt?
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequatur cupiditate excepturi incidunt iste
+                neque recusandae soluta vel! A, ab accusamus amet atque doloremque eligendi ex, in itaque iure nulla
+                sunt?
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequatur cupiditate excepturi incidunt iste
+                neque recusandae soluta vel! A, ab accusamus amet atque doloremque eligendi ex, in itaque iure nulla
+                sunt?
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequatur cupiditate excepturi incidunt iste
+                neque recusandae soluta vel! A, ab accusamus amet atque doloremque eligendi ex, in itaque iure nulla
+                sunt?
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequatur cupiditate excepturi incidunt iste
+                neque recusandae soluta vel! A, ab accusamus amet atque doloremque eligendi ex, in itaque iure nulla
+                sunt?
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequatur cupiditate excepturi incidunt iste
+                neque recusandae soluta vel! A, ab accusamus amet atque doloremque eligendi ex, in itaque iure nulla
+                sunt?
             </p>
             <div className={styles.test}>
                 <BtnDefault className={styles.default} text={'Иконка start'} iconType={'round'} iconName={'upload'}
@@ -44,6 +76,7 @@ function Test() {
                 <BtnTransparent text={'Иконка start'} iconType={'round'} iconName={'upload'} iconPosition={'start'}/>
                 <BtnTransparent text={'Иконка end'} iconType={'round'} iconName={'upload'} iconPosition={'end'}/>
                 <BtnTransparent text={'Без иконки'}/>
+                <BtnTransparent text={'Menu open'} onClick={handleClick}/>
 
                 <BtnCircleDefault className={styles.default} iconName={'upload'} iconType={'round'}/>
                 <BtnCircleDefault className={styles.default} iconName={'upload'} iconType={'round'} isActive={true}/>
@@ -59,8 +92,23 @@ function Test() {
                 <Input placeholder={'Коротка строка'} className={styles.input_short}/>
 
                 <Btn text={'Modal open'} onClick={() => setModal(true)}/>
+
+                <Card><>123</>
+                </Card>
+
+                <div>
+                    <Tag text={'#Пример тега'}/>
+                </div>
             </div>
             {modal && <Modal isOpened={modal} setOpen={setModal}>Привет</Modal>}
+            <PopupMenu open={!!anchorEl} onClose={handleClose} anchorEl={anchorEl}>
+                <MenuItem>Кнопка 1</MenuItem>
+                <MenuItem>Кнопка 2</MenuItem>
+                <MenuItem>Очень большая Кнопка 3</MenuItem>
+                <MenuItem isDanger iconName={'delete_forever'} iconType={'round'}>Опасность слева</MenuItem>
+                <MenuItem isDanger iconName={'delete_forever'} iconType={'round'} iconPosition={'end'}>Опасность
+                    справа</MenuItem>
+            </PopupMenu>
         </>
     );
 }

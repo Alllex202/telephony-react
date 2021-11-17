@@ -1,6 +1,7 @@
 import React, {MouseEventHandler} from 'react';
 import Icon from "../icon";
 import styles from './styles.module.scss';
+import {classNames} from "../../../shared/utils/class-names";
 
 type Props = {
     text: string,
@@ -13,7 +14,7 @@ type Props = {
 
 function BtnDefault({text, iconName, iconType, iconPosition, className, onClick}: Props) {
     return (
-        <button className={[styles.btn, iconPosition === 'end' ? styles.reverse : '', className ?? ''].join(' ')}
+        <button className={classNames(styles.btn, iconPosition === 'end' ? styles.reverse : '', className ?? '')}
                 onClick={onClick}>
             {iconName &&
             <Icon name={iconName} type={iconType} className={[styles.icon, styles.icon_custom].join(' ')}/>}

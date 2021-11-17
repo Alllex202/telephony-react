@@ -1,0 +1,15 @@
+.MuiMenu-root {
+
+  .MuiMenu-paper {
+    box-shadow: 0 2px 8px rgba(33, 35, 36, 0.2);
+    border-radius: 4px;
+    margin-top: 10px;
+
+    .MuiMenu-list {
+      background-color: var(--dropdown-fill);
+      padding: 0;
+    }
+  }
+}
+
+

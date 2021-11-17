@@ -11,9 +11,17 @@
   font-family: 'Montserrat', sans-serif;
 }
 
+body {
+  overflow: hidden;
+}
+
 button {
   cursor: pointer;
   border: none;
+}
+
+.unselectable {
+  user-select: none;
 }
 
 :root {
