@@ -1,0 +1,25 @@
+.header {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: space-between;
+
+  .add {
+
+  }
+  .search {
+    min-width: 150px;
+    margin: 0 20px 0 20px;
+  }
+
+  .sort {
+    //width: 240px;
+    //justify-content: start;
+    //padding: 8px 0;
+
+    & > div {
+      width: 150px;
+      text-align: start;
+    }
+  }
+}

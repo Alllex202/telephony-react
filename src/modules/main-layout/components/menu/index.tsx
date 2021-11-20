@@ -8,7 +8,7 @@ const Menu = () => {
     const menuItems: { link: string, label: string }[] = [
         {link: routes.callingList(), label: 'Обзванивание'},
         {link: routes.scenarioList(), label: 'Сценарии'},
-        {link: routes.databaseList(), label: 'Базы данных'},
+        {link: routes.callersBaseList(), label: 'Базы клиетнтов'},
         {link: routes.statisticsView(), label: 'Статистика'},
         {link: routes.test(), label: 'Test'},
     ];

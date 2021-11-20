@@ -15,7 +15,7 @@ const MainLayout = ({childrenBody, childrenHeader}: Props) => {
             <div className={styles.main}>
                 <Menu/>
                 <Bar>{childrenHeader}</Bar>
-                <div className={styles.wrapper}>
+                <div className={styles.wrapper} id={'scrolling-wrapper'}>
                     <div className={styles.container}>
                         <div className={styles.content}>
                             {childrenBody}

@@ -1,7 +1,16 @@
 const serverApi = process.env.REACT_APP_SERVER_API;
+const callersBase = 'callers-base';
 
 export const apiRoutes = {
-    databases: () => `${serverApi}/callers-base`,
-    databasesId: (id: string | number) => `${serverApi}/callers-base/${id}`,
-    databasesUpload: () => `${serverApi}/callers-base/upload/exel`,
+    callersBase: {
+        byId: (id: string | number) => `${serverApi}/${callersBase}/${id}`,
+        dataById: (id: string | number) =>`${serverApi}/${callersBase}/data/${id}`,
+        header: () =>`${serverApi}/${callersBase}/header`,
+        headerById: (id: string | number) =>`${serverApi}/${callersBase}/header/${id}`,
+        uploadExcel: () =>`${serverApi}/${callersBase}/upload/exel`,
+        variablesTypes: () =>`${serverApi}/${callersBase}/variables/types`,
+    },
+    // callers-bases: () => `${serverApi}/callers-base`,
+    // databasesId: (id: string | number) => `${serverApi}/callers-base/${id}`,
+    // databasesUpload: () => `${serverApi}/callers-base/upload/exel`,
 };

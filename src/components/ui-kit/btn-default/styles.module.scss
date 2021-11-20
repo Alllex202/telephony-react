@@ -39,6 +39,7 @@
   }
 
   & > div {
+    width: max-content;
     font: var(--font-body-bold);
   }
 }

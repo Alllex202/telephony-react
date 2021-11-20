@@ -24,6 +24,10 @@ button {
   user-select: none;
 }
 
+.d-none {
+  display: none;
+}
+
 :root {
   // colors
   --black: #{$black};
@@ -134,6 +138,7 @@ button {
   --max-width-content: 952px;
   --logo-width: 139px;
   --logo-height: 48px;
+  --card-callers-base-width: 464px;
 }
 
 //* {

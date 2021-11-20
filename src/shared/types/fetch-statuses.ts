@@ -1,5 +1,5 @@
 export type FetchStatuses = {
-    isLoading: boolean;
-    isError: boolean;
-    isSuccess: boolean;
+    isLoading?: boolean;
+    isError?: boolean;
+    isSuccess?: boolean;
 }

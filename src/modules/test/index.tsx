@@ -11,7 +11,7 @@ import RightSidebar from "../../components/right-sidebar";
 import Modal from "../../components/modal";
 import Card from "../../components/ui-kit/card";
 import Tag from "../../components/ui-kit/tag";
-import PopupMenu from "../../components/ui-kit/popup-menu";
+import Menu from "../../components/ui-kit/menu";
 import MenuItem from "../../components/ui-kit/menu-item";
 
 function Test() {
@@ -101,14 +101,14 @@ function Test() {
                 </div>
             </div>
             {modal && <Modal isOpened={modal} setOpen={setModal}>Привет</Modal>}
-            <PopupMenu open={!!anchorEl} onClose={handleClose} anchorEl={anchorEl}>
+            <Menu open={!!anchorEl} onClose={handleClose} anchorEl={anchorEl}>
                 <MenuItem>Кнопка 1</MenuItem>
                 <MenuItem>Кнопка 2</MenuItem>
                 <MenuItem>Очень большая Кнопка 3</MenuItem>
                 <MenuItem isDanger iconName={'delete_forever'} iconType={'round'}>Опасность слева</MenuItem>
                 <MenuItem isDanger iconName={'delete_forever'} iconType={'round'} iconPosition={'end'}>Опасность
                     справа</MenuItem>
-            </PopupMenu>
+            </Menu>
         </>
     );
 }

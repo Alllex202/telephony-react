@@ -1,7 +1,7 @@
 // import {DatabaseModel} from "../../core/api/models";
 //
 // export interface DatabaseState {
-//     databases: DatabaseModel[];
+//     callers-bases: DatabaseModel[];
 //     loading: boolean;
 //     error: null | string;
 // }
