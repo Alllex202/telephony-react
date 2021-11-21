@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import Btn from "../../components/ui-kit/btn";
 import styles from './styles.module.scss';
-import BtnTransparent from "../../components/ui-kit/btn-transparent";
+import BtnSecond from "../../components/ui-kit/btn-second";
 import BtnDefault from "../../components/ui-kit/btn-default";
 import BtnToggle from "../../components/ui-kit/btn-toggle";
 import BtnCircle from "../../components/ui-kit/btn-circle";
@@ -26,10 +26,7 @@ function Test() {
     };
 
     return (
-        <>
-            <RightSidebar>
-                Это опциональная менюшка с правой стороны
-            </RightSidebar>
+        <div className={styles.wrapper}>
             <p>
                 Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequatur cupiditate excepturi incidunt iste
                 neque recusandae soluta vel! A, ab accusamus amet atque doloremque eligendi ex, in itaque iure nulla
@@ -73,10 +70,10 @@ function Test() {
                 <Btn text={'Иконка end'} iconType={'round'} iconName={'upload'} iconPosition={'end'}/>
                 <Btn text={'Без иконки'}/>
 
-                <BtnTransparent text={'Иконка start'} iconType={'round'} iconName={'upload'} iconPosition={'start'}/>
-                <BtnTransparent text={'Иконка end'} iconType={'round'} iconName={'upload'} iconPosition={'end'}/>
-                <BtnTransparent text={'Без иконки'}/>
-                <BtnTransparent text={'Menu open'} onClick={handleClick}/>
+                <BtnSecond text={'Иконка start'} iconType={'round'} iconName={'upload'} iconPosition={'start'}/>
+                <BtnSecond text={'Иконка end'} iconType={'round'} iconName={'upload'} iconPosition={'end'}/>
+                <BtnSecond text={'Без иконки'}/>
+                <BtnSecond text={'Menu open'} onClick={handleClick}/>
 
                 <BtnCircleDefault className={styles.default} iconName={'upload'} iconType={'round'}/>
                 <BtnCircleDefault className={styles.default} iconName={'upload'} iconType={'round'} isActive={true}/>
@@ -109,7 +106,7 @@ function Test() {
                 <MenuItem isDanger iconName={'delete_forever'} iconType={'round'} iconPosition={'end'}>Опасность
                     справа</MenuItem>
             </Menu>
-        </>
+        </div>
     );
 }
 

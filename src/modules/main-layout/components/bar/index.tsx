@@ -15,15 +15,20 @@ const Bar = ({children}: Props) => {
     }
 
     return (
-        <div className={styles.bar}>
-            <Logo/>
-            <div className={styles.actions}>
-                <div className={styles.wrapper}>
-                    {children}
-                </div>
+        <div className={styles.header}>
+            <div className={styles.left}>
+                <Logo/>
             </div>
-            <BtnToggle className={styles.profile} isActive={isOpen} onClick={toggleProfile} iconName={'account_circle'}
-                       iconType={'round'}/>
+            <div className={styles.center}>
+                {children}
+            </div>
+            <div className={styles.right}>
+                <BtnToggle className={styles.profile}
+                           isActive={isOpen}
+                           onClick={toggleProfile}
+                           iconName={'account_circle'}
+                           iconType={'round'}/>
+            </div>
         </div>
     );
 };

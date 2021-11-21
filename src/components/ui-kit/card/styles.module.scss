@@ -3,11 +3,12 @@
   display: flex;
   width: 464px;
   height: 251px;
+  background-color: var(--card-fill);
   border-radius: 2px;
   cursor: pointer;
 
   &.active > .border_active {
-    border: 4px solid var(--orange-light-40);
+    border: 4px solid var(--card-border-hover);
   }
 
   .content {
@@ -21,7 +22,7 @@
     position: absolute;
     width: 100%;
     height: 100%;
-    border: 1px solid var(--black-light-10);
+    border: 1px solid var(--card-border);
     border-radius: 2px;
   }
 
@@ -29,14 +30,14 @@
     position: absolute;
     width: 100%;
     height: 100%;
-    border: 4px solid transparent;
+    border: 4px solid var(--trasparent);
     border-radius: 2px;
     transition: .2s border;
   }
 
   &:hover {
     .border_active {
-      border: 4px solid var(--orange-light-40);
+      border: 4px solid var(--card-border-hover);
     }
   }
 }

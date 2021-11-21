@@ -1,17 +1,17 @@
 import React, {useEffect, useState} from 'react';
 import styles from './styles.module.scss';
-import Btn from "../../../components/ui-kit/btn";
-import Input from "../../../components/ui-kit/input";
+import Btn from "../../../../components/ui-kit/btn";
+import Input from "../../../../components/ui-kit/input";
 import {useDispatch, useSelector} from "react-redux";
-import {RootState} from "../../../store";
-import BtnTransparent from "../../../components/ui-kit/btn-transparent";
-import Menu from "../../../components/ui-kit/menu";
-import MenuItem from "../../../components/ui-kit/menu-item";
+import {RootState} from "../../../../store";
+import BtnSecond from "../../../../components/ui-kit/btn-second";
+import Menu from "../../../../components/ui-kit/menu";
+import MenuItem from "../../../../components/ui-kit/menu-item";
 import {useHistory} from "react-router-dom";
-import routes from "../../../routing/routes";
-import {DirectionType, SortByType} from "../../../core/api/requests";
-import {changeFilter, resetFilter} from "../../../store/features/callers-bases/filter";
-import {resetCallersBasesStates} from "../../../store/features/callers-bases/list";
+import routes from "../../../../routing/routes";
+import {DirectionType, SortByType} from "../../../../core/api/requests";
+import {changeFilter, resetFilter} from "../../../../store/features/callers-bases/filter";
+import {resetCallersBasesStates} from "../../../../store/features/callers-bases/list";
 
 interface sortItem {
     sortBy: SortByType,
@@ -24,7 +24,7 @@ const sortItems: sortItem[] = [
     {sortBy: 'CREATION_DATE', direction: 'ASC', text: 'Сначала старые'},
 ];
 
-function CallersBaseHeader() {
+function CallersBaseListHeader() {
     const {statuses} = useSelector((state: RootState) => state.callersBaseHeaders);
     const {direction, sortBy} = useSelector((state: RootState) => state.callersBasesFilter);
     const dispatch = useDispatch();
@@ -77,8 +77,9 @@ function CallersBaseHeader() {
                  onClick={handlerAdd}/>
             <Input value={input} onChange={e => setInput(e.target.value)} className={styles.search}
                    type={'search'} placeholder={'Поиск'} autoCompleteOff onKeyPress={handlerSearch}/>
-            <BtnTransparent text={direction === 'DESC' ? 'Сначала новые' : 'Сначала старые'}
-                            iconName={'upload'} iconType={'round'} className={styles.sort} onClick={handlerOpenSort}/>
+            <BtnSecond text={direction === 'DESC' ? 'Сначала новые' : 'Сначала старые'}
+                       iconName={'upload'} iconType={'round'} className={styles.sort} onClick={handlerOpenSort}
+                       isActive={!!anchorEl}/>
             <Menu anchorEl={anchorEl} open={!!anchorEl} onClose={handlerCloseSort}>
                 {sortItems.map((el, index) =>
                     <MenuItem key={index} onClick={() => handlerSortItem({sortBy: el.sortBy, direction: el.direction})}>
@@ -89,4 +90,4 @@ function CallersBaseHeader() {
     );
 }
 
-export default CallersBaseHeader;
+export default CallersBaseListHeader;

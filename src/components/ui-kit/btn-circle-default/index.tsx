@@ -5,7 +5,7 @@ import Icon from "../icon";
 type Props = {
     iconName: string,
     className?: string,
-    onClick?: MouseEventHandler,
+    onClick?: React.MouseEventHandler,
     iconType?: 'outlined' | 'round' | 'sharp' | 'two-tone',
     isActive?: boolean,
 }

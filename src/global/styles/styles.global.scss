@@ -1,0 +1,31 @@
+@import 'palette';
+@import 'fonts';
+@import './themes/original';
+@import './themes/dark';
+
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+  text-decoration: none;
+  color: var(--text);
+  font-family: 'Montserrat', sans-serif;
+}
+
+body {
+  background-color: var(--body-fill);
+  overflow-y: scroll;
+}
+
+button {
+  cursor: pointer;
+  border: none;
+}
+
+.unselectable {
+  user-select: none;
+}
+
+.d-none {
+  display: none;
+}

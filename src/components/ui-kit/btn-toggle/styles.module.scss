@@ -28,12 +28,12 @@ button.btn {
   & > span {
     font-size: 48px;
     transition: .2s color;
-    color: var(--btn-toggle-text);
+    color: var(--btn-toggle-icon);
   }
 
   &.active {
     & > span {
-      color: var(--btn-toggle-active);
+      color: var(--btn-toggle-icon-active);
     }
   }
 }

@@ -1,7 +1,8 @@
 .sidebar {
-  position: fixed;
+  //position: fixed;
+  position: sticky;
   top: 96px;
-  right: 24px;
+  //right: 24px;
   width: 196px;
   display: flex;
   padding: 16px;

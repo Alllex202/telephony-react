@@ -9,13 +9,14 @@ type Props = {
     iconPosition?: 'start' | 'end',
     className?: string,
     onClick?: MouseEventHandler,
+    isActive?: boolean,
 }
 
-function BtnTransparent({text, iconName, iconType, iconPosition, className, onClick}: Props) {
+function BtnSecond({text, iconName, iconType, iconPosition, className, onClick, isActive}: Props) {
     return (
-        <BtnDefault className={[styles.btn, className ?? ''].join(' ')} text={text} iconName={iconName}
+        <BtnDefault className={[styles.btn, isActive ? styles.active : '', className ?? ''].join(' ')} text={text} iconName={iconName}
                     onClick={onClick} iconType={iconType} iconPosition={iconPosition}/>
     );
 }
 
-export default BtnTransparent;
+export default BtnSecond;

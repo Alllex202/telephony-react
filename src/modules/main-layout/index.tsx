@@ -2,27 +2,37 @@ import React, {ReactNode} from 'react';
 import Bar from "./components/bar";
 import Menu from "./components/menu";
 import styles from './styles.module.scss';
+import {Grid} from "@mui/material";
 
 
 type Props = {
     childrenBody: ReactNode,
     childrenHeader: ReactNode,
+    childrenFooter?: ReactNode,
+    childrenRightSidebar?: ReactNode,
 }
 
-const MainLayout = ({childrenBody, childrenHeader}: Props) => {
+const MainLayout = ({childrenBody, childrenHeader, childrenFooter, childrenRightSidebar}: Props) => {
     return (
         <>
-            <div className={styles.main}>
-                <Menu/>
-                <Bar>{childrenHeader}</Bar>
-                <div className={styles.wrapper} id={'scrolling-wrapper'}>
-                    <div className={styles.container}>
-                        <div className={styles.content}>
-                            {childrenBody}
-                        </div>
+            <div className={styles.wrapper}>
+                <div className={styles.main}>
+                    <Bar>{childrenHeader}</Bar>
+                    <div className={styles.left}>
+                        <Menu/>
+                    </div>
+                    <div className={styles.center}>
+                        {childrenBody}
+                    </div>
+                    <div className={styles.right}>
+                        {childrenRightSidebar}
                     </div>
                 </div>
+                <div className={styles.footer}>
+                    {childrenFooter}
+                </div>
             </div>
+
         </>
     );
 };

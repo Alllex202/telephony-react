@@ -1,0 +1,13 @@
+.btn {
+  background-color: var(--btn-second);
+  border-radius: 4px;
+  transition: .2s background-color;
+
+  &:hover, &:active, &.active {
+    background-color: var(--btn-second-hover);
+  }
+
+  & > * {
+    color: var(--btn-second-text);
+  }
+}

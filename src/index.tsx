@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from "react-dom";
 import App from "./app/app";
-import './styles.global.scss';
+import './global/styles/styles.global.scss';
 
 async function run() {
     if (process.env.NODE_ENV === 'development' && process.env.REACT_APP_ENABLE_FAKE_DATA === 'true') {

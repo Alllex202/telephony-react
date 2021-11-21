@@ -1,22 +1,29 @@
-.test {
+
+.wrapper {
   display: flex;
   flex-direction: column;
+  padding-bottom: 300px;
+  .test {
+    display: flex;
+    flex-direction: column;
 
-  .input_short {
-    width: 300px;
-  }
+    .input_short {
+      width: 300px;
+    }
 
-  & > * {
-    margin-bottom: 10px;
-  }
+    & > * {
+      margin-bottom: 10px;
+    }
 
-  .default {
-    position: relative;
-    &:after {
-      content: '(default)';
-      position: absolute;
-      right: 0;
-      transform: translateX(120%);
+    .default {
+      position: relative;
+
+      &:after {
+        content: '(default)';
+        position: absolute;
+        right: 0;
+        transform: translateX(120%);
+      }
     }
   }
 }

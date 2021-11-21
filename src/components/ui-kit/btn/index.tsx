@@ -9,11 +9,12 @@ type Props = {
     iconPosition?: 'start' | 'end',
     className?: string,
     onClick?: MouseEventHandler,
+    isActive?: boolean,
 }
 
-function Btn({text, iconName, iconType, iconPosition, className, onClick}: Props) {
+function Btn({text, iconName, iconType, iconPosition, className, onClick, isActive}: Props) {
     return (
-        <BtnDefault text={text} className={[styles.btn, className ?? ''].join(' ')} onClick={onClick}
+        <BtnDefault text={text} className={[styles.btn, isActive ? styles.active : '', className ?? ''].join(' ')} onClick={onClick}
                     iconName={iconName} iconPosition={iconPosition} iconType={iconType}/>
     );
 }

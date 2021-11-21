@@ -1,25 +1,32 @@
-.main {
-  width: 100%;
-  height: 100vh;
-  display: flex;
+.wrapper{
+  width: 1440px;
+  margin: 0 auto;
+  .main {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
 
-  .wrapper {
-    margin-top: 96px;
-    overflow-x: hidden;
-    overflow-y: auto;
+    .left {
+      position: sticky;
+      top: 96px;
+      width: 220px;
+      height: 100%;
+      margin-right: 24px;
+    }
 
-    .container {
-      overflow-y: auto;
-      overflow-x: hidden;
-      width: 100vw;
-      padding: 0 244px 24px;
+    .center {
+      height: 100%;
+      width: 952px;
+    }
 
-      .content {
-        max-width: var(--max-width-content);
-        margin: 0 auto;
-      }
+    .right {
+      width: 220px;
+      margin-left: 24px;
     }
   }
+
+  .footer {
+
+  }
 }
-
-
