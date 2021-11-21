@@ -5,7 +5,7 @@ import {RootState} from "../../../store";
 import {resetCallersBasesStates as clearData} from "../../../store/features/callers-bases/list";
 import CallersBaseCard from "./components/card";
 import {getCallersBasesByPage} from "../../../core/api/requests";
-import Btn from "../../../components/ui-kit/btn";
+import BtnSecond from "../../../components/ui-kit/btn-second";
 
 
 function CallersBaseList() {
@@ -23,6 +23,8 @@ function CallersBaseList() {
 
     const loadNextPage = () => {
         if (isLastPage || statuses.isLoading) return;
+
+        // document.removeEventListener('scroll', loadNextPage)
         getData(page + 1);
     }
 
@@ -49,6 +51,14 @@ function CallersBaseList() {
         // eslint-disable-next-line
     }, []);
 
+    // useEffect(() => {
+    //     document.addEventListener('scroll', loadNextPage)
+    //     return () => {
+    //         document.removeEventListener('scroll', loadNextPage)
+    //     }
+    //     // eslint-disable-next-line
+    // }, [isLastPage, statuses.isLoading]);
+
     if (callersBaseHeaders.length < 1 && statuses.isLoading) {
         return <h1>Загрузка...</h1>;
     }
@@ -73,7 +83,7 @@ function CallersBaseList() {
             <div className={styles.footer}>
                 {statuses.isLoading && <h1>Загрузка...</h1>}
                 {!isLastPage && !statuses.isLoading &&
-                <Btn className={styles.more} onClick={loadNextPage} text={'Показать больше'}/>}
+                <BtnSecond className={styles.more} onClick={loadNextPage} text={'Показать больше'}/>}
             </div>
         </>
     );

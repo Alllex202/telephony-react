@@ -2,15 +2,15 @@ import React from 'react';
 import styles from './styles.module.scss';
 
 type Props = {
-    value?: string | number | readonly string[],
-    onChange?: (e: React.ChangeEvent<HTMLInputElement>) => any,
+    value?: string | number,
+    onChange?: React.ChangeEventHandler<HTMLInputElement>,
     placeholder?: string,
     className?: string,
     type?: React.HTMLInputTypeAttribute,
     name?: string,
     id?: string,
     autoCompleteOff?: boolean,
-    onKeyPress?: (e: React.KeyboardEvent<HTMLInputElement>) => void
+    onKeyPress?: React.KeyboardEventHandler<HTMLInputElement>
 }
 
 function Input({value, onChange, placeholder, className, type, name, autoCompleteOff, id, onKeyPress}: Props) {

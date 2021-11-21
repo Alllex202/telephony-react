@@ -76,7 +76,7 @@ function CallersBaseListHeader() {
             <Btn text={'Добавить базу'} iconName={'upload'} iconType={'round'} className={styles.add}
                  onClick={handlerAdd}/>
             <Input value={input} onChange={e => setInput(e.target.value)} className={styles.search}
-                   type={'search'} placeholder={'Поиск'} autoCompleteOff onKeyPress={handlerSearch}/>
+                   type={'text'} placeholder={'Поиск'} autoCompleteOff onKeyPress={handlerSearch}/>
             <BtnSecond text={direction === 'DESC' ? 'Сначала новые' : 'Сначала старые'}
                        iconName={'upload'} iconType={'round'} className={styles.sort} onClick={handlerOpenSort}
                        isActive={!!anchorEl}/>

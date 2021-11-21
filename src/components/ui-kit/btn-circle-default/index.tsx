@@ -1,4 +1,4 @@
-import React, {MouseEventHandler} from 'react';
+import React from 'react';
 import styles from "./styles.module.scss";
 import Icon from "../icon";
 
@@ -19,3 +19,4 @@ function BtnCircleDefault({className,iconName,iconType, onClick, isActive}: Prop
 }
 
 export default BtnCircleDefault;
+

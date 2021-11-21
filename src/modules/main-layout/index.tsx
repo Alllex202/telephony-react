@@ -2,7 +2,6 @@ import React, {ReactNode} from 'react';
 import Bar from "./components/bar";
 import Menu from "./components/menu";
 import styles from './styles.module.scss';
-import {Grid} from "@mui/material";
 
 
 type Props = {

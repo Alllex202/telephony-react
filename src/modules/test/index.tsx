@@ -7,7 +7,6 @@ import BtnToggle from "../../components/ui-kit/btn-toggle";
 import BtnCircle from "../../components/ui-kit/btn-circle";
 import Input from "../../components/ui-kit/input";
 import BtnCircleDefault from "../../components/ui-kit/btn-circle-default";
-import RightSidebar from "../../components/right-sidebar";
 import Modal from "../../components/modal";
 import Card from "../../components/ui-kit/card";
 import Tag from "../../components/ui-kit/tag";
