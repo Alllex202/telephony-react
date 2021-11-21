@@ -12,15 +12,15 @@ import {
     setSuccess
 } from "../../../store/features/callers-bases/list";
 
-export type SortByType = 'NAME' | 'CREATION_DATE' | 'COUNT_VARIABLES';
-export type DirectionType = 'ASC' | 'DESC';
+export type SortType = 'NAME' | 'CREATION_DATE' | 'COUNT_VARIABLES';
+export type DirectionSort = 'ASC' | 'DESC';
 
-export interface ParamsPaginatorHeader {
+export interface ParamsPaginatorHeader<SortType, DirectionSort> {
     page: number,
     size: number,
     name?: string,
-    sortBy?: SortByType,
-    direction?: DirectionType,
+    sortBy?: SortType,
+    direction?: DirectionSort,
 }
 
 export interface ParamsPaginatorData {
@@ -40,7 +40,7 @@ export const getCallersBaseDataById = (id: number | string, params: ParamsPagina
 //     return axios.get<PaginatorModel<CallersBaseHeaderModel>>(apiRoutes.callersBase.header(), {...config, params});
 // };
 
-export const getCallersBasesByPage = (params: ParamsPaginatorHeader, cancelToken?: CancelToken, otherConfig?: AxiosRequestConfig) => {
+export const getCallersBasesByPage = (params: ParamsPaginatorHeader<SortType, DirectionSort>, cancelToken?: CancelToken, otherConfig?: AxiosRequestConfig) => {
     return async (dispatch: Dispatch) => {
         dispatch(setLoading());
         axios.get<PaginatorModel<CallersBaseHeaderModel>>(apiRoutes.callersBase.header(), {
@@ -77,21 +77,3 @@ export const uploadCallersBaseExcel = (formData: FormData, config?: AxiosRequest
 export const getVariablesTypes = (config?: AxiosRequestConfig): BaseResponse<VariableTypeModel[]> => {
     return axios.get<VariableTypeModel[]>(apiRoutes.callersBase.variablesTypes(), config);
 };
-
-
-// export const getDatabases = (config?: AxiosRequestConfig): BaseResponse<DatabaseModel[]> => {
-//     return axios.get<DatabaseModel[]>(apiRoutes.callers-bases(), config);
-// };
-//
-// export const getDatabaseById = (id: number | string, config?: AxiosRequestConfig): BaseResponse<DatabaseModel> => {
-//     return axios.get(apiRoutes.databasesId(id), config);
-// }
-//
-// export const deleteDatabaseById = (id: number | string, config?: AxiosRequestConfig): BaseResponse<DatabaseModel> => {
-//     return axios.delete(apiRoutes.databasesId(id), config);
-// }
-//
-// export const uploadDatabase = (formData: FormData, config?: AxiosRequestConfig): BaseResponse<DatabaseModel> => {
-//     return axios.post(apiRoutes.databasesUpload(), formData, {...config});
-// }
-

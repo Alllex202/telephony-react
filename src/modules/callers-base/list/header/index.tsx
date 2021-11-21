@@ -9,13 +9,13 @@ import Menu from "../../../../components/ui-kit/menu";
 import MenuItem from "../../../../components/ui-kit/menu-item";
 import {useHistory} from "react-router-dom";
 import routes from "../../../../routing/routes";
-import {DirectionType, SortByType} from "../../../../core/api/requests";
+import {DirectionSort, SortType} from "../../../../core/api/requests";
 import {changeFilter, resetFilter} from "../../../../store/features/callers-bases/filter";
 import {resetCallersBasesStates} from "../../../../store/features/callers-bases/list";
 
 interface sortItem {
-    sortBy: SortByType,
-    direction: DirectionType,
+    sortBy: SortType,
+    direction: DirectionSort,
     text: string,
 }
 
@@ -53,7 +53,7 @@ function CallersBaseListHeader() {
         setAnchorEl(null);
     }
 
-    function handlerSortItem(options: { sortBy: SortByType, direction: DirectionType }) {
+    function handlerSortItem(options: { sortBy: SortType, direction: DirectionSort }) {
         handlerCloseSort();
         if (statuses.isLoading || (options.sortBy === sortBy && options.direction === direction)) return;
 

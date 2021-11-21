@@ -10,7 +10,4 @@ export const apiRoutes = {
         uploadExcel: () =>`${serverApi}/${callersBase}/upload/exel`,
         variablesTypes: () =>`${serverApi}/${callersBase}/variables/types`,
     },
-    // callers-bases: () => `${serverApi}/callers-base`,
-    // databasesId: (id: string | number) => `${serverApi}/callers-base/${id}`,
-    // databasesUpload: () => `${serverApi}/callers-base/upload/exel`,
 };
