@@ -2,8 +2,6 @@
   position: relative;
   background-color: var(--btn);
   border-radius: 12px;
-  filter: none;
-  transition: .2s filter;
 
   &::before {
     content: '';

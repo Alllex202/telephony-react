@@ -12,21 +12,13 @@ import routes from "../../../../routing/routes";
 import {DirectionSort, SortType} from "../../../../core/api/requests";
 import {changeFilter, resetFilter} from "../../../../store/features/callers-bases/filter";
 import {resetCallersBasesStates} from "../../../../store/features/callers-bases/list";
+import {classNames} from "../../../../shared/utils";
+import {sortItemsCallersBaseList} from "../../../../shared/data/sort-items";
 
-interface sortItem {
-    sortBy: SortType,
-    direction: DirectionSort,
-    text: string,
-}
-
-const sortItems: sortItem[] = [
-    {sortBy: 'CREATION_DATE', direction: 'DESC', text: 'Сначала новые'},
-    {sortBy: 'CREATION_DATE', direction: 'ASC', text: 'Сначала старые'},
-];
 
 function CallersBaseListHeader() {
     const {statuses} = useSelector((state: RootState) => state.callersBaseHeaders);
-    const {direction, sortBy} = useSelector((state: RootState) => state.callersBasesFilter);
+    const {direction, sortBy, text} = useSelector((state: RootState) => state.callersBasesFilter);
     const dispatch = useDispatch();
     const history = useHistory();
     const [anchorEl, setAnchorEl] = useState<Element | null>(null);
@@ -53,12 +45,12 @@ function CallersBaseListHeader() {
         setAnchorEl(null);
     }
 
-    function handlerSortItem(options: { sortBy: SortType, direction: DirectionSort }) {
+    function handlerSortItem(options: { sortBy: SortType, direction: DirectionSort, text: string }) {
         handlerCloseSort();
         if (statuses.isLoading || (options.sortBy === sortBy && options.direction === direction)) return;
 
         dispatch(resetCallersBasesStates());
-        dispatch(changeFilter({sortBy: options.sortBy, name: input, direction: options.direction}));
+        dispatch(changeFilter({sortBy: options.sortBy, name: input, direction: options.direction, text: options.text}));
     }
 
     function handlerSearch(event: React.KeyboardEvent) {
@@ -67,22 +59,26 @@ function CallersBaseListHeader() {
 
             setLastInput(input);
             dispatch(resetCallersBasesStates());
-            dispatch(changeFilter({sortBy, name: input, direction}));
+            dispatch(changeFilter({sortBy, name: input, direction, text}));
         }
     }
 
     return (
         <div className={styles.header}>
             <Btn text={'Добавить базу'} iconName={'upload'} iconType={'round'} className={styles.add}
-                 onClick={handlerAdd}/>
+                 onClick={handlerAdd} iconPosition={'end'}/>
             <Input value={input} onChange={e => setInput(e.target.value)} className={styles.search}
                    type={'text'} placeholder={'Поиск'} autoCompleteOff onKeyPress={handlerSearch}/>
-            <BtnSecond text={direction === 'DESC' ? 'Сначала новые' : 'Сначала старые'}
-                       iconName={'upload'} iconType={'round'} className={styles.sort} onClick={handlerOpenSort}
-                       isActive={!!anchorEl}/>
+            <BtnSecond text={text} iconName={'sort'} iconType={'round'} onClick={handlerOpenSort}
+                       className={classNames(styles.sort, direction === 'ASC' ? styles.revert : '')}
+                       isActive={!!anchorEl} iconPosition={'end'}/>
             <Menu anchorEl={anchorEl} open={!!anchorEl} onClose={handlerCloseSort}>
-                {sortItems.map((el, index) =>
-                    <MenuItem key={index} onClick={() => handlerSortItem({sortBy: el.sortBy, direction: el.direction})}>
+                {sortItemsCallersBaseList.map((el, index) =>
+                    <MenuItem key={index} onClick={() => handlerSortItem({
+                        sortBy: el.sortBy,
+                        direction: el.direction,
+                        text: el.text
+                    })}>
                         {el.text}
                     </MenuItem>)}
             </Menu>

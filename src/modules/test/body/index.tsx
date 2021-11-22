@@ -1,17 +1,17 @@
 import React, {useState} from 'react';
-import Btn from "../../components/ui-kit/btn";
+import Btn from "../../../components/ui-kit/btn";
 import styles from './styles.module.scss';
-import BtnSecond from "../../components/ui-kit/btn-second";
-import BtnDefault from "../../components/ui-kit/btn-default";
-import BtnToggle from "../../components/ui-kit/btn-toggle";
-import BtnCircle from "../../components/ui-kit/btn-circle";
-import Input from "../../components/ui-kit/input";
-import BtnCircleDefault from "../../components/ui-kit/btn-circle-default";
-import Modal from "../../components/modal";
-import Card from "../../components/ui-kit/card";
-import Tag from "../../components/ui-kit/tag";
-import Menu from "../../components/ui-kit/menu";
-import MenuItem from "../../components/ui-kit/menu-item";
+import BtnSecond from "../../../components/ui-kit/btn-second";
+import BtnDefault from "../../../components/ui-kit/btn-default";
+import BtnToggle from "../../../components/ui-kit/btn-toggle";
+import BtnCircle from "../../../components/ui-kit/btn-circle";
+import Input from "../../../components/ui-kit/input";
+import BtnCircleDefault from "../../../components/ui-kit/btn-circle-default";
+import Modal from "../../../components/modal";
+import Card from "../../../components/ui-kit/card";
+import Tag from "../../../components/ui-kit/tag";
+import Menu from "../../../components/ui-kit/menu";
+import MenuItem from "../../../components/ui-kit/menu-item";
 
 function Test() {
     const [modal, setModal] = useState<boolean>(false);
@@ -96,7 +96,7 @@ function Test() {
                     <Tag text={'#Пример тега'}/>
                 </div>
             </div>
-            {modal && <Modal isOpened={modal} setOpen={setModal}>Привет</Modal>}
+            {modal && <Modal isOpened={modal} setOpen={setModal}>Старое решение<br/>А нужно ли вообще модальное окно?</Modal>}
             <Menu open={!!anchorEl} onClose={handleClose} anchorEl={anchorEl}>
                 <MenuItem>Кнопка 1</MenuItem>
                 <MenuItem>Кнопка 2</MenuItem>

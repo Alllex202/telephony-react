@@ -17,8 +17,8 @@ function BtnDefault({text, iconName, iconType, iconPosition, className, onClick}
         <button className={classNames(styles.btn, iconPosition === 'end' ? styles.reverse : '', className ?? '')}
                 onClick={onClick}>
             {iconName &&
-            <Icon name={iconName} type={iconType} className={[styles.icon, styles.icon_custom].join(' ')}/>}
-            <div className={styles.text}>{text}</div>
+            <Icon name={iconName} type={iconType} className={classNames(styles.icon, styles.icon_custom, 'icon')}/>}
+            <div className={classNames(styles.text, 'text')}>{text}</div>
         </button>
     );
 }

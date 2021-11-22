@@ -1,18 +1,10 @@
 import React from 'react';
 import styles from './styles.module.scss';
 import MenuItem from "./components/menu-item";
-import routes from "../../../../routing/routes";
+import {menuItems} from "../../../../shared/data/menu-items";
 
 
 const Menu = () => {
-    const menuItems: { link: string, label: string }[] = [
-        {link: routes.callingList(), label: 'Обзванивание'},
-        {link: routes.scenarioList(), label: 'Сценарии'},
-        {link: routes.callersBaseList(), label: 'Базы клиетнтов'},
-        {link: routes.statisticsView(), label: 'Статистика'},
-        {link: routes.test(), label: 'Test'},
-    ];
-
     return (
         <>
             <div className={styles.menu}>

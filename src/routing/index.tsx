@@ -2,9 +2,9 @@ import React from 'react';
 import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
 import routes from "./routes";
 import MainLayout from "../modules/main-layout";
-import Test from "../modules/test";
+import Test from "../modules/test/body";
 import TestHeader from "../modules/test/header";
-import CallersBaseList from "../modules/callers-base/list";
+import CallersBaseList from "../modules/callers-base/list/body";
 import CallersBaseListHeader from "../modules/callers-base/list/header";
 import TestRightSidebar from "../modules/test/right-block";
 

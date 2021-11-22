@@ -1,17 +1,20 @@
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 import {DirectionSort, SortType} from "../../../../core/api/requests";
+import {sortItemsCallersBaseList} from "../../../../shared/data/sort-items";
 
 
 export interface FilterState {
     name: string,
     sortBy: SortType,
     direction: DirectionSort,
+    text: string,
 }
 
 const initialState: FilterState = {
     name: '',
-    sortBy: 'CREATION_DATE',
-    direction: 'DESC',
+    sortBy: sortItemsCallersBaseList[0].sortBy,
+    direction: sortItemsCallersBaseList[0].direction,
+    text: sortItemsCallersBaseList[0].text,
 }
 
 export const callersBasesFilterSlice = createSlice({
@@ -22,11 +25,13 @@ export const callersBasesFilterSlice = createSlice({
             state.name = action.payload.name;
             state.sortBy = action.payload.sortBy;
             state.direction = action.payload.direction;
+            state.text = action.payload.text;
         },
         resetFilter: (state) => {
             state.name = '';
-            state.sortBy = 'CREATION_DATE';
-            state.direction = 'DESC';
+            state.sortBy = sortItemsCallersBaseList[0].sortBy;
+            state.direction = sortItemsCallersBaseList[0].direction;
+            state.text = sortItemsCallersBaseList[0].text;
         }
     }
 });

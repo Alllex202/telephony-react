@@ -1,21 +1,21 @@
 import React, {useState} from 'react';
 import styles from './styles.module.scss';
-import {CallersBaseHeaderModel} from "../../../../../core/api";
-import Card from "../../../../../components/ui-kit/card";
-import Tag from "../../../../../components/ui-kit/tag";
-import Icon from "../../../../../components/ui-kit/icon";
-import {formatDate} from "../../../../../shared/utils/format-date";
-import {classNames} from "../../../../../shared/utils";
-import BtnCircle from "../../../../../components/ui-kit/btn-circle";
-import Menu from "../../../../../components/ui-kit/menu";
-import MenuItem from "../../../../../components/ui-kit/menu-item";
-import {deleteCallersBase} from "../../../../../core/api/requests";
-import {FetchStatuses} from "../../../../../shared/types/fetch-statuses";
-import {DefaultAxiosError} from "../../../../../shared/types/base-response-error";
-import routes from "../../../../../routing/routes";
+import {CallersBaseHeaderModel} from "../../../../../../core/api";
+import Card from "../../../../../../components/ui-kit/card";
+import Tag from "../../../../../../components/ui-kit/tag";
+import Icon from "../../../../../../components/ui-kit/icon";
+import {formatDate} from "../../../../../../shared/utils/format-date";
+import {classNames} from "../../../../../../shared/utils";
+import BtnCircle from "../../../../../../components/ui-kit/btn-circle";
+import Menu from "../../../../../../components/ui-kit/menu";
+import MenuItem from "../../../../../../components/ui-kit/menu-item";
+import {deleteCallersBase} from "../../../../../../core/api/requests";
+import {FetchStatuses} from "../../../../../../shared/types/fetch-statuses";
+import {DefaultAxiosError} from "../../../../../../shared/types/base-response-error";
+import routes from "../../../../../../routing/routes";
 import {Link} from "react-router-dom";
 import {useDispatch} from "react-redux";
-import {deleteCallersBaseById} from "../../../../../store/features/callers-bases/list";
+import {deleteCallersBaseById} from "../../../../../../store/features/callers-bases/list";
 
 type Props = {
     data: CallersBaseHeaderModel,
