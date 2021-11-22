@@ -1,0 +1,73 @@
+.name {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-bottom: 12px;
+
+  .input {
+    width: 100%;
+    font: var(--font-h2-bold);
+    background-color: var(--trasparent);
+    border: none;
+  }
+  .edit {
+    font-size: 24px;
+    opacity: 0.2;
+    margin-right: 8px;
+  }
+}
+
+.info {
+  position: relative;
+  width: 100%;
+  min-height: 93px;
+  padding: 19px 19px 19px 64px;
+  background-color: var(--info-fill);
+  border-radius: 2px;
+  margin-bottom: 24px;
+
+  .icon {
+    position: absolute;
+    top: 16px;
+    left: 16px;
+    font-size: 32px;
+    color: var(--info-icon);
+  }
+
+  .text {
+    font: var(--font-body-medium);
+  }
+}
+
+.drop {
+  width: 100%;
+  height: 292px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  background-color: var(--drag-fill);
+  border: 4px dashed var(--drag-border);
+  border-radius: 4px;
+  transition: .2s background-color;
+  font: var(--font-body-bold);
+  cursor: pointer;
+
+  .inputFile {
+    display: none;
+  }
+
+  &.dropped {
+    background-color: var(--drag-hover);
+  }
+
+  & > span {
+    color: var(--drag-text);
+  }
+}
+
+.error {
+  margin-top: 8px;
+  font: var(--font-body-medium);
+  color: var(--text-error);
+}

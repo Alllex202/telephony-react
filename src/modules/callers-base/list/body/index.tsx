@@ -8,7 +8,7 @@ import {getCallersBasesByPage} from "../../../../core/api/requests";
 import BtnSecond from "../../../../components/ui-kit/btn-second";
 
 
-function CallersBaseList() {
+function CallersBaseListBody() {
     const {
         callersBaseHeaders,
         statuses,
@@ -89,5 +89,5 @@ function CallersBaseList() {
     );
 }
 
-export default CallersBaseList;
+export default CallersBaseListBody;
 
