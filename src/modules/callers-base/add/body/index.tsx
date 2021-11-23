@@ -3,7 +3,6 @@ import styles from './styles.module.scss';
 import Icon from "../../../../components/ui-kit/icon";
 import {classNames} from "../../../../shared/utils";
 import {uploadCallersBaseExcel} from "../../../../core/api/requests";
-// import {FetchStatuses} from "../../../../shared/types/fetch-statuses";
 import {DefaultAxiosError} from "../../../../shared/types/base-response-error";
 import {useHistory} from "react-router-dom";
 import routes from "../../../../routing/routes";
@@ -15,7 +14,6 @@ function CallersBaseAddBody() {
     const [file, setFile] = useState<File | null>(null);
     const [isDrag, setDrag] = useState<boolean>(false);
     const [error, setError] = useState<string>('');
-    // const [statuses, setStatuses] = useState<FetchStatuses>({});
     const history = useHistory();
     const inputFile = useRef<HTMLInputElement | null>(null);
 
@@ -49,6 +47,11 @@ function CallersBaseAddBody() {
     }
 
     function tryUploadFile(files: FileList | null) {
+        if (!name) {
+            setError('Необходимо ввести название');
+            setFile(null);
+            return;
+        }
         if (!files) return;
         if (files.length !== 1) {
             setError('Можно загрузить только 1 файл');
@@ -65,25 +68,20 @@ function CallersBaseAddBody() {
         const formData = new FormData();
         formData.append('file', files[0]);
         formData.append('name', name);
-        // setStatuses({isLoading: true});
         uploadCallersBaseExcel(formData)
             .then(res => {
-                // TODO передать данные на страницу просмотра
-                console.log(res.data)
                 history.push(routes.callersBaseView(res.data.id));
-                // setStatuses({isSuccess: true});
             })
             .catch((err: DefaultAxiosError) => {
                 setError(err.response?.data.message || 'Ошибка при отправке');
                 setFile(null);
-                // setStatuses({isError: true});
             });
     }
 
     return (
         <>
             <div className={styles.name}>
-                <Icon name={'edit'} type={'round'} className={styles.edit}/>
+                <Icon name={'edit'} type={'round'} className={styles.icon}/>
                 <input className={styles.input} type="text" value={name} onChange={handlerChangeName}
                        placeholder={'Введите название'} maxLength={50}/>
             </div>
