@@ -18,8 +18,10 @@
 
 
   &:hover, &:active, &.active {
-    &::before {
-      opacity: 0.06;
+    &:not(:disabled) {
+      &::before {
+        opacity: 0.06;
+      }
     }
   }
 

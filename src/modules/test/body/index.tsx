@@ -12,6 +12,7 @@ import Card from "../../../components/ui-kit/card";
 import Tag from "../../../components/ui-kit/tag";
 import Menu from "../../../components/ui-kit/menu";
 import MenuItem from "../../../components/ui-kit/menu-item";
+import InputTransparent from "../../../components/ui-kit/input-transparent";
 
 function Test() {
     const [modal, setModal] = useState<boolean>(false);
@@ -95,6 +96,8 @@ function Test() {
                 <div>
                     <Tag text={'#Пример тега'}/>
                 </div>
+
+                <InputTransparent type={'text'} placeholder={'Прозрачная строка ввода'}/>
             </div>
             {modal && <Modal isOpened={modal} setOpen={setModal}>Старое решение<br/>А нужно ли вообще модальное окно?</Modal>}
             <Menu open={!!anchorEl} onClose={handleClose} anchorEl={anchorEl}>

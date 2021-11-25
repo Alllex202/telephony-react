@@ -1,0 +1,37 @@
+.data-view {
+
+  .MuiTableCell-root {
+    padding: 14px 16px;
+    font: var(--font-body-medium);
+    border-bottom: 1px solid var(--table-border);
+
+    &:not(:last-child) {
+      border-right: 1px solid var(--table-border);
+    }
+  }
+
+  .MuiTableBody-root {
+
+    .MuiTableRow-root {
+      height: 48px;
+
+      &:nth-child(2n - 1) {
+        background-color: var(--table-row-odd);
+      }
+
+      &:last-child {
+
+        .MuiTableCell-root {
+          border-bottom: none;
+        }
+      }
+
+      .MuiTableCell-root {
+        &:first-child {
+          font: var(--font-caption-medium);
+          color: var(--table-text-number);
+        }
+      }
+    }
+  }
+}

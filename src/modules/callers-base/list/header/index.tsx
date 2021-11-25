@@ -10,8 +10,8 @@ import MenuItem from "../../../../components/ui-kit/menu-item";
 import {useHistory} from "react-router-dom";
 import routes from "../../../../routing/routes";
 import {DirectionSort, SortType} from "../../../../core/api/requests";
-import {changeFilter, resetFilter} from "../../../../store/features/callers-bases/filter";
-import {resetCallersBasesStates} from "../../../../store/features/callers-bases/list";
+import {changeFilter, resetFilter} from "../../../../store/features/callers-bases/add/filter";
+import {resetCallersBasesStates} from "../../../../store/features/callers-bases/add/list";
 import {classNames} from "../../../../shared/utils";
 import {sortItemsCallersBaseList} from "../../../../shared/data/sort-items";
 

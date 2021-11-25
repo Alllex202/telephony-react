@@ -1,6 +1,11 @@
-import {createSlice, PayloadAction} from '@reduxjs/toolkit';
-import {CallersBaseHeaderModel} from "../../../../core/api";
-import {FetchStatuses} from "../../../../shared/types/fetch-statuses";
+import {createSlice, Dispatch, PayloadAction} from '@reduxjs/toolkit';
+import {CallersBaseHeaderModel, PaginatorModel} from "../../../../../core/api";
+import {FetchStatuses} from "../../../../../shared/types/fetch-statuses";
+import axios, {AxiosRequestConfig, CancelToken} from "axios";
+import {apiRoutes} from "../../../../../core/api/routes";
+import {DefaultAxiosError} from "../../../../../shared/types/base-response-error";
+import {DirectionSort, ParamsPaginatorHeader, SortType} from "../../../../../core/api/requests";
+import {RootState} from "../../../../index";
 
 export interface CallersBaseState {
     callersBaseHeaders: CallersBaseHeaderModel[],
@@ -25,7 +30,6 @@ export const callersBaseHeadersSlice = createSlice({
     initialState,
     reducers: {
         addCallersBases: (state, action: PayloadAction<CallersBaseHeaderModel[]>) => {
-            // state.callersBaseHeaders.push(...action.payload);
             state.callersBaseHeaders = [...state.callersBaseHeaders, ...action.payload];
         },
         setPage: (state, action: PayloadAction<number>) => {
@@ -66,6 +70,30 @@ export const callersBaseHeadersSlice = createSlice({
         },
     },
 });
+
+export const getCallersBasesByPage =
+    (params: ParamsPaginatorHeader<SortType, DirectionSort>, cancelToken?: CancelToken, otherConfig?: AxiosRequestConfig) =>
+        (dispatch: Dispatch) => {
+            dispatch(setLoading());
+            axios
+                .get<PaginatorModel<CallersBaseHeaderModel>>(apiRoutes.callersBase.header(), {
+                    ...otherConfig,
+                    params,
+                    cancelToken
+                })
+                .then((res) => {
+                    dispatch(addCallersBases(res.data.content))
+                    if (res.data.last) {
+                        dispatch(setLastPage(res.data.last));
+                    }
+                    dispatch(setPage(res.data.pageable.pageNumber));
+                    dispatch(setSuccess());
+                })
+                .catch((err: DefaultAxiosError) => {
+                    dispatch(setError(err.response?.data.error || 'Необработанная ошибка'));
+                });
+        };
+
 
 export const {
     addCallersBases,

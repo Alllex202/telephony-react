@@ -11,12 +11,13 @@ type Props = {
     className?: string,
     onClick?: MouseEventHandler,
     isActive?: boolean,
+    disabled?: boolean,
 }
 
-function BtnSecond({text, iconName, iconType, iconPosition, className, onClick, isActive}: Props) {
+function BtnSecond({text, iconName, iconType, iconPosition, className, onClick, isActive, disabled}: Props) {
     return (
         <BtnDefault className={classNames(styles.btn, isActive ? styles.active : '', className ?? '')} text={text} iconName={iconName}
-                    onClick={onClick} iconType={iconType} iconPosition={iconPosition}/>
+                    onClick={onClick} iconType={iconType} iconPosition={iconPosition} disabled={disabled}/>
     );
 }
 

@@ -2,9 +2,11 @@ import React, {useEffect} from 'react';
 import styles from './styles.module.scss';
 import {useDispatch, useSelector} from "react-redux";
 import {RootState} from "../../../../store";
-import {resetCallersBasesStates as clearData} from "../../../../store/features/callers-bases/list";
+import {
+    getCallersBasesByPage,
+    resetCallersBasesStates as clearData
+} from "../../../../store/features/callers-bases/add/list";
 import CallersBaseCard from "./components/card";
-import {getCallersBasesByPage} from "../../../../core/api/requests";
 import BtnSecond from "../../../../components/ui-kit/btn-second";
 
 
@@ -50,7 +52,7 @@ function CallersBaseListBody() {
         };
         // eslint-disable-next-line
     }, []);
-
+ 
     // useEffect(() => {
     //     document.addEventListener('scroll', loadNextPage)
     //     return () => {

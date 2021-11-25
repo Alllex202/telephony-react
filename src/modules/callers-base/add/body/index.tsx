@@ -6,6 +6,7 @@ import {uploadCallersBaseExcel} from "../../../../core/api/requests";
 import {DefaultAxiosError} from "../../../../shared/types/base-response-error";
 import {useHistory} from "react-router-dom";
 import routes from "../../../../routing/routes";
+import NameInput from "../../components/input-name";
 
 const fileType = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet';
 
@@ -16,7 +17,6 @@ function CallersBaseAddBody() {
     const [error, setError] = useState<string>('');
     const history = useHistory();
     const inputFile = useRef<HTMLInputElement | null>(null);
-
 
     function handlerChangeName(e: React.ChangeEvent<HTMLInputElement>) {
         setInput(e.target.value);
@@ -80,11 +80,7 @@ function CallersBaseAddBody() {
 
     return (
         <>
-            <div className={styles.name}>
-                <Icon name={'edit'} type={'round'} className={styles.icon}/>
-                <input className={styles.input} type="text" value={name} onChange={handlerChangeName}
-                       placeholder={'Введите название'} maxLength={50}/>
-            </div>
+            <NameInput name={name} onChange={handlerChangeName}/>
             <div className={styles.info}>
                 <Icon className={styles.icon} name={'info'} type={'round'}/>
                 <div className={styles.text}>

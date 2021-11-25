@@ -1,6 +1,6 @@
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
-import {DirectionSort, SortType} from "../../../../core/api/requests";
-import {sortItemsCallersBaseList} from "../../../../shared/data/sort-items";
+import {DirectionSort, SortType} from "../../../../../core/api/requests";
+import {sortItemsCallersBaseList} from "../../../../../shared/data/sort-items";
 
 
 export interface FilterState {

@@ -1,7 +1,7 @@
 const routes = {
     callersBaseAdd: (): string => `/callers-base/add`,
     callersBaseList: (): string => `/callers-bases`,
-    callersBaseView: (id: string | number): string => `/callers-base/${id}`,
+    callersBaseView: (id: string | number): string => `/callers-base/view/id${id}`,
     callingList: (): string => '/callings',
     callingCreating: (): string => '/calling/create',
     callingView: (id: string | number): string => `/calling/${id}`,

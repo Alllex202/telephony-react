@@ -57,10 +57,12 @@
   // TODO table
   --table-fill: var(--white);
   --table-title: var(--white);
+  --table-border: var(--grey-100);
   --table-row-odd: var(--grey-50);
   --table-row-even: var(--white);
-  --table-row-error: var(--red-50);
-  --table-text-error: var(--red);
+  --table-row-invalid: var(--red-50);
+  --table-text-invalid: var(--red-600);
+  --table-text-number: var(--text-light);
 
   --tag-fill: var(--grey-50);
   //--tag-text: var(--grey-900);
@@ -69,6 +71,7 @@
   --variable-text: var(--orange-100);
 
   --text: var(--grey-900);
+  --text-light: var(--grey-600);
   --text-super-light: var(--grey-200);
   --text-error: var(--red-600);
 }

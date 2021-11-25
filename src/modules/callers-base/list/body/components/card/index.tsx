@@ -15,7 +15,7 @@ import {DefaultAxiosError} from "../../../../../../shared/types/base-response-er
 import routes from "../../../../../../routing/routes";
 import {Link} from "react-router-dom";
 import {useDispatch} from "react-redux";
-import {deleteCallersBaseById} from "../../../../../../store/features/callers-bases/list";
+import {deleteCallersBaseById} from "../../../../../../store/features/callers-bases/add/list";
 
 type Props = {
     data: CallersBaseHeaderModel,

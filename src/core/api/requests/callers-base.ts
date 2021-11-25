@@ -1,16 +1,7 @@
-import axios, {AxiosRequestConfig, CancelToken} from "axios";
+import axios, {AxiosRequestConfig} from "axios";
 import {CallersBaseDataModel, CallersBaseHeaderModel, PaginatorModel, VariableTypeModel} from "../models";
 import {BaseResponse} from "../../../shared/types/base-response";
 import {apiRoutes} from "../routes";
-import {Dispatch} from "@reduxjs/toolkit";
-import {DefaultAxiosError} from "../../../shared/types/base-response-error";
-import {
-    addCallersBases,
-    setError,
-    setLastPage,
-    setLoading, setPage,
-    setSuccess
-} from "../../../store/features/callers-bases/list";
 
 export type SortType = 'NAME' | 'CREATION_DATE' | 'COUNT_VARIABLES';
 export type DirectionSort = 'ASC' | 'DESC';
@@ -36,31 +27,9 @@ export const getCallersBaseDataById = (id: number | string, params: ParamsPagina
     return axios.get<PaginatorModel<CallersBaseDataModel>>(apiRoutes.callersBase.dataById(id), {...config, params});
 };
 
-// export const getCallersBasesHeader = (params: ParamsPaginatorHeader, config?: AxiosRequestConfig): BaseResponse<PaginatorModel<CallersBaseHeaderModel>> => {
-//     return axios.get<PaginatorModel<CallersBaseHeaderModel>>(apiRoutes.callersBase.header(), {...config, params});
-// };
-
-export const getCallersBasesByPage = (params: ParamsPaginatorHeader<SortType, DirectionSort>, cancelToken?: CancelToken, otherConfig?: AxiosRequestConfig) => {
-    return async (dispatch: Dispatch) => {
-        dispatch(setLoading());
-        axios.get<PaginatorModel<CallersBaseHeaderModel>>(apiRoutes.callersBase.header(), {
-            ...otherConfig,
-            params,
-            cancelToken
-        })
-            .then((res) => {
-                dispatch(addCallersBases(res.data.content))
-                if (res.data.last) {
-                    dispatch(setLastPage(res.data.last));
-                }
-                dispatch(setPage(res.data.pageable.pageNumber));
-                dispatch(setSuccess());
-            })
-            .catch((err: DefaultAxiosError) => {
-                dispatch(setError(err.response?.data.error || 'Необработанная ошибка'));
-            });
-    };
-}
+export const getCallersBasesHeader = (params: ParamsPaginatorHeader<SortType, DirectionSort>, config?: AxiosRequestConfig): BaseResponse<PaginatorModel<CallersBaseHeaderModel>> => {
+    return axios.get<PaginatorModel<CallersBaseHeaderModel>>(apiRoutes.callersBase.header(), {...config, params});
+};
 
 export const getCallersBaseHeaderById = (id: number | string, config?: AxiosRequestConfig): BaseResponse<CallersBaseHeaderModel> => {
     return axios.get<CallersBaseHeaderModel>(apiRoutes.callersBase.headerById(id), config);

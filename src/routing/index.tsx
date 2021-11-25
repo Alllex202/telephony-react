@@ -1,14 +1,10 @@
 import React from 'react';
-import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
-import routes from "./routes";
+import {BrowserRouter as Router} from 'react-router-dom';
 import MainLayout from "../modules/main-layout";
-import Test from "../modules/test/body";
-import TestHeader from "../modules/test/header";
-import CallersBaseListBody from "../modules/callers-base/list/body";
-import CallersBaseListHeader from "../modules/callers-base/list/header";
-import TestRightSidebar from "../modules/test/right-block";
-import CallersBaseAddHeader from "../modules/callers-base/add/header";
-import CallersBaseAddBody from "../modules/callers-base/add/body";
+import RoutingBody from "./components/routing-body";
+import RoutingHeader from "./components/routing-header";
+import RoutingFooter from "./components/routing-footer";
+import RoutingRightSidebar from "./components/routing-right-sidebar";
 
 function Routing() {
     return (
@@ -21,45 +17,5 @@ function Routing() {
     );
 }
 
-function RoutingBody() {
-    return (
-        <Switch>
-            <Route path={routes.callersBaseList()} exact component={CallersBaseListBody}/>
-            <Route path={routes.callersBaseAdd()} exact component={CallersBaseAddBody}/>
-            <Route path={routes.test()} exact component={Test}/>
-        </Switch>
-    );
-}
-
-function RoutingHeader() {
-    return (
-        <Switch>
-            <Route path={routes.callersBaseList()} exact component={CallersBaseListHeader}/>
-            <Route path={routes.callersBaseAdd()} exact component={CallersBaseAddHeader}/>
-            <Route path={routes.test()} exact component={TestHeader}/>
-            <Route children={<>Стандартная шапка</>}/>
-        </Switch>
-    );
-}
-
-function RoutingRightSidebar() {
-    return (
-        <Switch>
-            {/*<Route path={routes.callersBaseList()} exact component={CallersBaseHeader}/>*/}
-            <Route path={routes.test()} exact component={TestRightSidebar}/>
-            {/*<Route children={<>Стандартная шапка</>}/>*/}
-        </Switch>
-    );
-}
-
-function RoutingFooter() {
-    return (
-        <Switch>
-            {/*<Route path={routes.callersBaseList()} exact component={CallersBaseHeader}/>*/}
-            {/*<Route path={routes.test()} exact component={TestHeader}/>*/}
-            {/*<Route children={<>Стандартная шапка</>}/>*/}
-        </Switch>
-    );
-}
 
 export default Routing;
