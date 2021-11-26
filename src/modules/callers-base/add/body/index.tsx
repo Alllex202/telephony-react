@@ -6,21 +6,18 @@ import {uploadCallersBaseExcel} from "../../../../core/api/requests";
 import {DefaultAxiosError} from "../../../../shared/types/base-response-error";
 import {useHistory} from "react-router-dom";
 import routes from "../../../../routing/routes";
-import NameInput from "../../components/input-name";
+import InputName from "../../components/input-name";
 
 const fileType = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet';
 
 function CallersBaseAddBody() {
-    const [name, setInput] = useState<string>('Новая база данных');
+    const [name, setName] = useState<string>('Новая база данных');
+    const [lastName, setLastName] = useState<string>(name);
     const [file, setFile] = useState<File | null>(null);
     const [isDrag, setDrag] = useState<boolean>(false);
     const [error, setError] = useState<string>('');
     const history = useHistory();
     const inputFile = useRef<HTMLInputElement | null>(null);
-
-    function handlerChangeName(e: React.ChangeEvent<HTMLInputElement>) {
-        setInput(e.target.value);
-    }
 
     function onDrop(e: React.DragEvent) {
         e.preventDefault();
@@ -47,12 +44,12 @@ function CallersBaseAddBody() {
     }
 
     function tryUploadFile(files: FileList | null) {
+        if (!files) return;
         if (!name) {
             setError('Необходимо ввести название');
             setFile(null);
             return;
         }
-        if (!files) return;
         if (files.length !== 1) {
             setError('Можно загрузить только 1 файл');
             setFile(null);
@@ -63,6 +60,7 @@ function CallersBaseAddBody() {
             setFile(null);
             return;
         }
+
         setError('');
         setFile(files[0]);
         const formData = new FormData();
@@ -80,7 +78,7 @@ function CallersBaseAddBody() {
 
     return (
         <>
-            <NameInput name={name} onChange={handlerChangeName}/>
+            <InputName text={name} lastText={lastName} setText={setName} setLastText={setLastName}/>
             <div className={styles.info}>
                 <Icon className={styles.icon} name={'info'} type={'round'}/>
                 <div className={styles.text}>

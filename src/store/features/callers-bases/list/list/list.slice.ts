@@ -5,7 +5,6 @@ import axios, {AxiosRequestConfig, CancelToken} from "axios";
 import {apiRoutes} from "../../../../../core/api/routes";
 import {DefaultAxiosError} from "../../../../../shared/types/base-response-error";
 import {DirectionSort, ParamsPaginatorHeader, SortType} from "../../../../../core/api/requests";
-import {RootState} from "../../../../index";
 
 export interface CallersBaseState {
     callersBaseHeaders: CallersBaseHeaderModel[],
@@ -21,7 +20,7 @@ const initialState: CallersBaseState = {
     error: '',
     statuses: {isLoading: false, isError: false, isSuccess: false},
     page: 0,
-    size: 1,
+    size: 10,
     isLastPage: false,
 }
 

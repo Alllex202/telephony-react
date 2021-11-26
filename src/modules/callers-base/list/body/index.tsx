@@ -5,7 +5,7 @@ import {RootState} from "../../../../store";
 import {
     getCallersBasesByPage,
     resetCallersBasesStates as clearData
-} from "../../../../store/features/callers-bases/add/list";
+} from "../../../../store/features/callers-bases/list/list";
 import CallersBaseCard from "./components/card";
 import BtnSecond from "../../../../components/ui-kit/btn-second";
 
@@ -26,7 +26,6 @@ function CallersBaseListBody() {
     const loadNextPage = () => {
         if (isLastPage || statuses.isLoading) return;
 
-        // document.removeEventListener('scroll', loadNextPage)
         getData(page + 1);
     }
 
@@ -52,14 +51,6 @@ function CallersBaseListBody() {
         };
         // eslint-disable-next-line
     }, []);
- 
-    // useEffect(() => {
-    //     document.addEventListener('scroll', loadNextPage)
-    //     return () => {
-    //         document.removeEventListener('scroll', loadNextPage)
-    //     }
-    //     // eslint-disable-next-line
-    // }, [isLastPage, statuses.isLoading]);
 
     if (callersBaseHeaders.length < 1 && statuses.isLoading) {
         return <h1>Загрузка...</h1>;

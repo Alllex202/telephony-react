@@ -1,0 +1,17 @@
+.view {
+  width: fit-content;
+  font: var(--font-h2-bold);
+  cursor: pointer;
+  white-space: pre;
+  overflow: hidden;
+  text-overflow: ellipsis;
+
+  &.hidden {
+    position: absolute;
+    top: -10000px;
+    left: -10000px;
+  }
+}
+
+.input {
+}

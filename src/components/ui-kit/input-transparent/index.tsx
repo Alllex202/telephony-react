@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {ForwardedRef} from 'react';
 import styles from './styles.module.scss';
 
 type Props = {
@@ -13,26 +13,28 @@ type Props = {
     onKeyPress?: React.KeyboardEventHandler<HTMLInputElement>,
     maxLength?: number
     onBlur?: React.FocusEventHandler<HTMLInputElement>,
+    onKeyDown?: React.KeyboardEventHandler<HTMLInputElement>,
 }
 
-function InputTransparent({
-                              value,
-                              onChange,
-                              placeholder,
-                              className,
-                              type,
-                              name,
-                              autoCompleteOff,
-                              id,
-                              onKeyPress,
-                              maxLength,
-                              onBlur
-                          }: Props) {
+const InputTransparent = React.forwardRef(({
+                                               value,
+                                               onChange,
+                                               placeholder,
+                                               className,
+                                               type,
+                                               name,
+                                               autoCompleteOff,
+                                               id,
+                                               onKeyPress,
+                                               maxLength,
+                                               onBlur,
+                                               onKeyDown
+                                           }: Props, ref: ForwardedRef<HTMLInputElement>) => {
     return (
         <input className={[styles.input, className].join(' ')} type={type} placeholder={placeholder} onChange={onChange}
                value={value} name={name} autoComplete={autoCompleteOff ? 'new-password' : ''} id={id}
-               onKeyPress={onKeyPress} maxLength={maxLength} onBlur={onBlur}/>
+               onKeyPress={onKeyPress} maxLength={maxLength} onBlur={onBlur} ref={ref} onKeyDown={onKeyDown}/>
     );
-}
+})
 
 export default InputTransparent;

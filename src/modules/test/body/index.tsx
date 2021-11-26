@@ -13,9 +13,12 @@ import Tag from "../../../components/ui-kit/tag";
 import Menu from "../../../components/ui-kit/menu";
 import MenuItem from "../../../components/ui-kit/menu-item";
 import InputTransparent from "../../../components/ui-kit/input-transparent";
+import HiddenInput from "../../../components/hidden-input";
 
 function Test() {
     const [modal, setModal] = useState<boolean>(false);
+    const [text, setText] = useState<string>('Скрытый ввод');
+    const [lastText, setLastText] = useState<string>(text);
 
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
     const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -75,8 +78,12 @@ function Test() {
                 <BtnSecond text={'Без иконки'}/>
                 <BtnSecond text={'Menu open'} onClick={handleClick}/>
 
-                <BtnCircleDefault className={styles.default} iconName={'upload'} iconType={'round'}/>
-                <BtnCircleDefault className={styles.default} iconName={'upload'} iconType={'round'} isActive={true}/>
+                <div style={{width: 'fit-content', display: 'flex', alignItems: 'center'}} className={styles.default}>
+                    <BtnCircleDefault iconName={'upload'} iconType={'round'}/>
+                </div>
+                <div style={{width: 'fit-content', display: 'flex', alignItems: 'center'}} className={styles.default}>
+                    <BtnCircleDefault iconName={'upload'} iconType={'round'} isActive={true}/>
+                </div>
 
                 <BtnToggle iconName={'account_circle'} iconType={'round'}/>
                 <BtnToggle iconName={'account_circle'} iconType={'round'} isActive={true}/>
@@ -98,6 +105,10 @@ function Test() {
                 </div>
 
                 <InputTransparent type={'text'} placeholder={'Прозрачная строка ввода'}/>
+
+                <div style={{width: '50%', display: 'flex'}}>
+                    <HiddenInput setText={setText} text={text} lastText={lastText} setLastText={setLastText}/>
+                </div>
             </div>
             {modal && <Modal isOpened={modal} setOpen={setModal}>Старое решение<br/>А нужно ли вообще модальное окно?</Modal>}
             <Menu open={!!anchorEl} onClose={handleClose} anchorEl={anchorEl}>

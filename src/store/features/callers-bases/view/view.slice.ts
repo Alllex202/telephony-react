@@ -141,6 +141,23 @@ export const getCallersBaseDataByPage = (id: number | string, params: ParamsPagi
         });
 };
 
+export const updateCallersBaseDataByPage = (id: number | string, params: ParamsPaginatorData) => (dispatch: Dispatch) => {
+    dispatch(setDataLoading());
+    getCallersBaseDataById(id, params)
+        .then(res => {
+            dispatch(resetData());
+            dispatch(pushDataPage(res.data.content));
+            if (res.data.last) {
+                dispatch(setLastPage(true));
+            }
+            dispatch(setPage(res.data.pageable.pageNumber));
+            dispatch(setDataSuccess());
+        })
+        .catch((err: DefaultAxiosError) => {
+            dispatch(setDataError(err.response?.data.message || 'Ошибка при получении данных'));
+        });
+};
+
 export const loadVariablesTypes = () => (dispatch: Dispatch, getState: () => RootState) => {
     const state = getState();
     if (state.callersBaseView.variablesTypes && state.callersBaseView.statusesVariables.isSuccess) return;
