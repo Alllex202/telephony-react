@@ -20,7 +20,7 @@ function CallersBaseViewRightSidebar() {
                     {header.confirmed &&
                     <>
                         <Info title={'Дата и время загрузки'}>{formatDate(header.created)}</Info>
-                        <Info title={'Последнее обновление'}>Недоступно</Info>
+                        <Info title={'Последнее обновление'}>{formatDate(header.updated)}</Info>
                         <Info title={'Обзванивания (fake)'}>
                             {['Обзванивание',
                                 'Обзванивание пример',

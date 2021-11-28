@@ -6,6 +6,7 @@ export interface CallersBaseHeaderModel {
     columns: Array<CallersBaseHeaderColumnModel>,
     name: string,
     confirmed: boolean,
+    updated: number,
 }
 
 export interface CallersBaseHeaderColumnModel {
