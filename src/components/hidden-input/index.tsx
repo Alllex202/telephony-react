@@ -9,11 +9,12 @@ type Props = {
     setText: React.Dispatch<React.SetStateAction<string>>,
     setLastText: React.Dispatch<React.SetStateAction<string>>,
     callback?: Function,
-    classNameText?: string,
-    classNameInput?: string,
+    classText?: string,
+    classInput?: string,
+    classWrapper?: string
 };
 
-const HiddenInput = ({setLastText, setText, lastText, text, callback, classNameText, classNameInput}: Props) => {
+const HiddenInput = ({setLastText, setText, lastText, text, callback, classText, classInput ,classWrapper}: Props) => {
     const [isView, setView] = useState<boolean>(true);
     const inputRef = React.createRef<HTMLInputElement>();
     const textRef = useRef<HTMLDivElement>(null);
@@ -91,11 +92,11 @@ const HiddenInput = ({setLastText, setText, lastText, text, callback, classNameT
 
     return (
         <>
-            <div ref={divRef}>
-                <div className={classNames(styles.view, classNameText, !isView ? styles.hidden : '')} onClick={changeView}
+            <div className={classWrapper} ref={divRef}>
+                <div className={classNames(styles.view, classText, !isView ? styles.hidden : '')} onClick={changeView}
                      ref={textRef} title={text}>{text}</div>
                 {!isView &&
-                <InputTransparent className={classNames(styles.input, classNameInput)} type="text" value={text}
+                <InputTransparent className={classNames(styles.input, classInput)} type="text" value={text}
                                   onChange={onChange} placeholder={'Введите название'} onKeyPress={onKeyPress}
                                   onBlur={onBlur} ref={inputRef} onKeyDown={onKeyDown}/>}
             </div>

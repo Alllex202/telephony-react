@@ -54,7 +54,6 @@
 
   --sidebar-fill: var(--grey-50);
 
-  // TODO table
   --table-fill: var(--white);
   --table-title: var(--white);
   --table-border: var(--grey-100);
@@ -74,8 +73,15 @@
   --variable-fill-hover: var(--orange-100);
   --variable-text: var(--orange-600);
 
+  --switch-track-off: var(--grey-700);
+  --switch-track-on: var(--orange-600);
+  --switch-thumb-off: var(--grey-700);
+  --switch-thumb-on: var(--orange-600);
+
+
   --text: var(--grey-900);
   --text-light: var(--grey-600);
   --text-super-light: var(--grey-200);
   --text-error: var(--red-600);
+  --text-link: var(--blue-500);
 }

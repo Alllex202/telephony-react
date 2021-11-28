@@ -19,7 +19,7 @@ function CallersBaseViewHeader() {
 
     function handlerCalling() {
         // TODO Создать обзвон с текущей базой
-        history.push(routes.callingCreating());
+        history.push(routes.callingCreate());
     }
 
     function handlerSave() {

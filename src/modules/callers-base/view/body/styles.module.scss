@@ -1,5 +1,24 @@
-.name {
-  width: 50%;
+.head {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  .name {
+    max-width:600px;
+    .nameInput {
+      max-width:600px;
+    }
+    .nameText {
+      max-width:600px;
+    }
+  }
+
+  .toggleBlock {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
 }
 .table {
   display: flex;

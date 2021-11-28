@@ -1,3 +1,18 @@
-.coffee {
-  text-align: center;
+.infoBlock {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+
+  .linkWrapper {
+    word-break: break-word;
+
+    &:not(:last-child):after {
+      content: ', ';
+    }
+
+    .link {
+      color: var(--text-link);
+      text-decoration: underline;
+    }
+  }
 }

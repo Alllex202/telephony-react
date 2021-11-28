@@ -32,7 +32,7 @@ function InputVariableName({conditionSave, initState, data, el}: Props) {
 
     return (
         <HiddenInput text={name} lastText={lastName} setText={setName} setLastText={setLastName} callback={save}
-                     classNameText={styles.text} classNameInput={styles.input}/>
+                     classText={styles.text} classInput={styles.input}/>
     );
 }
 

@@ -31,7 +31,8 @@ const CallersBaseViewTable = React.memo(() => {
         isLastPage,
         data,
         variablesTypes,
-        statusesHeader
+        statusesHeader,
+        onlyInvalid
     } = useSelector((state: RootState) => state.callersBaseView);
     const [anchorEl, setAnchorEl] = useState<Element | null>(null);
     const [selectedVariable, selectVariable] = useState<CallersBaseHeaderColumnModel | null>(null);
@@ -41,10 +42,10 @@ const CallersBaseViewTable = React.memo(() => {
             dispatch(loadVariablesTypes());
         }
         if (header) {
-            dispatch(updateCallersBaseDataByPage(header.id, {size, page: 0}))
+            dispatch(updateCallersBaseDataByPage(header.id, {size, page: 0, onlyInvalid}))
         }
         // eslint-disable-next-line
-    }, [header]);
+    }, [header, onlyInvalid]);
 
     function handlerScroll(e: React.UIEvent<HTMLDivElement>) {
         if (statusesData.isLoading || statusesHeader.isLoading) return;
@@ -52,7 +53,7 @@ const CallersBaseViewTable = React.memo(() => {
         if (isLastPage) return;
         if (!header) return;
 
-        dispatch(getCallersBaseDataByPage(header?.id, {page: page + 1, size}))
+        dispatch(getCallersBaseDataByPage(header.id, {page: page + 1, size, onlyInvalid}))
     }
 
     function handlerShowMenuType(anchor: Element, variable: CallersBaseHeaderColumnModel) {

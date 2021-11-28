@@ -20,6 +20,7 @@ export interface ViewState {
     statusesData: FetchStatuses;
     statusesVariables: FetchStatuses;
     variablesTypes: VariableTypeModel[] | null,
+    onlyInvalid: boolean,
 }
 
 const initialState: ViewState = {
@@ -32,12 +33,16 @@ const initialState: ViewState = {
     page: 0,
     isLastPage: false,
     size: 50,
+    onlyInvalid: false,
 };
 
 export const callersBaseViewSlice = createSlice({
     name: 'callersBaseView',
     initialState,
     reducers: {
+        setType: (state: ViewState, action: PayloadAction<boolean>) => {
+            state.onlyInvalid = action.payload;
+        },
         setVariables: (state: ViewState, action: PayloadAction<VariableTypeModel[]>) => {
             state.variablesTypes = action.payload;
         },
@@ -109,6 +114,7 @@ export const callersBaseViewSlice = createSlice({
             state.statusesData = {};
             state.page = 0;
             state.isLastPage = false;
+            state.onlyInvalid = false;
         }
     }
 });
@@ -206,6 +212,7 @@ export const {
     setVariablesLoading,
     setVariablesSuccess,
     resetData,
+    setType
 } = callersBaseViewSlice.actions;
 
 export const callersBaseViewReducer = callersBaseViewSlice.reducer;

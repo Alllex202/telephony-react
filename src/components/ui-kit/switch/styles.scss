@@ -1,0 +1,25 @@
+.switchCustom {
+
+  &.MuiSwitch-root {
+
+    .MuiSwitch-switchBase {
+      .MuiSwitch-thumb {
+        background-color: var(--switch-thumb-off);
+      }
+
+      &.Mui-checked {
+        & + .MuiSwitch-track {
+          background-color: var(--switch-track-on);
+        }
+
+        .MuiSwitch-thumb {
+          background-color: var(--switch-thumb-on);
+        }
+      }
+    }
+
+    .MuiSwitch-track {
+      background-color: var(--switch-track-off);
+    }
+  }
+}

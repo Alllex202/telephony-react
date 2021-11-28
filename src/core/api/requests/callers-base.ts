@@ -17,6 +17,7 @@ export interface ParamsPaginatorHeader<SortType, DirectionSort> {
 export interface ParamsPaginatorData {
     page: number,
     size: number,
+    onlyInvalid: boolean,
 }
 
 export const deleteCallersBase = (id: number | string, config?: AxiosRequestConfig): BaseResponse<null> => {

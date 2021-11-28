@@ -1,0 +1,18 @@
+.info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+
+  .title {
+    font: var(--font-caption-medium);
+    color: var(--text-light);
+  }
+
+  .detail {
+    display: flex;
+    flex-wrap: wrap;
+    font: var(--font-body-medium);
+
+
+  }
+}
