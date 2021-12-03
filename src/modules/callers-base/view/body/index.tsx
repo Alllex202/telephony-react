@@ -11,6 +11,7 @@ import {
 import {RootState} from "../../../../store";
 import CallersBaseViewTable from "./components/table";
 import Switch from "../../../../components/ui-kit/switch";
+import {deleteCallersBase} from "../../../../core/api/requests";
 
 function CallersBaseViewBody() {
     const {
@@ -27,6 +28,9 @@ function CallersBaseViewBody() {
     useEffect(() => {
         dispatch(getCallersBaseById(callersBaseId));
         return () => {
+            if (!statusesHeader.isLoading && header?.confirmed === false) {
+                deleteCallersBase(header.id);
+            }
             dispatch(resetAll());
         }
         // eslint-disable-next-line
