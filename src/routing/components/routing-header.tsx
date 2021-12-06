@@ -5,6 +5,7 @@ import CallersBaseListHeader from "../../modules/callers-base/list/header";
 import CallersBaseAddHeader from "../../modules/callers-base/add/header";
 import CallersBaseViewHeader from "../../modules/callers-base/view/header";
 import TestHeader from "../../modules/test/header";
+import ScenarioListHeader from "../../modules/scenario/list/header";
 
 export default function RoutingHeader() {
     return (
@@ -12,6 +13,7 @@ export default function RoutingHeader() {
             <Route path={routes.callersBaseList()} exact component={CallersBaseListHeader}/>
             <Route path={routes.callersBaseAdd()} exact component={CallersBaseAddHeader}/>
             <Route path={routes.callersBaseView(':callersBaseId')} exact component={CallersBaseViewHeader}/>
+            <Route path={routes.scenarioList()} exact component={ScenarioListHeader}/>
             <Route path={routes.test()} exact component={TestHeader}/>
             <Route children={<>Стандартная шапка</>}/>
         </Switch>

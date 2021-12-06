@@ -1,0 +1,32 @@
+.header {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: space-between;
+
+  .add {
+    width: 220px;
+    //padding-right: 26px;
+    //padding-left: 26px;
+  }
+
+  .search {
+    width: 488px;
+    margin: 0 20px 0 20px;
+  }
+
+  .sort {
+    width: 197px;
+    justify-content: flex-start;
+    padding: 8px 12px;
+
+    & > .text {
+      //width: 150px;
+      text-align: start;
+    }
+
+    &.revert > .icon {
+
+    }
+  }
+}

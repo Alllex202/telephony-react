@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import styles from './styles.module.scss';
+import styles from '../../../../shared/styles/header-list/styes.module.scss';
 import Btn from "../../../../components/ui-kit/btn";
 import Input from "../../../../components/ui-kit/input";
 import {useDispatch, useSelector} from "react-redux";
