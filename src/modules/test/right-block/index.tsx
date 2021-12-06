@@ -1,5 +1,5 @@
 import React from 'react';
-import RightSidebar from "../../../components/right-sidebar";
+import RightSidebar from "components/right-sidebar";
 
 function TestRightSidebar() {
     return (

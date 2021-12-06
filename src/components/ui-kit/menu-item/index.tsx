@@ -1,7 +1,7 @@
 import React from 'react';
 import {MenuItem as MuiMenuItem} from "@mui/material";
 import './custom-styles.scss';
-import {classNames} from "../../../shared/utils/class-names";
+import {classNames} from "shared/utils";
 import Icon from "../icon";
 
 type Props = {

@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from './styles.module.scss';
+import styles from 'shared/styles/header-list/styes.module.scss';
 
 const ScenarioListHeader = () => {
     return (

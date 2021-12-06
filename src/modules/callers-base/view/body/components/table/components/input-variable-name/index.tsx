@@ -1,9 +1,9 @@
 import React, {useState} from 'react';
 import styles from './styles.module.scss';
-import HiddenInput from "../../../../../../../../components/hidden-input";
+import HiddenInput from "components/hidden-input";
 import {useDispatch} from "react-redux";
-import {changeCallersBaseHeaderById} from "../../../../../../../../store/features/callers-bases/view";
-import {CallersBaseHeaderColumnModel, CallersBaseHeaderModel} from "../../../../../../../../core/api";
+import {changeCallersBaseHeaderById} from "store/features/callers-bases/view";
+import {CallersBaseHeaderColumnModel, CallersBaseHeaderModel} from "core/api";
 
 type Props = {
     conditionSave: () => boolean,

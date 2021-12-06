@@ -1,12 +1,12 @@
 import React from 'react';
 import styles from './styles.module.scss';
-import BtnSecond from "../../../../components/ui-kit/btn-second";
-import Btn from "../../../../components/ui-kit/btn";
+import BtnSecond from "components/ui-kit/btn-second";
+import Btn from "components/ui-kit/btn";
 import {useHistory} from "react-router-dom";
-import routes from "../../../../routing/routes";
+import routes from "routing/routes";
 import {useDispatch, useSelector} from "react-redux";
-import {RootState} from "../../../../store";
-import {changeCallersBaseHeaderById} from "../../../../store/features/callers-bases/view";
+import {RootState} from "store";
+import {changeCallersBaseHeaderById} from "store/features/callers-bases/view";
 
 function CallersBaseViewHeader() {
     const dispatch = useDispatch();

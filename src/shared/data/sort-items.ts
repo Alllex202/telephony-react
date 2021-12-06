@@ -1,4 +1,4 @@
-import {DirectionSort, SortType} from "../../core/api/requests";
+import {DirectionSort, SortType} from "core/api/requests";
 
 interface sortItem {
     sortBy: SortType,

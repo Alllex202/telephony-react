@@ -1,11 +1,11 @@
 import React, {useRef, useState} from 'react';
 import styles from './styles.module.scss';
-import Icon from "../../../../components/ui-kit/icon";
-import {classNames} from "../../../../shared/utils";
-import {uploadCallersBaseExcel} from "../../../../core/api/requests";
-import {DefaultAxiosError} from "../../../../shared/types/base-response-error";
+import Icon from "components/ui-kit/icon";
+import {classNames} from "shared/utils";
+import {uploadCallersBaseExcel} from "core/api/requests";
+import {DefaultAxiosError} from "shared/types/base-response-error";
 import {useHistory} from "react-router-dom";
-import routes from "../../../../routing/routes";
+import routes from "routing/routes";
 import InputName from "../../components/input-name";
 
 const fileType = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet';

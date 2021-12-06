@@ -1,14 +1,14 @@
 import {createSlice, Dispatch, PayloadAction} from "@reduxjs/toolkit";
-import {CallersBaseDataModel, CallersBaseHeaderModel, VariableTypeModel} from "../../../../core/api";
-import {FetchStatuses} from "../../../../shared/types/fetch-statuses";
+import {CallersBaseDataModel, CallersBaseHeaderModel, VariableTypeModel} from "core/api";
+import {FetchStatuses} from "shared/types/fetch-statuses";
 import {
     getCallersBaseDataById,
     getCallersBaseHeaderById,
     getVariablesTypes,
     ParamsPaginatorData, putCallersBaseHeaderById
-} from "../../../../core/api/requests";
-import {DefaultAxiosError} from "../../../../shared/types/base-response-error";
-import {RootState} from "../../../index";
+} from "core/api/requests";
+import {DefaultAxiosError} from "shared/types/base-response-error";
+import {RootState} from "store";
 
 export interface ViewState {
     header: CallersBaseHeaderModel | null;

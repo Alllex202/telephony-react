@@ -1,19 +1,19 @@
 import React, {useEffect, useState} from 'react';
-import styles from '../../../../shared/styles/header-list/styes.module.scss';
-import Btn from "../../../../components/ui-kit/btn";
-import Input from "../../../../components/ui-kit/input";
+import styles from 'shared/styles/header-list/styes.module.scss';
+import Btn from "components/ui-kit/btn";
+import Input from "components/ui-kit/input";
 import {useDispatch, useSelector} from "react-redux";
-import {RootState} from "../../../../store";
-import BtnSecond from "../../../../components/ui-kit/btn-second";
-import Menu from "../../../../components/ui-kit/menu";
-import MenuItem from "../../../../components/ui-kit/menu-item";
+import {RootState} from "store";
+import BtnSecond from "components/ui-kit/btn-second";
+import Menu from "components/ui-kit/menu";
+import MenuItem from "components/ui-kit/menu-item";
 import {useHistory} from "react-router-dom";
-import routes from "../../../../routing/routes";
-import {DirectionSort, SortType} from "../../../../core/api/requests";
-import {changeFilter, resetFilter} from "../../../../store/features/callers-bases/list/filter";
-import {resetCallersBasesStates} from "../../../../store/features/callers-bases/list/list";
-import {classNames} from "../../../../shared/utils";
-import {sortItemsCallersBaseList} from "../../../../shared/data/sort-items";
+import routes from "routing/routes";
+import {DirectionSort, SortType} from "core/api/requests";
+import {changeFilter, resetFilter} from "store/features/callers-bases/list/filter";
+import {resetCallersBasesStates} from "store/features/callers-bases/list/list";
+import {classNames} from "shared/utils";
+import {sortItemsCallersBaseList} from "shared/data/sort-items";
 
 
 function CallersBaseListHeader() {

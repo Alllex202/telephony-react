@@ -2,22 +2,22 @@ import React, {useEffect, useState} from 'react';
 import styles from './styles.module.scss';
 import './styles.scss';
 import {useDispatch, useSelector} from "react-redux";
-import {RootState} from "../../../../../../store";
+import {RootState} from "store";
 import {
     changeCallersBaseHeaderById,
     getCallersBaseDataByPage,
     loadVariablesTypes,
     updateCallersBaseDataByPage
-} from "../../../../../../store/features/callers-bases/view";
+} from "store/features/callers-bases/view";
 import {Table, TableBody, TableCell, TableHead, TableRow as MuiTableRow} from "@mui/material";
-import BtnCircle from "../../../../../../components/ui-kit/btn-circle";
-import Menu from "../../../../../../components/ui-kit/menu";
-import MenuItem from "../../../../../../components/ui-kit/menu-item";
+import BtnCircle from "components/ui-kit/btn-circle";
+import Menu from "components/ui-kit/menu";
+import MenuItem from "components/ui-kit/menu-item";
 import {
     CallersBaseDataModel,
     CallersBaseHeaderColumnModel,
     VariableTypeModel
-} from "../../../../../../core/api";
+} from "core/api";
 import InputVariableName from "./components/input-variable-name";
 
 const CallersBaseViewTable = React.memo(() => {

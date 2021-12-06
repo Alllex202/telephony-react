@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from './styles.module.scss';
 import MenuItem from "./components/menu-item";
-import {menuItems} from "../../../../shared/data/menu-items";
+import {menuItems} from "shared/data/menu-items";
 
 
 const Menu = () => {

@@ -1,8 +1,8 @@
 import React from 'react';
 import styles from "./styles.module.scss";
-import Icon from "../../../../components/ui-kit/icon";
-import HiddenInput from "../../../../components/hidden-input";
-import {classNames} from "../../../../shared/utils";
+import Icon from "components/ui-kit/icon";
+import HiddenInput from "components/hidden-input";
+import {classNames} from "shared/utils";
 
 type Props = {
     text: string,

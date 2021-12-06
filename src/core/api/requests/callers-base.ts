@@ -1,6 +1,6 @@
 import axios, {AxiosRequestConfig} from "axios";
 import {CallersBaseDataModel, CallersBaseHeaderModel, PaginatorModel, VariableTypeModel} from "../models";
-import {BaseResponse} from "../../../shared/types/base-response";
+import {BaseResponse} from "shared/types/base-response";
 import {apiRoutes} from "../routes";
 
 export type SortType = 'NAME' | 'CREATION_DATE' | 'COUNT_VARIABLES';

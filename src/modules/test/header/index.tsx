@@ -1,8 +1,8 @@
 import React from 'react';
 import styles from './styles.module.scss';
-import Btn from "../../../components/ui-kit/btn";
-import BtnSecond from "../../../components/ui-kit/btn-second";
-import Input from "../../../components/ui-kit/input";
+import Btn from "components/ui-kit/btn";
+import BtnSecond from "components/ui-kit/btn-second";
+import Input from "components/ui-kit/input";
 
 function TestHeader() {
     return (

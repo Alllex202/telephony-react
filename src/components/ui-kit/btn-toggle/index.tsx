@@ -1,7 +1,7 @@
 import React, {MouseEventHandler} from 'react';
 import styles from './styles.module.scss';
 import BtnCircleDefault from "../btn-circle-default";
-import {classNames} from "../../../shared/utils";
+import {classNames} from "shared/utils";
 
 type Props = {
     iconName: string,

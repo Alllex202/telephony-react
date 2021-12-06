@@ -1,10 +1,10 @@
 import {createSlice, Dispatch, PayloadAction} from '@reduxjs/toolkit';
-import {CallersBaseHeaderModel, PaginatorModel} from "../../../../../core/api";
-import {FetchStatuses} from "../../../../../shared/types/fetch-statuses";
+import {CallersBaseHeaderModel, PaginatorModel} from "core/api";
+import {FetchStatuses} from "shared/types/fetch-statuses";
 import axios, {AxiosRequestConfig, CancelToken} from "axios";
-import {apiRoutes} from "../../../../../core/api/routes";
-import {DefaultAxiosError} from "../../../../../shared/types/base-response-error";
-import {DirectionSort, ParamsPaginatorHeader, SortType} from "../../../../../core/api/requests";
+import {apiRoutes} from "core/api/routes";
+import {DefaultAxiosError} from "shared/types/base-response-error";
+import {DirectionSort, ParamsPaginatorHeader, SortType} from "core/api/requests";
 
 export interface CallersBaseState {
     callersBaseHeaders: CallersBaseHeaderModel[],

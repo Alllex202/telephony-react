@@ -7,11 +7,11 @@ import {
     changeCallersBaseHeaderById,
     getCallersBaseById,
     resetAll, setType
-} from "../../../../store/features/callers-bases/view";
-import {RootState} from "../../../../store";
+} from "store/features/callers-bases/view";
+import {RootState} from "store";
 import CallersBaseViewTable from "./components/table";
-import Switch from "../../../../components/ui-kit/switch";
-import {deleteCallersBase} from "../../../../core/api/requests";
+import Switch from "components/ui-kit/switch";
+import {deleteCallersBase} from "core/api/requests";
 
 function CallersBaseViewBody() {
     const {

@@ -1,6 +1,6 @@
 import React, {useEffect, useRef, useState} from 'react';
 import styles from './styles.module.scss';
-import {classNames} from "../../shared/utils";
+import {classNames} from "shared/utils";
 import InputTransparent from "../ui-kit/input-transparent";
 
 type Props = {

@@ -1,8 +1,8 @@
 import React from "react";
 import {Route, Switch} from "react-router-dom";
 import routes from "../routes";
-import TestRightSidebar from "../../modules/test/right-block";
-import CallersBaseViewRightSidebar from "../../modules/callers-base/view/right-sidebar";
+import TestRightSidebar from "modules/test/right-block";
+import CallersBaseViewRightSidebar from "modules/callers-base/view/right-sidebar";
 
 export default function RoutingRightSidebar() {
     return (

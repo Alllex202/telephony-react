@@ -1,7 +1,7 @@
 import React, {ReactNode, useState} from 'react';
 import styles from './styles.module.scss';
 import Logo from "./components/logo";
-import BtnToggle from "../../../../components/ui-kit/btn-toggle";
+import BtnToggle from "components/ui-kit/btn-toggle";
 
 type Props = {
     children: ReactNode,
