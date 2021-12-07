@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
-import styles from './styles.module.scss';
+import cardStyles from 'shared/styles/card/styles.module.scss';
+// import styles from './styles.module.scss';
 import {CallersBaseHeaderModel} from "core/api";
 import Card from "components/ui-kit/card";
 import Tag from "components/ui-kit/tag";
@@ -40,7 +41,7 @@ function CallersBaseCard({data, className}: Props) {
         setStatuses({isLoading: true, isSuccess: false, isError: false});
         deleteCallersBase(data.id)
             .then(res => {
-                // show noty
+                // TODO show noty
                 console.log('База клиентов удалена')
                 dispatch(deleteCallersBaseById(data.id));
                 // setStatuses({isLoading: false, isSuccess: true, isError: false});
@@ -54,10 +55,10 @@ function CallersBaseCard({data, className}: Props) {
 
     return (
         <Link to={routes.callersBaseView(data.id)} className={statuses.isLoading ? 'd-none' : ''}>
-            <Card className={classNames(className, styles.card)} isActive={!!anchorEl}>
-                <div className={styles.wrapper}>
-                    <div onClick={e => e.preventDefault()} className={styles.options_wrapper}>
-                        <BtnCircle iconName={'more_horiz'} iconType={'round'} className={styles.options_btn}
+            <Card className={classNames(className, cardStyles.card)} isActive={!!anchorEl}>
+                <div className={cardStyles.wrapper}>
+                    <div onClick={e => e.preventDefault()} className={cardStyles.options_wrapper}>
+                        <BtnCircle iconName={'more_horiz'} iconType={'round'} className={cardStyles.options_btn}
                                    onClick={openOptions}
                                    isActive={!!anchorEl}/>
                         <Menu anchorEl={anchorEl} open={!!anchorEl} onClose={closeOptions}>
@@ -66,24 +67,24 @@ function CallersBaseCard({data, className}: Props) {
                             </MenuItem>
                         </Menu>
                     </div>
-                    <div className={styles.header}>
-                        <h2 className={styles.title}>{data.name}</h2>
-                        <div className={styles.description}>
-                            <div className={styles.info}>
-                                <Icon name={'calendar_today'} type={'round'} className={styles.icon}/>
+                    <div className={cardStyles.header}>
+                        <h2 className={cardStyles.title}>{data.name}</h2>
+                        <div className={cardStyles.description}>
+                            <div className={cardStyles.info}>
+                                <Icon name={'calendar_today'} type={'round'} className={cardStyles.icon}/>
                                 {formatDate(data.created)}
                             </div>
-                            <div className={styles.info}>
-                                <Icon name={'table_rows'} type={'round'} className={styles.icon}/>
+                            <div className={cardStyles.info}>
+                                <Icon name={'table_rows'} type={'round'} className={cardStyles.icon}/>
                                 {data.countCallers} эл
                             </div>
                         </div>
                     </div>
-                    <div className={styles.tags}>
+                    <div className={cardStyles.tags}>
                         {data.columns.slice(0, 5).map(el => <Tag text={`#${el.nameInTable}`} key={el.id}
-                                                                 className={styles.tag}/>)}
+                                                                 className={cardStyles.tag}/>)}
                         {data.columns.length - 5 > 0 &&
-                        <Tag text={`+${data.columns.length - 5}`} className={styles.tag}/>}
+                        <Tag text={`+${data.columns.length - 5}`} className={cardStyles.tag}/>}
                     </div>
                 </div>
             </Card>

@@ -9,15 +9,14 @@ import Menu from "components/ui-kit/menu";
 import MenuItem from "components/ui-kit/menu-item";
 import {useHistory} from "react-router-dom";
 import routes from "routing/routes";
-import {DirectionSort, SortType} from "core/api/requests";
 import {changeFilter, resetFilter} from "store/features/callers-bases/list/filter";
 import {resetCallersBasesStates} from "store/features/callers-bases/list/list";
 import {classNames} from "shared/utils";
-import {sortItemsCallersBaseList} from "shared/data/sort-items";
+import {DirectionSort, sortItemsCallersBaseList, SortType} from 'shared/data/sort-items';
 
 
 function CallersBaseListHeader() {
-    const {statuses} = useSelector((state: RootState) => state.callersBaseHeaders);
+    const {statuses} = useSelector((state: RootState) => state.callersBaseList);
     const {direction, sortBy, text} = useSelector((state: RootState) => state.callersBasesFilter);
     const dispatch = useDispatch();
     const history = useHistory();

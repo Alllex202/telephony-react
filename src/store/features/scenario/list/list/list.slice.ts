@@ -1,14 +1,14 @@
 import {createSlice, Dispatch, PayloadAction} from '@reduxjs/toolkit';
-import {CallersBaseHeaderModel} from 'core/api';
-import {FetchStatuses} from 'shared/types/fetch-statuses';
-import {AxiosRequestConfig} from 'axios';
-import {DefaultAxiosError} from 'shared/types/base-response-error';
+import {ScenarioInfoModel} from "core/api";
+import {FetchStatuses} from "shared/types/fetch-statuses";
+import {AxiosRequestConfig} from "axios";
+import {DefaultAxiosError} from "shared/types/base-response-error";
 import {DirectionSort, SortType} from 'shared/data/sort-items';
 import {ParamsPaginatorWithFilterModel} from 'core/api/models';
-import {getCallersBasesHeader} from 'core/api/requests';
+import {getScenariosByPage as getScenarios} from 'core/api/requests'
 
-export interface CallersBaseState {
-    callersBaseList: CallersBaseHeaderModel[],
+export interface ScenariosState {
+    scenarioList: ScenarioInfoModel[],
     error: string,
     statuses: FetchStatuses,
     page: number,
@@ -16,30 +16,30 @@ export interface CallersBaseState {
     isLastPage: boolean,
 }
 
-const initialState: CallersBaseState = {
-    callersBaseList: [],
+const initialState: ScenariosState = {
+    scenarioList: [],
     error: '',
     statuses: {isLoading: false, isError: false, isSuccess: false},
     page: 0,
     size: 10,
     isLastPage: false,
-};
+}
 
-export const callersBaseListSlice = createSlice({
-    name: 'callersBases',
+export const scenarioListSlice = createSlice({
+    name: 'scenarios',
     initialState,
     reducers: {
-        addCallersBases: (state, action: PayloadAction<CallersBaseHeaderModel[]>) => {
-            state.callersBaseList = [...state.callersBaseList, ...action.payload];
+        addScenarios: (state, action: PayloadAction<ScenarioInfoModel[]>) => {
+            state.scenarioList = [...state.scenarioList, ...action.payload];
         },
         setPage: (state, action: PayloadAction<number>) => {
             state.page = action.payload;
         },
-        resetCallersBases: (state) => {
-            state.callersBaseList = [];
+        resetScenarios: (state) => {
+            state.scenarioList = [];
         },
-        deleteCallersBaseById: (state, action: PayloadAction<number | string>) => {
-            state.callersBaseList = state.callersBaseList.filter(el => el.id !== action.payload);
+        deleteScenarioById: (state, action: PayloadAction<number | string>) => {
+            state.scenarioList = state.scenarioList.filter(el => el.id !== action.payload);
         },
         setError: (state, action: PayloadAction<string>) => {
             state.error = action.payload;
@@ -57,10 +57,10 @@ export const callersBaseListSlice = createSlice({
         resetStatuses: (state) => {
             state.statuses = {isLoading: false, isError: false, isSuccess: false};
         },
-        resetCallersBasesStates: (state) => {
+        resetScenariosStates: (state) => {
             state.statuses = {isLoading: false, isError: false, isSuccess: false};
             state.error = '';
-            state.callersBaseList = [];
+            state.scenarioList = [];
             state.page = 0;
             state.size = initialState.size;
             state.isLastPage = false;
@@ -71,13 +71,13 @@ export const callersBaseListSlice = createSlice({
     },
 });
 
-export const getCallersBasesByPage =
+export const getScenariosByPage =
     (params: ParamsPaginatorWithFilterModel<SortType, DirectionSort>, otherConfig?: AxiosRequestConfig) =>
         (dispatch: Dispatch) => {
             dispatch(setLoading());
-            getCallersBasesHeader(params, otherConfig)
+            getScenarios(params, otherConfig)
                 .then((res) => {
-                    dispatch(addCallersBases(res.data.content));
+                    dispatch(addScenarios(res.data.content))
                     if (res.data.last) {
                         dispatch(setLastPage(res.data.last));
                     }
@@ -91,17 +91,17 @@ export const getCallersBasesByPage =
 
 
 export const {
-    addCallersBases,
-    // resetCallersBases,
+    addScenarios,
+    // resetScenarios,
     // resetStatuses,
     // resetError,
     setError,
-    deleteCallersBaseById,
+    deleteScenarioById,
     setSuccess,
-    resetCallersBasesStates,
+    resetScenariosStates,
     setLoading,
     setLastPage,
     setPage,
-} = callersBaseListSlice.actions;
+} = scenarioListSlice.actions;
 
-export const callersBaseListReducers = callersBaseListSlice.reducer;
+export const scenarioListReducers = scenarioListSlice.reducer;

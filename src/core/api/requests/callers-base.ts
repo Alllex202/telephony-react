@@ -1,22 +1,17 @@
-import axios, {AxiosRequestConfig} from "axios";
-import {CallersBaseDataModel, CallersBaseHeaderModel, PaginatorModel, VariableTypeModel} from "../models";
-import {BaseResponse} from "shared/types/base-response";
-import {apiRoutes} from "../routes";
+import axios, {AxiosRequestConfig} from 'axios';
+import {
+    CallersBaseDataModel,
+    CallersBaseHeaderModel,
+    PaginatorModel,
+    VariableTypeModel,
+    ParamsPaginatorModel,
+    ParamsPaginatorWithFilterModel
+} from '../models';
+import {BaseResponse} from 'shared/types/base-response';
+import {apiRoutes} from '../routes';
+import {DirectionSort, SortType} from 'shared/data/sort-items';
 
-export type SortType = 'NAME' | 'CREATION_DATE' | 'COUNT_VARIABLES';
-export type DirectionSort = 'ASC' | 'DESC';
-
-export interface ParamsPaginatorHeader<SortType, DirectionSort> {
-    page: number,
-    size: number,
-    name?: string,
-    sortBy?: SortType,
-    direction?: DirectionSort,
-}
-
-export interface ParamsPaginatorData {
-    page: number,
-    size: number,
+export interface ParamsPaginatorDataModel extends ParamsPaginatorModel {
     onlyInvalid: boolean,
 }
 
@@ -24,11 +19,11 @@ export const deleteCallersBase = (id: number | string, config?: AxiosRequestConf
     return axios.delete<null>(apiRoutes.callersBase.byId(id), config);
 };
 
-export const getCallersBaseDataById = (id: number | string, params: ParamsPaginatorData, config?: AxiosRequestConfig): BaseResponse<PaginatorModel<CallersBaseDataModel>> => {
+export const getCallersBaseDataById = (id: number | string, params: ParamsPaginatorDataModel, config?: AxiosRequestConfig): BaseResponse<PaginatorModel<CallersBaseDataModel>> => {
     return axios.get<PaginatorModel<CallersBaseDataModel>>(apiRoutes.callersBase.dataById(id), {...config, params});
 };
 
-export const getCallersBasesHeader = (params: ParamsPaginatorHeader<SortType, DirectionSort>, config?: AxiosRequestConfig): BaseResponse<PaginatorModel<CallersBaseHeaderModel>> => {
+export const getCallersBasesHeader = (params: ParamsPaginatorWithFilterModel<SortType, DirectionSort>, config?: AxiosRequestConfig): BaseResponse<PaginatorModel<CallersBaseHeaderModel>> => {
     return axios.get<PaginatorModel<CallersBaseHeaderModel>>(apiRoutes.callersBase.header(), {...config, params});
 };
 

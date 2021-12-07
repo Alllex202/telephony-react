@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react';
-import styles from './styles.module.scss';
+import bodyStyles from 'shared/styles/body-list/styles.module.scss';
 import {useDispatch, useSelector} from "react-redux";
 import {RootState} from "store";
 import {
@@ -12,13 +12,13 @@ import BtnSecond from "components/ui-kit/btn-second";
 
 function CallersBaseListBody() {
     const {
-        callersBaseHeaders,
+        callersBaseList,
         statuses,
         error,
         page,
         size,
         isLastPage
-    } = useSelector((state: RootState) => state.callersBaseHeaders);
+    } = useSelector((state: RootState) => state.callersBaseList);
     const filter = useSelector((state: RootState) => state.callersBasesFilter);
 
     const dispatch = useDispatch();
@@ -52,31 +52,31 @@ function CallersBaseListBody() {
         // eslint-disable-next-line
     }, []);
 
-    if (callersBaseHeaders.length < 1 && statuses.isLoading) {
+    if (callersBaseList.length < 1 && statuses.isLoading) {
         return <h1>Загрузка...</h1>;
     }
 
-    if (callersBaseHeaders.length < 1 && statuses.isError) {
+    if (callersBaseList.length < 1 && statuses.isError) {
         return <h1>Ошибка при загрузке | {error}</h1>
     }
 
     return (
         <>
-            {callersBaseHeaders.length < 1
+            {callersBaseList.length < 1
                 ? <h1>Здесь пусто :(</h1>
                 : <>
-                    <div className={styles.list}>
-                        {callersBaseHeaders.map(el =>
-                            <CallersBaseCard key={el.id} data={el} className={styles.card}/>
+                    <div className={bodyStyles.list}>
+                        {callersBaseList.map(el =>
+                            <CallersBaseCard key={el.id} data={el} className={bodyStyles.card}/>
                         )}
                     </div>
                 </>
             }
 
-            <div className={styles.footer}>
+            <div className={bodyStyles.footer}>
                 {statuses.isLoading && <h1>Загрузка...</h1>}
                 {!isLastPage && !statuses.isLoading &&
-                <BtnSecond className={styles.more} onClick={loadNextPage} text={'Показать больше'}/>}
+                <BtnSecond className={bodyStyles.more} onClick={loadNextPage} text={'Показать больше'}/>}
             </div>
         </>
     );

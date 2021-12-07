@@ -10,4 +10,6 @@ export const apiRoutes = {
         uploadExcel: () =>`${serverApi}/${callersBase}/upload/exel`,
         variablesTypes: () =>`${serverApi}/${callersBase}/variables/types`,
     },
+    scenario: {
+    }
 };

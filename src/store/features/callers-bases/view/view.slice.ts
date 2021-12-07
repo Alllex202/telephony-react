@@ -4,9 +4,9 @@ import {FetchStatuses} from "shared/types/fetch-statuses";
 import {
     getCallersBaseDataById,
     getCallersBaseHeaderById,
-    getVariablesTypes,
-    ParamsPaginatorData, putCallersBaseHeaderById
-} from "core/api/requests";
+    getVariablesTypes, ParamsPaginatorDataModel,
+    putCallersBaseHeaderById
+} from 'core/api/requests';
 import {DefaultAxiosError} from "shared/types/base-response-error";
 import {RootState} from "store";
 
@@ -131,7 +131,7 @@ export const getCallersBaseById = (id: number | string) => (dispatch: Dispatch) 
         });
 };
 
-export const getCallersBaseDataByPage = (id: number | string, params: ParamsPaginatorData) => (dispatch: Dispatch) => {
+export const getCallersBaseDataByPage = (id: number | string, params: ParamsPaginatorDataModel) => (dispatch: Dispatch) => {
     dispatch(setDataLoading());
     getCallersBaseDataById(id, params)
         .then(res => {
@@ -147,7 +147,7 @@ export const getCallersBaseDataByPage = (id: number | string, params: ParamsPagi
         });
 };
 
-export const updateCallersBaseDataByPage = (id: number | string, params: ParamsPaginatorData) => (dispatch: Dispatch) => {
+export const updateCallersBaseDataByPage = (id: number | string, params: ParamsPaginatorDataModel) => (dispatch: Dispatch) => {
     dispatch(setDataLoading());
     getCallersBaseDataById(id, params)
         .then(res => {
