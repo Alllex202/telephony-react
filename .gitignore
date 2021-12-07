@@ -42,3 +42,7 @@ yarn-error.log*
 # docker
 .dockerignore
 Dockerfile
+
+
+# development env
+.env
