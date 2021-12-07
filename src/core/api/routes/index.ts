@@ -1,4 +1,5 @@
-const serverApi = process.env.REACT_APP_SERVER_API;
+import {serverApi} from 'config';
+
 const callersBase = 'callers-base';
 
 export const apiRoutes = {
