@@ -10,13 +10,16 @@ type Props = {
     name?: string,
     id?: string,
     autoCompleteOff?: boolean,
-    onKeyPress?: React.KeyboardEventHandler<HTMLInputElement>
+    onKeyPress?: React.KeyboardEventHandler<HTMLInputElement>,
+    max?: number | string,
+    min?: number | string,
 }
 
-function Input({value, onChange, placeholder, className, type, name, autoCompleteOff, id, onKeyPress}: Props) {
+function Input({value, onChange, placeholder, className, type, name, autoCompleteOff, id, onKeyPress, max, min}: Props) {
     return (
         <input className={[styles.input, className].join(' ')} type={type} placeholder={placeholder} onChange={onChange}
-               value={value} name={name} autoComplete={autoCompleteOff ? 'new-password' : ''} id={id} onKeyPress={onKeyPress}/>
+               value={value} name={name} autoComplete={autoCompleteOff ? 'new-password' : ''} id={id}
+               onKeyPress={onKeyPress} max={max} min={min}/>
     );
 }
 

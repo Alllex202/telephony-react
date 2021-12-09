@@ -1,6 +1,7 @@
 import {serverApi} from 'config';
 
 const callersBase = 'callers-base';
+const scenario = 'scenario';
 
 export const apiRoutes = {
     callersBase: {
@@ -12,5 +13,7 @@ export const apiRoutes = {
         variablesTypes: () =>`${serverApi}/${callersBase}/variables/types`,
     },
     scenario: {
-    }
+        scenario: () => `${serverApi}/${scenario}`,
+        byId: (id: string | number) => `${serverApi}/${scenario}/${id}`,
+    },
 };

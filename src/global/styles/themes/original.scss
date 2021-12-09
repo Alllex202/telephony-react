@@ -84,4 +84,18 @@
   --text-super-light: var(--grey-200);
   --text-error: var(--red-600);
   --text-link: var(--blue-500);
+
+  --scenario-sidebar-fill: var(--white);
+  --scenario-grid-fill: var(--grey-50);
+  --scenario-grid: var(--grey-200);
+  --scenario-element-fill: var(--white);
+  --scenario-element-border: var(--grey-900);
+  --scenario-element-border-select: var(--orange-400);
+  --scenario-handle-fill: var(--white);
+  --scenario-handle-border: var(--grey-900);
+  --scenario-input-border: var(--trasparent);
+  --scenario-input-border-focus: var(--grey-600);
+  --scenario-separator: var(--grey-100);
+  --scenario-answer-circle-fill: var(--grey-50);
+  --scenario-answer-circle-fill-hover: var(--grey-100);
 }

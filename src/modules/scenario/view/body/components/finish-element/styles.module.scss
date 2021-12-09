@@ -1,0 +1,23 @@
+.finish {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 172px;
+  height: 48px;
+  background-color: var(--scenario-element-fill);
+  font: var(--font-h3-medium);
+  border: 1px solid var(--scenario-element-border);
+  border-radius: 2px 2px 25px 25px;
+
+  .handle {
+    width: 12px;
+    height: 12px;
+    background: var(--scenario-handle-fill) none;
+    border: 1px solid var(--scenario-handle-border);
+    border-radius: 0;
+
+    &.round {
+      border-radius: 50%;
+    }
+  }
+}

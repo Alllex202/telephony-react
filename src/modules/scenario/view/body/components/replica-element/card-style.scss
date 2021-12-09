@@ -1,0 +1,16 @@
+.replica-wrapper.card {
+  border-radius: 2px;
+  &:hover > .card-border-active {
+  }
+
+  .card-border {
+    border: 1px solid var(--scenario-element-border);
+    border-radius: 2px;
+  }
+  .card-border-active {
+    border-radius: 2px;
+  }
+  .card-content {
+    //padding: 12px;
+  }
+}

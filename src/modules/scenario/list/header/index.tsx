@@ -14,12 +14,16 @@ import {useHistory} from 'react-router-dom';
 import {changeFilter, resetFilter} from 'store/features/scenario/list/filter';
 import routes from 'routing/routes';
 import {resetScenariosStates} from 'store/features/scenario/list/list';
+import {createScenario} from 'core/api/requests';
+import {DefaultAxiosError} from 'shared/types/base-response-error';
+import {FetchStatuses} from 'shared/types/fetch-statuses';
 
 const ScenarioListHeader = () => {
     const [input, setInput] = useState<string>('');
     const [lastInput, setLastInput] = useState<string>('');
     const {statuses} = useSelector((state: RootState) => state.scenarioList);
     const {direction, sortBy, text} = useSelector((state: RootState) => state.scenarioFilter);
+    const [creating, setCreating] = useState<FetchStatuses>({});
     const dispatch = useDispatch();
     const history = useHistory();
     const [anchorEl, setAnchorEl] = useState<Element | null>(null);
@@ -33,7 +37,15 @@ const ScenarioListHeader = () => {
 
 
     function handlerAdd() {
-        // TODO created Scenario
+        if (creating.isLoading) return;
+
+        setCreating({isLoading: true});
+        createScenario('Новый сценарий')
+            .then(res => history.push(routes.scenarioView(res.data.id)))
+            .catch((err: DefaultAxiosError) => {
+                console.log(err.response?.data.message || 'Ошибка при создании');
+                setCreating({isError: true, error: err.response?.data.message || 'Ошибка при создании'});
+            });
     }
 
     function handlerOpenSort(e: any) {
@@ -71,6 +83,7 @@ const ScenarioListHeader = () => {
                 className={classNames(headerStyles.add, styles.add)}
                 onClick={handlerAdd}
                 iconPosition={'end'}
+                disabled={creating.isLoading}
             />
             <Input value={input} onChange={e => setInput(e.target.value)} className={headerStyles.search}
                    type={'text'} placeholder={'Поиск'} autoCompleteOff onKeyPress={handlerSearch}/>
