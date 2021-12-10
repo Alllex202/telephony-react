@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import styles from './styles.module.scss';
 import './card-style.scss';
-import {Handle, Position, NodeProps} from 'react-flow-renderer';
+import {Handle, Position, NodeProps, useStoreState} from 'react-flow-renderer';
 import {classNames} from 'shared/utils';
 import {NodeDataModel} from 'core/api';
 import Input from 'components/ui-kit/input';
@@ -25,10 +25,13 @@ const _numbers = [1, 2, 3, 4, 5];
 
 const ReplicaElement = ({id, data, selected, dragHandle, xPos, yPos, isDragging}: NodeProps<NodeDataModel>) => {
     // const {} = useSelector((state: RootState) => state.scenarioView);
+    // const {nodes, edges} = useStoreState((state) => state)
+    // console.log({nodes, edges})
     const dispatch = useDispatch();
     const [isFocus, setFocus] = useState<boolean>(false);
     const [anchorEl, setAnchorEl] = useState<Element | null>(null);
     const [numbers, setNumbers] = useState<number[]>(_numbers);
+    const [answerEditing, setAnswerEditing] = useState<number | null>(null);
     // console.log(data.answers)
 
     useEffect(() => {
@@ -54,18 +57,20 @@ const ReplicaElement = ({id, data, selected, dragHandle, xPos, yPos, isDragging}
         setFocus(false);
     };
 
-    const handlerOpenMenu = (e: React.MouseEvent<Element>) => {
+    const handlerOpenMenu = (e: React.MouseEvent<Element>, oldNumber: number) => {
         setAnchorEl(e.currentTarget);
+        setAnswerEditing(oldNumber);
     };
 
     const handlerCloseMenu = () => {
         setAnchorEl(null);
     };
 
-    const handlerSelectNumberKey = (newNumber: number, oldNumber: number) => {
+    const handlerSelectNumberKey = (newNumber: number) => {
         handlerCloseMenu();
+        if (answerEditing === null) return;
 
-        dispatch(changeAnswer({id, newAnswer: newNumber, oldAnswer: oldNumber}));
+        dispatch(changeAnswer({id, newAnswer: newNumber, oldAnswer: answerEditing}));
     };
 
     const onChangeNeedAnswer = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -124,7 +129,7 @@ const ReplicaElement = ({id, data, selected, dragHandle, xPos, yPos, isDragging}
                         <div className={styles.answers}>
                             {data.answers?.map(ans =>
                                 <div key={ans.button} className={styles.answer}>
-                                    <Handle type={'source'} id={ans.button} position={Position.Left}
+                                    <Handle type={'source'} id={ans.id} position={Position.Left}
                                             className={classNames(styles.handle, styles.round)}/>
                                     {
                                         data.answers && data.answers.length > 1 ?
@@ -146,19 +151,12 @@ const ReplicaElement = ({id, data, selected, dragHandle, xPos, yPos, isDragging}
                                     <span className={styles.label}>Кнопка {ans.button}</span>
                                     {
                                         numbers.length > 0 &&
-                                        <BtnCircle iconName={'arrow_drop_down'} iconType={'round'}
-                                                   className={styles.dropDown}
-                                                   onClick={handlerOpenMenu}/>
+                                        <>
+                                            <BtnCircle iconName={'arrow_drop_down'} iconType={'round'}
+                                                       className={styles.dropDown}
+                                                       onClick={(e) => handlerOpenMenu(e, Number(ans.button))}/>
+                                        </>
                                     }
-                                    <Menu anchorEl={anchorEl} open={!!anchorEl} onClose={handlerCloseMenu}>
-                                        {numbers.map(num =>
-                                            <MenuItem
-                                                key={num}
-                                                onClick={() => handlerSelectNumberKey(num, Number(ans.button))}
-                                            >
-                                                Кнопка {num}
-                                            </MenuItem>)}
-                                    </Menu>
                                 </div>
                             )}
                             {
@@ -168,6 +166,16 @@ const ReplicaElement = ({id, data, selected, dragHandle, xPos, yPos, isDragging}
                                 </button>
                             }
                         </div>
+
+                        <Menu anchorEl={anchorEl} open={!!anchorEl} onClose={handlerCloseMenu}>
+                            {numbers.map(num =>
+                                <MenuItem
+                                    key={num}
+                                    onClick={() => handlerSelectNumberKey(num)}
+                                >
+                                    Кнопка {num}
+                                </MenuItem>)}
+                        </Menu>
                     </div>
                 }
             </div>

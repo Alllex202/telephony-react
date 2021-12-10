@@ -1,5 +1,5 @@
 import {createSlice, Dispatch, PayloadAction} from '@reduxjs/toolkit';
-import {AnswerModel, EdgeModel, NodeDataModel, NodeModel, ScenarioModel} from 'core/api';
+import {AnswerModel, EdgeModel, NodeDataModel, NodeModel, NodeType, ScenarioModel} from 'core/api';
 import {FetchStatuses} from 'shared/types/fetch-statuses';
 import {getScenarioById, putScenarioById} from 'core/api/requests';
 import {DefaultAxiosError} from 'shared/types/base-response-error';
@@ -11,9 +11,11 @@ import {
     Connection,
     removeElements,
     Elements,
-    getConnectedEdges
+    getConnectedEdges,
+    updateEdge, XYPosition
 } from 'react-flow-renderer';
-import {getRandomNumber} from 'shared/utils';
+import {copy, getUniqueId} from 'shared/utils';
+import {json} from 'msw/lib/types/context';
 
 export type ElementType = Node<NodeDataModel> | Edge;
 
@@ -82,7 +84,7 @@ export const scenarioSlice = createSlice({
                     sourceHandle: action.payload.value ? '1' : null,
                     target,
                     targetHandle: null,
-                    id: String(getRandomNumber())
+                    id: String(getUniqueId())
                 }, state.elements);
             }
         },
@@ -95,22 +97,99 @@ export const scenarioSlice = createSlice({
         addAnswer: (state: ScenarioState, action: PayloadAction<{ id: string, value: number }>) => {
             state.elements = state.elements.map(el => el.id === action.payload.id ? {
                 ...el,
-                data: {...el.data, answers: [...(el.data.answers || []), {button: String(action.payload.value)}]}
+                data: {
+                    ...el.data,
+                    answers: [...(el.data.answers || []), {id: getUniqueId(), button: String(action.payload.value)}]
+                }
             } : el);
         },
         changeAnswer: (state: ScenarioState, action: PayloadAction<{ id: string, newAnswer: number, oldAnswer: number }>) => {
-            state.elements = state.elements.map(el =>
-                (el as Edge).source === action.payload.id &&
-                (el as Edge).sourceHandle === String(action.payload.oldAnswer) ?
-                    {...el, sourceHandle: String(action.payload.newAnswer)} : el);
+            // const oldEdge = state.elements
+            //     .find(el =>
+            //         (el as Edge).source === action.payload.id &&
+            //         (el as Edge).sourceHandle === String(action.payload.oldAnswer)) as Edge;
+
+            // console.log(copy(action.payload));
+            // console.log(copy(state.elements));
+            // console.log(JSON.stringify(oldEdge));
+
+            // if (oldEdge) {
+            //     state.elements = updateEdge(
+            //         oldEdge,
+            //         {
+            //             target: oldEdge.target,
+            //             targetHandle: oldEdge.targetHandle || null,
+            //             source: oldEdge.source,
+            //             sourceHandle: String(action.payload.newAnswer)
+            //         },
+            //         state.elements.map(el => el.id === action.payload.id ? {
+            //             ...el,
+            //             data: {
+            //                 ...el.data,
+            //                 answers: el.data.answers.map((ans: AnswerModel) =>
+            //                     ans.button === String(action.payload.oldAnswer) ?
+            //                         {button: String(action.payload.newAnswer)} :
+            //                         ans),
+            //             },
+            //         } : el));
+            // } else {
+            //     state.elements = state.elements.map(el => el.id === action.payload.id ? {
+            //         ...el,
+            //         data: {
+            //             ...el.data,
+            //             answers: el.data.answers.map((ans: AnswerModel) =>
+            //                 ans.button === String(action.payload.oldAnswer) ?
+            //                     {button: String(action.payload.newAnswer)} :
+            //                     ans),
+            //         },
+            //     } : el);
+            // }
+
+            // if (oldEdge) {
+            //     state.elements = state.elements
+            //         .filter(el =>
+            //             !((el as Edge).source === action.payload.id &&
+            //                 (el as Edge).sourceHandle === String(action.payload.oldAnswer)))
+            //         .map(el => el.id === action.payload.id ? {
+            //             ...el,
+            //             data: {
+            //                 ...el.data,
+            //                 answers: el.data.answers.map((ans: AnswerModel) =>
+            //                     ans.button === String(action.payload.oldAnswer) ?
+            //                         {button: String(action.payload.newAnswer)} :
+            //                         ans),
+            //             },
+            //         } : el);
+            //
+            //     state.elements = _addEdge(
+            //         {
+            //             id: getUniqueId(),
+            //             target: oldEdge.target,
+            //             targetHandle: oldEdge.targetHandle,
+            //             source: oldEdge.source,
+            //             sourceHandle: String(action.payload.newAnswer)
+            //         },
+            //         state.elements);
+            // } else {
+            //     state.elements = state.elements.map(el => el.id === action.payload.id ? {
+            //         ...el,
+            //         data: {
+            //             ...el.data,
+            //             answers: el.data.answers.map((ans: AnswerModel) =>
+            //                 ans.button === String(action.payload.oldAnswer) ?
+            //                     {button: String(action.payload.newAnswer)} :
+            //                     ans),
+            //         },
+            //     } : el);
+            // }
 
             state.elements = state.elements.map(el => el.id === action.payload.id ? {
                 ...el,
                 data: {
                     ...el.data,
-                    answers: el.data.answers.map((ans: AnswerModel) =>
+                    answers: el.data.answers.map((ans: AnswerModel): AnswerModel =>
                         ans.button === String(action.payload.oldAnswer) ?
-                            {button: String(action.payload.newAnswer)} :
+                            {...ans, button: String(action.payload.newAnswer)} :
                             ans),
                 },
             } : el);
@@ -134,7 +213,7 @@ export const scenarioSlice = createSlice({
             } : el);
         },
         addEdge: (state: ScenarioState, action: PayloadAction<Edge | Connection>) => {
-            state.elements = _addEdge({...action.payload, id: String(getRandomNumber())}, state.elements);
+            state.elements = _addEdge({...action.payload, id: String(getUniqueId())}, state.elements);
         },
         removeAllOutputsEdge: (state: ScenarioState, action: PayloadAction<string>) => {
             state.elements = state.elements.filter(el => (el as Edge).source !== action.payload);
@@ -149,7 +228,21 @@ export const scenarioSlice = createSlice({
                 ...el,
                 position: {x: action.payload.x, y: action.payload.y},
             } : el);
-        }
+        },
+        addNode: (state: ScenarioState, action: PayloadAction<{ nodeType: NodeType, position: XYPosition }>) => {
+            const newNode: Node<NodeDataModel> = {
+                id: getUniqueId(),
+                type: action.payload.nodeType,
+                position: action.payload.position,
+                data: {
+                    // id: getUniqueId(),
+                    needAnswer: false,
+                    waitingTime: 0,
+                    replica: '',
+                }
+            };
+            state.elements = [...state.elements, newNode];
+        },
         // removeEdges: (state: ScenarioState, action: PayloadAction<Edge[]>) => {
         //     state.elements = removeElements(action.payload, state.elements);
         // }
@@ -168,7 +261,13 @@ export const getScenario = (id: string | number) => (dispatch: Dispatch, getStat
                 elements.push({
                     id: value.id,
                     position: value.position,
-                    data: value.data,
+                    // TODO убрать костыль
+                    data: {
+                        ...value.data,
+                        answers: value.data.answers?.map((ans): AnswerModel => {
+                            return {id: ans.button, button: ans.button};
+                        })
+                    },
                     type: value.type,
                     selectable: true,
                     dragHandle: '.draggable-handle',
@@ -241,7 +340,8 @@ export const {
     addEdge,
     removeAllOutputsEdge,
     changeName,
-    changePosition
+    changePosition,
+    addNode,
 } = scenarioSlice.actions;
 
 export const scenarioReducers = scenarioSlice.reducer;

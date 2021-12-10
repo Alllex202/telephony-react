@@ -27,8 +27,8 @@ export interface NodeModel {
 }
 
 export interface NodeDataModel {
-    id: string,
-    created: number,
+    id?: string,
+    created?: number,
     replica: string,
     waitingTime: number,
     answers?: AnswerModel[],
@@ -36,5 +36,6 @@ export interface NodeDataModel {
 }
 
 export interface AnswerModel {
+    id: string,
     button: string,
 }
