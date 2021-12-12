@@ -4,17 +4,8 @@ import {FetchStatuses} from 'shared/types/fetch-statuses';
 import {getScenarioById, putScenarioById} from 'core/api/requests';
 import {DefaultAxiosError} from 'shared/types/base-response-error';
 import {RootState} from 'store';
-import {
-    Node,
-    Edge,
-    addEdge as _addEdge,
-    Connection,
-    removeElements,
-    Elements,
-    getConnectedEdges,
-    updateEdge, XYPosition
-} from 'react-flow-renderer';
-import {copy, getUniqueId} from 'shared/utils';
+import {addEdge as _addEdge, ArrowHeadType, Connection, Edge, Node, XYPosition} from 'react-flow-renderer';
+import {getUniqueId} from 'shared/utils';
 
 export type ElementType = Node<NodeDataModel> | Edge;
 
@@ -88,7 +79,9 @@ export const scenarioSlice = createSlice({
                     sourceHandle: action.payload.isNeed ? answerId : null,
                     target,
                     targetHandle: null,
-                    id: String(getUniqueId())
+                    id: getUniqueId(),
+                    arrowHeadType: ArrowHeadType.Arrow,
+                    type: 'smoothstep',
                 }, state.elements);
             }
         },
@@ -138,7 +131,12 @@ export const scenarioSlice = createSlice({
             } : el);
         },
         addEdge: (state: ScenarioState, action: PayloadAction<Edge | Connection>) => {
-            state.elements = _addEdge({...action.payload, id: String(getUniqueId())}, state.elements);
+            state.elements = _addEdge({
+                ...action.payload,
+                id: getUniqueId(),
+                arrowHeadType: ArrowHeadType.Arrow,
+                type: 'smoothstep',
+            }, state.elements);
         },
         removeAllOutputsEdge: (state: ScenarioState, action: PayloadAction<string>) => {
             state.elements = state.elements.filter(el => (el as Edge).source !== action.payload);
@@ -200,6 +198,8 @@ export const getScenario = (id: string | number) => (dispatch: Dispatch, getStat
                     source: value.source,
                     target: value.target,
                     sourceHandle: value.sourceHandle,
+                    arrowHeadType: ArrowHeadType.Arrow,
+                    type: 'smoothstep',
                 });
             });
             dispatch(setData(res.data));
