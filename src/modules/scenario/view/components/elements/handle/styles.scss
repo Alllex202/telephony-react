@@ -1,0 +1,16 @@
+.handle {
+  width: 12px;
+  height: 12px;
+  background: var(--scenario-handle-fill) none;
+  border: 1px solid var(--scenario-handle-border);
+  border-radius: 0;
+  transition: .2s transform;
+
+  &.left {
+    left: -16px;
+  }
+
+  &.round {
+    border-radius: 50%;
+  }
+}

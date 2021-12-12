@@ -15,7 +15,6 @@ import {
     updateEdge, XYPosition
 } from 'react-flow-renderer';
 import {copy, getUniqueId} from 'shared/utils';
-import {json} from 'msw/lib/types/context';
 
 export type ElementType = Node<NodeDataModel> | Edge;
 
@@ -61,153 +60,79 @@ export const scenarioSlice = createSlice({
             state.statuses = {};
             state.elements = [];
         },
-        changeReplica: (state: ScenarioState, action: PayloadAction<{ id: string, value: string }>) => {
-            state.elements = state.elements.map(el => el.id === action.payload.id ? {
+        changeReplica: (state: ScenarioState, action: PayloadAction<{ elementId: string, replica: string }>) => {
+            state.elements = state.elements.map(el => el.id === action.payload.elementId ? {
                 ...el,
-                data: {...el.data, replica: action.payload.value}
+                data: {...el.data, replica: action.payload.replica}
             } : el);
         },
-        changeNeedAnswer: (state: ScenarioState, action: PayloadAction<{ id: string, value: boolean }>) => {
-
-            const target = (state.elements.find(el => (el as Edge).source === action.payload.id) as Edge)?.target;
+        changeNeedAnswer: (state: ScenarioState, action: PayloadAction<{ elementId: string, isNeed: boolean }>) => {
+            const target = (state.elements.find(el => (el as Edge).source === action.payload.elementId) as Edge)?.target;
+            const answerId = getUniqueId();
 
             state.elements = state.elements
-                .filter(el => (el as Edge).source !== action.payload.id)
-                .map(el => el.id === action.payload.id ? {
+                .filter(el => (el as Edge).source !== action.payload.elementId)
+                .map(el => (el as Node).id === action.payload.elementId ? {
                     ...el,
-                    data: {...el.data, needAnswer: action.payload.value}
+                    data: {
+                        ...el.data,
+                        answers: action.payload.isNeed ? [{id: answerId, button: '1'}] : null,
+                        waitingTime: 30 * 1000,
+                        needAnswer: action.payload.isNeed
+                    },
                 } : el);
 
             if (target) {
                 state.elements = _addEdge({
-                    source: action.payload.id,
-                    sourceHandle: action.payload.value ? '1' : null,
+                    source: action.payload.elementId,
+                    sourceHandle: action.payload.isNeed ? answerId : null,
                     target,
                     targetHandle: null,
                     id: String(getUniqueId())
                 }, state.elements);
             }
         },
-        changeWaitingTime: (state: ScenarioState, action: PayloadAction<{ id: string, value: number }>) => {
-            state.elements = state.elements.map(el => el.id === action.payload.id ? {
+        changeWaitingTime: (state: ScenarioState, action: PayloadAction<{ elementId: string, time: number }>) => {
+            state.elements = state.elements.map(el => el.id === action.payload.elementId ? {
                 ...el,
-                data: {...el.data, waitingTime: action.payload.value}
+                data: {...el.data, waitingTime: action.payload.time}
             } : el);
         },
-        addAnswer: (state: ScenarioState, action: PayloadAction<{ id: string, value: number }>) => {
-            state.elements = state.elements.map(el => el.id === action.payload.id ? {
+        addAnswer: (state: ScenarioState, action: PayloadAction<{ elementId: string, button: string }>) => {
+            state.elements = state.elements.map(el => el.id === action.payload.elementId ? {
                 ...el,
                 data: {
                     ...el.data,
-                    answers: [...(el.data.answers || []), {id: getUniqueId(), button: String(action.payload.value)}]
+                    answers: [...(el.data.answers || []), {id: getUniqueId(), button: action.payload.button}]
                 }
             } : el);
         },
-        changeAnswer: (state: ScenarioState, action: PayloadAction<{ id: string, newAnswer: number, oldAnswer: number }>) => {
-            // const oldEdge = state.elements
-            //     .find(el =>
-            //         (el as Edge).source === action.payload.id &&
-            //         (el as Edge).sourceHandle === String(action.payload.oldAnswer)) as Edge;
-
-            // console.log(copy(action.payload));
-            // console.log(copy(state.elements));
-            // console.log(JSON.stringify(oldEdge));
-
-            // if (oldEdge) {
-            //     state.elements = updateEdge(
-            //         oldEdge,
-            //         {
-            //             target: oldEdge.target,
-            //             targetHandle: oldEdge.targetHandle || null,
-            //             source: oldEdge.source,
-            //             sourceHandle: String(action.payload.newAnswer)
-            //         },
-            //         state.elements.map(el => el.id === action.payload.id ? {
-            //             ...el,
-            //             data: {
-            //                 ...el.data,
-            //                 answers: el.data.answers.map((ans: AnswerModel) =>
-            //                     ans.button === String(action.payload.oldAnswer) ?
-            //                         {button: String(action.payload.newAnswer)} :
-            //                         ans),
-            //             },
-            //         } : el));
-            // } else {
-            //     state.elements = state.elements.map(el => el.id === action.payload.id ? {
-            //         ...el,
-            //         data: {
-            //             ...el.data,
-            //             answers: el.data.answers.map((ans: AnswerModel) =>
-            //                 ans.button === String(action.payload.oldAnswer) ?
-            //                     {button: String(action.payload.newAnswer)} :
-            //                     ans),
-            //         },
-            //     } : el);
-            // }
-
-            // if (oldEdge) {
-            //     state.elements = state.elements
-            //         .filter(el =>
-            //             !((el as Edge).source === action.payload.id &&
-            //                 (el as Edge).sourceHandle === String(action.payload.oldAnswer)))
-            //         .map(el => el.id === action.payload.id ? {
-            //             ...el,
-            //             data: {
-            //                 ...el.data,
-            //                 answers: el.data.answers.map((ans: AnswerModel) =>
-            //                     ans.button === String(action.payload.oldAnswer) ?
-            //                         {button: String(action.payload.newAnswer)} :
-            //                         ans),
-            //             },
-            //         } : el);
-            //
-            //     state.elements = _addEdge(
-            //         {
-            //             id: getUniqueId(),
-            //             target: oldEdge.target,
-            //             targetHandle: oldEdge.targetHandle,
-            //             source: oldEdge.source,
-            //             sourceHandle: String(action.payload.newAnswer)
-            //         },
-            //         state.elements);
-            // } else {
-            //     state.elements = state.elements.map(el => el.id === action.payload.id ? {
-            //         ...el,
-            //         data: {
-            //             ...el.data,
-            //             answers: el.data.answers.map((ans: AnswerModel) =>
-            //                 ans.button === String(action.payload.oldAnswer) ?
-            //                     {button: String(action.payload.newAnswer)} :
-            //                     ans),
-            //         },
-            //     } : el);
-            // }
-
-            state.elements = state.elements.map(el => el.id === action.payload.id ? {
+        changeAnswer: (state: ScenarioState, action: PayloadAction<{ elementId: string, newButton: string, oldButton: string }>) => {
+            state.elements = state.elements.map(el => el.id === action.payload.elementId ? {
                 ...el,
                 data: {
                     ...el.data,
                     answers: el.data.answers.map((ans: AnswerModel): AnswerModel =>
-                        ans.button === String(action.payload.oldAnswer) ?
-                            {...ans, button: String(action.payload.newAnswer)} :
+                        ans.button === action.payload.oldButton ?
+                            {...ans, button: action.payload.newButton} :
                             ans),
                 },
             } : el);
         },
-        removeAnswer: (state: ScenarioState, action: PayloadAction<{ id: string, value: number }>) => {
+        removeAnswer: (state: ScenarioState, action: PayloadAction<{ elementId: string, answerId: string }>) => {
             state.elements = state.elements
-                .filter(el => !((el as Edge).source === action.payload.id &&
-                    (el as Edge).sourceHandle === String(action.payload.value)))
-                .map(el => el.id === action.payload.id ? {
+                .filter(el => !((el as Edge).source === action.payload.elementId &&
+                    (el as Edge).sourceHandle === action.payload.answerId))
+                .map(el => el.id === action.payload.elementId ? {
                     ...el,
                     data: {
                         ...el.data,
-                        answers: el.data.answers.filter((ans: AnswerModel) => ans.button !== String(action.payload.value))
+                        answers: el.data.answers.filter((ans: AnswerModel) => ans.id !== action.payload.answerId)
                     }
                 } : el);
         },
-        removeAllAnswers: (state: ScenarioState, action: PayloadAction<{ id: string }>) => {
-            state.elements = state.elements.map(el => el.id === action.payload.id ? {
+        removeAllAnswers: (state: ScenarioState, action: PayloadAction<{ elementId: string }>) => {
+            state.elements = state.elements.map(el => el.id === action.payload.elementId ? {
                 ...el,
                 data: {...el.data, answers: null}
             } : el);
@@ -223,8 +148,8 @@ export const scenarioSlice = createSlice({
                 state.data.name = action.payload;
             }
         },
-        changePosition: (state: ScenarioState, action: PayloadAction<{ id: string, x: number, y: number }>) => {
-            state.elements = state.elements.map(el => el.id === action.payload.id ? {
+        changePosition: (state: ScenarioState, action: PayloadAction<{ elementId: string, x: number, y: number }>) => {
+            state.elements = state.elements.map(el => el.id === action.payload.elementId ? {
                 ...el,
                 position: {x: action.payload.x, y: action.payload.y},
             } : el);
@@ -239,7 +164,9 @@ export const scenarioSlice = createSlice({
                     needAnswer: false,
                     waitingTime: 0,
                     replica: '',
-                }
+                },
+                selectable: true,
+                dragHandle: '.draggable-handle',
             };
             state.elements = [...state.elements, newNode];
         },
@@ -261,13 +188,7 @@ export const getScenario = (id: string | number) => (dispatch: Dispatch, getStat
                 elements.push({
                     id: value.id,
                     position: value.position,
-                    // TODO убрать костыль
-                    data: {
-                        ...value.data,
-                        answers: value.data.answers?.map((ans): AnswerModel => {
-                            return {id: ans.button, button: ans.button};
-                        })
-                    },
+                    data: value.data,
                     type: value.type,
                     selectable: true,
                     dragHandle: '.draggable-handle',

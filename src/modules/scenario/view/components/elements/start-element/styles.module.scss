@@ -1,3 +1,5 @@
+@import "../handle/styles";
+
 .start {
   display: flex;
   align-items: center;
@@ -8,16 +10,4 @@
   font: var(--font-h3-medium);
   border: 1px solid var(--scenario-element-border);
   border-radius: 25px 25px 2px 2px;
-
-  .handle {
-    width: 12px;
-    height: 12px;
-    background: var(--scenario-handle-fill) none;
-    border: 1px solid var(--scenario-handle-border);
-    border-radius: 0;
-
-    &.round {
-      border-radius: 50%;
-    }
-  }
 }

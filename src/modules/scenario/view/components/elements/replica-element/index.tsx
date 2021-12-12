@@ -21,32 +21,53 @@ import {
     removeAllAnswers, removeAllOutputsEdge, removeAnswer
 } from 'store/features/scenario/view';
 
-const _numbers = [1, 2, 3, 4, 5];
+export interface Button {
+    name: string,
+    isUsed: boolean,
+}
+
+const _buttons: Button[] = [
+    {name: '1', isUsed: false},
+    {name: '2', isUsed: false},
+    {name: '3', isUsed: false},
+    {name: '4', isUsed: false},
+    {name: '5', isUsed: false},
+    {name: '6', isUsed: false},
+    {name: '7', isUsed: false},
+    {name: '8', isUsed: false},
+    {name: '9', isUsed: false},
+    {name: '0', isUsed: false},
+];
 
 const ReplicaElement = ({id, data, selected, dragHandle, xPos, yPos, isDragging}: NodeProps<NodeDataModel>) => {
     // const {} = useSelector((state: RootState) => state.scenarioView);
-    // const {nodes, edges} = useStoreState((state) => state)
-    // console.log({nodes, edges})
+    const {nodes, edges} = useStoreState((state) => state);
+    // console.log({nodes, edges});
     const dispatch = useDispatch();
+    const [menu, setMenu] = useState<{ buttons: Button[], isShow: boolean }>({
+        buttons: _buttons,
+        isShow: true,
+    });
     const [isFocus, setFocus] = useState<boolean>(false);
     const [anchorEl, setAnchorEl] = useState<Element | null>(null);
-    const [numbers, setNumbers] = useState<number[]>(_numbers);
-    const [answerEditing, setAnswerEditing] = useState<number | null>(null);
+    const [oldButton, setOldButton] = useState<string | null>(null);
     // console.log(data.answers)
 
     useEffect(() => {
-        let res = _numbers.slice();
-        data.answers?.forEach(ans => {
-            res = res.filter(num => String(num) !== ans.button);
-        });
-        setNumbers(res.sort());
+        const buttons = menu.buttons.map(btn =>
+            data.answers?.some(ans => ans.button === btn.name)
+                ? {...btn, isUsed: true}
+                : {...btn, isUsed: false});
+        const isShow = buttons.some(btn => !btn.isUsed);
+        setMenu({buttons, isShow});
         // eslint-disable-next-line
     }, [data.answers]);
 
     useEffect(() => {
         if (isDragging === false && xPos && yPos) {
-            dispatch(changePosition({id, x: xPos, y: yPos}));
+            dispatch(changePosition({elementId: id, x: xPos, y: yPos}));
         }
+        // eslint-disable-next-line
     }, [isDragging]);
 
     const onFocus = () => {
@@ -57,50 +78,46 @@ const ReplicaElement = ({id, data, selected, dragHandle, xPos, yPos, isDragging}
         setFocus(false);
     };
 
-    const handlerOpenMenu = (e: React.MouseEvent<Element>, oldNumber: number) => {
+    const onOpenMenu = (e: React.MouseEvent, oldButton: string) => {
         setAnchorEl(e.currentTarget);
-        setAnswerEditing(oldNumber);
+        setOldButton(oldButton);
     };
 
-    const handlerCloseMenu = () => {
+    const onCloseMenu = () => {
         setAnchorEl(null);
     };
 
-    const handlerSelectNumberKey = (newNumber: number) => {
-        handlerCloseMenu();
-        if (answerEditing === null) return;
+    const onSelectNumberKey = (newButton: string) => {
+        onCloseMenu();
+        if (oldButton === null) return;
 
-        dispatch(changeAnswer({id, newAnswer: newNumber, oldAnswer: answerEditing}));
+        dispatch(changeAnswer({elementId: id, newButton, oldButton}));
     };
 
     const onChangeNeedAnswer = (e: React.ChangeEvent<HTMLInputElement>) => {
-        // dispatch(removeAllOutputsEdge(id));
-        if (data.needAnswer) {
-            dispatch(changeWaitingTime({id, value: 0}));
-            dispatch(removeAllAnswers({id}));
-        } else {
-            dispatch(changeWaitingTime({id, value: 30 * 1000}));
-            dispatch(addAnswer({id, value: 1}));
-        }
-        dispatch(changeNeedAnswer({id, value: !data.needAnswer}));
+        dispatch(changeNeedAnswer({elementId: id, isNeed: !data.needAnswer}));
     };
 
     const onChangeText = (e: React.ChangeEvent<HTMLInputElement>) => {
-        dispatch(changeReplica({id, value: e.currentTarget.value}));
+        dispatch(changeReplica({elementId: id, replica: e.currentTarget.value}));
     };
 
     const onChangeWaitingTime = (e: React.ChangeEvent<HTMLInputElement>) => {
         const {value, min, max} = e.target;
         const time = Math.max(Number(min), Math.min(Number(max), Number(value)));
-        dispatch(changeWaitingTime({id, value: time * 1000}));
+        dispatch(changeWaitingTime({elementId: id, time: time * 1000}));
     };
 
     const onAddAnswer = () => {
-        dispatch(addAnswer({id, value: numbers[0]}));
+        if (!menu.isShow) return;
+        const unusedBtn = menu.buttons.find(btn => !btn.isUsed);
+        if (!unusedBtn) return;
+
+        dispatch(addAnswer({elementId: id, button: unusedBtn.name}));
     };
 
-    const onRemoveAnswer = (number: number) => {
-        dispatch(removeAnswer({id, value: number}));
+    const onRemoveAnswer = (answerId: string) => {
+        dispatch(removeAnswer({elementId: id, answerId}));
     };
 
     return (
@@ -130,11 +147,11 @@ const ReplicaElement = ({id, data, selected, dragHandle, xPos, yPos, isDragging}
                             {data.answers?.map(ans =>
                                 <div key={ans.button} className={styles.answer}>
                                     <Handle type={'source'} id={ans.id} position={Position.Left}
-                                            className={classNames(styles.handle, styles.round)}/>
+                                            className={classNames(styles.handle, styles.round, styles.left)}/>
                                     {
                                         data.answers && data.answers.length > 1 ?
                                             <button className={styles.circle}
-                                                    onClick={() => onRemoveAnswer(Number(ans.button))}>
+                                                    onClick={() => onRemoveAnswer(ans.id)}>
                                                 <div className={classNames(styles.container, styles.movable)}>
                                                     <span className={styles.number}>{ans.button}</span>
                                                 </div>
@@ -150,30 +167,30 @@ const ReplicaElement = ({id, data, selected, dragHandle, xPos, yPos, isDragging}
                                     }
                                     <span className={styles.label}>Кнопка {ans.button}</span>
                                     {
-                                        numbers.length > 0 &&
+                                        menu.isShow &&
                                         <>
                                             <BtnCircle iconName={'arrow_drop_down'} iconType={'round'}
                                                        className={styles.dropDown}
-                                                       onClick={(e) => handlerOpenMenu(e, Number(ans.button))}/>
+                                                       onClick={(e) => onOpenMenu(e, ans.button)}/>
                                         </>
                                     }
                                 </div>
                             )}
                             {
-                                numbers.length > 0 &&
+                                menu.isShow &&
                                 <button className={styles.circle} onClick={onAddAnswer}>
                                     <Icon name={'add'} type={'round'} className={styles.icon}/>
                                 </button>
                             }
                         </div>
 
-                        <Menu anchorEl={anchorEl} open={!!anchorEl} onClose={handlerCloseMenu}>
-                            {numbers.map(num =>
+                        <Menu anchorEl={anchorEl} open={!!anchorEl} onClose={onCloseMenu}>
+                            {menu.buttons.map(btn => !btn.isUsed &&
                                 <MenuItem
-                                    key={num}
-                                    onClick={() => handlerSelectNumberKey(num)}
+                                    key={btn.name}
+                                    onClick={() => onSelectNumberKey(btn.name)}
                                 >
-                                    Кнопка {num}
+                                    Кнопка {btn.name}
                                 </MenuItem>)}
                         </Menu>
                     </div>

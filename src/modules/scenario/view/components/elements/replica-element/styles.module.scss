@@ -1,3 +1,5 @@
+@import "../handle/styles";
+
 .replicaWrapper {
   width: 172px;
   //height: 106px;
@@ -87,10 +89,6 @@
           position: relative;
           display: flex;
           align-items: center;
-
-          .handle {
-            left: -19px;
-          }
 
           .circle {
             display: block;
@@ -189,15 +187,4 @@
     //height: fit-content;
   }
 
-  .handle {
-    width: 12px;
-    height: 12px;
-    background: var(--scenario-handle-fill) none;
-    border: 1px solid var(--scenario-handle-border);
-    border-radius: 0;
-
-    &.round {
-      border-radius: 50%;
-    }
-  }
 }

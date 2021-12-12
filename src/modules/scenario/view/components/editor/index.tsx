@@ -69,6 +69,8 @@ const ScenarioEditor = () => {
                 onLoad={onLoad}
                 onDragOver={onDragOver}
                 onDrop={onDrop}
+                // snapToGrid={true}
+                // snapGrid={[20, 20]}
             >
                 <Background variant={BackgroundVariant.Lines} className={styles.grid} gap={112}/>
                 <Controls className={styles.controls}/>

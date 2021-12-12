@@ -1,12 +1,12 @@
 import React, {useEffect} from 'react';
-import styles from 'modules/scenario/view/styles.module.scss';
+import styles from './styles.module.scss';
 import {useDispatch, useSelector} from 'react-redux';
 import {getScenario, resetAll} from 'store/features/scenario/view';
 import {useParams} from 'react-router-dom';
 import {RootState} from 'store';
-import ScenarioViewHeader from 'modules/scenario/view/components/header';
-import ScenarioLeftSidebar from 'modules/scenario/view/components/left-sidebar';
-import ScenarioEditor from 'modules/scenario/view/components/editor';
+import ScenarioViewHeader from './components/header';
+import ScenarioLeftSidebar from './components/left-sidebar';
+import ScenarioEditor from './components/editor';
 
 const ScenarioView = () => {
     const {statuses} = useSelector((state: RootState) => state.scenarioView);
@@ -27,7 +27,7 @@ const ScenarioView = () => {
     }
 
     if (statuses.isError) {
-        return <h1>Ошибка | {statuses.error}</h1>;
+        return <h1 className={styles.error}>Ошибка | {statuses.error}</h1>;
     }
 
     return (

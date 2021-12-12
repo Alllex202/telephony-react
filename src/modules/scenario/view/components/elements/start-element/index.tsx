@@ -11,8 +11,9 @@ const StartElement = ({id, data, selected, dragHandle, xPos, yPos, isDragging}: 
 
     useEffect(() => {
         if (isDragging === false && xPos && yPos) {
-            dispatch(changePosition({id, x: xPos, y: yPos}));
+            dispatch(changePosition({elementId: id, x: xPos, y: yPos}));
         }
+        // eslint-disable-next-line
     }, [isDragging]);
     return (
         <div className={classNames(styles.start, 'draggable-handle')}>
@@ -23,3 +24,4 @@ const StartElement = ({id, data, selected, dragHandle, xPos, yPos, isDragging}: 
 };
 
 export default StartElement;
+
