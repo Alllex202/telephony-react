@@ -1,0 +1,43 @@
+.header {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  top: 0;
+  left: 50%;
+  width: 1000px;
+  padding: 24px;
+  background-color: var(--main-fill);
+  border-radius: 2px;
+  transform: translateX(-50%);
+  z-index: 1000;
+
+  .controls {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+
+    .back {
+      padding-left: 8px;
+      padding-right: 12px;
+    }
+
+    .save {
+      padding-left: 44px;
+      padding-right: 44px;
+    }
+  }
+
+  .name {
+    max-width: 900px;
+
+    .nameInput {
+      max-width: 900px;
+    }
+
+    .nameText {
+      max-width: 900px;
+    }
+  }
+}
