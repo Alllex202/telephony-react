@@ -134,8 +134,14 @@ export const scenarioSlice = createSlice({
                 } : el);
         },
         addEdge: (state: ScenarioState, action: PayloadAction<Edge | Connection>) => {
-            if (state.elements.some(el => (el as Edge).source === action.payload.target &&
-                (el as Edge).target === action.payload.source)) return;
+            if (state.elements.some(el => ((el as Edge).source === action.payload.target &&
+                    (el as Edge).target === action.payload.source) ||
+                ((el as Edge).source === action.payload.source &&
+                    (el as Edge).source === state.startId) ||
+                ((el as Edge).source === action.payload.source &&
+                    (el as Edge).sourceHandle === action.payload.sourceHandle))) {
+                return;
+            }
 
             state.elements = _addEdge({
                 ...action.payload,
