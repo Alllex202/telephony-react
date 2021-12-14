@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import styles from './styles.module.scss';
-import './card-style.scss';
+import 'modules/scenario/view/components/elements/element/element-style.scss';
 import {Handle, Position, NodeProps, useStoreState} from 'react-flow-renderer';
 import {classNames} from 'shared/utils';
 import {NodeDataModel} from 'core/api';
@@ -14,12 +14,13 @@ import MenuItem from 'components/ui-kit/menu-item';
 import {useDispatch, useSelector} from 'react-redux';
 import {RootState} from 'store';
 import {
-    addAnswer, addEdge, changeAnswer,
+    addAnswer, changeAnswer,
     changeNeedAnswer, changePosition,
     changeReplica,
     changeWaitingTime,
-    removeAllAnswers, removeAllOutputsEdge, removeAnswer
+    removeAnswer
 } from 'store/features/scenario/view';
+import ReplicaInput from 'modules/scenario/view/components/elements/replica-element/components/replica-input';
 
 export interface Button {
     name: string,
@@ -39,9 +40,9 @@ const _buttons: Button[] = [
     {name: '0', isUsed: false},
 ];
 
-const ReplicaElement = ({id, data, selected, dragHandle, xPos, yPos, isDragging}: NodeProps<NodeDataModel>) => {
+const ReplicaElement = React.memo(({id, data, selected, dragHandle, xPos, yPos, isDragging}: NodeProps<NodeDataModel>) => {
     // const {} = useSelector((state: RootState) => state.scenarioView);
-    const {nodes, edges} = useStoreState((state) => state);
+    // const {nodes, edges} = useStoreState((state) => state);
     // console.log({nodes, edges});
     const dispatch = useDispatch();
     const [menu, setMenu] = useState<{ buttons: Button[], isShow: boolean }>({
@@ -98,8 +99,8 @@ const ReplicaElement = ({id, data, selected, dragHandle, xPos, yPos, isDragging}
         dispatch(changeNeedAnswer({elementId: id, isNeed: !data.needAnswer}));
     };
 
-    const onChangeText = (e: React.ChangeEvent<HTMLInputElement>) => {
-        dispatch(changeReplica({elementId: id, replica: e.currentTarget.value}));
+    const onChangeReplica = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+        dispatch(changeReplica({elementId: id, replica: e.target.value}));
     };
 
     const onChangeWaitingTime = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -122,12 +123,15 @@ const ReplicaElement = ({id, data, selected, dragHandle, xPos, yPos, isDragging}
 
     return (
         <Card isActive={selected || isFocus}
-              className={classNames(styles.replicaWrapper, 'replica-wrapper', selected || isFocus ? styles.selected : '',
+              className={classNames(styles.replicaWrapper, 'element-wrapper', selected || isFocus ? styles.selected : '',
                   data.needAnswer ? styles.extended : '')}
               disableHover={true} onFocus={onFocus} onBlur={onBlur}>
             <div className={styles.replica}>
                 <div className={classNames(styles.title, 'draggable-handle')}>Реплика</div>
-                <Input type={'text'} className={styles.textInput} value={data.replica} onChange={onChangeText}/>
+                {/*<Input type={'text'} className={styles.textInput} value={data.replica} onChange={onChangeReplica}/>*/}
+
+                <ReplicaInput value={data.replica} onChange={onChangeReplica}/>
+
                 {(selected || isFocus || data.needAnswer) && <div className={styles.waitingTime}>
                     <span className={styles.label}>
                         Ожидание ответа
@@ -202,6 +206,6 @@ const ReplicaElement = ({id, data, selected, dragHandle, xPos, yPos, isDragging}
             <Handle type={'source'} position={Position.Bottom} className={classNames(styles.handle, styles.round)}/>}
         </Card>
     );
-};
+});
 
 export default ReplicaElement;

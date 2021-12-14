@@ -5,8 +5,10 @@ import {classNames} from 'shared/utils';
 import {changePosition} from 'store/features/scenario/view';
 import {useDispatch} from 'react-redux';
 import {NodeDataModel} from 'core/api';
+import Card from 'components/ui-kit/card';
 
-const StartElement = ({id, data, selected, dragHandle, xPos, yPos, isDragging}: NodeProps<NodeDataModel>) => {
+const StartElement = React.memo((
+    {id, data, selected, dragHandle, xPos, yPos, isDragging}: NodeProps<NodeDataModel>) => {
     const dispatch = useDispatch();
 
     useEffect(() => {
@@ -16,12 +18,13 @@ const StartElement = ({id, data, selected, dragHandle, xPos, yPos, isDragging}: 
         // eslint-disable-next-line
     }, [isDragging]);
     return (
-        <div className={classNames(styles.start, 'draggable-handle')}>
+        <Card className={classNames(styles.start, 'draggable-handle', 'element-wrapper', 'start-wrapper')}
+              disableHover={true} isActive={selected}>
             Старт
             <Handle type={'source'} position={Position.Bottom} className={classNames(styles.handle, styles.round)}/>
-        </div>
+        </Card>
     );
-};
+});
 
 export default StartElement;
 

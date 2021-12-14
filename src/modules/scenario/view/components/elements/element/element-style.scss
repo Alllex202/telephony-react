@@ -1,0 +1,54 @@
+.element-wrapper.card {
+  border-radius: 2px;
+
+  &:hover > .card-border-active {
+  }
+
+  .card-border {
+    border: 1px solid var(--scenario-element-border);
+    border-radius: 2px;
+  }
+
+  .card-border-active {
+    border-radius: 2px;
+  }
+
+  .card-content {
+    //padding: 12px;
+  }
+}
+
+.card {
+  &.finish-wrapper {
+    border-radius: 2px 2px 25px 25px;
+
+    .card-border {
+      border-radius: 2px 2px 25px 25px;
+    }
+
+    .card-border-active {
+      border-radius: 2px 2px 25px 25px;
+    }
+  }
+
+  &.start-wrapper {
+    border-radius: 25px 25px 2px 2px;
+
+    .card-border {
+      border-radius: 25px 25px 2px 2px;
+    }
+
+    .card-border-active {
+      border-radius: 25px 25px 2px 2px;
+    }
+  }
+
+  &.finish-wrapper, &.start-wrapper {
+    .card-content {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+  }
+}
+

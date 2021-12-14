@@ -1,0 +1,27 @@
+.replicaInput {
+
+  width: 100%;
+  outline: none;
+  background-color: var(--input-fill);
+  font: var(--font-body-bold);
+  border-radius: 4px;
+  transition: .2s border;
+
+  height: 100px;
+  margin-top: 14px;
+  padding: 12px;
+  font: var(--font-body-medium);
+  border: 1px solid var(--scenario-input-border);
+  resize: none;
+
+  &:focus {
+    //padding: 0 16px 0;
+
+    border: 1px solid var(--scenario-input-border-focus);
+  }
+}
+
+.dropdown {
+  margin-top: 50px;
+  z-index: 500;
+}

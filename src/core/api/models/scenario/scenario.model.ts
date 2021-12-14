@@ -5,6 +5,7 @@ export interface ScenarioModel {
     name: string,
     nodes: NodeModel[],
     rootId: string | number,
+    variables: string[],
 }
 
 export interface EdgeModel {

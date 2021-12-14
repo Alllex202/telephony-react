@@ -22,18 +22,6 @@
       cursor: grab;
     }
 
-    .textInput {
-      height: 44px;
-      margin-top: 14px;
-      padding: 0 12px;
-      font: var(--font-body-medium);
-      border: 1px solid var(--scenario-input-border);
-
-      &:focus {
-        border: 1px solid var(--scenario-input-border-focus);
-      }
-    }
-
     .waitingTime {
       display: flex;
       flex-direction: row;

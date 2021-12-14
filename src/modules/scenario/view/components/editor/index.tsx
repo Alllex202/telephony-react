@@ -5,17 +5,18 @@ import ReactFlow, {
     BackgroundVariant,
     Connection,
     Controls,
-    Edge,
+    Edge, Elements,
     NodeTypesType,
-    OnLoadParams
+    OnLoadParams,
 } from 'react-flow-renderer';
 import {useDispatch, useSelector} from 'react-redux';
 import {RootState} from 'store';
-import {addEdge, addNode} from 'store/features/scenario/view';
+import {addEdge, addNode, removeElements} from 'store/features/scenario/view';
 import {NodeType} from 'core/api';
 import StartElement from '../elements/start-element';
 import FinishElement from '../elements/finish-element';
 import ReplicaElement from '../elements/replica-element';
+import {copy} from 'shared/utils';
 
 const typesElements: NodeTypesType = {
     START: StartElement,
@@ -23,7 +24,7 @@ const typesElements: NodeTypesType = {
     REPLICA: ReplicaElement,
 };
 
-const ScenarioEditor = () => {
+const ScenarioEditor = React.memo(() => {
     const {elements} = useSelector((state: RootState) => state.scenarioView);
     const dispatch = useDispatch();
     const reactFlowWrapper = useRef<HTMLDivElement | null>(null);
@@ -58,6 +59,10 @@ const ScenarioEditor = () => {
         dispatch(addNode({nodeType, position}));
     };
 
+    const onElementsRemove = (elements: Elements) => {
+        dispatch(removeElements(elements));
+    };
+
     return (
         <div className={styles.wrapper} ref={reactFlowWrapper}>
             <ReactFlow
@@ -69,6 +74,8 @@ const ScenarioEditor = () => {
                 onLoad={onLoad}
                 onDragOver={onDragOver}
                 onDrop={onDrop}
+                deleteKeyCode={46}
+                onElementsRemove={onElementsRemove}
                 // snapToGrid={true}
                 // snapGrid={[20, 20]}
             >
@@ -77,6 +84,6 @@ const ScenarioEditor = () => {
             </ReactFlow>
         </div>
     );
-};
+});
 
 export default ScenarioEditor;

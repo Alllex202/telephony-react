@@ -1,13 +1,9 @@
 @import "../handle/styles";
 
 .start {
-  display: flex;
-  align-items: center;
-  justify-content: center;
   width: 172px;
   height: 48px;
-  background-color: var(--scenario-element-fill);
   font: var(--font-h3-medium);
-  border: 1px solid var(--scenario-element-border);
-  border-radius: 25px 25px 2px 2px;
+  border-radius: 2px 2px 25px 25px;
+  cursor: grab;
 }

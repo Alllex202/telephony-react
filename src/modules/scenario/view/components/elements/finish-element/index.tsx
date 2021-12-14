@@ -5,8 +5,11 @@ import {classNames} from 'shared/utils';
 import {useDispatch} from 'react-redux';
 import {changePosition} from 'store/features/scenario/view';
 import {NodeDataModel} from 'core/api';
+import Card from 'components/ui-kit/card';
 
-const FinishElement = ({id, data, selected, dragHandle, xPos, yPos, isDragging}: NodeProps<NodeDataModel>) => {
+const FinishElement = React.memo((
+    {id, data, selected, dragHandle, xPos, yPos, isDragging}: NodeProps<NodeDataModel>
+) => {
     const dispatch = useDispatch();
 
     useEffect(() => {
@@ -15,12 +18,15 @@ const FinishElement = ({id, data, selected, dragHandle, xPos, yPos, isDragging}:
         }
         // eslint-disable-next-line
     }, [isDragging]);
+
     return (
-        <div className={classNames(styles.finish, 'draggable-handle')}>
+        <Card isActive={selected}
+              className={classNames(styles.finish, 'draggable-handle', 'element-wrapper', 'finish-wrapper')}
+              disableHover={true}>
             Финиш
             <Handle type={'target'} position={Position.Top} className={styles.handle}/>
-        </div>
+        </Card>
     );
-};
+});
 
 export default FinishElement;

@@ -4,8 +4,17 @@ import {FetchStatuses} from 'shared/types/fetch-statuses';
 import {getScenarioById, putScenarioById} from 'core/api/requests';
 import {DefaultAxiosError} from 'shared/types/base-response-error';
 import {RootState} from 'store';
-import {addEdge as _addEdge, ArrowHeadType, Connection, Edge, Node, XYPosition} from 'react-flow-renderer';
-import {getUniqueId} from 'shared/utils';
+import {
+    addEdge as _addEdge,
+    ArrowHeadType,
+    Connection,
+    Edge,
+    Elements,
+    Node,
+    removeElements as _removeElements,
+    XYPosition
+} from 'react-flow-renderer';
+import {copy, getUniqueId} from 'shared/utils';
 
 export type ElementType = Node<NodeDataModel> | Edge;
 
@@ -13,12 +22,16 @@ export interface ScenarioState {
     data: ScenarioModel | null,
     elements: ElementType[],
     statuses: FetchStatuses,
+    startId: string | null,
+    finishId: string | null
 }
 
 const initialState: ScenarioState = {
     data: null,
     elements: [],
     statuses: {},
+    startId: null,
+    finishId: null,
 };
 
 export const scenarioSlice = createSlice({
@@ -37,19 +50,15 @@ export const scenarioSlice = createSlice({
         setData: (state: ScenarioState, action: PayloadAction<ScenarioModel>) => {
             state.data = action.payload;
         },
-        resetData: (state: ScenarioState) => {
-            state.data = null;
-        },
         setElements: (state: ScenarioState, action: PayloadAction<ElementType[]>) => {
             state.elements = action.payload;
-        },
-        resetElements: (state: ScenarioState) => {
-            state.elements = [];
         },
         resetAll: (state: ScenarioState) => {
             state.data = null;
             state.statuses = {};
             state.elements = [];
+            state.startId = null;
+            state.finishId = null;
         },
         changeReplica: (state: ScenarioState, action: PayloadAction<{ elementId: string, replica: string }>) => {
             state.elements = state.elements.map(el => el.id === action.payload.elementId ? {
@@ -124,22 +133,16 @@ export const scenarioSlice = createSlice({
                     }
                 } : el);
         },
-        removeAllAnswers: (state: ScenarioState, action: PayloadAction<{ elementId: string }>) => {
-            state.elements = state.elements.map(el => el.id === action.payload.elementId ? {
-                ...el,
-                data: {...el.data, answers: null}
-            } : el);
-        },
         addEdge: (state: ScenarioState, action: PayloadAction<Edge | Connection>) => {
+            if (state.elements.some(el => (el as Edge).source === action.payload.target &&
+                (el as Edge).target === action.payload.source)) return;
+
             state.elements = _addEdge({
                 ...action.payload,
                 id: getUniqueId(),
                 arrowHeadType: ArrowHeadType.Arrow,
                 type: 'smoothstep',
             }, state.elements);
-        },
-        removeAllOutputsEdge: (state: ScenarioState, action: PayloadAction<string>) => {
-            state.elements = state.elements.filter(el => (el as Edge).source !== action.payload);
         },
         changeName: (state: ScenarioState, action: PayloadAction<string>) => {
             if (state.data) {
@@ -153,12 +156,16 @@ export const scenarioSlice = createSlice({
             } : el);
         },
         addNode: (state: ScenarioState, action: PayloadAction<{ nodeType: NodeType, position: XYPosition }>) => {
+            if ((action.payload.nodeType === 'START' && state.startId) ||
+                (action.payload.nodeType === 'FINISH' && state.finishId)) {
+                return;
+            }
+
             const newNode: Node<NodeDataModel> = {
                 id: getUniqueId(),
                 type: action.payload.nodeType,
                 position: action.payload.position,
                 data: {
-                    // id: getUniqueId(),
                     needAnswer: false,
                     waitingTime: 0,
                     replica: '',
@@ -166,11 +173,29 @@ export const scenarioSlice = createSlice({
                 selectable: true,
                 dragHandle: '.draggable-handle',
             };
+            if (action.payload.nodeType === 'START') {
+                state.startId = newNode.id;
+            }
+            if (action.payload.nodeType === 'FINISH') {
+                state.finishId = newNode.id;
+            }
             state.elements = [...state.elements, newNode];
         },
-        // removeEdges: (state: ScenarioState, action: PayloadAction<Edge[]>) => {
-        //     state.elements = removeElements(action.payload, state.elements);
-        // }
+        removeElements: (state: ScenarioState, action: PayloadAction<Elements>) => {
+            if (action.payload.some(el => (el as NodeModel).type === 'START')) {
+                state.startId = null;
+            }
+            if (action.payload.some(el => (el as NodeModel).type === 'FINISH')) {
+                state.finishId = null;
+            }
+            state.elements = _removeElements(action.payload, state.elements);
+        },
+        setStartId: (state: ScenarioState, action: PayloadAction<string>) => {
+            state.startId = action.payload;
+        },
+        setFinishId: (state: ScenarioState, action: PayloadAction<string>) => {
+            state.finishId = action.payload;
+        },
     },
 });
 
@@ -183,6 +208,12 @@ export const getScenario = (id: string | number) => (dispatch: Dispatch, getStat
         .then(res => {
             const elements: ElementType[] = [];
             res.data.nodes.forEach((value) => {
+                if (value.type === 'START') {
+                    dispatch(setStartId(value.id));
+                }
+                if (value.type === 'FINISH') {
+                    dispatch(setFinishId(value.id));
+                }
                 elements.push({
                     id: value.id,
                     position: value.position,
@@ -247,22 +278,21 @@ export const {
     setSuccess,
     setError,
     setData,
-    resetData,
     resetAll,
-    resetElements,
     setElements,
     changeReplica,
     changeWaitingTime,
     changeNeedAnswer,
     removeAnswer,
-    removeAllAnswers,
     addAnswer,
     changeAnswer,
     addEdge,
-    removeAllOutputsEdge,
     changeName,
     changePosition,
     addNode,
+    removeElements,
+    setFinishId,
+    setStartId,
 } = scenarioSlice.actions;
 
 export const scenarioReducers = scenarioSlice.reducer;
