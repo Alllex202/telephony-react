@@ -7,6 +7,7 @@ import {RootState} from 'store';
 import ScenarioViewHeader from './components/header';
 import ScenarioLeftSidebar from './components/left-sidebar';
 import ScenarioEditor from './components/editor';
+import ScenarioRightSidebar from 'modules/scenario/view/components/right-sidebar';
 
 const ScenarioView = () => {
     const {statuses} = useSelector((state: RootState) => state.scenarioView);
@@ -16,6 +17,7 @@ const ScenarioView = () => {
 
     useEffect(() => {
         dispatch(getScenario(scenarioId));
+
         return () => {
             dispatch(resetAll());
         };
@@ -34,6 +36,7 @@ const ScenarioView = () => {
         <div className={styles.wrapper}>
             <ScenarioViewHeader/>
             <ScenarioLeftSidebar/>
+            <ScenarioRightSidebar/>
             <ScenarioEditor/>
         </div>
     );

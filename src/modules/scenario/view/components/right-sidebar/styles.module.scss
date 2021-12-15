@@ -1,0 +1,14 @@
+.rightSidebar {
+  position: absolute;
+  right: 0;
+  top: 180px;
+  width: 220px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  background-color: var(--main-fill);
+  border-top-left-radius: 2px;
+  border-bottom-left-radius: 2px;
+  box-shadow: 0 2px 8px var(--shadow);
+  z-index: 1000;
+}
