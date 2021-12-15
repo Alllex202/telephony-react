@@ -17,7 +17,7 @@ const ScenarioEditorControls = () => {
     };
 
     const onFitView = () => {
-        fitView({duration: 200, padding: 0.35}, 200);
+        fitView({duration: 500, padding: 0.35}, 500);
     };
 
     return (
