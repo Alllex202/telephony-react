@@ -42,6 +42,7 @@ const ReplicaInput = React.memo(({value, onChange}: Props) => {
             className={styles.replicaInput}
             dropdownClassName={styles.dropdown}
             onKeyDown={onKeyDown}
+            maxLength={1000}
         />
     );
 });
