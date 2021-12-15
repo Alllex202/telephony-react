@@ -13,6 +13,7 @@ type Props = {
     classNameWrapper?: string,
     classNameInput?: string,
     classNameText?: string
+    className?: string
 }
 
 function InputName({
@@ -23,10 +24,11 @@ function InputName({
                        callback,
                        classNameWrapper,
                        classNameInput,
-                       classNameText
+                       classNameText,
+                       className
                    }: Props) {
     return (
-        <div className={classNames(styles.name)}>
+        <div className={classNames(styles.name, className)}>
             <HiddenInput text={text} lastText={lastText} setLastText={setLastText} setText={setText} callback={callback}
                          classInput={classNames(styles.input, classNameInput)}
                          classText={classNames(styles.view, classNameText)} classWrapper={classNameWrapper}/>

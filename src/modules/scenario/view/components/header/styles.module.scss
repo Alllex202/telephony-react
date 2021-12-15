@@ -1,43 +1,45 @@
 .header {
   position: absolute;
   display: flex;
-  flex-direction: column;
-  gap: 24px;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
   top: 0;
   left: 50%;
   width: 1000px;
   padding: 24px;
   background-color: var(--main-fill);
-  border-radius: 2px;
+  border-bottom-left-radius: 2px;
+  border-bottom-right-radius: 2px;
   transform: translateX(-50%);
+  box-shadow: 0 2px 8px var(--shadow);
   z-index: 1000;
 
-  .controls {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-
-    .back {
-      padding-left: 8px;
-      padding-right: 12px;
-    }
-
-    .save {
-      padding-left: 44px;
-      padding-right: 44px;
-    }
+  .back {
+    padding-left: 8px;
+    padding-right: 12px;
   }
 
-  .name {
-    max-width: 900px;
+  .save {
+    padding-left: 44px;
+    padding-right: 44px;
+  }
 
-    .nameInput {
-      max-width: 900px;
-    }
+  .nameWrapper {
+    justify-content: center;
 
-    .nameText {
-      max-width: 900px;
+    .name {
+      max-width: 570px;
+
+      .nameInput {
+        max-width: 570px;
+        font: var(--font-h3-bold);
+      }
+
+      .nameText {
+        max-width: 570px;
+        font: var(--font-h3-bold);
+      }
     }
   }
 }
