@@ -104,6 +104,11 @@ const ReplicaElement = React.memo(({id, data, selected, dragHandle, xPos, yPos, 
     };
 
     const onChangeWaitingTime = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const {value} = e.target;
+        dispatch(changeWaitingTime({elementId: id, time: Number(value) * 1000}));
+    };
+
+    const onBlurWaitingTime = (e: React.ChangeEvent<HTMLInputElement>) => {
         const {value, min, max} = e.target;
         const time = Math.max(Number(min), Math.min(Number(max), Number(value)));
         dispatch(changeWaitingTime({elementId: id, time: time * 1000}));
@@ -128,10 +133,7 @@ const ReplicaElement = React.memo(({id, data, selected, dragHandle, xPos, yPos, 
               disableHover={true} onFocus={onFocus} onBlur={onBlur}>
             <div className={styles.replica}>
                 <div className={classNames(styles.title, 'draggable-handle')}>Реплика</div>
-                {/*<Input type={'text'} className={styles.textInput} value={data.replica} onChange={onChangeReplica}/>*/}
-
                 <ReplicaInput value={data.replica} onChange={onChangeReplica}/>
-
                 {(selected || isFocus || data.needAnswer) && <div className={styles.waitingTime}>
                     <span className={styles.label}>
                         Ожидание ответа
@@ -144,7 +146,7 @@ const ReplicaElement = React.memo(({id, data, selected, dragHandle, xPos, yPos, 
                         <div className={styles.wrapper}>
                             <Input type={'number'} className={styles.timeInput}
                                    value={data.needAnswer ? data.waitingTime / 1000 : 5}
-                                   onChange={onChangeWaitingTime} min={5} max={60}/>
+                                   onChange={onChangeWaitingTime} min={5} max={60} onBlur={onBlurWaitingTime}/>
                             <span className={styles.postfix}>сек</span>
                         </div>
                         <div className={styles.answers}>

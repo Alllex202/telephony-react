@@ -13,13 +13,15 @@ type Props = {
     onKeyPress?: React.KeyboardEventHandler<HTMLInputElement>,
     max?: number | string,
     min?: number | string,
+    onBlur?: React.FocusEventHandler<HTMLInputElement>,
 }
 
-function Input({value, onChange, placeholder, className, type, name, autoCompleteOff, id, onKeyPress, max, min}: Props) {
+function Input({value, onChange, placeholder, className, type, name, autoCompleteOff, id, onKeyPress, max,
+                   min, onBlur}: Props) {
     return (
         <input className={[styles.input, className].join(' ')} type={type} placeholder={placeholder} onChange={onChange}
                value={value} name={name} autoComplete={autoCompleteOff ? 'new-password' : ''} id={id}
-               onKeyPress={onKeyPress} max={max} min={min}/>
+               onKeyPress={onKeyPress} max={max} min={min} onBlur={onBlur}/>
     );
 }
 
