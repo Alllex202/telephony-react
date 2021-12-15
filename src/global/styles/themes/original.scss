@@ -91,6 +91,7 @@
   --scenario-element-fill: var(--white);
   --scenario-element-border: var(--grey-900);
   --scenario-element-border-select: var(--orange-400);
+  --scenario-element-preview-border: var(--grey-200);
   --scenario-handle-fill: var(--white);
   --scenario-handle-border: var(--grey-900);
   --scenario-input-border: var(--trasparent);
@@ -98,4 +99,6 @@
   --scenario-separator: var(--grey-100);
   --scenario-answer-circle-fill: var(--grey-50);
   --scenario-answer-circle-fill-hover: var(--grey-100);
+
+  --shadow: rgba(33, 35, 36, 0.2);
 }
