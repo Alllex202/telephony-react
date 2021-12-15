@@ -1,10 +1,9 @@
-import React, {useCallback, useRef, useState} from 'react';
+import React, {useCallback, useEffect, useRef, useState} from 'react';
 import styles from './styles.module.scss';
 import ReactFlow, {
     Background,
     BackgroundVariant,
-    Connection, ControlButton,
-    Controls,
+    Connection,
     Edge, Elements,
     NodeTypesType,
     OnLoadParams, useZoomPanHelper,
@@ -16,8 +15,6 @@ import {NodeType} from 'core/api';
 import StartElement from '../elements/start-element';
 import FinishElement from '../elements/finish-element';
 import ReplicaElement from '../elements/replica-element';
-import {copy} from 'shared/utils';
-import BtnCircle from 'components/ui-kit/btn-circle';
 
 const typesElements: NodeTypesType = {
     START: StartElement,
@@ -26,10 +23,18 @@ const typesElements: NodeTypesType = {
 };
 
 const ScenarioEditor = React.memo(() => {
-    const {elements} = useSelector((state: RootState) => state.scenarioView);
+    const {elements, isLoaded} = useSelector((state: RootState) => state.scenarioView);
+    const {fitView} = useZoomPanHelper();
     const dispatch = useDispatch();
     const reactFlowWrapper = useRef<HTMLDivElement | null>(null);
     const [reactFlowInstance, setReactFlowInstance] = useState<OnLoadParams | null>(null);
+
+    useEffect(() => {
+        if (isLoaded) {
+            fitView({duration: 500, padding: 0.35}, 500);
+        }
+        // eslint-disable-next-line
+    }, [isLoaded]);
 
     const onConnect = useCallback((params: Edge | Connection) => {
         dispatch(addEdge(params));

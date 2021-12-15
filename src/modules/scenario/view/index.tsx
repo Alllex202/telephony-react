@@ -12,37 +12,33 @@ import {ReactFlowProvider} from 'react-flow-renderer';
 import ScenarioEditorControls from 'modules/scenario/view/components/controls';
 
 const ScenarioView = () => {
-    const {statuses} = useSelector((state: RootState) => state.scenarioView);
-    // console.log(elements);
+    const {isLoaded} = useSelector((state: RootState) => state.scenarioView);
     const dispatch = useDispatch();
     const {scenarioId} = useParams<{ scenarioId: string }>();
 
     useEffect(() => {
         dispatch(getScenario(scenarioId));
 
-        document.body.setAttribute('overflow', 'hidden');
+        // document.body.setAttribute('overflow', 'hidden');
         return () => {
-            document.body.removeAttribute('overflow');
+            // document.body.removeAttribute('overflow');
             dispatch(resetAll());
         };
         // eslint-disable-next-line
     }, []);
 
-    if (statuses.isLoading) {
-        return <h1>Загрузка...</h1>;
-    }
-
-    if (statuses.isError) {
-        return <h1 className={styles.error}>Ошибка | {statuses.error}</h1>;
-    }
-
     return (
         <ReactFlowProvider>
             <div className={styles.wrapper}>
                 <ScenarioViewHeader/>
-                <ScenarioLeftSidebar/>
-                <ScenarioRightSidebar/>
-                <ScenarioEditorControls/>
+                {
+                    isLoaded &&
+                    <>
+                        <ScenarioLeftSidebar/>
+                        <ScenarioRightSidebar/>
+                        <ScenarioEditorControls/>
+                    </>
+                }
                 <ScenarioEditor/>
             </div>
         </ReactFlowProvider>

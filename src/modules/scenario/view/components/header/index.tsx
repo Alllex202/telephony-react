@@ -6,7 +6,7 @@ import routes from 'routing/routes';
 import Btn from 'components/ui-kit/btn';
 import {useDispatch, useSelector} from 'react-redux';
 import {RootState} from 'store';
-import {changeName, resetAll, saveScenario} from 'store/features/scenario/view';
+import {changeName, saveScenario} from 'store/features/scenario/view';
 import InputName from 'modules/components/input-name';
 
 const ScenarioViewHeader = () => {
@@ -20,13 +20,6 @@ const ScenarioViewHeader = () => {
         setName(data?.name || '');
         setLastName(data?.name || '');
     }, [data?.name]);
-
-    useEffect(() => {
-        return () => {
-            dispatch(resetAll());
-        };
-        // eslint-disable-next-line
-    }, []);
 
     const handlerBack = () => {
         history.push(routes.scenarioList());
@@ -46,9 +39,12 @@ const ScenarioViewHeader = () => {
         <div className={styles.header}>
             <BtnSecond text={'Назад'} className={styles.back} onClick={handlerBack} iconType={'round'}
                        iconName={'arrow_back'}/>
-            <InputName text={name} lastText={lastName} setText={setName} setLastText={setLastName}
-                       classNameWrapper={styles.name} classNameInput={styles.nameInput}
-                       classNameText={styles.nameText} callback={onChangeName} className={styles.nameWrapper}/>
+            {statuses.isLoading
+                ? <div className={styles.loading}>Загрузка...</div>
+                : <InputName text={name} lastText={lastName} setText={setName} setLastText={setLastName}
+                             classNameWrapper={styles.name} classNameInput={styles.nameInput}
+                             classNameText={styles.nameText} callback={onChangeName} className={styles.nameWrapper}/>}
+
             <Btn text={'Сохранить'} className={styles.save} onClick={handlerSave} disabled={statuses.isLoading}/>
         </div>
     );

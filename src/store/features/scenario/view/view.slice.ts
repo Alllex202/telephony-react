@@ -14,7 +14,7 @@ import {
     removeElements as _removeElements,
     XYPosition
 } from 'react-flow-renderer';
-import {copy, getUniqueId} from 'shared/utils';
+import {getUniqueId} from 'shared/utils';
 
 export type ElementType = Node<NodeDataModel> | Edge;
 
@@ -22,6 +22,7 @@ export interface ScenarioState {
     data: ScenarioModel | null,
     elements: ElementType[],
     statuses: FetchStatuses,
+    isLoaded: boolean,
     startId: string | null,
     finishId: string | null
 }
@@ -30,6 +31,7 @@ const initialState: ScenarioState = {
     data: null,
     elements: [],
     statuses: {},
+    isLoaded: false,
     startId: null,
     finishId: null,
 };
@@ -47,6 +49,9 @@ export const scenarioSlice = createSlice({
         setError: (state: ScenarioState, action: PayloadAction<string>) => {
             state.statuses = {isError: true, error: action.payload};
         },
+        setLoaded: (state: ScenarioState) => {
+            state.isLoaded = true;
+        },
         setData: (state: ScenarioState, action: PayloadAction<ScenarioModel>) => {
             state.data = action.payload;
         },
@@ -59,6 +64,7 @@ export const scenarioSlice = createSlice({
             state.elements = [];
             state.startId = null;
             state.finishId = null;
+            state.isLoaded = false;
         },
         changeReplica: (state: ScenarioState, action: PayloadAction<{ elementId: string, replica: string }>) => {
             state.elements = state.elements.map(el => el.id === action.payload.elementId ? {
@@ -242,6 +248,7 @@ export const getScenario = (id: string | number) => (dispatch: Dispatch, getStat
             dispatch(setData(res.data));
             dispatch(setElements(elements));
             dispatch(setSuccess());
+            dispatch(setLoaded());
         })
         .catch((err: DefaultAxiosError) => {
             dispatch(setError(err.response?.data.message || 'Ошибка при получении сценария'));
@@ -299,6 +306,7 @@ export const {
     removeElements,
     setFinishId,
     setStartId,
+    setLoaded
 } = scenarioSlice.actions;
 
 export const scenarioReducers = scenarioSlice.reducer;
