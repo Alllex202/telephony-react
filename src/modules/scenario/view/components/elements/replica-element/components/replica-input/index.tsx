@@ -1,9 +1,7 @@
-import React, {useState} from 'react';
-import TextareaAutocomplete, {TextareaProps} from '@webscopeio/react-textarea-autocomplete';
-import TextareaAutosize from 'react-autosize-textarea';
+import React from 'react';
+import TextareaAutocomplete from '@webscopeio/react-textarea-autocomplete';
 import '@webscopeio/react-textarea-autocomplete/style.css';
 import styles from './styles.module.scss';
-import {getUniqueId} from 'shared/utils';
 import {useSelector} from 'react-redux';
 import {RootState} from 'store';
 
@@ -15,8 +13,6 @@ type Props = {
 const ReplicaInput = React.memo(({value, onChange}: Props) => {
     const {data} = useSelector((state: RootState) => state.scenarioView);
     const variables = data?.variables ?? [];
-
-    const [vars] = useState([getUniqueId(), getUniqueId()]);
 
     const onKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
         if (e.key === 'Enter') {
@@ -41,8 +37,6 @@ const ReplicaInput = React.memo(({value, onChange}: Props) => {
             onChange={onChange}
             value={value}
             movePopupAsYouType={true}
-            // renderToBody={true}
-            // textAreaComponent={Textarea}
             loadingComponent={Loading}
             containerClassName={''}
             className={styles.replicaInput}
@@ -58,7 +52,3 @@ const Item = (props: any) => {
     return <div>{props.entity}</div>;
 };
 const Loading = () => <div>Loading</div>;
-
-const Textarea = React.forwardRef((props: any, ref) => {
-    return <TextareaAutosize {...props} ref={ref}/>;
-});

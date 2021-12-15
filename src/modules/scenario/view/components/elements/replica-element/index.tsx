@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import styles from './styles.module.scss';
 import 'modules/scenario/view/components/elements/element/element-style.scss';
-import {Handle, Position, NodeProps, useStoreState} from 'react-flow-renderer';
+import {Handle, Position, NodeProps} from 'react-flow-renderer';
 import {classNames} from 'shared/utils';
 import {NodeDataModel} from 'core/api';
 import Input from 'components/ui-kit/input';
@@ -11,8 +11,7 @@ import BtnCircle from 'components/ui-kit/btn-circle';
 import Icon from 'components/ui-kit/icon';
 import Menu from 'components/ui-kit/menu';
 import MenuItem from 'components/ui-kit/menu-item';
-import {useDispatch, useSelector} from 'react-redux';
-import {RootState} from 'store';
+import {useDispatch} from 'react-redux';
 import {
     addAnswer, changeAnswer,
     changeNeedAnswer, changePosition,
@@ -40,10 +39,8 @@ const _buttons: Button[] = [
     {name: '0', isUsed: false},
 ];
 
-const ReplicaElement = React.memo(({id, data, selected, dragHandle, xPos, yPos, isDragging}: NodeProps<NodeDataModel>) => {
-    // const {} = useSelector((state: RootState) => state.scenarioView);
-    // const {nodes, edges} = useStoreState((state) => state);
-    // console.log({nodes, edges});
+const ReplicaElement = React.memo(({id, data, selected, dragHandle, xPos, yPos,
+                                       isDragging}: NodeProps<NodeDataModel>) => {
     const dispatch = useDispatch();
     const [menu, setMenu] = useState<{ buttons: Button[], isShow: boolean }>({
         buttons: _buttons,
@@ -52,7 +49,6 @@ const ReplicaElement = React.memo(({id, data, selected, dragHandle, xPos, yPos, 
     const [isFocus, setFocus] = useState<boolean>(false);
     const [anchorEl, setAnchorEl] = useState<Element | null>(null);
     const [oldButton, setOldButton] = useState<string | null>(null);
-    // console.log(data.answers)
 
     useEffect(() => {
         const buttons = menu.buttons.map(btn =>
