@@ -15,6 +15,10 @@
 body {
   background-color: var(--body-fill);
   overflow-y: scroll;
+
+  &[overflow='hidden'] {
+    overflow: hidden;
+  }
 }
 
 button {

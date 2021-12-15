@@ -18,7 +18,9 @@ const ScenarioView = () => {
     useEffect(() => {
         dispatch(getScenario(scenarioId));
 
+        document.body.setAttribute('overflow', 'hidden');
         return () => {
+            document.body.removeAttribute('overflow');
             dispatch(resetAll());
         };
         // eslint-disable-next-line
