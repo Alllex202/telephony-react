@@ -8,6 +8,8 @@ import ScenarioViewHeader from './components/header';
 import ScenarioLeftSidebar from './components/left-sidebar';
 import ScenarioEditor from './components/editor';
 import ScenarioRightSidebar from 'modules/scenario/view/components/right-sidebar';
+import {ReactFlowProvider} from 'react-flow-renderer';
+import ScenarioEditorControls from 'modules/scenario/view/components/controls';
 
 const ScenarioView = () => {
     const {statuses} = useSelector((state: RootState) => state.scenarioView);
@@ -35,12 +37,15 @@ const ScenarioView = () => {
     }
 
     return (
-        <div className={styles.wrapper}>
-            <ScenarioViewHeader/>
-            <ScenarioLeftSidebar/>
-            <ScenarioRightSidebar/>
-            <ScenarioEditor/>
-        </div>
+        <ReactFlowProvider>
+            <div className={styles.wrapper}>
+                <ScenarioViewHeader/>
+                <ScenarioLeftSidebar/>
+                <ScenarioRightSidebar/>
+                <ScenarioEditorControls/>
+                <ScenarioEditor/>
+            </div>
+        </ReactFlowProvider>
     );
 };
 

@@ -3,11 +3,11 @@ import styles from './styles.module.scss';
 import ReactFlow, {
     Background,
     BackgroundVariant,
-    Connection,
+    Connection, ControlButton,
     Controls,
     Edge, Elements,
     NodeTypesType,
-    OnLoadParams,
+    OnLoadParams, useZoomPanHelper,
 } from 'react-flow-renderer';
 import {useDispatch, useSelector} from 'react-redux';
 import {RootState} from 'store';
@@ -17,6 +17,7 @@ import StartElement from '../elements/start-element';
 import FinishElement from '../elements/finish-element';
 import ReplicaElement from '../elements/replica-element';
 import {copy} from 'shared/utils';
+import BtnCircle from 'components/ui-kit/btn-circle';
 
 const typesElements: NodeTypesType = {
     START: StartElement,
@@ -80,7 +81,6 @@ const ScenarioEditor = React.memo(() => {
                 // snapGrid={[20, 20]}
             >
                 <Background variant={BackgroundVariant.Lines} className={styles.grid} gap={112}/>
-                <Controls className={styles.controls}/>
             </ReactFlow>
         </div>
     );
