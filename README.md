@@ -51,7 +51,7 @@ REACT_APP_SERVER_API=путь к api (без последнего слэша "/"
 В консоли с открытой папкой корня проекта ввести
 
 ```no-highlight
-npm run
+npm start
 ```
 
 Проект запустится по адресу <a href="http://localhost:3000">localhost:3000</a>
