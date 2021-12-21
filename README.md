@@ -10,7 +10,7 @@
 
 ---
 
-<h2 name="#installation">Установка</h2>
+<h2 name="installation">Установка</h2>
 <p>(<a href="#context">к содержанию</a>)</p>
 
 - <a href="#nodejs">Node.js</a>
@@ -45,7 +45,7 @@ REACT_APP_SERVER_API=путь к api (без последнего слэша "/"
 
 ---
 
-<h2 name="#run">Запуск</h2>
+<h2 name="run">Запуск</h2>
 <p>(<a href="#context">к содержанию</a>)</p>
 
 В консоли с открытой папкой корня проекта ввести
