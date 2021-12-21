@@ -1,7 +1,15 @@
 import {createSlice, Dispatch, PayloadAction} from '@reduxjs/toolkit';
-import {AnswerModel, EdgeModel, NodeDataModel, NodeModel, NodeType, ScenarioModel} from 'core/api';
+import {
+    AnswerModel,
+    CallersBaseHeaderModel,
+    EdgeModel,
+    NodeDataModel,
+    NodeModel,
+    NodeType,
+    ScenarioModel
+} from 'core/api';
 import {FetchStatuses} from 'shared/types/fetch-statuses';
-import {getScenarioById, putScenarioById} from 'core/api/requests';
+import {getCallersBaseHeaderById, getScenarioById, putScenarioById} from 'core/api/requests';
 import {DefaultAxiosError} from 'shared/types/base-response-error';
 import {RootState} from 'store';
 import {
@@ -24,7 +32,8 @@ export interface ScenarioState {
     statuses: FetchStatuses,
     isLoaded: boolean,
     startId: string | null,
-    finishId: string | null
+    finishId: string | null,
+    callersBaseHeader: CallersBaseHeaderModel | null,
 }
 
 const initialState: ScenarioState = {
@@ -34,6 +43,7 @@ const initialState: ScenarioState = {
     isLoaded: false,
     startId: null,
     finishId: null,
+    callersBaseHeader: null,
 };
 
 export const scenarioSlice = createSlice({
@@ -208,6 +218,15 @@ export const scenarioSlice = createSlice({
         setFinishId: (state: ScenarioState, action: PayloadAction<string>) => {
             state.finishId = action.payload;
         },
+        setConnectionId: (state: ScenarioState, action: PayloadAction<null | number | string>) => {
+            if (!state.data) {
+                return;
+            }
+            state.data.connectedCallerBaseId = action.payload;
+        },
+        setCallerBaseHeader: (state: ScenarioState, action: PayloadAction<CallersBaseHeaderModel | null>) => {
+            state.callersBaseHeader = action.payload;
+        },
     },
 });
 
@@ -253,6 +272,21 @@ export const getScenario = (id: string | number) => (dispatch: Dispatch, getStat
         .catch((err: DefaultAxiosError) => {
             dispatch(setError(err.response?.data.message || 'Ошибка при получении сценария'));
         });
+};
+
+export const getCallersBaseHeader = () => (dispatch: Dispatch, getState: () => RootState) => {
+    const state = getState();
+    if (state.scenarioView.data?.connectedCallerBaseId) {
+        getCallersBaseHeaderById(state.scenarioView.data.connectedCallerBaseId)
+            .then((res) => {
+                dispatch(setCallerBaseHeader(res.data));
+            })
+            .catch((err: DefaultAxiosError) => {
+                console.log(err);
+            });
+    } else {
+        dispatch(setCallerBaseHeader(null));
+    }
 };
 
 export const saveScenario = () => (dispatch: Dispatch, getState: () => RootState) => {
@@ -306,7 +340,9 @@ export const {
     removeElements,
     setFinishId,
     setStartId,
-    setLoaded
+    setLoaded,
+    setConnectionId,
+    setCallerBaseHeader
 } = scenarioSlice.actions;
 
 export const scenarioReducers = scenarioSlice.reducer;

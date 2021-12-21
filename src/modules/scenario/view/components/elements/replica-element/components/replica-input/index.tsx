@@ -4,6 +4,7 @@ import '@webscopeio/react-textarea-autocomplete/style.css';
 import styles from './styles.module.scss';
 import {useSelector} from 'react-redux';
 import {RootState} from 'store';
+import {CallersBaseHeaderColumnModel} from 'core/api';
 
 type Props = {
     value: string,
@@ -11,8 +12,8 @@ type Props = {
 };
 
 const ReplicaInput = React.memo(({value, onChange}: Props) => {
-    const {data} = useSelector((state: RootState) => state.scenarioView);
-    const variables = data?.variables ?? [];
+    const {callersBaseHeader} = useSelector((state: RootState) => state.scenarioView);
+    const variables = callersBaseHeader?.columns ?? [];
 
     const onKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
         if (e.key === 'Enter') {
@@ -25,11 +26,12 @@ const ReplicaInput = React.memo(({value, onChange}: Props) => {
             trigger={{
                 '*': {
                     dataProvider: (token) => {
-                        return variables.filter((el) => el.toLowerCase().includes(token.toLowerCase()));
+                        return variables.filter((el) => el.currentName.toLowerCase().includes(token.toLowerCase()));
                     },
                     component: Item,
-                    output: (text, trigger) => {
-                        return `${trigger}${text}`;
+                    output: (item, trigger) => {
+                        const _item = (item as CallersBaseHeaderColumnModel);
+                        return `*${_item.currentName}`
                     },
                 },
             }}
@@ -50,6 +52,6 @@ const ReplicaInput = React.memo(({value, onChange}: Props) => {
 export default ReplicaInput;
 
 const Item = (props: any) => {
-    return <div>{props.entity}</div>;
+    return <div>{props.entity.currentName}</div>;
 };
 const Loading = () => <div>Loading</div>;

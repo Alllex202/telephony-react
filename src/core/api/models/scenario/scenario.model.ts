@@ -1,11 +1,11 @@
 export interface ScenarioModel {
+    connectedCallerBaseId: number | string | null,
     created: number,
     edges: EdgeModel[],
     id: string,
     name: string,
     nodes: NodeModel[],
     rootId: string | number,
-    variables: string[],
 }
 
 export interface EdgeModel {
