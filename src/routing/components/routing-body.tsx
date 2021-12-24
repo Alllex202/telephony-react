@@ -6,6 +6,8 @@ import CallersBaseAddBody from "modules/callers-base/add/body";
 import Test from "modules/test/body";
 import CallersBaseViewBody from "modules/callers-base/view/body";
 import ScenarioListBody from "modules/scenario/list/body";
+import CallingListBody from 'modules/calling/list/body';
+import CallingCreatingBody from 'modules/calling/creating/body';
 
 export default function RoutingBody() {
     return (
@@ -14,6 +16,8 @@ export default function RoutingBody() {
             <Route path={routes.callersBaseAdd()} exact component={CallersBaseAddBody}/>
             <Route path={routes.callersBaseView(':callersBaseId')} exact component={CallersBaseViewBody}/>
             <Route path={routes.scenarioList()} exact component={ScenarioListBody}/>
+            <Route path={routes.callingList()} exact component={CallingListBody}/>
+            <Route path={routes.callingCreate()} exact component={CallingCreatingBody}/>
             <Route path={routes.test()} exact component={Test}/>
         </Switch>
     );
