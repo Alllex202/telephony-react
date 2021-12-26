@@ -21,9 +21,18 @@ function Input({
                    min, onBlur,
                }: Props) {
     return (
-        <input className={[styles.input, className].join(' ')} type={type} placeholder={placeholder} onChange={onChange}
-               value={value} name={name} autoComplete={autoCompleteOff ? 'new-password' : ''} id={id}
-               onKeyPress={onKeyPress} max={max} min={min} onBlur={onBlur}/>
+        <input className={[styles.input, className].join(' ')}
+               type={type}
+               placeholder={placeholder}
+               onChange={onChange}
+               value={value}
+               name={name}
+               autoComplete={autoCompleteOff ? 'new-password' : ''}
+               id={id}
+               onKeyPress={onKeyPress}
+               max={max}
+               min={min}
+               onBlur={onBlur}/>
     );
 }
 

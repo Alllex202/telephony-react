@@ -10,8 +10,10 @@ type Props = {
 const Modal = ({children, isOpened, setOpen}: Props) => {
 
     return (
-        <div className={[styles.modal, !isOpened && styles.hide].join(' ')} onClick={() => setOpen(false)}>
-            <div className={styles.content} onClick={event => event.stopPropagation()}>
+        <div className={[styles.modal, !isOpened && styles.hide].join(' ')}
+             onClick={() => setOpen(false)}>
+            <div className={styles.content}
+                 onClick={event => event.stopPropagation()}>
                 {children}
             </div>
         </div>

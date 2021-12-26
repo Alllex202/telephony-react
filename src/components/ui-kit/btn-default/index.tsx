@@ -16,9 +16,12 @@ type Props = {
 function BtnDefault({text, iconName, iconType, iconPosition, className, onClick, disabled}: Props) {
     return (
         <button className={classNames(styles.btn, iconPosition === 'end' ? styles.reverse : '', className ?? '')}
-                onClick={onClick} disabled={disabled}>
+                onClick={onClick}
+                disabled={disabled}>
             {iconName &&
-            <Icon name={iconName} type={iconType} className={classNames(styles.icon, styles.icon_custom, 'icon')}/>}
+            <Icon name={iconName}
+                  type={iconType}
+                  className={classNames(styles.icon, styles.icon_custom, 'icon')}/>}
             <div className={classNames(styles.text, 'text')}>{text}</div>
         </button>
     );

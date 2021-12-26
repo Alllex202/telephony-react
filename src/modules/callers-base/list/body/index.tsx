@@ -63,7 +63,9 @@ function CallersBaseListBody() {
              : <>
                  <div className={bodyStyles.list}>
                      {callersBaseList.map(el =>
-                         <CallersBaseCard key={el.id} data={el} className={bodyStyles.card}/>,
+                         <CallersBaseCard key={el.id}
+                                          data={el}
+                                          className={bodyStyles.card}/>,
                      )}
                  </div>
              </>
@@ -72,7 +74,9 @@ function CallersBaseListBody() {
             <div className={bodyStyles.footer}>
                 {statuses.isLoading && <h1>Загрузка...</h1>}
                 {!isLastPage && !statuses.isLoading &&
-                <BtnSecond className={bodyStyles.more} onClick={loadNextPage} text={'Показать больше'}/>}
+                <BtnSecond className={bodyStyles.more}
+                           onClick={loadNextPage}
+                           text={'Показать больше'}/>}
             </div>
         </>
     );

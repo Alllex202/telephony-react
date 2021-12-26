@@ -24,7 +24,9 @@ const FinishElement = React.memo((
               className={classNames(styles.finish, 'draggable-handle', 'element-wrapper', 'finish-wrapper')}
               disableHover={true}>
             Финиш
-            <Handle type={'target'} position={Position.Top} className={styles.handle}/>
+            <Handle type={'target'}
+                    position={Position.Top}
+                    className={styles.handle}/>
         </Card>
     );
 });

@@ -1,4 +1,4 @@
-@import "../handle/styles";
+@import '../handle/styles';
 
 .replicaWrapper {
   width: 172px;
@@ -88,6 +88,7 @@
                   top: -40px;
                   opacity: 0;
                 }
+
                 &:last-child {
                   top: 0;
                   opacity: 1;

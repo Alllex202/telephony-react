@@ -7,8 +7,12 @@ import CallersBaseViewRightSidebar from 'modules/callers-base/view/right-sidebar
 export default function RoutingRightSidebar() {
     return (
         <Switch>
-            <Route path={routes.callersBaseView(':callersBaseId')} exact component={CallersBaseViewRightSidebar}/>
-            <Route path={routes.test()} exact component={TestRightSidebar}/>
+            <Route path={routes.callersBaseView(':callersBaseId')}
+                   exact
+                   component={CallersBaseViewRightSidebar}/>
+            <Route path={routes.test()}
+                   exact
+                   component={TestRightSidebar}/>
         </Switch>
     );
 }

@@ -55,7 +55,9 @@ const CallingListBody = () => {
              : <>
                  <div className={bodyStyles.list}>
                      {callingList.map(el =>
-                         <CallingCard key={el.id} data={el} className={bodyStyles.card}/>,
+                         <CallingCard key={el.id}
+                                      data={el}
+                                      className={bodyStyles.card}/>,
                      )}
                  </div>
              </>
@@ -64,7 +66,9 @@ const CallingListBody = () => {
             <div className={bodyStyles.footer}>
                 {statuses.isLoading && <h1>Загрузка...</h1>}
                 {!isLastPage && !statuses.isLoading &&
-                <BtnSecond className={bodyStyles.more} onClick={loadNextPage} text={'Показать больше'}/>}
+                <BtnSecond className={bodyStyles.more}
+                           onClick={loadNextPage}
+                           text={'Показать больше'}/>}
             </div>
         </>
     );

@@ -29,10 +29,17 @@ function InputName({
                    }: Props) {
     return (
         <div className={classNames(styles.name, className)}>
-            <HiddenInput text={text} lastText={lastText} setLastText={setLastText} setText={setText} callback={callback}
+            <HiddenInput text={text}
+                         lastText={lastText}
+                         setLastText={setLastText}
+                         setText={setText}
+                         callback={callback}
                          classInput={classNames(styles.input, classNameInput)}
-                         classText={classNames(styles.view, classNameText)} classWrapper={classNameWrapper}/>
-            <Icon name={'edit'} type={'round'} className={styles.icon}/>
+                         classText={classNames(styles.view, classNameText)}
+                         classWrapper={classNameWrapper}/>
+            <Icon name={'edit'}
+                  type={'round'}
+                  className={styles.icon}/>
         </div>
     );
 }

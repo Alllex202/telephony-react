@@ -10,7 +10,11 @@ type Props = {
 
 const Switch = ({checked, onChange, disabled}: Props) => {
     return (
-        <MuiSwitch checked={checked} onChange={onChange} disabled={disabled} disableRipple className={'switchCustom'}/>
+        <MuiSwitch checked={checked}
+                   onChange={onChange}
+                   disabled={disabled}
+                   disableRipple
+                   className={'switchCustom'}/>
     );
 };
 

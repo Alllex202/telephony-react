@@ -24,7 +24,8 @@ function MenuItem({onClick, children, isDanger, iconName, iconPosition, iconType
             disableRipple
             className={classNames('custom', isDanger ? 'danger' : '', iconPosition === 'end' ? 'reverse' : '')}
         >
-            {iconName && <Icon name={iconName} type={iconType}/>}
+            {iconName && <Icon name={iconName}
+                               type={iconType}/>}
             {children}
         </MuiMenuItem>
     );

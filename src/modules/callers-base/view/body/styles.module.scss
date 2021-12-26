@@ -5,12 +5,14 @@
   justify-content: space-between;
 
   .name {
-    max-width:600px;
+    max-width: 600px;
+
     .nameInput {
-      max-width:600px;
+      max-width: 600px;
     }
+
     .nameText {
-      max-width:600px;
+      max-width: 600px;
     }
   }
 
@@ -20,6 +22,7 @@
     align-items: center;
   }
 }
+
 .table {
   display: flex;
   width: 100%;

@@ -63,39 +63,75 @@ function Test() {
                 sunt?
             </p>
             <div className={styles.test}>
-                <BtnDefault className={styles.default} text={'Иконка start'} iconType={'round'} iconName={'upload'}
+                <BtnDefault className={styles.default}
+                            text={'Иконка start'}
+                            iconType={'round'}
+                            iconName={'upload'}
                             iconPosition={'start'}/>
-                <BtnDefault className={styles.default} text={'Иконка end'} iconType={'round'} iconName={'upload'}
+                <BtnDefault className={styles.default}
+                            text={'Иконка end'}
+                            iconType={'round'}
+                            iconName={'upload'}
                             iconPosition={'end'}/>
-                <BtnDefault className={styles.default} text={'Без иконки'}/>
+                <BtnDefault className={styles.default}
+                            text={'Без иконки'}/>
 
-                <Btn text={'Иконка start'} iconType={'round'} iconName={'upload'} iconPosition={'start'}/>
-                <Btn text={'Иконка end'} iconType={'round'} iconName={'upload'} iconPosition={'end'}/>
+                <Btn text={'Иконка start'}
+                     iconType={'round'}
+                     iconName={'upload'}
+                     iconPosition={'start'}/>
+                <Btn text={'Иконка end'}
+                     iconType={'round'}
+                     iconName={'upload'}
+                     iconPosition={'end'}/>
                 <Btn text={'Без иконки'}/>
 
-                <BtnSecond text={'Иконка start'} iconType={'round'} iconName={'upload'} iconPosition={'start'}/>
-                <BtnSecond text={'Иконка end'} iconType={'round'} iconName={'upload'} iconPosition={'end'}/>
+                <BtnSecond text={'Иконка start'}
+                           iconType={'round'}
+                           iconName={'upload'}
+                           iconPosition={'start'}/>
+                <BtnSecond text={'Иконка end'}
+                           iconType={'round'}
+                           iconName={'upload'}
+                           iconPosition={'end'}/>
                 <BtnSecond text={'Без иконки'}/>
-                <BtnSecond text={'Menu open'} onClick={handleClick}/>
+                <BtnSecond text={'Menu open'}
+                           onClick={handleClick}/>
 
-                <div style={{width: 'fit-content', display: 'flex', alignItems: 'center'}} className={styles.default}>
-                    <BtnCircleDefault iconName={'upload'} iconType={'round'}/>
+                <div style={{width: 'fit-content', display: 'flex', alignItems: 'center'}}
+                     className={styles.default}>
+                    <BtnCircleDefault iconName={'upload'}
+                                      iconType={'round'}/>
                 </div>
-                <div style={{width: 'fit-content', display: 'flex', alignItems: 'center'}} className={styles.default}>
-                    <BtnCircleDefault iconName={'upload'} iconType={'round'} isActive={true}/>
+                <div style={{width: 'fit-content', display: 'flex', alignItems: 'center'}}
+                     className={styles.default}>
+                    <BtnCircleDefault iconName={'upload'}
+                                      iconType={'round'}
+                                      isActive={true}/>
                 </div>
 
-                <BtnToggle iconName={'account_circle'} iconType={'round'}/>
-                <BtnToggle iconName={'account_circle'} iconType={'round'} isActive={true}/>
+                <BtnToggle iconName={'account_circle'}
+                           iconType={'round'}/>
+                <BtnToggle iconName={'account_circle'}
+                           iconType={'round'}
+                           isActive={true}/>
 
-                <BtnCircle iconName={'upload'} iconType={'round'}/>
-                <BtnCircle iconName={'upload'} iconType={'round'} isActive={true}/>
+                <BtnCircle iconName={'upload'}
+                           iconType={'round'}/>
+                <BtnCircle iconName={'upload'}
+                           iconType={'round'}
+                           isActive={true}/>
 
-                <Input placeholder={'Пароль'} type={'password'} autoCompleteOff/>
-                <Input placeholder={'Строка ввода'} type={'text'}/>
-                <Input placeholder={'Коротка строка'} className={styles.input_short}/>
+                <Input placeholder={'Пароль'}
+                       type={'password'}
+                       autoCompleteOff/>
+                <Input placeholder={'Строка ввода'}
+                       type={'text'}/>
+                <Input placeholder={'Коротка строка'}
+                       className={styles.input_short}/>
 
-                <Btn text={'Modal open'} onClick={() => setModal(true)}/>
+                <Btn text={'Modal open'}
+                     onClick={() => setModal(true)}/>
 
                 <Card><>123</>
                 </Card>
@@ -104,20 +140,32 @@ function Test() {
                     <Tag text={'#Пример тега'}/>
                 </div>
 
-                <InputTransparent type={'text'} placeholder={'Прозрачная строка ввода'}/>
+                <InputTransparent type={'text'}
+                                  placeholder={'Прозрачная строка ввода'}/>
 
                 <div style={{width: '50%', display: 'flex'}}>
-                    <HiddenInput setText={setText} text={text} lastText={lastText} setLastText={setLastText}/>
+                    <HiddenInput setText={setText}
+                                 text={text}
+                                 lastText={lastText}
+                                 setLastText={setLastText}/>
                 </div>
             </div>
             {modal &&
-            <Modal isOpened={modal} setOpen={setModal}>Старое решение<br/>А нужно ли вообще модальное окно?</Modal>}
-            <Menu open={!!anchorEl} onClose={handleClose} anchorEl={anchorEl}>
+            <Modal isOpened={modal}
+                   setOpen={setModal}>Старое решение<br/>А нужно ли вообще модальное окно?</Modal>}
+            <Menu open={!!anchorEl}
+                  onClose={handleClose}
+                  anchorEl={anchorEl}>
                 <MenuItem>Кнопка 1</MenuItem>
                 <MenuItem>Кнопка 2</MenuItem>
                 <MenuItem>Очень большая Кнопка 3</MenuItem>
-                <MenuItem isDanger iconName={'delete_forever'} iconType={'round'}>Опасность слева</MenuItem>
-                <MenuItem isDanger iconName={'delete_forever'} iconType={'round'} iconPosition={'end'}>Опасность
+                <MenuItem isDanger
+                          iconName={'delete_forever'}
+                          iconType={'round'}>Опасность слева</MenuItem>
+                <MenuItem isDanger
+                          iconName={'delete_forever'}
+                          iconType={'round'}
+                          iconPosition={'end'}>Опасность
                     справа</MenuItem>
             </Menu>
         </div>

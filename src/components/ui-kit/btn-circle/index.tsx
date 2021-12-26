@@ -14,9 +14,12 @@ type Props = {
 
 function BtnCircle({className, iconName, iconType, onClick, isActive, activeStyle}: Props) {
     return (
-        <BtnCircleDefault iconName={iconName} iconType={iconType}
+        <BtnCircleDefault iconName={iconName}
+                          iconType={iconType}
                           className={classNames(className, styles.btn)}
-                          isActive={isActive} onClick={onClick} activeStyle={activeStyle || styles.active}/>
+                          isActive={isActive}
+                          onClick={onClick}
+                          activeStyle={activeStyle || styles.active}/>
     );
 }
 

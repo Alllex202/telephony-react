@@ -36,10 +36,15 @@ const CallingCreatingHeader = () => {
 
     return (
         <div className={styles.header}>
-            <BtnSecond text={'Отменить'} className={styles.cancel} onClick={onCancel} iconName={'arrow_back'}
+            <BtnSecond text={'Отменить'}
+                       className={styles.cancel}
+                       onClick={onCancel}
+                       iconName={'arrow_back'}
                        iconType={'round'}
                        iconPosition={'start'}/>
-            <Btn text={'Запустить обзванивание'} className={styles.save} onClick={onSave}/>
+            <Btn text={'Запустить обзванивание'}
+                 className={styles.save}
+                 onClick={onSave}/>
         </div>
     );
 };

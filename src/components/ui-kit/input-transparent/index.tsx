@@ -31,9 +31,19 @@ const InputTransparent = React.forwardRef(({
                                                onKeyDown,
                                            }: Props, ref: ForwardedRef<HTMLInputElement>) => {
     return (
-        <input className={[styles.input, className].join(' ')} type={type} placeholder={placeholder} onChange={onChange}
-               value={value} name={name} autoComplete={autoCompleteOff ? 'new-password' : ''} id={id}
-               onKeyPress={onKeyPress} maxLength={maxLength} onBlur={onBlur} ref={ref} onKeyDown={onKeyDown}/>
+        <input className={[styles.input, className].join(' ')}
+               type={type}
+               placeholder={placeholder}
+               onChange={onChange}
+               value={value}
+               name={name}
+               autoComplete={autoCompleteOff ? 'new-password' : ''}
+               id={id}
+               onKeyPress={onKeyPress}
+               maxLength={maxLength}
+               onBlur={onBlur}
+               ref={ref}
+               onKeyDown={onKeyDown}/>
     );
 });
 

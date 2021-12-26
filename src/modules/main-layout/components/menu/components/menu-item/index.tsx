@@ -10,7 +10,9 @@ type Props = {
 
 const MenuItem = ({to, label}: Props) => {
     return (
-        <NavLink className={styles.menuItem} to={to} activeClassName={styles.active}>{label}</NavLink>
+        <NavLink className={styles.menuItem}
+                 to={to}
+                 activeClassName={styles.active}>{label}</NavLink>
     );
 };
 

@@ -12,13 +12,27 @@ import CallingListHeader from 'modules/calling/list/header';
 export default function RoutingHeader() {
     return (
         <Switch>
-            <Route path={routes.callersBaseList()} exact component={CallersBaseListHeader}/>
-            <Route path={routes.callersBaseAdd()} exact component={CallersBaseAddHeader}/>
-            <Route path={routes.callersBaseView(':callersBaseId')} exact component={CallersBaseViewHeader}/>
-            <Route path={routes.scenarioList()} exact component={ScenarioListHeader}/>
-            <Route path={routes.callingList()} exact component={CallingListHeader}/>
-            <Route path={routes.callingCreate()} exact component={CallingCreatingHeader}/>
-            <Route path={routes.test()} exact component={TestHeader}/>
+            <Route path={routes.callersBaseList()}
+                   exact
+                   component={CallersBaseListHeader}/>
+            <Route path={routes.callersBaseAdd()}
+                   exact
+                   component={CallersBaseAddHeader}/>
+            <Route path={routes.callersBaseView(':callersBaseId')}
+                   exact
+                   component={CallersBaseViewHeader}/>
+            <Route path={routes.scenarioList()}
+                   exact
+                   component={ScenarioListHeader}/>
+            <Route path={routes.callingList()}
+                   exact
+                   component={CallingListHeader}/>
+            <Route path={routes.callingCreate()}
+                   exact
+                   component={CallingCreatingHeader}/>
+            <Route path={routes.test()}
+                   exact
+                   component={TestHeader}/>
             <Route children={<>Стандартная шапка</>}/>
         </Switch>
     );

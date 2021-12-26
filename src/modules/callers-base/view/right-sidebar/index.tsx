@@ -31,8 +31,10 @@ function CallersBaseViewRightSidebar() {
                              'овероверовердлинноеслово',
                          ]
                              .map((el, ind) =>
-                                 <span key={ind} className={styles.linkWrapper}>
-                                        <Link to={routes.callingView('')} className={styles.link}>{el}</Link>
+                                 <span key={ind}
+                                       className={styles.linkWrapper}>
+                                        <Link to={routes.callingView('')}
+                                              className={styles.link}>{el}</Link>
                                     </span>)}
                      </Info>
                  </>}

@@ -73,11 +73,17 @@ function CallersBaseViewBody() {
             {header &&
             <>
                 <div className={styles.head}>
-                    <InputName text={name} lastText={lastName} setText={setName} setLastText={setLastName}
-                               callback={onSave} classNameWrapper={styles.name} classNameInput={styles.nameInput}
+                    <InputName text={name}
+                               lastText={lastName}
+                               setText={setName}
+                               setLastText={setLastName}
+                               callback={onSave}
+                               classNameWrapper={styles.name}
+                               classNameInput={styles.nameInput}
                                classNameText={styles.nameText}/>
                     <div className={styles.toggleBlock}>
-                        <Switch checked={onlyInvalid} onChange={onChangeFilter}/>
+                        <Switch checked={onlyInvalid}
+                                onChange={onChangeFilter}/>
                         <span>Невалидные</span>
                     </div>
                 </div>

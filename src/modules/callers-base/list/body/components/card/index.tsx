@@ -54,15 +54,25 @@ function CallersBaseCard({data, className}: Props) {
     }
 
     return (
-        <Link to={routes.callersBaseView(data.id)} className={statuses.isLoading ? 'd-none' : ''}>
-            <Card className={classNames(className, cardStyles.card)} isActive={!!anchorEl}>
+        <Link to={routes.callersBaseView(data.id)}
+              className={statuses.isLoading ? 'd-none' : ''}>
+            <Card className={classNames(className, cardStyles.card)}
+                  isActive={!!anchorEl}>
                 <div className={cardStyles.wrapper}>
-                    <div onClick={e => e.preventDefault()} className={cardStyles.options_wrapper}>
-                        <BtnCircle iconName={'more_horiz'} iconType={'round'} className={cardStyles.options_btn}
+                    <div onClick={e => e.preventDefault()}
+                         className={cardStyles.options_wrapper}>
+                        <BtnCircle iconName={'more_horiz'}
+                                   iconType={'round'}
+                                   className={cardStyles.options_btn}
                                    onClick={openOptions}
                                    isActive={!!anchorEl}/>
-                        <Menu anchorEl={anchorEl} open={!!anchorEl} onClose={closeOptions}>
-                            <MenuItem onClick={handlerDelete} isDanger iconName={'delete_forever'} iconType={'round'}>
+                        <Menu anchorEl={anchorEl}
+                              open={!!anchorEl}
+                              onClose={closeOptions}>
+                            <MenuItem onClick={handlerDelete}
+                                      isDanger
+                                      iconName={'delete_forever'}
+                                      iconType={'round'}>
                                 Удалить
                             </MenuItem>
                         </Menu>
@@ -71,21 +81,27 @@ function CallersBaseCard({data, className}: Props) {
                         <h2 className={cardStyles.title}>{data.name}</h2>
                         <div className={cardStyles.description}>
                             <div className={cardStyles.info}>
-                                <Icon name={'calendar_today'} type={'round'} className={cardStyles.icon}/>
+                                <Icon name={'calendar_today'}
+                                      type={'round'}
+                                      className={cardStyles.icon}/>
                                 {formatDate(data.created)}
                             </div>
                             <div className={cardStyles.info}>
-                                <Icon name={'table_rows'} type={'round'} className={cardStyles.icon}/>
+                                <Icon name={'table_rows'}
+                                      type={'round'}
+                                      className={cardStyles.icon}/>
                                 {data.countCallers} эл
                             </div>
                         </div>
                     </div>
                     <div className={cardStyles.tags}>
                         {data.columns.slice(0, 5)
-                            .map(el => <Tag text={`#${el.nameInTable}`} key={el.id}
+                            .map(el => <Tag text={`#${el.nameInTable}`}
+                                            key={el.id}
                                             className={cardStyles.tag}/>)}
                         {data.columns.length - 5 > 0 &&
-                        <Tag text={`+${data.columns.length - 5}`} className={cardStyles.tag}/>}
+                        <Tag text={`+${data.columns.length - 5}`}
+                             className={cardStyles.tag}/>}
                     </div>
                 </div>
             </Card>

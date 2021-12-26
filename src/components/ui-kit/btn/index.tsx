@@ -16,9 +16,13 @@ type Props = {
 
 function Btn({text, iconName, iconType, iconPosition, className, onClick, isActive, disabled}: Props) {
     return (
-        <BtnDefault text={text} className={classNames(styles.btn, isActive ? styles.active : '', className ?? '')}
+        <BtnDefault text={text}
+                    className={classNames(styles.btn, isActive ? styles.active : '', className ?? '')}
                     onClick={onClick}
-                    iconName={iconName} iconPosition={iconPosition} iconType={iconType} disabled={disabled}/>
+                    iconName={iconName}
+                    iconPosition={iconPosition}
+                    iconType={iconType}
+                    disabled={disabled}/>
     );
 }
 

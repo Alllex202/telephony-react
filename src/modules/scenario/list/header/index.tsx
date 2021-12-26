@@ -84,18 +84,30 @@ const ScenarioListHeader = () => {
                 iconPosition={'end'}
                 disabled={creating.isLoading}
             />
-            <Input value={input} onChange={e => setInput(e.target.value)} className={headerStyles.search}
-                   type={'text'} placeholder={'Поиск'} autoCompleteOff onKeyPress={handlerSearch}/>
-            <BtnSecond text={text} iconName={'sort'} iconType={'round'} onClick={handlerOpenSort}
+            <Input value={input}
+                   onChange={e => setInput(e.target.value)}
+                   className={headerStyles.search}
+                   type={'text'}
+                   placeholder={'Поиск'}
+                   autoCompleteOff
+                   onKeyPress={handlerSearch}/>
+            <BtnSecond text={text}
+                       iconName={'sort'}
+                       iconType={'round'}
+                       onClick={handlerOpenSort}
                        className={classNames(headerStyles.sort, direction === 'ASC' ? headerStyles.revert : '')}
-                       isActive={!!anchorEl} iconPosition={'end'}/>
-            <Menu anchorEl={anchorEl} open={!!anchorEl} onClose={handlerCloseSort}>
+                       isActive={!!anchorEl}
+                       iconPosition={'end'}/>
+            <Menu anchorEl={anchorEl}
+                  open={!!anchorEl}
+                  onClose={handlerCloseSort}>
                 {sortItems.map((el, index) =>
-                    <MenuItem key={index} onClick={() => handlerSortItem({
-                        sortBy: el.sortBy,
-                        direction: el.direction,
-                        text: el.text,
-                    })}>
+                    <MenuItem key={index}
+                              onClick={() => handlerSortItem({
+                                  sortBy: el.sortBy,
+                                  direction: el.direction,
+                                  text: el.text,
+                              })}>
                         {el.text}
                     </MenuItem>)}
             </Menu>

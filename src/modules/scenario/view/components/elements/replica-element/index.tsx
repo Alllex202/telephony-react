@@ -131,29 +131,40 @@ const ReplicaElement = React.memo(({
               className={classNames(styles.replicaWrapper, 'element-wrapper', selected || isFocus ? styles.selected
                                                                                                   : '',
                   data.needAnswer ? styles.extended : '')}
-              disableHover={true} onFocus={onFocus} onBlur={onBlur}>
+              disableHover={true}
+              onFocus={onFocus}
+              onBlur={onBlur}>
             <div className={styles.replica}>
                 <div className={classNames(styles.title, 'draggable-handle')}>Реплика</div>
-                <ReplicaInput value={data.replica} onChange={onChangeReplica}/>
+                <ReplicaInput value={data.replica}
+                              onChange={onChangeReplica}/>
                 {(selected || isFocus || data.needAnswer) && <div className={styles.waitingTime}>
                     <span className={styles.label}>
                         Ожидание ответа
                     </span>
-                    <Switch checked={data.needAnswer} onChange={onChangeNeedAnswer}/>
+                    <Switch checked={data.needAnswer}
+                            onChange={onChangeNeedAnswer}/>
                 </div>}
                 {
                     data.needAnswer &&
                     <div className={styles.options}>
                         <div className={styles.wrapper}>
-                            <Input type={'number'} className={styles.timeInput}
+                            <Input type={'number'}
+                                   className={styles.timeInput}
                                    value={data.needAnswer ? data.waitingTime / 1000 : 5}
-                                   onChange={onChangeWaitingTime} min={5} max={60} onBlur={onBlurWaitingTime}/>
+                                   onChange={onChangeWaitingTime}
+                                   min={5}
+                                   max={60}
+                                   onBlur={onBlurWaitingTime}/>
                             <span className={styles.postfix}>сек</span>
                         </div>
                         <div className={styles.answers}>
                             {data.answers?.map(ans =>
-                                <div key={ans.button} className={styles.answer}>
-                                    <Handle type={'source'} id={ans.id} position={Position.Left}
+                                <div key={ans.button}
+                                     className={styles.answer}>
+                                    <Handle type={'source'}
+                                            id={ans.id}
+                                            position={Position.Left}
                                             className={classNames(styles.handle, styles.round, styles.left)}/>
                                     {
                                         data.answers && data.answers.length > 1 ?
@@ -163,7 +174,9 @@ const ReplicaElement = React.memo(({
                                                 <span className={styles.number}>{ans.button}</span>
                                             </div>
                                             <div className={classNames(styles.container, styles.movable)}>
-                                                <Icon name={'remove'} type={'round'} className={styles.icon}/>
+                                                <Icon name={'remove'}
+                                                      type={'round'}
+                                                      className={styles.icon}/>
                                             </div>
                                         </button> :
                                         <div className={styles.circle}>
@@ -176,7 +189,8 @@ const ReplicaElement = React.memo(({
                                     {
                                         menu.isShow &&
                                         <>
-                                            <BtnCircle iconName={'arrow_drop_down'} iconType={'round'}
+                                            <BtnCircle iconName={'arrow_drop_down'}
+                                                       iconType={'round'}
                                                        className={styles.dropDown}
                                                        onClick={(e) => onOpenMenu(e, ans.button)}/>
                                         </>
@@ -185,13 +199,18 @@ const ReplicaElement = React.memo(({
                             )}
                             {
                                 menu.isShow &&
-                                <button className={styles.circle} onClick={onAddAnswer}>
-                                    <Icon name={'add'} type={'round'} className={styles.icon}/>
+                                <button className={styles.circle}
+                                        onClick={onAddAnswer}>
+                                    <Icon name={'add'}
+                                          type={'round'}
+                                          className={styles.icon}/>
                                 </button>
                             }
                         </div>
 
-                        <Menu anchorEl={anchorEl} open={!!anchorEl} onClose={onCloseMenu}>
+                        <Menu anchorEl={anchorEl}
+                              open={!!anchorEl}
+                              onClose={onCloseMenu}>
                             {menu.buttons.map(btn => !btn.isUsed &&
                                 <MenuItem
                                     key={btn.name}
@@ -204,9 +223,13 @@ const ReplicaElement = React.memo(({
                 }
             </div>
 
-            <Handle type={'target'} position={Position.Top} className={styles.handle}/>
+            <Handle type={'target'}
+                    position={Position.Top}
+                    className={styles.handle}/>
             {!data.needAnswer &&
-            <Handle type={'source'} position={Position.Bottom} className={classNames(styles.handle, styles.round)}/>}
+            <Handle type={'source'}
+                    position={Position.Bottom}
+                    className={classNames(styles.handle, styles.round)}/>}
         </Card>
     );
 });

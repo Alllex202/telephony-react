@@ -15,7 +15,8 @@ function Card({children, className, isActive, disableHover, onFocus, onBlur}: Pr
     return (
         <div className={classNames(styles.card,
             className, isActive ? styles.active : '', 'card', disableHover ? styles.disableHover : '')}
-             onFocus={onFocus} onBlur={onBlur}>
+             onFocus={onFocus}
+             onBlur={onBlur}>
             <div className={classNames(styles.border, 'card-border')}/>
             <div
                 className={classNames(styles.border_active, 'card-border-active')}/>

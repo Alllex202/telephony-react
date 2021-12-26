@@ -37,15 +37,27 @@ const ScenarioViewHeader = () => {
 
     return (
         <div className={styles.header}>
-            <BtnSecond text={'Назад'} className={styles.back} onClick={handlerBack} iconType={'round'}
+            <BtnSecond text={'Назад'}
+                       className={styles.back}
+                       onClick={handlerBack}
+                       iconType={'round'}
                        iconName={'arrow_back'}/>
             {statuses.isLoading
              ? <div className={styles.loading}>Загрузка...</div>
-             : <InputName text={name} lastText={lastName} setText={setName} setLastText={setLastName}
-                          classNameWrapper={styles.name} classNameInput={styles.nameInput}
-                          classNameText={styles.nameText} callback={onChangeName} className={styles.nameWrapper}/>}
+             : <InputName text={name}
+                          lastText={lastName}
+                          setText={setName}
+                          setLastText={setLastName}
+                          classNameWrapper={styles.name}
+                          classNameInput={styles.nameInput}
+                          classNameText={styles.nameText}
+                          callback={onChangeName}
+                          className={styles.nameWrapper}/>}
 
-            <Btn text={'Сохранить'} className={styles.save} onClick={handlerSave} disabled={statuses.isLoading}/>
+            <Btn text={'Сохранить'}
+                 className={styles.save}
+                 onClick={handlerSave}
+                 disabled={statuses.isLoading}/>
         </div>
     );
 };

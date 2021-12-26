@@ -59,7 +59,10 @@ const CallingCreatingBody = () => {
     return (
         <div className={styles.wrapper}>
             <div className={styles.header}>
-                <InputName text={_name} lastText={lastName} setText={_setName} setLastText={setLastName}
+                <InputName text={_name}
+                           lastText={lastName}
+                           setText={_setName}
+                           setLastText={setLastName}
                            callback={onChangeName}/>
             </div>
             <div className={styles.form}>
@@ -72,7 +75,8 @@ const CallingCreatingBody = () => {
                         onChange={onSelectBase}
                         defaultValue={''}
                     >
-                        {bases?.map(el => <MenuItem key={el.id} value={el.id}>{el.name}</MenuItem>)}
+                        {bases?.map(el => <MenuItem key={el.id}
+                                                    value={el.id}>{el.name}</MenuItem>)}
                     </Select>
                 </FormControl>
                 <FormControl fullWidth>
@@ -84,11 +88,13 @@ const CallingCreatingBody = () => {
                         onChange={onSelectScenario}
                         defaultValue={''}
                     >
-                        {scenarios?.map(el => <MenuItem key={el.id} value={el.id}>{el.name}</MenuItem>)}
+                        {scenarios?.map(el => <MenuItem key={el.id}
+                                                        value={el.id}>{el.name}</MenuItem>)}
                     </Select>
                 </FormControl>
 
-                <input type={'datetime-local'} onChange={onChangeDateTime}/>
+                <input type={'datetime-local'}
+                       onChange={onChangeDateTime}/>
             </div>
         </div>
     );

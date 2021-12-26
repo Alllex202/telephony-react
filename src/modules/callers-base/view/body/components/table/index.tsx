@@ -88,8 +88,10 @@ const CallersBaseViewTable = React.memo(() => {
 
     return (
         <>
-            <div className={styles.wrapper} onScroll={handlerScroll}>
-                <Table stickyHeader className={'data-view'}>
+            <div className={styles.wrapper}
+                 onScroll={handlerScroll}>
+                <Table stickyHeader
+                       className={'data-view'}>
                     <TableHead>
                         <MuiTableRow>
                             <TableCell></TableCell>
@@ -100,7 +102,8 @@ const CallersBaseViewTable = React.memo(() => {
                                             <span className={styles.text}>
                                                 {variablesTypes && variablesTypes?.find(e => e.name === el.type)?.description}
                                             </span>
-                                            <BtnCircle iconName={'arrow_drop_down'} className={styles.btn}
+                                            <BtnCircle iconName={'arrow_drop_down'}
+                                                       className={styles.btn}
                                                        iconType={'round'}
                                                        onClick={e => handlerShowMenuType(e.currentTarget, el)}
                                                        isActive={!!anchorEl && selectedVariable?.id === el.id}
@@ -108,7 +111,8 @@ const CallersBaseViewTable = React.memo(() => {
                                         </div>
                                         <div className={styles.name}>
                                             {/*{el.currentName}*/}
-                                            <InputVariableName initState={el.currentName} el={el}
+                                            <InputVariableName initState={el.currentName}
+                                                               el={el}
                                                                conditionSave={conditionSaveVariablesName}
                                                                data={header}/>
                                         </div>
@@ -118,14 +122,19 @@ const CallersBaseViewTable = React.memo(() => {
                     </TableHead>
                     <TableBody>
                         {data?.map((el, ind) =>
-                            <TableRow key={el.id} el={el} ind={ind}/>)}
+                            <TableRow key={el.id}
+                                      el={el}
+                                      ind={ind}/>)}
                     </TableBody>
                 </Table>
             </div>
-            {variablesTypes && <Menu anchorEl={anchorEl} open={!!anchorEl} onClose={handlerHideMenuType}>
+            {variablesTypes && <Menu anchorEl={anchorEl}
+                                     open={!!anchorEl}
+                                     onClose={handlerHideMenuType}>
                 <div className={styles.menuWrapper}>
                     {variablesTypes?.map(el =>
-                        <MenuItem key={el.name} onClick={() => handlerChangeVariableType(el)}>
+                        <MenuItem key={el.name}
+                                  onClick={() => handlerChangeVariableType(el)}>
                             {el.description}
                         </MenuItem>)}
                 </div>
@@ -145,7 +154,8 @@ const TableRow = React.memo(({el, ind}: PropsRow) => {
             <TableCell>{ind + 1}</TableCell>
             {el.variables.map(el =>
                 // <TableCellRender key={el.id} el={el}/>
-                <TableCell key={el.id} className={!el.valid ? styles.invalidCell : ''}>
+                <TableCell key={el.id}
+                           className={!el.valid ? styles.invalidCell : ''}>
                     {el.value}
                 </TableCell>,
             )}

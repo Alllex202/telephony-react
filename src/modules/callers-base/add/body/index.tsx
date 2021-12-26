@@ -78,9 +78,14 @@ function CallersBaseAddBody() {
 
     return (
         <>
-            <InputName text={name} lastText={lastName} setText={setName} setLastText={setLastName}/>
+            <InputName text={name}
+                       lastText={lastName}
+                       setText={setName}
+                       setLastText={setLastName}/>
             <div className={styles.info}>
-                <Icon className={styles.icon} name={'info'} type={'round'}/>
+                <Icon className={styles.icon}
+                      name={'info'}
+                      type={'round'}/>
                 <div className={styles.text}>
                     Здесь описание необходимого формата таблицы, строк и прочее
                 </div>
@@ -91,8 +96,12 @@ function CallersBaseAddBody() {
                  onDragLeave={onDragLeave}
                  onDragOver={onDragStart}
                  onClick={handlerOpenFileExplorer}>
-                <input type="file" id="file" className={styles.inputFile} onChange={handlerChangeInputFile}
-                       ref={inputFile} accept={fileType}/>
+                <input type="file"
+                       id="file"
+                       className={styles.inputFile}
+                       onChange={handlerChangeInputFile}
+                       ref={inputFile}
+                       accept={fileType}/>
                 {!file
                  ?
                  <span>Перетащите базу данных сюда или нажмите, чтобы выбрать файл<br/>Поддерживаемые форматы: xlsx.</span>

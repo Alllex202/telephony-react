@@ -72,7 +72,8 @@ const ScenarioEditor = React.memo(() => {
     };
 
     return (
-        <div className={styles.wrapper} ref={reactFlowWrapper}>
+        <div className={styles.wrapper}
+             ref={reactFlowWrapper}>
             <ReactFlow
                 elements={elements}
                 nodeTypes={typesElements}
@@ -87,7 +88,9 @@ const ScenarioEditor = React.memo(() => {
                 // snapToGrid={true}
                 // snapGrid={[20, 20]}
             >
-                <Background variant={BackgroundVariant.Lines} className={styles.grid} gap={112}/>
+                <Background variant={BackgroundVariant.Lines}
+                            className={styles.grid}
+                            gap={112}/>
             </ReactFlow>
         </div>
     );

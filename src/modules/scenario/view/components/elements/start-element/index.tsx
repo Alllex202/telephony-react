@@ -19,9 +19,12 @@ const StartElement = React.memo((
     }, [isDragging]);
     return (
         <Card className={classNames(styles.start, 'draggable-handle', 'element-wrapper', 'start-wrapper')}
-              disableHover={true} isActive={selected}>
+              disableHover={true}
+              isActive={selected}>
             Старт
-            <Handle type={'source'} position={Position.Bottom} className={classNames(styles.handle, styles.round)}/>
+            <Handle type={'source'}
+                    position={Position.Bottom}
+                    className={classNames(styles.handle, styles.round)}/>
         </Card>
     );
 });

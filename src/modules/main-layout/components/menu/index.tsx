@@ -9,7 +9,9 @@ const Menu = () => {
             <div className={styles.menu}>
                 {
                     menuItems.map((item, ind) =>
-                        <MenuItem key={ind} to={item.link} label={item.label}/>)
+                        <MenuItem key={ind}
+                                  to={item.link}
+                                  label={item.label}/>)
                 }
             </div>
         </>

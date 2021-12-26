@@ -63,7 +63,9 @@ const ScenarioListBody = () => {
              : <>
                  <div className={bodyStyles.list}>
                      {scenarioList.map(el =>
-                         <ScenarioCard key={el.id} data={el} className={bodyStyles.card}/>,
+                         <ScenarioCard key={el.id}
+                                       data={el}
+                                       className={bodyStyles.card}/>,
                      )}
                  </div>
              </>
@@ -72,7 +74,9 @@ const ScenarioListBody = () => {
             <div className={bodyStyles.footer}>
                 {statuses.isLoading && <h1>Загрузка...</h1>}
                 {!isLastPage && !statuses.isLoading &&
-                <BtnSecond className={bodyStyles.more} onClick={loadNextPage} text={'Показать больше'}/>}
+                <BtnSecond className={bodyStyles.more}
+                           onClick={loadNextPage}
+                           text={'Показать больше'}/>}
             </div>
         </>
     );

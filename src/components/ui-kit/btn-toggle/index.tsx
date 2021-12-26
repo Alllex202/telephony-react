@@ -14,9 +14,12 @@ type Props = {
 
 function BtnToggle({iconName, className, onClick, iconType, isActive, activeStyle}: Props) {
     return (
-        <BtnCircleDefault iconName={iconName} iconType={iconType}
+        <BtnCircleDefault iconName={iconName}
+                          iconType={iconType}
                           className={classNames(className, styles.btn)}
-                          isActive={isActive} onClick={onClick} activeStyle={activeStyle || styles.active}/>
+                          isActive={isActive}
+                          onClick={onClick}
+                          activeStyle={activeStyle || styles.active}/>
     );
 }
 

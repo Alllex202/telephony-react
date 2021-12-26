@@ -13,7 +13,8 @@ function Routing() {
     return (
         <Router>
             <Switch>
-                <Route path={routes.scenarioView(':scenarioId')} exact
+                <Route path={routes.scenarioView(':scenarioId')}
+                       exact
                        children={<EditorLayout children={<ScenarioView/>}/>}/>
 
                 <Route children={<MainLayout childrenBody={<RoutingBody/>}

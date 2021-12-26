@@ -92,13 +92,22 @@ const HiddenInput = ({setLastText, setText, lastText, text, callback, classText,
 
     return (
         <>
-            <div className={classWrapper} ref={divRef}>
-                <div className={classNames(styles.view, classText, !isView ? styles.hidden : '')} onClick={changeView}
-                     ref={textRef} title={text}>{text}</div>
+            <div className={classWrapper}
+                 ref={divRef}>
+                <div className={classNames(styles.view, classText, !isView ? styles.hidden : '')}
+                     onClick={changeView}
+                     ref={textRef}
+                     title={text}>{text}</div>
                 {!isView &&
-                <InputTransparent className={classNames(styles.input, classInput)} type="text" value={text}
-                                  onChange={onChange} placeholder={'Введите название'} onKeyPress={onKeyPress}
-                                  onBlur={onBlur} ref={inputRef} onKeyDown={onKeyDown}/>}
+                <InputTransparent className={classNames(styles.input, classInput)}
+                                  type="text"
+                                  value={text}
+                                  onChange={onChange}
+                                  placeholder={'Введите название'}
+                                  onKeyPress={onKeyPress}
+                                  onBlur={onBlur}
+                                  ref={inputRef}
+                                  onKeyDown={onKeyDown}/>}
             </div>
 
         </>

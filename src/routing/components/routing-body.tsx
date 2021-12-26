@@ -12,13 +12,27 @@ import CallingCreatingBody from 'modules/calling/creating/body';
 export default function RoutingBody() {
     return (
         <Switch>
-            <Route path={routes.callersBaseList()} exact component={CallersBaseListBody}/>
-            <Route path={routes.callersBaseAdd()} exact component={CallersBaseAddBody}/>
-            <Route path={routes.callersBaseView(':callersBaseId')} exact component={CallersBaseViewBody}/>
-            <Route path={routes.scenarioList()} exact component={ScenarioListBody}/>
-            <Route path={routes.callingList()} exact component={CallingListBody}/>
-            <Route path={routes.callingCreate()} exact component={CallingCreatingBody}/>
-            <Route path={routes.test()} exact component={Test}/>
+            <Route path={routes.callersBaseList()}
+                   exact
+                   component={CallersBaseListBody}/>
+            <Route path={routes.callersBaseAdd()}
+                   exact
+                   component={CallersBaseAddBody}/>
+            <Route path={routes.callersBaseView(':callersBaseId')}
+                   exact
+                   component={CallersBaseViewBody}/>
+            <Route path={routes.scenarioList()}
+                   exact
+                   component={ScenarioListBody}/>
+            <Route path={routes.callingList()}
+                   exact
+                   component={CallingListBody}/>
+            <Route path={routes.callingCreate()}
+                   exact
+                   component={CallingCreatingBody}/>
+            <Route path={routes.test()}
+                   exact
+                   component={Test}/>
         </Switch>
     );
 }

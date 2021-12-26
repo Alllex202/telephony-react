@@ -87,17 +87,31 @@ const ScenarioRightSidebar = () => {
         <div className={styles.rightSidebar}>
             <div className={styles.part}>
                 <div className={styles.subtitle}>Масштаб</div>
-                <Controls className={styles.controls} showFitView={false} showInteractive={false} showZoom={false}>
+                <Controls className={styles.controls}
+                          showFitView={false}
+                          showInteractive={false}
+                          showZoom={false}>
                     <div className={styles.percent}>{(currentZoom * 100).toFixed(0)}%</div>
                     <div className={styles.buttons}>
-                        <BtnCircle iconName={'remove'} iconType={'round'} className={styles.btn} onClick={onZoomOut}/>
-                        <BtnCircle iconName={'add'} iconType={'round'} className={styles.btn} onClick={onZoomIn}/>
-                        <BtnCircle iconName={'crop_free'} iconType={'round'} className={styles.btn}
+                        <BtnCircle iconName={'remove'}
+                                   iconType={'round'}
+                                   className={styles.btn}
+                                   onClick={onZoomOut}/>
+                        <BtnCircle iconName={'add'}
+                                   iconType={'round'}
+                                   className={styles.btn}
+                                   onClick={onZoomIn}/>
+                        <BtnCircle iconName={'crop_free'}
+                                   iconType={'round'}
+                                   className={styles.btn}
                                    onClick={onFitView}/>
                     </div>
                 </Controls>
             </div>
-            <BtnSecond text={'Запустить'} className={styles.btnRun} iconName={'play_arrow'} iconType={'round'}
+            <BtnSecond text={'Запустить'}
+                       className={styles.btnRun}
+                       iconName={'play_arrow'}
+                       iconType={'round'}
                        iconPosition={'end'}/>
             {
                 callersBasesHeader !== null &&
@@ -117,7 +131,8 @@ const ScenarioRightSidebar = () => {
                             <div className={styles.tags}>
                                 {callersBaseHeader.columns.slice(0, maxShowVariables)
                                     .map(el =>
-                                        <Tag text={`#${el.currentName}`} key={el.id}/>)}
+                                        <Tag text={`#${el.currentName}`}
+                                             key={el.id}/>)}
                                 {callersBaseHeader.columns.length - maxShowVariables > 0 &&
                                 <Tag text={`+${callersBaseHeader.columns.length - maxShowVariables}`}
                                      className={cardStyles.tag}/>}
@@ -126,13 +141,23 @@ const ScenarioRightSidebar = () => {
                     }
                     {
                         data?.connectedCallerBaseId
-                        ? <BtnSecond className={styles.btnDisconnect} text={'Разорвать'} iconName={'link_off'}
-                                     iconType={'round'} iconPosition={'end'} onClick={onDisconnect}/>
-                        : <BtnSecond className={styles.btnConnect} text={'Прикрепить'} iconName={'link'}
-                                     iconType={'round'} iconPosition={'end'} onClick={onOpenMenu}
+                        ? <BtnSecond className={styles.btnDisconnect}
+                                     text={'Разорвать'}
+                                     iconName={'link_off'}
+                                     iconType={'round'}
+                                     iconPosition={'end'}
+                                     onClick={onDisconnect}/>
+                        : <BtnSecond className={styles.btnConnect}
+                                     text={'Прикрепить'}
+                                     iconName={'link'}
+                                     iconType={'round'}
+                                     iconPosition={'end'}
+                                     onClick={onOpenMenu}
                                      disabled={callersBasesHeader === null || callersBasesHeader.length === 0}/>
                     }
-                    <Menu anchorEl={anchorEl} open={!!anchorEl} onClose={onCloseMenu}>
+                    <Menu anchorEl={anchorEl}
+                          open={!!anchorEl}
+                          onClose={onCloseMenu}>
                         {callersBasesHeader?.map(el => <MenuItem key={el.id}
                                                                  onClick={() => onConnect(el.id)}>{el.name}</MenuItem>)}
                     </Menu>

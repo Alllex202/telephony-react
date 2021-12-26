@@ -11,9 +11,13 @@ type Props = {
 
 function Menu({anchorEl, open, onClose, children}: Props) {
     return (
-        <MuiMenu open={open} onClose={onClose} anchorEl={anchorEl} variant={'menu'}
+        <MuiMenu open={open}
+                 onClose={onClose}
+                 anchorEl={anchorEl}
+                 variant={'menu'}
                  anchorOrigin={{horizontal: 'right', vertical: 'bottom'}}
-                 transformOrigin={{horizontal: 'right', vertical: 'top'}} marginThreshold={20}>
+                 transformOrigin={{horizontal: 'right', vertical: 'top'}}
+                 marginThreshold={20}>
             {children}
         </MuiMenu>
     );

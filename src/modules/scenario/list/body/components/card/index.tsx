@@ -54,15 +54,25 @@ const ScenarioCard = ({data, className}: Props) => {
     }
 
     return (
-        <Link to={routes.scenarioView(data.id)} className={statuses.isLoading ? 'd-none' : ''}>
-            <Card className={classNames(className, cardStyles.card, styles.card)} isActive={!!anchorEl}>
+        <Link to={routes.scenarioView(data.id)}
+              className={statuses.isLoading ? 'd-none' : ''}>
+            <Card className={classNames(className, cardStyles.card, styles.card)}
+                  isActive={!!anchorEl}>
                 <div className={cardStyles.wrapper}>
-                    <div onClick={e => e.preventDefault()} className={cardStyles.options_wrapper}>
-                        <BtnCircle iconName={'more_horiz'} iconType={'round'} className={cardStyles.options_btn}
+                    <div onClick={e => e.preventDefault()}
+                         className={cardStyles.options_wrapper}>
+                        <BtnCircle iconName={'more_horiz'}
+                                   iconType={'round'}
+                                   className={cardStyles.options_btn}
                                    onClick={openOptions}
                                    isActive={!!anchorEl}/>
-                        <Menu anchorEl={anchorEl} open={!!anchorEl} onClose={closeOptions}>
-                            <MenuItem onClick={handlerDelete} isDanger iconName={'delete_forever'} iconType={'round'}>
+                        <Menu anchorEl={anchorEl}
+                              open={!!anchorEl}
+                              onClose={closeOptions}>
+                            <MenuItem onClick={handlerDelete}
+                                      isDanger
+                                      iconName={'delete_forever'}
+                                      iconType={'round'}>
                                 Удалить
                             </MenuItem>
                         </Menu>
@@ -71,11 +81,15 @@ const ScenarioCard = ({data, className}: Props) => {
                         <h2 className={cardStyles.title}>{data.name}</h2>
                         <div className={cardStyles.description}>
                             <div className={cardStyles.info}>
-                                <Icon name={'calendar_today'} type={'round'} className={cardStyles.icon}/>
+                                <Icon name={'calendar_today'}
+                                      type={'round'}
+                                      className={cardStyles.icon}/>
                                 {formatDate(data.created)}
                             </div>
                             <div className={cardStyles.info}>
-                                <Icon name={'table_rows'} type={'round'} className={cardStyles.icon}/>
+                                <Icon name={'table_rows'}
+                                      type={'round'}
+                                      className={cardStyles.icon}/>
                                 {data.countSteps} ш
                             </div>
                         </div>

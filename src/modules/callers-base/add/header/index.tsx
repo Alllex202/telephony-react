@@ -14,8 +14,12 @@ function CallersBaseAddHeader() {
     return (
         <>
             <div className={styles.header}>
-                <BtnSecond text={'Отменить'} className={styles.cancel} iconName={'arrow_back'} iconType={'round'}
-                           onClick={handlerBack} iconPosition={'start'}/>
+                <BtnSecond text={'Отменить'}
+                           className={styles.cancel}
+                           iconName={'arrow_back'}
+                           iconType={'round'}
+                           onClick={handlerBack}
+                           iconPosition={'start'}/>
             </div>
         </>
     );

@@ -19,7 +19,8 @@ function BtnCircleDefault({className, iconName, iconType, onClick, isActive, act
                                                                                                          ? activeStyle
                                                                                                          : '')}
             onClick={onClick}>
-            <Icon name={iconName} type={iconType}/>
+            <Icon name={iconName}
+                  type={iconType}/>
         </button>
     );
 }
