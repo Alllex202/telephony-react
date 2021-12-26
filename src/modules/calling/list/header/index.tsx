@@ -3,9 +3,9 @@ import styles from 'shared/styles/header-list/styes.module.scss';
 import {useDispatch, useSelector} from 'react-redux';
 import {RootState} from 'store';
 import {useHistory} from 'react-router-dom';
-import {changeFilter, resetFilter} from 'store/features/calling/list/filter';
+import {changeFilter, resetFilter} from 'store/features/filter';
 import routes from 'routing/routes';
-import {DirectionSort, sortItemsCallingList, SortType} from 'shared/data/sort-items';
+import {DirectionSort, sortItems, SortType} from 'shared/data/sort-items';
 import {resetCallingStates} from 'store/features/calling/list/list';
 import Btn from 'components/ui-kit/btn';
 import Input from 'components/ui-kit/input';
@@ -16,7 +16,7 @@ import MenuItem from 'components/ui-kit/menu-item';
 
 const CallingListHeader = () => {
     const {statuses} = useSelector((state: RootState) => state.callingList);
-    const {direction, sortBy, text} = useSelector((state: RootState) => state.callingFilter);
+    const {direction, sortBy, text} = useSelector((state: RootState) => state.filter);
     const dispatch = useDispatch();
     const history = useHistory();
     const [anchorEl, setAnchorEl] = useState<Element | null>(null);
@@ -71,7 +71,7 @@ const CallingListHeader = () => {
                        className={classNames(styles.sort, direction === 'ASC' ? styles.revert : '')}
                        isActive={!!anchorEl} iconPosition={'end'}/>
             <Menu anchorEl={anchorEl} open={!!anchorEl} onClose={handlerCloseSort}>
-                {sortItemsCallingList.map((el, index) =>
+                {sortItems.map((el, index) =>
                     <MenuItem key={index} onClick={() => handlerSortItem({
                         sortBy: el.sortBy,
                         direction: el.direction,

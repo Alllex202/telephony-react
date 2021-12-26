@@ -19,7 +19,7 @@ function CallersBaseListBody() {
         size,
         isLastPage
     } = useSelector((state: RootState) => state.callersBaseList);
-    const filter = useSelector((state: RootState) => state.callersBasesFilter);
+    const filter = useSelector((state: RootState) => state.filter);
 
     const dispatch = useDispatch();
 

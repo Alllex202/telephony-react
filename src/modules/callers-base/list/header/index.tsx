@@ -9,15 +9,15 @@ import Menu from "components/ui-kit/menu";
 import MenuItem from "components/ui-kit/menu-item";
 import {useHistory} from "react-router-dom";
 import routes from "routing/routes";
-import {changeFilter, resetFilter} from "store/features/callers-bases/list/filter";
+import {changeFilter, resetFilter} from "store/features/filter";
 import {resetCallersBasesStates} from "store/features/callers-bases/list/list";
 import {classNames} from "shared/utils";
-import {DirectionSort, sortItemsCallersBaseList, SortType} from 'shared/data/sort-items';
+import {DirectionSort, sortItems, SortType} from 'shared/data/sort-items';
 
 
 function CallersBaseListHeader() {
     const {statuses} = useSelector((state: RootState) => state.callersBaseList);
-    const {direction, sortBy, text} = useSelector((state: RootState) => state.callersBasesFilter);
+    const {direction, sortBy, text} = useSelector((state: RootState) => state.filter);
     const dispatch = useDispatch();
     const history = useHistory();
     const [anchorEl, setAnchorEl] = useState<Element | null>(null);
@@ -72,7 +72,7 @@ function CallersBaseListHeader() {
                        className={classNames(styles.sort, direction === 'ASC' ? styles.revert : '')}
                        isActive={!!anchorEl} iconPosition={'end'}/>
             <Menu anchorEl={anchorEl} open={!!anchorEl} onClose={handlerCloseSort}>
-                {sortItemsCallersBaseList.map((el, index) =>
+                {sortItems.map((el, index) =>
                     <MenuItem key={index} onClick={() => handlerSortItem({
                         sortBy: el.sortBy,
                         direction: el.direction,

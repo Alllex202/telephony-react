@@ -9,7 +9,7 @@ import CallingCard from 'modules/calling/list/body/components/card';
 
 const CallingListBody = () => {
     const {statuses, callingList, isLastPage, page, size} = useSelector((state: RootState) => state.callingList);
-    const filter = useSelector((state: RootState) => state.callingFilter);
+    const filter = useSelector((state: RootState) => state.filter);
     const dispatch = useDispatch();
 
     const loadNextPage = () => {

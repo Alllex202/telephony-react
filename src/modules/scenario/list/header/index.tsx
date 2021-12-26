@@ -6,12 +6,12 @@ import Input from 'components/ui-kit/input';
 import BtnSecond from 'components/ui-kit/btn-second';
 import {classNames} from 'shared/utils';
 import Menu from 'components/ui-kit/menu';
-import {DirectionSort, sortItemsScenarioList, SortType} from 'shared/data/sort-items';
+import {DirectionSort, sortItems, SortType} from 'shared/data/sort-items';
 import MenuItem from 'components/ui-kit/menu-item';
 import {useDispatch, useSelector} from 'react-redux';
 import {RootState} from 'store';
 import {useHistory} from 'react-router-dom';
-import {changeFilter, resetFilter} from 'store/features/scenario/list/filter';
+import {changeFilter, resetFilter} from 'store/features/filter';
 import routes from 'routing/routes';
 import {resetScenariosStates} from 'store/features/scenario/list/list';
 import {createScenario} from 'core/api/requests';
@@ -22,7 +22,7 @@ const ScenarioListHeader = () => {
     const [input, setInput] = useState<string>('');
     const [lastInput, setLastInput] = useState<string>('');
     const {statuses} = useSelector((state: RootState) => state.scenarioList);
-    const {direction, sortBy, text} = useSelector((state: RootState) => state.scenarioFilter);
+    const {direction, sortBy, text} = useSelector((state: RootState) => state.filter);
     const [creating, setCreating] = useState<FetchStatuses>({});
     const dispatch = useDispatch();
     const history = useHistory();
@@ -91,7 +91,7 @@ const ScenarioListHeader = () => {
                        className={classNames(headerStyles.sort, direction === 'ASC' ? headerStyles.revert : '')}
                        isActive={!!anchorEl} iconPosition={'end'}/>
             <Menu anchorEl={anchorEl} open={!!anchorEl} onClose={handlerCloseSort}>
-                {sortItemsScenarioList.map((el, index) =>
+                {sortItems.map((el, index) =>
                     <MenuItem key={index} onClick={() => handlerSortItem({
                         sortBy: el.sortBy,
                         direction: el.direction,

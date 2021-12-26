@@ -15,7 +15,7 @@ const ScenarioListBody = () => {
         size,
         isLastPage
     } = useSelector((state: RootState) => state.scenarioList);
-    const filter = useSelector((state: RootState) => state.scenarioFilter);
+    const filter = useSelector((state: RootState) => state.filter);
 
     const dispatch = useDispatch();
 
