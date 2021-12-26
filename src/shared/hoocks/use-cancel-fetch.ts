@@ -1,6 +1,6 @@
-import axios from "axios";
+import axios from 'axios';
 
 export const useCancelFetchAxios = () => {
     const {cancel, token} = axios.CancelToken.source();
-    return {cancel, token}
+    return {cancel, token};
 };

@@ -1,8 +1,8 @@
 import React from 'react';
-import styles from "modules/components/input-name/styles.module.scss";
-import Icon from "components/ui-kit/icon";
-import HiddenInput from "components/hidden-input";
-import {classNames} from "shared/utils";
+import styles from 'modules/components/input-name/styles.module.scss';
+import Icon from 'components/ui-kit/icon';
+import HiddenInput from 'components/hidden-input';
+import {classNames} from 'shared/utils';
 
 type Props = {
     text: string,
@@ -25,7 +25,7 @@ function InputName({
                        classNameWrapper,
                        classNameInput,
                        classNameText,
-                       className
+                       className,
                    }: Props) {
     return (
         <div className={classNames(styles.name, className)}>

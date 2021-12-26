@@ -3,9 +3,9 @@ import {
     CallersBaseDataModel,
     CallersBaseHeaderModel,
     PaginatorModel,
-    VariableTypeModel,
     ParamsPaginatorModel,
-    ParamsPaginatorWithFilterModel
+    ParamsPaginatorWithFilterModel,
+    VariableTypeModel,
 } from '../models';
 import {BaseResponse} from 'shared/types/base-response';
 import {apiRoutes} from '../routes';

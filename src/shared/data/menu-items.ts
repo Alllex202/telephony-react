@@ -1,4 +1,4 @@
-import routes from "routing/routes";
+import routes from 'routing/routes';
 
 interface MenuItemModel {
     link: string,

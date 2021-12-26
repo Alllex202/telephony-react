@@ -26,10 +26,9 @@ const CallingListHeader = () => {
     useEffect(() => {
         return () => {
             dispatch(resetFilter());
-        }
+        };
         // eslint-disable-next-line
     }, []);
-
 
     function handlerAdd() {
         history.push(routes.callingCreate());
@@ -75,7 +74,7 @@ const CallingListHeader = () => {
                     <MenuItem key={index} onClick={() => handlerSortItem({
                         sortBy: el.sortBy,
                         direction: el.direction,
-                        text: el.text
+                        text: el.text,
                     })}>
                         {el.text}
                     </MenuItem>)}

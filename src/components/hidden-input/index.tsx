@@ -1,7 +1,7 @@
 import React, {useEffect, useRef, useState} from 'react';
 import styles from './styles.module.scss';
-import {classNames} from "shared/utils";
-import InputTransparent from "../ui-kit/input-transparent";
+import {classNames} from 'shared/utils';
+import InputTransparent from '../ui-kit/input-transparent';
 
 type Props = {
     text: string,
@@ -14,7 +14,7 @@ type Props = {
     classWrapper?: string
 };
 
-const HiddenInput = ({setLastText, setText, lastText, text, callback, classText, classInput ,classWrapper}: Props) => {
+const HiddenInput = ({setLastText, setText, lastText, text, callback, classText, classInput, classWrapper}: Props) => {
     const [isView, setView] = useState<boolean>(true);
     const inputRef = React.createRef<HTMLInputElement>();
     const textRef = useRef<HTMLDivElement>(null);
@@ -41,14 +41,14 @@ const HiddenInput = ({setLastText, setText, lastText, text, callback, classText,
             const viewWidth = textRef.current.getBoundingClientRect().width;
             inputRef.current.style.width = `${viewWidth}px`;
         }
-    }
+    };
 
     const changeWidthDiv = () => {
         if (divRef.current && textRef.current) {
             const viewWidth = textRef.current.getBoundingClientRect().width;
             divRef.current.style.width = `${viewWidth}px`;
         }
-    }
+    };
 
     const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         valueRef.current = e.target.value;
@@ -80,7 +80,7 @@ const HiddenInput = ({setLastText, setText, lastText, text, callback, classText,
             setText(lastText);
         } else {
             valueRef.current = trim;
-            setText(trim)
+            setText(trim);
             setLastText(trim);
         }
         setView(!isView);
@@ -88,7 +88,7 @@ const HiddenInput = ({setLastText, setText, lastText, text, callback, classText,
         if (!isView) {
             callback && callback(trim || lastText);
         }
-    }
+    };
 
     return (
         <>

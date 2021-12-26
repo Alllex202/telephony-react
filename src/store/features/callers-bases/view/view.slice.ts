@@ -1,14 +1,15 @@
-import {createSlice, Dispatch, PayloadAction} from "@reduxjs/toolkit";
-import {CallersBaseDataModel, CallersBaseHeaderModel, VariableTypeModel} from "core/api";
-import {FetchStatuses} from "shared/types/fetch-statuses";
+import {createSlice, Dispatch, PayloadAction} from '@reduxjs/toolkit';
+import {CallersBaseDataModel, CallersBaseHeaderModel, VariableTypeModel} from 'core/api';
+import {FetchStatuses} from 'shared/types/fetch-statuses';
 import {
     getCallersBaseDataById,
     getCallersBaseHeaderById,
-    getVariablesTypes, ParamsPaginatorDataModel,
-    putCallersBaseHeaderById
+    getVariablesTypes,
+    ParamsPaginatorDataModel,
+    putCallersBaseHeaderById,
 } from 'core/api/requests';
-import {DefaultAxiosError} from "shared/types/base-response-error";
-import {RootState} from "store";
+import {DefaultAxiosError} from 'shared/types/base-response-error';
+import {RootState} from 'store';
 
 export interface ViewState {
     header: CallersBaseHeaderModel | null;
@@ -115,8 +116,8 @@ export const callersBaseViewSlice = createSlice({
             state.page = 0;
             state.isLastPage = false;
             state.onlyInvalid = false;
-        }
-    }
+        },
+    },
 });
 
 export const getCallersBaseById = (id: number | string) => (dispatch: Dispatch) => {
@@ -176,7 +177,7 @@ export const loadVariablesTypes = () => (dispatch: Dispatch, getState: () => Roo
         })
         .catch((err: DefaultAxiosError) => {
             dispatch(setVariablesError(err.response?.data.message || 'Ошибка при получении данных'));
-        })
+        });
 };
 
 export const changeCallersBaseHeaderById = (data: CallersBaseHeaderModel) => (dispatch: Dispatch) => {
@@ -187,7 +188,7 @@ export const changeCallersBaseHeaderById = (data: CallersBaseHeaderModel) => (di
             dispatch(setHeaderSuccess());
         })
         .catch((err: DefaultAxiosError) => {
-            dispatch(setHeaderError(err.response?.data.message || 'Ошибка при отправке'))
+            dispatch(setHeaderError(err.response?.data.message || 'Ошибка при отправке'));
         });
 };
 
@@ -212,7 +213,7 @@ export const {
     setVariablesLoading,
     setVariablesSuccess,
     resetData,
-    setType
+    setType,
 } = callersBaseViewSlice.actions;
 
 export const callersBaseViewReducer = callersBaseViewSlice.reducer;

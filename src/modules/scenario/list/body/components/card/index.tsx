@@ -42,7 +42,7 @@ const ScenarioCard = ({data, className}: Props) => {
         deleteScenario(data.id)
             .then(res => {
                 // TODO show noty
-                console.log('Сценарий удалена')
+                console.log('Сценарий удалена');
                 dispatch(deleteScenarioById(data.id));
                 // setStatuses({isLoading: false, isSuccess: true, isError: false});
             })

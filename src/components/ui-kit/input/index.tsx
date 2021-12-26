@@ -16,8 +16,10 @@ type Props = {
     onBlur?: React.FocusEventHandler<HTMLInputElement>,
 }
 
-function Input({value, onChange, placeholder, className, type, name, autoCompleteOff, id, onKeyPress, max,
-                   min, onBlur}: Props) {
+function Input({
+                   value, onChange, placeholder, className, type, name, autoCompleteOff, id, onKeyPress, max,
+                   min, onBlur,
+               }: Props) {
     return (
         <input className={[styles.input, className].join(' ')} type={type} placeholder={placeholder} onChange={onChange}
                value={value} name={name} autoComplete={autoCompleteOff ? 'new-password' : ''} id={id}

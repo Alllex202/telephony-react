@@ -1,6 +1,6 @@
 import React from 'react';
 import './styles.scss';
-import {Switch as MuiSwitch} from "@mui/material";
+import {Switch as MuiSwitch} from '@mui/material';
 
 type Props = {
     checked?: boolean,

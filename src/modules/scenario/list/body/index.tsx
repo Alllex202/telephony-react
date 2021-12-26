@@ -13,7 +13,7 @@ const ScenarioListBody = () => {
         error,
         page,
         size,
-        isLastPage
+        isLastPage,
     } = useSelector((state: RootState) => state.scenarioList);
     const filter = useSelector((state: RootState) => state.filter);
 
@@ -23,7 +23,7 @@ const ScenarioListBody = () => {
         if (isLastPage || statuses.isLoading) return;
 
         getData(page + 1);
-    }
+    };
 
     function getData(page: number) {
         dispatch(getScenariosByPage({
@@ -31,7 +31,7 @@ const ScenarioListBody = () => {
                 size,
                 direction: filter.direction,
                 name: filter.name,
-                sortBy: filter.sortBy
+                sortBy: filter.sortBy,
             },
         ));
     }
@@ -53,20 +53,20 @@ const ScenarioListBody = () => {
     }
 
     if (scenarioList.length < 1 && statuses.isError) {
-        return <h1>Ошибка при загрузке | {error}</h1>
+        return <h1>Ошибка при загрузке | {error}</h1>;
     }
 
     return (
         <>
             {scenarioList.length < 1
-                ? <h1>Здесь пусто :(</h1>
-                : <>
-                    <div className={bodyStyles.list}>
-                        {scenarioList.map(el =>
-                            <ScenarioCard key={el.id} data={el} className={bodyStyles.card}/>
-                        )}
-                    </div>
-                </>
+             ? <h1>Здесь пусто :(</h1>
+             : <>
+                 <div className={bodyStyles.list}>
+                     {scenarioList.map(el =>
+                         <ScenarioCard key={el.id} data={el} className={bodyStyles.card}/>,
+                     )}
+                 </div>
+             </>
             }
 
             <div className={bodyStyles.footer}>

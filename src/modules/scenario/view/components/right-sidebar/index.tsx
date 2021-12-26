@@ -115,8 +115,9 @@ const ScenarioRightSidebar = () => {
                         <div className={styles.part}>
                             <div className={styles.subtitle}>Переменные</div>
                             <div className={styles.tags}>
-                                {callersBaseHeader.columns.slice(0, maxShowVariables).map(el =>
-                                    <Tag text={`#${el.currentName}`} key={el.id}/>)}
+                                {callersBaseHeader.columns.slice(0, maxShowVariables)
+                                    .map(el =>
+                                        <Tag text={`#${el.currentName}`} key={el.id}/>)}
                                 {callersBaseHeader.columns.length - maxShowVariables > 0 &&
                                 <Tag text={`+${callersBaseHeader.columns.length - maxShowVariables}`}
                                      className={cardStyles.tag}/>}
@@ -125,11 +126,11 @@ const ScenarioRightSidebar = () => {
                     }
                     {
                         data?.connectedCallerBaseId
-                            ? <BtnSecond className={styles.btnDisconnect} text={'Разорвать'} iconName={'link_off'}
-                                         iconType={'round'} iconPosition={'end'} onClick={onDisconnect}/>
-                            : <BtnSecond className={styles.btnConnect} text={'Прикрепить'} iconName={'link'}
-                                         iconType={'round'} iconPosition={'end'} onClick={onOpenMenu}
-                                         disabled={callersBasesHeader === null || callersBasesHeader.length === 0}/>
+                        ? <BtnSecond className={styles.btnDisconnect} text={'Разорвать'} iconName={'link_off'}
+                                     iconType={'round'} iconPosition={'end'} onClick={onDisconnect}/>
+                        : <BtnSecond className={styles.btnConnect} text={'Прикрепить'} iconName={'link'}
+                                     iconType={'round'} iconPosition={'end'} onClick={onOpenMenu}
+                                     disabled={callersBasesHeader === null || callersBasesHeader.length === 0}/>
                     }
                     <Menu anchorEl={anchorEl} open={!!anchorEl} onClose={onCloseMenu}>
                         {callersBasesHeader?.map(el => <MenuItem key={el.id}

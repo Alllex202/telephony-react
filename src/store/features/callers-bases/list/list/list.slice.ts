@@ -89,7 +89,6 @@ export const getCallersBasesByPage =
                 });
         };
 
-
 export const {
     addCallersBases,
     // resetCallersBases,

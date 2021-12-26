@@ -1,7 +1,7 @@
 import React, {MouseEventHandler} from 'react';
-import Icon from "../icon";
+import Icon from '../icon';
 import styles from './styles.module.scss';
-import {classNames} from "shared/utils";
+import {classNames} from 'shared/utils';
 
 type Props = {
     text: string,

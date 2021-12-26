@@ -1,9 +1,9 @@
 import React, {useState} from 'react';
 import styles from './styles.module.scss';
-import HiddenInput from "components/hidden-input";
-import {useDispatch} from "react-redux";
-import {changeCallersBaseHeaderById} from "store/features/callers-bases/view";
-import {CallersBaseHeaderColumnModel, CallersBaseHeaderModel} from "core/api";
+import HiddenInput from 'components/hidden-input';
+import {useDispatch} from 'react-redux';
+import {changeCallersBaseHeaderById} from 'store/features/callers-bases/view';
+import {CallersBaseHeaderColumnModel, CallersBaseHeaderModel} from 'core/api';
 
 type Props = {
     conditionSave: () => boolean,
@@ -15,7 +15,7 @@ type Props = {
 function InputVariableName({conditionSave, initState, data, el}: Props) {
     const [name, setName] = useState<string>(initState);
     const [lastName, setLastName] = useState<string>(name);
-    const dispatch = useDispatch()
+    const dispatch = useDispatch();
 
     function save(currentValue: string) {
         if (currentValue === lastName || !data) return;
@@ -26,7 +26,7 @@ function InputVariableName({conditionSave, initState, data, el}: Props) {
 
         dispatch(changeCallersBaseHeaderById({
             ...data,
-            columns: data.columns.map(elem => elem.id === el.id ? {...elem, currentName: currentValue} : elem)
+            columns: data.columns.map(elem => elem.id === el.id ? {...elem, currentName: currentValue} : elem),
         }));
     }
 

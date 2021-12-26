@@ -35,7 +35,6 @@ const ScenarioListHeader = () => {
         // eslint-disable-next-line
     }, []);
 
-
     function handlerAdd() {
         if (creating.isLoading) return;
 
@@ -95,7 +94,7 @@ const ScenarioListHeader = () => {
                     <MenuItem key={index} onClick={() => handlerSortItem({
                         sortBy: el.sortBy,
                         direction: el.direction,
-                        text: el.text
+                        text: el.text,
                     })}>
                         {el.text}
                     </MenuItem>)}

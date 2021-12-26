@@ -14,9 +14,9 @@ const CallingCreatingHeader = () => {
     const dispatch = useDispatch();
 
     useEffect(() => {
-        console.log(1)
+        console.log(1);
         if (statuses.isSuccess) {
-            console.log(2)
+            console.log(2);
             history.push(routes.callingList());
         }
         // eslint-disable-next-line
@@ -36,7 +36,8 @@ const CallingCreatingHeader = () => {
 
     return (
         <div className={styles.header}>
-            <BtnSecond text={'Отменить'} className={styles.cancel} onClick={onCancel} iconName={'arrow_back'} iconType={'round'}
+            <BtnSecond text={'Отменить'} className={styles.cancel} onClick={onCancel} iconName={'arrow_back'}
+                       iconType={'round'}
                        iconPosition={'start'}/>
             <Btn text={'Запустить обзванивание'} className={styles.save} onClick={onSave}/>
         </div>

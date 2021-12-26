@@ -1,19 +1,18 @@
 import React, {useEffect, useState} from 'react';
 import styles from 'shared/styles/header-list/styes.module.scss';
-import Btn from "components/ui-kit/btn";
-import Input from "components/ui-kit/input";
-import {useDispatch, useSelector} from "react-redux";
-import {RootState} from "store";
-import BtnSecond from "components/ui-kit/btn-second";
-import Menu from "components/ui-kit/menu";
-import MenuItem from "components/ui-kit/menu-item";
-import {useHistory} from "react-router-dom";
-import routes from "routing/routes";
-import {changeFilter, resetFilter} from "store/features/filter";
-import {resetCallersBasesStates} from "store/features/callers-bases/list/list";
-import {classNames} from "shared/utils";
+import Btn from 'components/ui-kit/btn';
+import Input from 'components/ui-kit/input';
+import {useDispatch, useSelector} from 'react-redux';
+import {RootState} from 'store';
+import BtnSecond from 'components/ui-kit/btn-second';
+import Menu from 'components/ui-kit/menu';
+import MenuItem from 'components/ui-kit/menu-item';
+import {useHistory} from 'react-router-dom';
+import routes from 'routing/routes';
+import {changeFilter, resetFilter} from 'store/features/filter';
+import {resetCallersBasesStates} from 'store/features/callers-bases/list/list';
+import {classNames} from 'shared/utils';
 import {DirectionSort, sortItems, SortType} from 'shared/data/sort-items';
-
 
 function CallersBaseListHeader() {
     const {statuses} = useSelector((state: RootState) => state.callersBaseList);
@@ -27,10 +26,9 @@ function CallersBaseListHeader() {
     useEffect(() => {
         return () => {
             dispatch(resetFilter());
-        }
+        };
         // eslint-disable-next-line
     }, []);
-
 
     function handlerAdd() {
         history.push(routes.callersBaseAdd());
@@ -76,7 +74,7 @@ function CallersBaseListHeader() {
                     <MenuItem key={index} onClick={() => handlerSortItem({
                         sortBy: el.sortBy,
                         direction: el.direction,
-                        text: el.text
+                        text: el.text,
                     })}>
                         {el.text}
                     </MenuItem>)}

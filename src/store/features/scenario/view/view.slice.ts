@@ -6,7 +6,7 @@ import {
     NodeDataModel,
     NodeModel,
     NodeType,
-    ScenarioModel
+    ScenarioModel,
 } from 'core/api';
 import {FetchStatuses} from 'shared/types/fetch-statuses';
 import {getCallersBaseHeaderById, getScenarioById, putScenarioById} from 'core/api/requests';
@@ -20,7 +20,7 @@ import {
     Elements,
     Node,
     removeElements as _removeElements,
-    XYPosition
+    XYPosition,
 } from 'react-flow-renderer';
 import {getUniqueId} from 'shared/utils';
 
@@ -79,7 +79,7 @@ export const scenarioSlice = createSlice({
         changeReplica: (state: ScenarioState, action: PayloadAction<{ elementId: string, replica: string }>) => {
             state.elements = state.elements.map(el => el.id === action.payload.elementId ? {
                 ...el,
-                data: {...el.data, replica: action.payload.replica}
+                data: {...el.data, replica: action.payload.replica},
             } : el);
         },
         changeNeedAnswer: (state: ScenarioState, action: PayloadAction<{ elementId: string, isNeed: boolean }>) => {
@@ -94,7 +94,7 @@ export const scenarioSlice = createSlice({
                         ...el.data,
                         answers: action.payload.isNeed ? [{id: answerId, button: '1'}] : null,
                         waitingTime: 30 * 1000,
-                        needAnswer: action.payload.isNeed
+                        needAnswer: action.payload.isNeed,
                     },
                 } : el);
 
@@ -113,7 +113,7 @@ export const scenarioSlice = createSlice({
         changeWaitingTime: (state: ScenarioState, action: PayloadAction<{ elementId: string, time: number }>) => {
             state.elements = state.elements.map(el => el.id === action.payload.elementId ? {
                 ...el,
-                data: {...el.data, waitingTime: action.payload.time}
+                data: {...el.data, waitingTime: action.payload.time},
             } : el);
         },
         addAnswer: (state: ScenarioState, action: PayloadAction<{ elementId: string, button: string }>) => {
@@ -121,8 +121,8 @@ export const scenarioSlice = createSlice({
                 ...el,
                 data: {
                     ...el.data,
-                    answers: [...(el.data.answers || []), {id: getUniqueId(), button: action.payload.button}]
-                }
+                    answers: [...(el.data.answers || []), {id: getUniqueId(), button: action.payload.button}],
+                },
             } : el);
         },
         changeAnswer: (state: ScenarioState, action: PayloadAction<{ elementId: string, newButton: string, oldButton: string }>) => {
@@ -133,7 +133,7 @@ export const scenarioSlice = createSlice({
                     answers: el.data.answers.map((ans: AnswerModel): AnswerModel =>
                         ans.button === action.payload.oldButton ?
                             {...ans, button: action.payload.newButton} :
-                            ans),
+                        ans),
                 },
             } : el);
         },
@@ -145,8 +145,8 @@ export const scenarioSlice = createSlice({
                     ...el,
                     data: {
                         ...el.data,
-                        answers: el.data.answers.filter((ans: AnswerModel) => ans.id !== action.payload.answerId)
-                    }
+                        answers: el.data.answers.filter((ans: AnswerModel) => ans.id !== action.payload.answerId),
+                    },
                 } : el);
         },
         addEdge: (state: ScenarioState, action: PayloadAction<Edge | Connection>) => {
@@ -342,7 +342,7 @@ export const {
     setStartId,
     setLoaded,
     setConnectionId,
-    setCallerBaseHeader
+    setCallerBaseHeader,
 } = scenarioSlice.actions;
 
 export const scenarioReducers = scenarioSlice.reducer;

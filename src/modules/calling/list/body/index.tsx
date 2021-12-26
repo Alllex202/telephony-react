@@ -1,5 +1,4 @@
 import React, {useEffect} from 'react';
-import styles from './styles.module.scss';
 import bodyStyles from 'shared/styles/body-list/styles.module.scss';
 import BtnSecond from 'components/ui-kit/btn-second';
 import {useDispatch, useSelector} from 'react-redux';
@@ -16,7 +15,7 @@ const CallingListBody = () => {
         if (isLastPage || statuses.isLoading) return;
 
         getData(page + 1);
-    }
+    };
 
     function getData(page: number) {
         dispatch(getCallingsByPage({
@@ -24,7 +23,7 @@ const CallingListBody = () => {
                 size,
                 direction: filter.direction,
                 name: filter.name,
-                sortBy: filter.sortBy
+                sortBy: filter.sortBy,
             },
         ));
     }
@@ -46,20 +45,20 @@ const CallingListBody = () => {
     }
 
     if (callingList.length < 1 && statuses.isError) {
-        return <h1>Ошибка при загрузке | {statuses.error}</h1>
+        return <h1>Ошибка при загрузке | {statuses.error}</h1>;
     }
 
     return (
         <>
             {callingList.length < 1
-                ? <h1>Здесь пусто :(</h1>
-                : <>
-                    <div className={bodyStyles.list}>
-                        {callingList.map(el =>
-                            <CallingCard key={el.id} data={el} className={bodyStyles.card}/>
-                        )}
-                    </div>
-                </>
+             ? <h1>Здесь пусто :(</h1>
+             : <>
+                 <div className={bodyStyles.list}>
+                     {callingList.map(el =>
+                         <CallingCard key={el.id} data={el} className={bodyStyles.card}/>,
+                     )}
+                 </div>
+             </>
             }
 
             <div className={bodyStyles.footer}>

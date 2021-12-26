@@ -1,12 +1,12 @@
 import React, {useRef, useState} from 'react';
 import styles from './styles.module.scss';
-import Icon from "components/ui-kit/icon";
-import {classNames} from "shared/utils";
-import {uploadCallersBaseExcel} from "core/api/requests";
-import {DefaultAxiosError} from "shared/types/base-response-error";
-import {useHistory} from "react-router-dom";
-import routes from "routing/routes";
-import InputName from "modules/components/input-name";
+import Icon from 'components/ui-kit/icon';
+import {classNames} from 'shared/utils';
+import {uploadCallersBaseExcel} from 'core/api/requests';
+import {DefaultAxiosError} from 'shared/types/base-response-error';
+import {useHistory} from 'react-router-dom';
+import routes from 'routing/routes';
+import InputName from 'modules/components/input-name';
 
 const fileType = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet';
 
@@ -22,7 +22,7 @@ function CallersBaseAddBody() {
     function onDrop(e: React.DragEvent) {
         e.preventDefault();
         setDrag(false);
-        tryUploadFile(e.dataTransfer.files)
+        tryUploadFile(e.dataTransfer.files);
     }
 
     function onDragStart(e: React.DragEvent) {
@@ -40,7 +40,7 @@ function CallersBaseAddBody() {
     }
 
     function handlerChangeInputFile(e: React.ChangeEvent<HTMLInputElement>) {
-        tryUploadFile(e.currentTarget.files)
+        tryUploadFile(e.currentTarget.files);
     }
 
     function tryUploadFile(files: FileList | null) {
@@ -91,12 +91,12 @@ function CallersBaseAddBody() {
                  onDragLeave={onDragLeave}
                  onDragOver={onDragStart}
                  onClick={handlerOpenFileExplorer}>
-                <input type='file' id='file' className={styles.inputFile} onChange={handlerChangeInputFile}
+                <input type="file" id="file" className={styles.inputFile} onChange={handlerChangeInputFile}
                        ref={inputFile} accept={fileType}/>
                 {!file
-                    ?
-                    <span>Перетащите базу данных сюда или нажмите, чтобы выбрать файл<br/>Поддерживаемые форматы: xlsx.</span>
-                    : <span>{file.name}<br/>Отправка...</span>}
+                 ?
+                 <span>Перетащите базу данных сюда или нажмите, чтобы выбрать файл<br/>Поддерживаемые форматы: xlsx.</span>
+                 : <span>{file.name}<br/>Отправка...</span>}
             </div>
             <div className={styles.error}>{error}</div>
         </>

@@ -4,7 +4,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import {RootState} from 'store';
 import {resetState, setCallersBaseId, setName, setScenarioId, setStartDate} from 'store/features/calling/creating';
 import InputName from 'modules/components/input-name';
-import {FormControl, InputLabel, MenuItem, Select, SelectChangeEvent, TextField} from '@mui/material';
+import {FormControl, InputLabel, MenuItem, Select, SelectChangeEvent} from '@mui/material';
 import {CallersBaseHeaderModel, ScenarioInfoModel} from 'core/api';
 import {getCallersBasesHeader, getScenariosByPage} from 'core/api/requests';
 import {DefaultAxiosError} from 'shared/types/base-response-error';

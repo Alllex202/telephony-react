@@ -4,8 +4,8 @@ import callersBaseList from './features/callers-bases/list/list';
 import callersBaseView from './features/callers-bases/view';
 import scenarioList from './features/scenario/list/list';
 import scenarioView from './features/scenario/view';
-import callingList from './features/calling/list/list'
-import callingCreating from './features/calling/creating'
+import callingList from './features/calling/list/list';
+import callingCreating from './features/calling/creating';
 
 export const store = configureStore({
     reducer: {

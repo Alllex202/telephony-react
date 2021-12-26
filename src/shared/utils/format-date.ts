@@ -1,4 +1,4 @@
-const month: {[key:number]:string} = {
+const month: { [key: number]: string } = {
     0: 'Январь',
     1: 'Февраль',
     2: 'Март',
@@ -11,13 +11,14 @@ const month: {[key:number]:string} = {
     9: 'Октябрь',
     10: 'Ноябрь',
     11: 'Декабрь',
-}
+};
 
 export function formatDate(ms: number, shortMonth?: boolean): string {
     const date = new Date(ms);
     let _month = month[date.getMonth()];
     if (shortMonth) {
-        _month = _month.substr(0, 3).toLowerCase();
+        _month = _month.substr(0, 3)
+            .toLowerCase();
     }
 
     return `${date.getDate()} ${_month} ${date.getFullYear()}`;

@@ -82,4 +82,4 @@
 //     return {fetch, isLoading, isError, isSuccess, error, data, mutateData};
 // }
 
-export {}
+export {};

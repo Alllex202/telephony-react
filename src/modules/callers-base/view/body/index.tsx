@@ -1,24 +1,20 @@
 import React, {useEffect, useState} from 'react';
 import styles from './styles.module.scss';
-import InputName from "modules/components/input-name";
-import {useParams} from "react-router-dom";
-import {useDispatch, useSelector} from "react-redux";
-import {
-    changeCallersBaseHeaderById,
-    getCallersBaseById,
-    resetAll, setType
-} from "store/features/callers-bases/view";
-import {RootState} from "store";
-import CallersBaseViewTable from "./components/table";
-import Switch from "components/ui-kit/switch";
-import {deleteCallersBase} from "core/api/requests";
+import InputName from 'modules/components/input-name';
+import {useParams} from 'react-router-dom';
+import {useDispatch, useSelector} from 'react-redux';
+import {changeCallersBaseHeaderById, getCallersBaseById, resetAll, setType} from 'store/features/callers-bases/view';
+import {RootState} from 'store';
+import CallersBaseViewTable from './components/table';
+import Switch from 'components/ui-kit/switch';
+import {deleteCallersBase} from 'core/api/requests';
 
 function CallersBaseViewBody() {
     const {
         statusesHeader,
         header,
         statusesData,
-        onlyInvalid
+        onlyInvalid,
     } = useSelector((state: RootState) => state.callersBaseView);
     const [name, setName] = useState<string>(header?.name || '');
     const [lastName, setLastName] = useState<string>(name);
@@ -32,14 +28,14 @@ function CallersBaseViewBody() {
                 deleteCallersBase(header.id);
             }
             dispatch(resetAll());
-        }
+        };
         // eslint-disable-next-line
     }, []);
 
     useEffect(() => {
         setName(header?.name || '');
         setLastName(header?.name || '');
-    }, [header?.name])
+    }, [header?.name]);
 
     function onSave(currentValue: string) {
         if (header) {
@@ -65,11 +61,11 @@ function CallersBaseViewBody() {
     }
 
     if (header === null && statusesHeader.isError) {
-        return <h1>{statusesHeader.error}</h1>
+        return <h1>{statusesHeader.error}</h1>;
     }
 
     if (header === null && statusesHeader.isLoading) {
-        return <h1>Загрузка...</h1>
+        return <h1>Загрузка...</h1>;
     }
 
     return (

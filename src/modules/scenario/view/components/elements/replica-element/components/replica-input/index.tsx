@@ -26,12 +26,13 @@ const ReplicaInput = React.memo(({value, onChange}: Props) => {
             trigger={{
                 '*': {
                     dataProvider: (token) => {
-                        return variables.filter((el) => el.currentName.toLowerCase().includes(token.toLowerCase()));
+                        return variables.filter((el) => el.currentName.toLowerCase()
+                            .includes(token.toLowerCase()));
                     },
                     component: Item,
                     output: (item, trigger) => {
                         const _item = (item as CallersBaseHeaderColumnModel);
-                        return `*${_item.currentName}`
+                        return `*${_item.currentName}`;
                     },
                 },
             }}

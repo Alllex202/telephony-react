@@ -1,11 +1,11 @@
 import {createSlice, Dispatch, PayloadAction} from '@reduxjs/toolkit';
-import {ScenarioInfoModel} from "core/api";
-import {FetchStatuses} from "shared/types/fetch-statuses";
-import {AxiosRequestConfig} from "axios";
-import {DefaultAxiosError} from "shared/types/base-response-error";
+import {ScenarioInfoModel} from 'core/api';
+import {FetchStatuses} from 'shared/types/fetch-statuses';
+import {AxiosRequestConfig} from 'axios';
+import {DefaultAxiosError} from 'shared/types/base-response-error';
 import {DirectionSort, SortType} from 'shared/data/sort-items';
 import {ParamsPaginatorWithFilterModel} from 'core/api/models';
-import {getScenariosByPage as getScenarios} from 'core/api/requests'
+import {getScenariosByPage as getScenarios} from 'core/api/requests';
 
 export interface ScenariosState {
     scenarioList: ScenarioInfoModel[],
@@ -23,7 +23,7 @@ const initialState: ScenariosState = {
     page: 0,
     size: 10,
     isLastPage: false,
-}
+};
 
 export const scenarioListSlice = createSlice({
     name: 'scenarios',
@@ -77,7 +77,7 @@ export const getScenariosByPage =
             dispatch(setLoading());
             getScenarios(params, otherConfig)
                 .then((res) => {
-                    dispatch(addScenarios(res.data.content))
+                    dispatch(addScenarios(res.data.content));
                     if (res.data.last) {
                         dispatch(setLastPage(res.data.last));
                     }
@@ -88,7 +88,6 @@ export const getScenariosByPage =
                     dispatch(setError(err.response?.data.error || 'Необработанная ошибка'));
                 });
         };
-
 
 export const {
     addScenarios,

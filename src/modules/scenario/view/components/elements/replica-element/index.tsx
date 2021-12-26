@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import styles from './styles.module.scss';
 import 'modules/scenario/view/components/elements/element/element-style.scss';
-import {Handle, Position, NodeProps} from 'react-flow-renderer';
+import {Handle, NodeProps, Position} from 'react-flow-renderer';
 import {classNames} from 'shared/utils';
 import {NodeDataModel} from 'core/api';
 import Input from 'components/ui-kit/input';
@@ -13,11 +13,13 @@ import Menu from 'components/ui-kit/menu';
 import MenuItem from 'components/ui-kit/menu-item';
 import {useDispatch} from 'react-redux';
 import {
-    addAnswer, changeAnswer,
-    changeNeedAnswer, changePosition,
+    addAnswer,
+    changeAnswer,
+    changeNeedAnswer,
+    changePosition,
     changeReplica,
     changeWaitingTime,
-    removeAnswer
+    removeAnswer,
 } from 'store/features/scenario/view';
 import ReplicaInput from 'modules/scenario/view/components/elements/replica-element/components/replica-input';
 
@@ -39,8 +41,10 @@ const _buttons: Button[] = [
     {name: '0', isUsed: false},
 ];
 
-const ReplicaElement = React.memo(({id, data, selected, dragHandle, xPos, yPos,
-                                       isDragging}: NodeProps<NodeDataModel>) => {
+const ReplicaElement = React.memo(({
+                                       id, data, selected, dragHandle, xPos, yPos,
+                                       isDragging,
+                                   }: NodeProps<NodeDataModel>) => {
     const dispatch = useDispatch();
     const [menu, setMenu] = useState<{ buttons: Button[], isShow: boolean }>({
         buttons: _buttons,
@@ -53,8 +57,8 @@ const ReplicaElement = React.memo(({id, data, selected, dragHandle, xPos, yPos,
     useEffect(() => {
         const buttons = menu.buttons.map(btn =>
             data.answers?.some(ans => ans.button === btn.name)
-                ? {...btn, isUsed: true}
-                : {...btn, isUsed: false});
+            ? {...btn, isUsed: true}
+            : {...btn, isUsed: false});
         const isShow = buttons.some(btn => !btn.isUsed);
         setMenu({buttons, isShow});
         // eslint-disable-next-line
@@ -124,7 +128,8 @@ const ReplicaElement = React.memo(({id, data, selected, dragHandle, xPos, yPos,
 
     return (
         <Card isActive={selected || isFocus}
-              className={classNames(styles.replicaWrapper, 'element-wrapper', selected || isFocus ? styles.selected : '',
+              className={classNames(styles.replicaWrapper, 'element-wrapper', selected || isFocus ? styles.selected
+                                                                                                  : '',
                   data.needAnswer ? styles.extended : '')}
               disableHover={true} onFocus={onFocus} onBlur={onBlur}>
             <div className={styles.replica}>
@@ -152,20 +157,20 @@ const ReplicaElement = React.memo(({id, data, selected, dragHandle, xPos, yPos,
                                             className={classNames(styles.handle, styles.round, styles.left)}/>
                                     {
                                         data.answers && data.answers.length > 1 ?
-                                            <button className={styles.circle}
-                                                    onClick={() => onRemoveAnswer(ans.id)}>
-                                                <div className={classNames(styles.container, styles.movable)}>
-                                                    <span className={styles.number}>{ans.button}</span>
-                                                </div>
-                                                <div className={classNames(styles.container, styles.movable)}>
-                                                    <Icon name={'remove'} type={'round'} className={styles.icon}/>
-                                                </div>
-                                            </button> :
-                                            <div className={styles.circle}>
-                                                <div className={styles.container}>
-                                                    <span className={styles.number}>{ans.button}</span>
-                                                </div>
+                                        <button className={styles.circle}
+                                                onClick={() => onRemoveAnswer(ans.id)}>
+                                            <div className={classNames(styles.container, styles.movable)}>
+                                                <span className={styles.number}>{ans.button}</span>
                                             </div>
+                                            <div className={classNames(styles.container, styles.movable)}>
+                                                <Icon name={'remove'} type={'round'} className={styles.icon}/>
+                                            </div>
+                                        </button> :
+                                        <div className={styles.circle}>
+                                            <div className={styles.container}>
+                                                <span className={styles.number}>{ans.button}</span>
+                                            </div>
+                                        </div>
                                     }
                                     <span className={styles.label}>Кнопка {ans.button}</span>
                                     {
@@ -176,7 +181,7 @@ const ReplicaElement = React.memo(({id, data, selected, dragHandle, xPos, yPos,
                                                        onClick={(e) => onOpenMenu(e, ans.button)}/>
                                         </>
                                     }
-                                </div>
+                                </div>,
                             )}
                             {
                                 menu.isShow &&

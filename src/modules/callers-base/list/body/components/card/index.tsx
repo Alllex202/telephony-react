@@ -1,22 +1,22 @@
 import React, {useState} from 'react';
 import cardStyles from 'shared/styles/card/styles.module.scss';
 // import styles from './styles.module.scss';
-import {CallersBaseHeaderModel} from "core/api";
-import Card from "components/ui-kit/card";
-import Tag from "components/ui-kit/tag";
-import Icon from "components/ui-kit/icon";
-import {formatDate} from "shared/utils/format-date";
-import {classNames} from "shared/utils";
-import BtnCircle from "components/ui-kit/btn-circle";
-import Menu from "components/ui-kit/menu";
-import MenuItem from "components/ui-kit/menu-item";
-import {deleteCallersBase} from "core/api/requests";
-import {FetchStatuses} from "shared/types/fetch-statuses";
-import {DefaultAxiosError} from "shared/types/base-response-error";
-import routes from "routing/routes";
-import {Link} from "react-router-dom";
-import {useDispatch} from "react-redux";
-import {deleteCallersBaseById} from "store/features/callers-bases/list/list";
+import {CallersBaseHeaderModel} from 'core/api';
+import Card from 'components/ui-kit/card';
+import Tag from 'components/ui-kit/tag';
+import Icon from 'components/ui-kit/icon';
+import {formatDate} from 'shared/utils/format-date';
+import {classNames} from 'shared/utils';
+import BtnCircle from 'components/ui-kit/btn-circle';
+import Menu from 'components/ui-kit/menu';
+import MenuItem from 'components/ui-kit/menu-item';
+import {deleteCallersBase} from 'core/api/requests';
+import {FetchStatuses} from 'shared/types/fetch-statuses';
+import {DefaultAxiosError} from 'shared/types/base-response-error';
+import routes from 'routing/routes';
+import {Link} from 'react-router-dom';
+import {useDispatch} from 'react-redux';
+import {deleteCallersBaseById} from 'store/features/callers-bases/list/list';
 
 type Props = {
     data: CallersBaseHeaderModel,
@@ -42,7 +42,7 @@ function CallersBaseCard({data, className}: Props) {
         deleteCallersBase(data.id)
             .then(res => {
                 // TODO show noty
-                console.log('База клиентов удалена')
+                console.log('База клиентов удалена');
                 dispatch(deleteCallersBaseById(data.id));
                 // setStatuses({isLoading: false, isSuccess: true, isError: false});
             })
@@ -81,8 +81,9 @@ function CallersBaseCard({data, className}: Props) {
                         </div>
                     </div>
                     <div className={cardStyles.tags}>
-                        {data.columns.slice(0, 5).map(el => <Tag text={`#${el.nameInTable}`} key={el.id}
-                                                                 className={cardStyles.tag}/>)}
+                        {data.columns.slice(0, 5)
+                            .map(el => <Tag text={`#${el.nameInTable}`} key={el.id}
+                                            className={cardStyles.tag}/>)}
                         {data.columns.length - 5 > 0 &&
                         <Tag text={`+${data.columns.length - 5}`} className={cardStyles.tag}/>}
                     </div>

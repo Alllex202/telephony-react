@@ -1,24 +1,20 @@
 import React, {useEffect, useState} from 'react';
 import styles from './styles.module.scss';
 import './styles.scss';
-import {useDispatch, useSelector} from "react-redux";
-import {RootState} from "store";
+import {useDispatch, useSelector} from 'react-redux';
+import {RootState} from 'store';
 import {
     changeCallersBaseHeaderById,
     getCallersBaseDataByPage,
     loadVariablesTypes,
-    updateCallersBaseDataByPage
-} from "store/features/callers-bases/view";
-import {Table, TableBody, TableCell, TableHead, TableRow as MuiTableRow} from "@mui/material";
-import BtnCircle from "components/ui-kit/btn-circle";
-import Menu from "components/ui-kit/menu";
-import MenuItem from "components/ui-kit/menu-item";
-import {
-    CallersBaseDataModel,
-    CallersBaseHeaderColumnModel,
-    VariableTypeModel
-} from "core/api";
-import InputVariableName from "./components/input-variable-name";
+    updateCallersBaseDataByPage,
+} from 'store/features/callers-bases/view';
+import {Table, TableBody, TableCell, TableHead, TableRow as MuiTableRow} from '@mui/material';
+import BtnCircle from 'components/ui-kit/btn-circle';
+import Menu from 'components/ui-kit/menu';
+import MenuItem from 'components/ui-kit/menu-item';
+import {CallersBaseDataModel, CallersBaseHeaderColumnModel, VariableTypeModel} from 'core/api';
+import InputVariableName from './components/input-variable-name';
 
 const CallersBaseViewTable = React.memo(() => {
     const dispatch = useDispatch();
@@ -32,7 +28,7 @@ const CallersBaseViewTable = React.memo(() => {
         data,
         variablesTypes,
         statusesHeader,
-        onlyInvalid
+        onlyInvalid,
     } = useSelector((state: RootState) => state.callersBaseView);
     const [anchorEl, setAnchorEl] = useState<Element | null>(null);
     const [selectedVariable, selectVariable] = useState<CallersBaseHeaderColumnModel | null>(null);
@@ -42,7 +38,7 @@ const CallersBaseViewTable = React.memo(() => {
             dispatch(loadVariablesTypes());
         }
         if (header) {
-            dispatch(updateCallersBaseDataByPage(header.id, {size, page: 0, onlyInvalid}))
+            dispatch(updateCallersBaseDataByPage(header.id, {size, page: 0, onlyInvalid}));
         }
         // eslint-disable-next-line
     }, [header, onlyInvalid]);
@@ -53,7 +49,7 @@ const CallersBaseViewTable = React.memo(() => {
         if (isLastPage) return;
         if (!header) return;
 
-        dispatch(getCallersBaseDataByPage(header.id, {page: page + 1, size, onlyInvalid}))
+        dispatch(getCallersBaseDataByPage(header.id, {page: page + 1, size, onlyInvalid}));
     }
 
     function handlerShowMenuType(anchor: Element, variable: CallersBaseHeaderColumnModel) {
@@ -77,8 +73,8 @@ const CallersBaseViewTable = React.memo(() => {
 
         dispatch(changeCallersBaseHeaderById({
             ...header,
-            columns: header.columns.map(el => el.id === selectedVariable?.id ? {...el, type: newType.name} : el)
-        }))
+            columns: header.columns.map(el => el.id === selectedVariable?.id ? {...el, type: newType.name} : el),
+        }));
         handlerHideMenuType();
     }
 
@@ -151,7 +147,7 @@ const TableRow = React.memo(({el, ind}: PropsRow) => {
                 // <TableCellRender key={el.id} el={el}/>
                 <TableCell key={el.id} className={!el.valid ? styles.invalidCell : ''}>
                     {el.value}
-                </TableCell>
+                </TableCell>,
             )}
         </MuiTableRow>
     );

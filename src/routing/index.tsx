@@ -1,5 +1,5 @@
 import React from 'react';
-import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
+import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
 import MainLayout from 'modules/main-layout';
 import RoutingBody from './components/routing-body';
 import RoutingHeader from './components/routing-header';
@@ -24,6 +24,5 @@ function Routing() {
         </Router>
     );
 }
-
 
 export default Routing;

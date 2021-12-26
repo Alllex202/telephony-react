@@ -12,5 +12,4 @@ const routes = {
     test: (): string => '/test',
 };
 
-
 export default routes;

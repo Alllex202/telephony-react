@@ -61,7 +61,7 @@ export const saveCalling = () => (dispatch: Dispatch, getState: () => RootState)
         name: state.name,
         callersBaseId: state.callersBaseId,
         scenarioId: state.scenarioId,
-        startDate: state.startDate
+        startDate: state.startDate,
     })
         .then((res) => {
             dispatch(setSuccess());
