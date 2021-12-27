@@ -14,9 +14,9 @@ import MenuItem from 'components/ui-kit/menu-item';
 import Icon from 'components/ui-kit/icon';
 import {formatDate} from 'shared/utils/format-date';
 import {CallingModel, callingStatuses, CallingStatuses} from 'core/api';
-import Tag from 'components/ui-kit/tag';
 import {deleteCalling} from 'core/api/requests/calling';
 import {deleteCallingById} from 'store/features/calling/list/list';
+import {LinearProgress} from '@mui/material';
 
 type Props = {
     data: CallingModel,
@@ -70,7 +70,7 @@ const CallingCard = ({data, className}: Props) => {
                       className={statuses.isLoading ? 'd-none' : ''}>
                     <Card className={classNames(className, cardStyles.card, styles.card)}
                           isActive={!!anchorEl}>
-                        <div className={cardStyles.wrapper}>
+                        <div className={classNames(cardStyles.wrapper, styles.wrapper)}>
                             <div onClick={e => e.preventDefault()}
                                  className={cardStyles.options_wrapper}>
                                 <BtnCircle iconName={'more_horiz'}
@@ -90,25 +90,35 @@ const CallingCard = ({data, className}: Props) => {
                                 </Menu>
                             </div>
                             <div className={cardStyles.header}>
-                                <h2 className={cardStyles.title}>{data.name}</h2>
-                                <div className={cardStyles.description}>
+                                <h2 className={cardStyles.title}>Очень очень очень длинное название этого обзванивания</h2>
+                                {/*<h2 className={cardStyles.title}>{data.name}</h2>*/}
+                                <div className={classNames(cardStyles.description, styles.description)}>
                                     <div className={cardStyles.info}>
                                         <Icon name={'calendar_today'}
                                               type={'round'}
                                               className={cardStyles.icon}/>
-                                        {data.created && formatDate(data.created)}
+                                        16 ноя, 16:30
+                                        {/*{data.created && formatDate(data.created)}*/}
                                     </div>
                                     <div className={cardStyles.info}>
-                                        <Icon name={'calendar_today'}
+                                        <Icon name={'forum'}
                                               type={'round'}
                                               className={cardStyles.icon}/>
-                                        {formatDate(data.startDate)}
+                                        Еженедельное обзванивание
+                                        {/*{formatDate(data.startDate)}*/}
+                                    </div>
+                                    <div className={cardStyles.info}>
+                                        <Icon name={'people_alt'}
+                                              type={'round'}
+                                              className={cardStyles.icon}/>
+                                        Клиенты клиники
+                                        {/*{formatDate(data.startDate)}*/}
                                     </div>
                                 </div>
                             </div>
-                            <div className={cardStyles.tags}>
-                                <Tag text={getStatus(data.status)}
-                                     className={styles.tag}/>
+                            <div className={styles.progress}>
+                                <LinearProgress value={45} variant={'determinate'} className={styles.progressBar}/>
+                                <span className={styles.label}>45% успешных</span>
                             </div>
                         </div>
                     </Card>

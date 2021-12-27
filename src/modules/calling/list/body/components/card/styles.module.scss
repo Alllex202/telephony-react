@@ -1,4 +1,44 @@
 .card {
   width: 464px;
-  height: 200px;
+  height: 246px;
+
+  .wrapper {
+    padding-bottom: 16px;
+
+    .description {
+      display: flex !important;
+      flex-direction: column !important;
+      flex-wrap: initial !important;
+      gap: 12px !important;
+    }
+
+    .progress {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+
+      .label {
+        font: var(--font-caption-medium);
+        color: var(--orange-800);
+      }
+
+      .progressBar {
+        height: 16px;
+        background-color: var(--grey-200);
+        border-radius: 2px;
+
+        &.running {
+          background-color: var(--orange-100);
+        }
+
+        span {
+          border-radius: 2px;
+        }
+
+        span:first-of-type {
+          background-color: var(--orange-600);
+        }
+      }
+    }
+  }
 }
