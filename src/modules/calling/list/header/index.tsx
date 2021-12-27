@@ -1,6 +1,5 @@
 import React, {useEffect, useState} from 'react';
 import headStyles from 'shared/styles/header-list/styes.module.scss';
-import styles from './styles.module.scss';
 import {useDispatch, useSelector} from 'react-redux';
 import {RootState} from 'store';
 import {useHistory} from 'react-router-dom';
@@ -66,7 +65,7 @@ const CallingListHeader = () => {
             <Btn text={'Обзванивание'}
                  iconName={'add_ic_call'}
                  iconType={'round'}
-                 className={classNames(headStyles.add, styles.add)}
+                 className={headStyles.add}
                  onClick={handlerAdd}
                  iconPosition={'end'}/>
             <Input value={input}

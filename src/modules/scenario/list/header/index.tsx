@@ -1,6 +1,5 @@
 import React, {useEffect, useState} from 'react';
 import headerStyles from 'shared/styles/header-list/styes.module.scss';
-import styles from './styles.module.scss';
 import Btn from 'components/ui-kit/btn';
 import Input from 'components/ui-kit/input';
 import BtnSecond from 'components/ui-kit/btn-second';
@@ -79,7 +78,7 @@ const ScenarioListHeader = () => {
                 text={'Создать сценарий'}
                 iconName={'format_list_numbered'}
                 iconType={'round'}
-                className={classNames(headerStyles.add, styles.add)}
+                className={headerStyles.add}
                 onClick={handlerAdd}
                 iconPosition={'end'}
                 disabled={creating.isLoading}

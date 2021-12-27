@@ -36,11 +36,12 @@
   .icon {
     margin-left: 0;
     margin-right: 8px;
-    font-size: 32px;
+    font-size: 24px;
   }
 
-  & > div {
+  .text {
     width: max-content;
     font: var(--font-body-bold);
+    white-space: nowrap;
   }
 }
