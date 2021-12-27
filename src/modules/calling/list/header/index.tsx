@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from 'react';
-import styles from 'shared/styles/header-list/styes.module.scss';
+import headStyles from 'shared/styles/header-list/styes.module.scss';
+import styles from './styles.module.scss';
 import {useDispatch, useSelector} from 'react-redux';
 import {RootState} from 'store';
 import {useHistory} from 'react-router-dom';
@@ -61,16 +62,16 @@ const CallingListHeader = () => {
     }
 
     return (
-        <div className={styles.header}>
-            <Btn text={'Обзвонить'}
-                 iconName={''}
+        <div className={headStyles.header}>
+            <Btn text={'Обзванивание'}
+                 iconName={'add_ic_call'}
                  iconType={'round'}
-                 className={styles.add}
+                 className={classNames(headStyles.add, styles.add)}
                  onClick={handlerAdd}
                  iconPosition={'end'}/>
             <Input value={input}
                    onChange={e => setInput(e.target.value)}
-                   className={styles.search}
+                   className={headStyles.search}
                    type={'text'}
                    placeholder={'Поиск'}
                    autoCompleteOff
@@ -79,7 +80,7 @@ const CallingListHeader = () => {
                        iconName={'sort'}
                        iconType={'round'}
                        onClick={handlerOpenSort}
-                       className={classNames(styles.sort, direction === 'ASC' ? styles.revert : '')}
+                       className={classNames(headStyles.sort, direction === 'ASC' ? headStyles.revert : '')}
                        isActive={!!anchorEl}
                        iconPosition={'end'}/>
             <Menu anchorEl={anchorEl}
