@@ -1,11 +1,18 @@
 export interface CallingModel {
-    callersBaseId: number | string,
+    callersBase: {
+        id: number | string,
+        name?: string,
+    },
     created?: number,
     id?: number | string,
     name: string,
-    scenarioId: number | string,
-    startDate: number,
-    status?: CallingStatuses,
+    percentEnd?: number,
+    scenario: {
+        id: number | string,
+        name?: string,
+    },
+    startDate?: number,
+    status: CallingStatuses,
 }
 
 export type CallingStatuses = 'RUN' | 'SCHEDULED' | 'DONE';
@@ -18,14 +25,14 @@ export interface CallingStatusModel {
 export const callingStatuses: Record<CallingStatuses, CallingStatusModel> = {
     RUN: {
         name: 'RUN',
-        message: 'Запущен',
+        message: 'Текущие',
     },
     SCHEDULED: {
         name: 'SCHEDULED',
-        message: 'Отложен',
+        message: 'Запланированные',
     },
     DONE: {
         name: 'DONE',
-        message: 'Готов',
+        message: 'Завершенные',
     },
 };

@@ -12,7 +12,7 @@
       gap: 12px !important;
     }
 
-    .progress {
+    .body {
       display: flex;
       flex-direction: column;
       gap: 4px;
@@ -38,6 +38,10 @@
         span:first-of-type {
           background-color: var(--orange-600);
         }
+      }
+
+      .btnRun {
+        width: 218px;
       }
     }
   }

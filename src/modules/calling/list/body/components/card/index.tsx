@@ -7,23 +7,24 @@ import {DefaultAxiosError} from 'shared/types/base-response-error';
 import {Link} from 'react-router-dom';
 import routes from 'routing/routes';
 import Card from 'components/ui-kit/card';
-import {classNames} from 'shared/utils';
+import {classNames, formatDate} from 'shared/utils';
 import BtnCircle from 'components/ui-kit/btn-circle';
 import Menu from 'components/ui-kit/menu';
 import MenuItem from 'components/ui-kit/menu-item';
 import Icon from 'components/ui-kit/icon';
-import {formatDate} from 'shared/utils/format-date';
-import {CallingModel, callingStatuses, CallingStatuses} from 'core/api';
+import {CallingModel, CallingStatuses} from 'core/api';
 import {deleteCalling} from 'core/api/requests/calling';
 import {deleteCallingById} from 'store/features/calling/list';
 import {LinearProgress} from '@mui/material';
+import BtnSecond from 'components/ui-kit/btn-second';
 
 type Props = {
     data: CallingModel,
     className?: string,
+    callingStatus: CallingStatuses,
 }
 
-const CallingCard = ({data, className}: Props) => {
+const CallingCard = ({data, callingStatus, className}: Props) => {
     const [anchorEl, setAnchorEl] = useState<Element | null>(null);
     const [statuses, setStatuses] = useState<FetchStatuses>({});
     const dispatch = useDispatch();
@@ -46,7 +47,7 @@ const CallingCard = ({data, className}: Props) => {
                 // TODO show noty
                 console.log('Сценарий удалена');
                 if (data.id) {
-                    dispatch(deleteCallingById(data.id));
+                    dispatch(deleteCallingById({id: data.id, callingStatus}));
                 }
             })
             .catch((err: DefaultAxiosError) => {
@@ -56,10 +57,20 @@ const CallingCard = ({data, className}: Props) => {
             });
     };
 
-    const getStatus = (type?: CallingStatuses) => {
-        if (!type) return 'В ожидании';
+    const handlerCancel = () => {
+        closeOptions();
+        if (!data.id) return;
+    };
 
-        return callingStatuses[type].message;
+    const handlerStop = () => {
+        closeOptions();
+        if (!data.id) return;
+    };
+
+    const handlerRun = (e: React.MouseEvent) => {
+        e.preventDefault();
+        closeOptions();
+        if (!data.id) return;
     };
 
     return (
@@ -81,44 +92,77 @@ const CallingCard = ({data, className}: Props) => {
                                 <Menu anchorEl={anchorEl}
                                       open={!!anchorEl}
                                       onClose={closeOptions}>
-                                    <MenuItem onClick={handlerDelete}
-                                              isDanger
-                                              iconName={'delete_forever'}
-                                              iconType={'round'}>
-                                        Удалить
-                                    </MenuItem>
+                                    {
+                                        callingStatus === 'SCHEDULED' &&
+                                        <MenuItem onClick={handlerCancel}
+                                                  isDanger
+                                                  iconName={'delete_forever'}
+                                                  iconType={'round'}>
+                                            Отменить
+                                        </MenuItem>
+                                    }
+                                    {
+                                        callingStatus === 'RUN' &&
+                                        <MenuItem onClick={handlerStop}
+                                                  isDanger
+                                                  iconName={'delete_forever'}
+                                                  iconType={'round'}>
+                                            Остановить
+                                        </MenuItem>
+                                    }
+                                    {
+                                        callingStatus === 'DONE' &&
+                                        <MenuItem onClick={handlerDelete}
+                                                  isDanger
+                                                  iconName={'delete_forever'}
+                                                  iconType={'round'}>
+                                            Удалить
+                                        </MenuItem>
+                                    }
                                 </Menu>
                             </div>
                             <div className={cardStyles.header}>
-                                <h2 className={cardStyles.title}>Очень очень очень длинное название этого обзванивания</h2>
-                                {/*<h2 className={cardStyles.title}>{data.name}</h2>*/}
+                                <h2 className={cardStyles.title}>{data.name}</h2>
                                 <div className={classNames(cardStyles.description, styles.description)}>
                                     <div className={cardStyles.info}>
                                         <Icon name={'calendar_today'}
                                               type={'round'}
                                               className={cardStyles.icon}/>
-                                        16 ноя, 16:30
-                                        {/*{data.created && formatDate(data.created)}*/}
+                                        {/*16 ноя, 16:30*/}
+                                        {data.startDate && formatDate(data.startDate)}
                                     </div>
                                     <div className={cardStyles.info}>
                                         <Icon name={'forum'}
                                               type={'round'}
                                               className={cardStyles.icon}/>
-                                        Еженедельное обзванивание
-                                        {/*{formatDate(data.startDate)}*/}
+                                        {data.scenario.name}
                                     </div>
                                     <div className={cardStyles.info}>
                                         <Icon name={'people_alt'}
                                               type={'round'}
                                               className={cardStyles.icon}/>
-                                        Клиенты клиники
-                                        {/*{formatDate(data.startDate)}*/}
+                                        {data.callersBase.name}
                                     </div>
                                 </div>
                             </div>
-                            <div className={styles.progress}>
-                                <LinearProgress value={45} variant={'determinate'} className={styles.progressBar}/>
-                                <span className={styles.label}>45% успешных</span>
+                            <div className={styles.body}>
+                                {
+                                    callingStatus === 'SCHEDULED'
+                                    ? <BtnSecond text={'Запустить сейчас'}
+                                                 iconType={'round'}
+                                                 iconName={'play_arrow'}
+                                                 iconPosition={'end'}
+                                                 className={styles.btnRun}
+                                                 onClick={handlerRun}/>
+                                    : <>
+                                        <LinearProgress value={data.percentEnd}
+                                                        variant={'determinate'}
+                                                        className={classNames(styles.progressBar, callingStatus === 'RUN'
+                                                                                                  ? styles.running
+                                                                                                  : '')}/>
+                                        <span className={styles.label}>{data.percentEnd}% успешных</span>
+                                    </>
+                                }
                             </div>
                         </div>
                     </Card>

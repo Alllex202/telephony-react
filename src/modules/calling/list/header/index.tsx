@@ -15,7 +15,7 @@ import Menu from 'components/ui-kit/menu';
 import MenuItem from 'components/ui-kit/menu-item';
 
 const CallingListHeader = () => {
-    const {statuses} = useSelector((state: RootState) => state.callingList);
+    const store = useSelector((state: RootState) => state.callingList);
     const {direction, sortBy, text} = useSelector((state: RootState) => state.filter);
     const dispatch = useDispatch();
     const history = useHistory();
@@ -44,7 +44,10 @@ const CallingListHeader = () => {
 
     function handlerSortItem(options: { sortBy: SortType, direction: DirectionSort, text: string }) {
         handlerCloseSort();
-        if (statuses.isLoading || (options.sortBy === sortBy && options.direction === direction)) return;
+        if (store['RUN'].statuses.isLoading ||
+            store['SCHEDULED'].statuses.isLoading ||
+            store['DONE'].statuses.isLoading ||
+            (options.sortBy === sortBy && options.direction === direction)) return;
 
         dispatch(resetCallingStates());
         dispatch(changeFilter({sortBy: options.sortBy, name: input, direction: options.direction, text: options.text}));
@@ -52,7 +55,10 @@ const CallingListHeader = () => {
 
     function handlerSearch(event: React.KeyboardEvent) {
         if (event.key === 'Enter') {
-            if (statuses.isLoading || input === lastInput) return;
+            if (store['RUN'].statuses.isLoading ||
+                store['SCHEDULED'].statuses.isLoading ||
+                store['DONE'].statuses.isLoading ||
+                input === lastInput) return;
 
             setLastInput(input);
             dispatch(resetCallingStates());

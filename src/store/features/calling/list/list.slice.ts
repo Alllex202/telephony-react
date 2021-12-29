@@ -1,4 +1,9 @@
-import {CallingModel, ParamsPaginatorWithFilterModel} from 'core/api';
+import {
+    CallingModel,
+    CallingStatuses,
+    ParamsPaginatorWithFilterAndStatusModel,
+    ParamsPaginatorWithFilterModel,
+} from 'core/api';
 import {FetchStatuses} from 'shared/types/fetch-statuses';
 import {createSlice, Dispatch, PayloadAction} from '@reduxjs/toolkit';
 import {DirectionSort, SortType} from 'shared/data/sort-items';
@@ -14,67 +19,102 @@ export interface CallingListState {
     isLastPage: boolean,
 }
 
-const initialState: CallingListState = {
-    callingList: [],
-    statuses: {},
-    page: 0,
-    size: 10,
-    isLastPage: false,
+const initialState: Record<CallingStatuses, CallingListState> = {
+    RUN: {
+        callingList: [],
+        statuses: {},
+        isLastPage: false,
+        size: 10,
+        page: 0,
+    },
+    SCHEDULED: {
+        callingList: [],
+        statuses: {},
+        isLastPage: false,
+        size: 10,
+        page: 0,
+    },
+    DONE: {
+        callingList: [],
+        statuses: {},
+        isLastPage: false,
+        size: 10,
+        page: 0,
+    },
 };
 
 export const callingListSlice = createSlice({
     name: 'callingList',
     initialState,
     reducers: {
-        setLoading: (state) => {
-            state.statuses = {isLoading: true};
+        setLoading: (state, action: PayloadAction<CallingStatuses>) => {
+            state[action.payload].statuses = {isLoading: true};
         },
-        setSuccess: (state) => {
-            state.statuses = {isSuccess: true};
+        setSuccess: (state, action: PayloadAction<CallingStatuses>) => {
+            state[action.payload].statuses = {isSuccess: true};
         },
-        setError: (state, action: PayloadAction<string>) => {
-            state.statuses = {isError: true, error: action.payload};
+        setError: (state, action: PayloadAction<{ error: string, callingStatus: CallingStatuses }>) => {
+            state[action.payload.callingStatus].statuses = {isError: true, error: action.payload.error};
         },
-        addCallings: (state, action: PayloadAction<CallingModel[]>) => {
-            state.callingList = [...state.callingList, ...action.payload];
+        addCallings: (state, action: PayloadAction<{ data: CallingModel[], callingStatus: CallingStatuses }>) => {
+            state[action.payload.callingStatus].callingList = [
+                ...state[action.payload.callingStatus].callingList,
+                ...action.payload.data,
+            ];
         },
-        resetCallings: (state) => {
-            state.callingList = [];
+        // resetCallings: (state) => {
+        //     state.callingList = [];
+        // },
+        deleteCallingById: (state, action: PayloadAction<{ id: number | string, callingStatus: CallingStatuses }>) => {
+            state[action.payload.callingStatus].callingList =
+                state[action.payload.callingStatus].callingList.filter(el => el.id !== action.payload.id);
         },
-        deleteCallingById: (state, action: PayloadAction<number | string>) => {
-            state.callingList = state.callingList.filter(el => el.id !== action.payload);
+        setPage: (state, action: PayloadAction<{ page: number, callingStatus: CallingStatuses }>) => {
+            state[action.payload.callingStatus].page = action.payload.page;
         },
-        setPage: (state, action: PayloadAction<number>) => {
-            state.page = action.payload;
-        },
-        setLastPage: (state, action: PayloadAction<boolean>) => {
-            state.isLastPage = action.payload;
+        setLastPage: (state, action: PayloadAction<{ isLast: boolean, callingStatus: CallingStatuses }>) => {
+            state[action.payload.callingStatus].isLastPage = action.payload.isLast;
         },
         resetCallingStates: (state) => {
-            state.callingList = [];
-            state.statuses = {};
-            state.page = 0;
-            state.isLastPage = false;
-            state.size = 10;
+            state.RUN.callingList = [];
+            state.RUN.statuses = {};
+            state.RUN.page = 0;
+            state.RUN.isLastPage = false;
+            state.RUN.size = 10;
+
+            state.SCHEDULED.callingList = [];
+            state.SCHEDULED.statuses = {};
+            state.SCHEDULED.page = 0;
+            state.SCHEDULED.isLastPage = false;
+            state.SCHEDULED.size = 10;
+
+            state.DONE.callingList = [];
+            state.DONE.statuses = {};
+            state.DONE.page = 0;
+            state.DONE.isLastPage = false;
+            state.DONE.size = 10;
         },
     },
 });
 
 export const getCallingsByPage =
-    (params: ParamsPaginatorWithFilterModel<SortType, DirectionSort>, otherConfig?: AxiosRequestConfig) =>
+    (callingStatus: CallingStatuses, params: ParamsPaginatorWithFilterAndStatusModel, otherConfig?: AxiosRequestConfig) =>
         (dispatch: Dispatch) => {
-            dispatch(setLoading());
+            dispatch(setLoading(callingStatus));
             getCallings(params, otherConfig)
                 .then((res) => {
-                    dispatch(addCallings(res.data.content));
+                    dispatch(addCallings({data: res.data.content, callingStatus}));
                     if (res.data.last) {
-                        dispatch(setLastPage(res.data.last));
+                        dispatch(setLastPage({isLast: res.data.last, callingStatus}));
                     }
-                    dispatch(setPage(res.data.pageable.pageNumber));
-                    dispatch(setSuccess());
+                    dispatch(setPage({page: res.data.pageable.pageNumber, callingStatus}));
+                    dispatch(setSuccess(callingStatus));
                 })
                 .catch((err: DefaultAxiosError) => {
-                    dispatch(setError(err.response?.data.message || 'Ошибка при полученни данных'));
+                    dispatch(setError({
+                        error: err.response?.data.message || 'Ошибка при полученни данных',
+                        callingStatus,
+                    }));
                 });
         };
 
@@ -83,7 +123,6 @@ export const {
     resetCallingStates,
     addCallings,
     setSuccess,
-    resetCallings,
     setLastPage,
     setPage,
     deleteCallingById,

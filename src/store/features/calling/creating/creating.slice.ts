@@ -59,9 +59,10 @@ export const saveCalling = () => (dispatch: Dispatch, getState: () => RootState)
     dispatch(setLoading());
     createCalling({
         name: state.name,
-        callersBaseId: state.callersBaseId,
-        scenarioId: state.scenarioId,
+        callersBase: {id: state.callersBaseId},
+        scenario: {id: state.scenarioId},
         startDate: state.startDate,
+        status: state.startDate ? 'SCHEDULED' : 'RUN',
     })
         .then((res) => {
             dispatch(setSuccess());
