@@ -6,6 +6,7 @@ import scenarioList from 'store/features/scenario/list'
 import scenarioView from './features/scenario/view'
 import callingList from 'store/features/calling/list'
 import callingCreating from './features/calling/creating'
+import notifications from './features/notifications'
 
 export const store = configureStore({
     reducer: {
@@ -15,7 +16,8 @@ export const store = configureStore({
         scenarioView,
         callingList,
         callingCreating,
-        filter
+        filter,
+        notifications
     }
 })
 
