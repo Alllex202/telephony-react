@@ -14,9 +14,7 @@ const CallingCreatingHeader = () => {
     const dispatch = useDispatch();
 
     useEffect(() => {
-        console.log(1);
         if (statuses.isSuccess) {
-            console.log(2);
             history.push(routes.callingList());
         }
         // eslint-disable-next-line

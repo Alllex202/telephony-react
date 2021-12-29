@@ -54,7 +54,7 @@ const callingCreatingSlice = createSlice({
 
 export const saveCalling = () => (dispatch: Dispatch, getState: () => RootState) => {
     const state = getState().callingCreating;
-    if (state.statuses.isLoading || !state.name || !state.callersBaseId || !state.scenarioId || !state.startDate) return;
+    if (state.statuses.isLoading || !state.name || !state.callersBaseId || !state.scenarioId) return;
 
     dispatch(setLoading());
     createCalling({
