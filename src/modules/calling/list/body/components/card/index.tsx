@@ -1,22 +1,22 @@
-import React, {useState} from 'react';
-import cardStyles from 'shared/styles/card/styles.module.scss';
-import styles from './styles.module.scss';
-import {FetchStatuses} from 'shared/types/fetch-statuses';
-import {useDispatch} from 'react-redux';
-import {DefaultAxiosError} from 'shared/types/base-response-error';
-import {Link} from 'react-router-dom';
-import routes from 'routing/routes';
-import Card from 'components/ui-kit/card';
-import {classNames, formatDate} from 'shared/utils';
-import BtnCircle from 'components/ui-kit/btn-circle';
-import Menu from 'components/ui-kit/menu';
-import MenuItem from 'components/ui-kit/menu-item';
-import Icon from 'components/ui-kit/icon';
-import {CallingModel, CallingStatuses} from 'core/api';
-import {deleteCalling} from 'core/api/requests/calling';
-import {deleteCallingById} from 'store/features/calling/list';
-import {LinearProgress} from '@mui/material';
-import BtnSecond from 'components/ui-kit/btn-second';
+import React, {useState} from 'react'
+import cardStyles from 'shared/styles/card/styles.module.scss'
+import styles from './styles.module.scss'
+import {FetchStatuses} from 'shared/types/fetch-statuses'
+import {useDispatch} from 'react-redux'
+import {DefaultAxiosError} from 'shared/types/base-response-error'
+import {Link} from 'react-router-dom'
+import routes from 'routing/routes'
+import Card from 'components/ui-kit/card'
+import {classNames, formatDate} from 'shared/utils'
+import BtnCircle from 'components/ui-kit/btn-circle'
+import Menu from 'components/ui-kit/menu'
+import MenuItem from 'components/ui-kit/menu-item'
+import Icon from 'components/ui-kit/icon'
+import {CallingModel, CallingStatuses} from 'core/api'
+import {deleteCalling} from 'core/api/requests/calling'
+import {deleteCallingById} from 'store/features/calling/list'
+import {LinearProgress} from '@mui/material'
+import BtnSecond from 'components/ui-kit/btn-second'
 
 type Props = {
     data: CallingModel,
@@ -25,53 +25,53 @@ type Props = {
 }
 
 const CallingCard = ({data, callingStatus, className}: Props) => {
-    const [anchorEl, setAnchorEl] = useState<Element | null>(null);
-    const [statuses, setStatuses] = useState<FetchStatuses>({});
-    const dispatch = useDispatch();
+    const [anchorEl, setAnchorEl] = useState<Element | null>(null)
+    const [statuses, setStatuses] = useState<FetchStatuses>({})
+    const dispatch = useDispatch()
 
     const openOptions = (e: React.MouseEvent) => {
-        setAnchorEl(e.currentTarget);
-    };
+        setAnchorEl(e.currentTarget)
+    }
 
     const closeOptions = () => {
-        setAnchorEl(null);
-    };
+        setAnchorEl(null)
+    }
 
     const handlerDelete = () => {
-        closeOptions();
-        if (!data.id) return;
+        closeOptions()
+        if (!data.id) return
 
-        setStatuses({isLoading: true});
+        setStatuses({isLoading: true})
         deleteCalling(data.id)
             .then(res => {
                 // TODO show noty
-                console.log('Сценарий удалена');
+                console.log('Сценарий удалена')
                 if (data.id) {
-                    dispatch(deleteCallingById({id: data.id, callingStatus}));
+                    dispatch(deleteCallingById({id: data.id, callingStatus}))
                 }
             })
             .catch((err: DefaultAxiosError) => {
                 // show noty
-                console.log(err.response?.data.message || 'Необработанная ошибка');
-                setStatuses({isError: true});
-            });
-    };
+                console.log(err.response?.data.message || 'Необработанная ошибка')
+                setStatuses({isError: true})
+            })
+    }
 
     const handlerCancel = () => {
-        closeOptions();
-        if (!data.id) return;
-    };
+        closeOptions()
+        if (!data.id) return
+    }
 
     const handlerStop = () => {
-        closeOptions();
-        if (!data.id) return;
-    };
+        closeOptions()
+        if (!data.id) return
+    }
 
     const handlerRun = (e: React.MouseEvent) => {
-        e.preventDefault();
-        closeOptions();
-        if (!data.id) return;
-    };
+        e.preventDefault()
+        closeOptions()
+        if (!data.id) return
+    }
 
     return (
         <>
@@ -128,7 +128,6 @@ const CallingCard = ({data, callingStatus, className}: Props) => {
                                         <Icon name={'calendar_today'}
                                               type={'round'}
                                               className={cardStyles.icon}/>
-                                        {/*16 ноя, 16:30*/}
                                         {data.startDate && formatDate(data.startDate)}
                                     </div>
                                     <div className={cardStyles.info}>
@@ -169,7 +168,7 @@ const CallingCard = ({data, callingStatus, className}: Props) => {
                 </Link>
             }
         </>
-    );
-};
+    )
+}
 
-export default CallingCard;
+export default CallingCard

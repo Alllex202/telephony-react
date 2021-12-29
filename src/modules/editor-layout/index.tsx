@@ -1,6 +1,6 @@
-import React, {ReactNode} from 'react';
-import styles from './styles.module.scss';
-import './styles.scss';
+import React, {ReactNode} from 'react'
+import styles from './styles.module.scss'
+import './styles.scss'
 
 type Props = {
     children: ReactNode,
@@ -13,7 +13,7 @@ const EditorLayout = ({children}: Props) => {
                 {children}
             </div>
         </>
-    );
-};
+    )
+}
 
-export default EditorLayout;
+export default EditorLayout

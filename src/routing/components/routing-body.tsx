@@ -1,13 +1,13 @@
-import React from 'react';
-import {Route, Switch} from 'react-router-dom';
-import routes from '../routes';
-import CallersBaseListBody from 'modules/callers-base/list/body';
-import CallersBaseAddBody from 'modules/callers-base/add/body';
-import Test from 'modules/test/body';
-import CallersBaseViewBody from 'modules/callers-base/view/body';
-import ScenarioListBody from 'modules/scenario/list/body';
-import CallingListBody from 'modules/calling/list/body';
-import CallingCreatingBody from 'modules/calling/creating/body';
+import React from 'react'
+import {Route, Switch} from 'react-router-dom'
+import routes from '../routes'
+import CallersBaseListBody from 'modules/callers-base/list/body'
+import CallersBaseAddBody from 'modules/callers-base/add/body'
+import Test from 'modules/test/body'
+import CallersBaseViewBody from 'modules/callers-base/view/body'
+import ScenarioListBody from 'modules/scenario/list/body'
+import CallingListBody from 'modules/calling/list/body'
+import CallingCreatingBody from 'modules/calling/creating/body'
 
 export default function RoutingBody() {
     return (
@@ -34,5 +34,5 @@ export default function RoutingBody() {
                    exact
                    component={Test}/>
         </Switch>
-    );
+    )
 }

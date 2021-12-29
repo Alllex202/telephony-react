@@ -1,4 +1,4 @@
-import routes from 'routing/routes';
+import routes from 'routing/routes'
 
 interface MenuItemModel {
     link: string,
@@ -10,5 +10,5 @@ export const menuItems: MenuItemModel[] = [
     {link: routes.scenarioList(), label: 'Сценарии'},
     {link: routes.callersBaseList(), label: 'Базы клиентов'},
     {link: routes.statisticsView(), label: 'Статистика'},
-    {link: routes.test(), label: 'Test'},
-];
+    {link: routes.test(), label: 'Test'}
+]

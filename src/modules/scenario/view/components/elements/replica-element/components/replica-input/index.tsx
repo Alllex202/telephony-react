@@ -1,10 +1,10 @@
-import React from 'react';
-import TextareaAutocomplete from '@webscopeio/react-textarea-autocomplete';
-import '@webscopeio/react-textarea-autocomplete/style.css';
-import styles from './styles.module.scss';
-import {useSelector} from 'react-redux';
-import {RootState} from 'store';
-import {CallersBaseHeaderColumnModel} from 'core/api';
+import React from 'react'
+import TextareaAutocomplete from '@webscopeio/react-textarea-autocomplete'
+import '@webscopeio/react-textarea-autocomplete/style.css'
+import styles from './styles.module.scss'
+import {useSelector} from 'react-redux'
+import {RootState} from 'store'
+import {CallersBaseHeaderColumnModel} from 'core/api'
 
 type Props = {
     value: string,
@@ -12,14 +12,14 @@ type Props = {
 };
 
 const ReplicaInput = React.memo(({value, onChange}: Props) => {
-    const {callersBaseHeader} = useSelector((state: RootState) => state.scenarioView);
-    const variables = callersBaseHeader?.columns ?? [];
+    const {callersBaseHeader} = useSelector((state: RootState) => state.scenarioView)
+    const variables = callersBaseHeader?.columns ?? []
 
     const onKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
         if (e.key === 'Enter') {
-            e.preventDefault();
+            e.preventDefault()
         }
-    };
+    }
 
     return (
         <TextareaAutocomplete
@@ -27,14 +27,14 @@ const ReplicaInput = React.memo(({value, onChange}: Props) => {
                 '*': {
                     dataProvider: (token) => {
                         return variables.filter((el) => el.currentName.toLowerCase()
-                            .includes(token.toLowerCase()));
+                            .includes(token.toLowerCase()))
                     },
                     component: Item,
                     output: (item, trigger) => {
-                        const _item = (item as CallersBaseHeaderColumnModel);
-                        return `*${_item.currentName}`;
-                    },
-                },
+                        const _item = (item as CallersBaseHeaderColumnModel)
+                        return `*${_item.currentName}`
+                    }
+                }
             }}
             minChar={0}
             onChange={onChange}
@@ -47,12 +47,12 @@ const ReplicaInput = React.memo(({value, onChange}: Props) => {
             onKeyDown={onKeyDown}
             maxLength={1000}
         />
-    );
-});
+    )
+})
 
-export default ReplicaInput;
+export default ReplicaInput
 
 const Item = (props: any) => {
-    return <div>{props.entity.currentName}</div>;
-};
-const Loading = () => <div>Loading</div>;
+    return <div>{props.entity.currentName}</div>
+}
+const Loading = () => <div>Loading</div>

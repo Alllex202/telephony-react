@@ -1,14 +1,14 @@
-import React from 'react';
-import styles from './styles.module.scss';
-import Icon from 'components/ui-kit/icon';
-import {NodeType} from 'core/api';
-import {classNames} from 'shared/utils';
+import React from 'react'
+import styles from './styles.module.scss'
+import Icon from 'components/ui-kit/icon'
+import {NodeType} from 'core/api'
+import {classNames} from 'shared/utils'
 
 const ScenarioLeftSidebar = () => {
     const onDragStart = (e: React.DragEvent<HTMLDivElement>, nodeType: NodeType) => {
-        e.dataTransfer.setData('application/reactflow', nodeType);
-        e.dataTransfer.effectAllowed = 'move';
-    };
+        e.dataTransfer.setData('application/reactflow', nodeType)
+        e.dataTransfer.effectAllowed = 'move'
+    }
 
     return (
         <div className={styles.leftSidebar}>
@@ -40,7 +40,7 @@ const ScenarioLeftSidebar = () => {
                 </div>
             </div>
         </div>
-    );
-};
+    )
+}
 
-export default ScenarioLeftSidebar;
+export default ScenarioLeftSidebar

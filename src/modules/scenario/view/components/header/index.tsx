@@ -1,39 +1,39 @@
-import React, {useEffect, useState} from 'react';
-import styles from './styles.module.scss';
-import BtnSecond from 'components/ui-kit/btn-second';
-import {useHistory} from 'react-router-dom';
-import routes from 'routing/routes';
-import Btn from 'components/ui-kit/btn';
-import {useDispatch, useSelector} from 'react-redux';
-import {RootState} from 'store';
-import {changeName, saveScenario} from 'store/features/scenario/view';
-import InputName from 'shared/components/input-name';
+import React, {useEffect, useState} from 'react'
+import styles from './styles.module.scss'
+import BtnSecond from 'components/ui-kit/btn-second'
+import {useHistory} from 'react-router-dom'
+import routes from 'routing/routes'
+import Btn from 'components/ui-kit/btn'
+import {useDispatch, useSelector} from 'react-redux'
+import {RootState} from 'store'
+import {changeName, saveScenario} from 'store/features/scenario/view'
+import InputName from 'shared/components/input-name'
 
 const ScenarioViewHeader = () => {
-    const dispatch = useDispatch();
-    const {statuses, data} = useSelector((state: RootState) => state.scenarioView);
-    const history = useHistory();
-    const [name, setName] = useState<string>(data?.name || '');
-    const [lastName, setLastName] = useState<string>(name);
+    const dispatch = useDispatch()
+    const {statuses, data} = useSelector((state: RootState) => state.scenarioView)
+    const history = useHistory()
+    const [name, setName] = useState<string>(data?.name || '')
+    const [lastName, setLastName] = useState<string>(name)
 
     useEffect(() => {
-        setName(data?.name || '');
-        setLastName(data?.name || '');
-    }, [data?.name]);
+        setName(data?.name || '')
+        setLastName(data?.name || '')
+    }, [data?.name])
 
     const handlerBack = () => {
-        history.push(routes.scenarioList());
-    };
+        history.push(routes.scenarioList())
+    }
 
     const handlerSave = () => {
-        if (statuses.isLoading) return;
+        if (statuses.isLoading) return
 
-        dispatch(saveScenario());
-    };
+        dispatch(saveScenario())
+    }
 
     const onChangeName = (name: string) => {
-        dispatch(changeName(name));
-    };
+        dispatch(changeName(name))
+    }
 
     return (
         <div className={styles.header}>
@@ -59,7 +59,7 @@ const ScenarioViewHeader = () => {
                  onClick={handlerSave}
                  disabled={statuses.isLoading}/>
         </div>
-    );
-};
+    )
+}
 
-export default ScenarioViewHeader;
+export default ScenarioViewHeader

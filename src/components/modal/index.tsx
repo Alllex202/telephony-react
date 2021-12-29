@@ -1,5 +1,5 @@
-import React from 'react';
-import styles from './styles.module.scss';
+import React from 'react'
+import styles from './styles.module.scss'
 
 type Props = {
     children: React.ReactNode,
@@ -17,7 +17,7 @@ const Modal = ({children, isOpened, setOpen}: Props) => {
                 {children}
             </div>
         </div>
-    );
-};
+    )
+}
 
-export default Modal;
+export default Modal

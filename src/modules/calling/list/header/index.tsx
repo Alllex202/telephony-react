@@ -1,56 +1,56 @@
-import React, {useEffect, useState} from 'react';
-import headStyles from 'shared/styles/header-list/styes.module.scss';
-import {useDispatch, useSelector} from 'react-redux';
-import {RootState} from 'store';
-import {useHistory} from 'react-router-dom';
-import {changeFilter, resetFilter} from 'store/features/filter';
-import routes from 'routing/routes';
-import {DirectionSort, sortItems, SortType} from 'shared/data/sort-items';
-import {resetCallingStates} from 'store/features/calling/list';
-import Btn from 'components/ui-kit/btn';
-import Input from 'components/ui-kit/input';
-import BtnSecond from 'components/ui-kit/btn-second';
-import {classNames} from 'shared/utils';
-import Menu from 'components/ui-kit/menu';
-import MenuItem from 'components/ui-kit/menu-item';
+import React, {useEffect, useState} from 'react'
+import headStyles from 'shared/styles/header-list/styes.module.scss'
+import {useDispatch, useSelector} from 'react-redux'
+import {RootState} from 'store'
+import {useHistory} from 'react-router-dom'
+import {changeFilter, resetFilter} from 'store/features/filter'
+import routes from 'routing/routes'
+import {DirectionSort, sortItems, SortType} from 'shared/data/sort-items'
+import {resetCallingStates} from 'store/features/calling/list'
+import Btn from 'components/ui-kit/btn'
+import Input from 'components/ui-kit/input'
+import BtnSecond from 'components/ui-kit/btn-second'
+import {classNames} from 'shared/utils'
+import Menu from 'components/ui-kit/menu'
+import MenuItem from 'components/ui-kit/menu-item'
 
 const CallingListHeader = () => {
-    const store = useSelector((state: RootState) => state.callingList);
-    const {direction, sortBy, text} = useSelector((state: RootState) => state.filter);
-    const dispatch = useDispatch();
-    const history = useHistory();
-    const [anchorEl, setAnchorEl] = useState<Element | null>(null);
-    const [input, setInput] = useState<string>('');
-    const [lastInput, setLastInput] = useState<string>('');
+    const store = useSelector((state: RootState) => state.callingList)
+    const {direction, sortBy, text} = useSelector((state: RootState) => state.filter)
+    const dispatch = useDispatch()
+    const history = useHistory()
+    const [anchorEl, setAnchorEl] = useState<Element | null>(null)
+    const [input, setInput] = useState<string>('')
+    const [lastInput, setLastInput] = useState<string>('')
 
     useEffect(() => {
         return () => {
-            dispatch(resetFilter());
-        };
+            dispatch(resetFilter())
+        }
         // eslint-disable-next-line
-    }, []);
+    }, [])
 
     function handlerAdd() {
-        history.push(routes.callingCreate());
+        history.push(routes.callingCreate())
     }
 
     function handlerOpenSort(e: any) {
-        setAnchorEl(e.currentTarget);
+        setAnchorEl(e.currentTarget)
     }
 
     function handlerCloseSort() {
-        setAnchorEl(null);
+        setAnchorEl(null)
     }
 
     function handlerSortItem(options: { sortBy: SortType, direction: DirectionSort, text: string }) {
-        handlerCloseSort();
+        handlerCloseSort()
         if (store['RUN'].statuses.isLoading ||
             store['SCHEDULED'].statuses.isLoading ||
             store['DONE'].statuses.isLoading ||
-            (options.sortBy === sortBy && options.direction === direction)) return;
+            (options.sortBy === sortBy && options.direction === direction)) return
 
-        dispatch(resetCallingStates());
-        dispatch(changeFilter({sortBy: options.sortBy, name: input, direction: options.direction, text: options.text}));
+        dispatch(resetCallingStates())
+        dispatch(changeFilter({sortBy: options.sortBy, name: input, direction: options.direction, text: options.text}))
     }
 
     function handlerSearch(event: React.KeyboardEvent) {
@@ -58,11 +58,11 @@ const CallingListHeader = () => {
             if (store['RUN'].statuses.isLoading ||
                 store['SCHEDULED'].statuses.isLoading ||
                 store['DONE'].statuses.isLoading ||
-                input === lastInput) return;
+                input === lastInput) return
 
-            setLastInput(input);
-            dispatch(resetCallingStates());
-            dispatch(changeFilter({sortBy, name: input, direction, text}));
+            setLastInput(input)
+            dispatch(resetCallingStates())
+            dispatch(changeFilter({sortBy, name: input, direction, text}))
         }
     }
 
@@ -96,13 +96,13 @@ const CallingListHeader = () => {
                               onClick={() => handlerSortItem({
                                   sortBy: el.sortBy,
                                   direction: el.direction,
-                                  text: el.text,
+                                  text: el.text
                               })}>
                         {el.text}
                     </MenuItem>)}
             </Menu>
         </div>
-    );
-};
+    )
+}
 
-export default CallingListHeader;
+export default CallingListHeader

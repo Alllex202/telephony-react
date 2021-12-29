@@ -1,7 +1,7 @@
-import React, {useEffect, useRef, useState} from 'react';
-import styles from './styles.module.scss';
-import {classNames} from 'shared/utils';
-import InputTransparent from '../ui-kit/input-transparent';
+import React, {useEffect, useRef, useState} from 'react'
+import styles from './styles.module.scss'
+import {classNames} from 'shared/utils'
+import InputTransparent from '../ui-kit/input-transparent'
 
 type Props = {
     text: string,
@@ -15,80 +15,80 @@ type Props = {
 };
 
 const HiddenInput = ({setLastText, setText, lastText, text, callback, classText, classInput, classWrapper}: Props) => {
-    const [isView, setView] = useState<boolean>(true);
-    const inputRef = React.createRef<HTMLInputElement>();
-    const textRef = useRef<HTMLDivElement>(null);
-    const divRef = useRef<HTMLDivElement>(null);
-    const valueRef = useRef<string>(text);
+    const [isView, setView] = useState<boolean>(true)
+    const inputRef = React.createRef<HTMLInputElement>()
+    const textRef = useRef<HTMLDivElement>(null)
+    const divRef = useRef<HTMLDivElement>(null)
+    const valueRef = useRef<string>(text)
 
     useEffect(() => {
         if (inputRef.current && !isView) {
-            inputRef.current.focus();
-            changeWidthInput();
-            changeWidthDiv();
+            inputRef.current.focus()
+            changeWidthInput()
+            changeWidthDiv()
         }
         // eslint-disable-next-line
-    }, [isView]);
+    }, [isView])
 
     useEffect(() => {
-        changeWidthInput();
-        changeWidthDiv();
+        changeWidthInput()
+        changeWidthDiv()
         // eslint-disable-next-line
-    }, [text]);
+    }, [text])
 
     const changeWidthInput = () => {
         if (inputRef.current && textRef.current) {
-            const viewWidth = textRef.current.getBoundingClientRect().width;
-            inputRef.current.style.width = `${viewWidth}px`;
+            const viewWidth = textRef.current.getBoundingClientRect().width
+            inputRef.current.style.width = `${viewWidth}px`
         }
-    };
+    }
 
     const changeWidthDiv = () => {
         if (divRef.current && textRef.current) {
-            const viewWidth = textRef.current.getBoundingClientRect().width;
-            divRef.current.style.width = `${viewWidth}px`;
+            const viewWidth = textRef.current.getBoundingClientRect().width
+            divRef.current.style.width = `${viewWidth}px`
         }
-    };
+    }
 
     const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        valueRef.current = e.target.value;
-        setText(e.target.value);
-    };
+        valueRef.current = e.target.value
+        setText(e.target.value)
+    }
 
     const onKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
-        if (e.key !== 'Enter') return;
+        if (e.key !== 'Enter') return
 
-        changeView();
-    };
+        changeView()
+    }
 
     const onKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-        if (e.key !== 'Escape') return;
+        if (e.key !== 'Escape') return
 
-        valueRef.current = lastText;
-        setText(lastText);
-        inputRef.current?.blur();
-    };
+        valueRef.current = lastText
+        setText(lastText)
+        inputRef.current?.blur()
+    }
 
     const onBlur = () => {
-        changeView();
-    };
+        changeView()
+    }
 
     const changeView = () => {
-        const trim = valueRef.current.trim();
+        const trim = valueRef.current.trim()
         if (trim === '') {
-            valueRef.current = lastText;
-            setText(lastText);
+            valueRef.current = lastText
+            setText(lastText)
         } else {
-            valueRef.current = trim;
-            setText(trim);
-            setLastText(trim);
+            valueRef.current = trim
+            setText(trim)
+            setLastText(trim)
         }
-        setView(!isView);
+        setView(!isView)
 
         if (!isView) {
-            callback && callback(trim || lastText);
+            callback && callback(trim || lastText)
         }
-    };
+    }
 
     return (
         <>
@@ -111,7 +111,7 @@ const HiddenInput = ({setLastText, setText, lastText, text, callback, classText,
             </div>
 
         </>
-    );
-};
+    )
+}
 
-export default HiddenInput;
+export default HiddenInput

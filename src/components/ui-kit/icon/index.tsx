@@ -1,4 +1,4 @@
-import React from 'react';
+import React from 'react'
 
 type Props = {
     type?: 'outlined' | 'round' | 'sharp' | 'two-tone',
@@ -9,7 +9,7 @@ type Props = {
 function Icon({type, name, className}: Props) {
     return (
         <span className={`material-icons material-icons${type ? `-${type}` : ''} ${className ?? ''}`}>{name}</span>
-    );
+    )
 }
 
-export default Icon;
+export default Icon

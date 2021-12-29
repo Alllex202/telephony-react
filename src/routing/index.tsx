@@ -1,13 +1,13 @@
-import React from 'react';
-import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
-import MainLayout from 'modules/main-layout';
-import RoutingBody from './components/routing-body';
-import RoutingHeader from './components/routing-header';
-import RoutingFooter from './components/routing-footer';
-import RoutingRightSidebar from './components/routing-right-sidebar';
-import routes from 'routing/routes';
-import EditorLayout from 'modules/editor-layout';
-import ScenarioView from 'modules/scenario/view';
+import React from 'react'
+import {BrowserRouter as Router, Route, Switch} from 'react-router-dom'
+import MainLayout from 'modules/main-layout'
+import RoutingBody from './components/routing-body'
+import RoutingHeader from './components/routing-header'
+import RoutingFooter from './components/routing-footer'
+import RoutingRightSidebar from './components/routing-right-sidebar'
+import routes from 'routing/routes'
+import EditorLayout from 'modules/editor-layout'
+import ScenarioView from 'modules/scenario/view'
 
 function Routing() {
     return (
@@ -23,7 +23,7 @@ function Routing() {
                                              childrenRightSidebar={<RoutingRightSidebar/>}/>}/>
             </Switch>
         </Router>
-    );
+    )
 }
 
-export default Routing;
+export default Routing

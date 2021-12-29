@@ -1,17 +1,17 @@
-import React, {useEffect, useState} from 'react';
-import styles from './styles.module.scss';
-import 'modules/scenario/view/components/elements/element/element-style.scss';
-import {Handle, NodeProps, Position} from 'react-flow-renderer';
-import {classNames} from 'shared/utils';
-import {NodeDataModel} from 'core/api';
-import Input from 'components/ui-kit/input';
-import Card from 'components/ui-kit/card';
-import Switch from 'components/ui-kit/switch';
-import BtnCircle from 'components/ui-kit/btn-circle';
-import Icon from 'components/ui-kit/icon';
-import Menu from 'components/ui-kit/menu';
-import MenuItem from 'components/ui-kit/menu-item';
-import {useDispatch} from 'react-redux';
+import React, {useEffect, useState} from 'react'
+import styles from './styles.module.scss'
+import 'modules/scenario/view/components/elements/element/element-style.scss'
+import {Handle, NodeProps, Position} from 'react-flow-renderer'
+import {classNames} from 'shared/utils'
+import {NodeDataModel} from 'core/api'
+import Input from 'components/ui-kit/input'
+import Card from 'components/ui-kit/card'
+import Switch from 'components/ui-kit/switch'
+import BtnCircle from 'components/ui-kit/btn-circle'
+import Icon from 'components/ui-kit/icon'
+import Menu from 'components/ui-kit/menu'
+import MenuItem from 'components/ui-kit/menu-item'
+import {useDispatch} from 'react-redux'
 import {
     addAnswer,
     changeAnswer,
@@ -19,9 +19,9 @@ import {
     changePosition,
     changeReplica,
     changeWaitingTime,
-    removeAnswer,
-} from 'store/features/scenario/view';
-import ReplicaInput from 'modules/scenario/view/components/elements/replica-element/components/replica-input';
+    removeAnswer
+} from 'store/features/scenario/view'
+import ReplicaInput from 'modules/scenario/view/components/elements/replica-element/components/replica-input'
 
 export interface Button {
     name: string,
@@ -38,93 +38,93 @@ const _buttons: Button[] = [
     {name: '7', isUsed: false},
     {name: '8', isUsed: false},
     {name: '9', isUsed: false},
-    {name: '0', isUsed: false},
-];
+    {name: '0', isUsed: false}
+]
 
 const ReplicaElement = React.memo(({
                                        id, data, selected, dragHandle, xPos, yPos,
-                                       isDragging,
+                                       isDragging
                                    }: NodeProps<NodeDataModel>) => {
-    const dispatch = useDispatch();
+    const dispatch = useDispatch()
     const [menu, setMenu] = useState<{ buttons: Button[], isShow: boolean }>({
         buttons: _buttons,
-        isShow: true,
-    });
-    const [isFocus, setFocus] = useState<boolean>(false);
-    const [anchorEl, setAnchorEl] = useState<Element | null>(null);
-    const [oldButton, setOldButton] = useState<string | null>(null);
+        isShow: true
+    })
+    const [isFocus, setFocus] = useState<boolean>(false)
+    const [anchorEl, setAnchorEl] = useState<Element | null>(null)
+    const [oldButton, setOldButton] = useState<string | null>(null)
 
     useEffect(() => {
         const buttons = menu.buttons.map(btn =>
             data.answers?.some(ans => ans.button === btn.name)
             ? {...btn, isUsed: true}
-            : {...btn, isUsed: false});
-        const isShow = buttons.some(btn => !btn.isUsed);
-        setMenu({buttons, isShow});
+            : {...btn, isUsed: false})
+        const isShow = buttons.some(btn => !btn.isUsed)
+        setMenu({buttons, isShow})
         // eslint-disable-next-line
-    }, [data.answers]);
+    }, [data.answers])
 
     useEffect(() => {
         if (isDragging === false && xPos && yPos) {
-            dispatch(changePosition({elementId: id, x: xPos, y: yPos}));
+            dispatch(changePosition({elementId: id, x: xPos, y: yPos}))
         }
         // eslint-disable-next-line
-    }, [isDragging]);
+    }, [isDragging])
 
     const onFocus = () => {
-        setFocus(true);
-    };
+        setFocus(true)
+    }
 
     const onBlur = () => {
-        setFocus(false);
-    };
+        setFocus(false)
+    }
 
     const onOpenMenu = (e: React.MouseEvent, oldButton: string) => {
-        setAnchorEl(e.currentTarget);
-        setOldButton(oldButton);
-    };
+        setAnchorEl(e.currentTarget)
+        setOldButton(oldButton)
+    }
 
     const onCloseMenu = () => {
-        setAnchorEl(null);
-    };
+        setAnchorEl(null)
+    }
 
     const onSelectNumberKey = (newButton: string) => {
-        onCloseMenu();
-        if (oldButton === null) return;
+        onCloseMenu()
+        if (oldButton === null) return
 
-        dispatch(changeAnswer({elementId: id, newButton, oldButton}));
-    };
+        dispatch(changeAnswer({elementId: id, newButton, oldButton}))
+    }
 
     const onChangeNeedAnswer = (e: React.ChangeEvent<HTMLInputElement>) => {
-        dispatch(changeNeedAnswer({elementId: id, isNeed: !data.needAnswer}));
-    };
+        dispatch(changeNeedAnswer({elementId: id, isNeed: !data.needAnswer}))
+    }
 
     const onChangeReplica = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-        dispatch(changeReplica({elementId: id, replica: e.target.value}));
-    };
+        dispatch(changeReplica({elementId: id, replica: e.target.value}))
+    }
 
     const onChangeWaitingTime = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const {value} = e.target;
-        dispatch(changeWaitingTime({elementId: id, time: Number(value) * 1000}));
-    };
+        const {value} = e.target
+        dispatch(changeWaitingTime({elementId: id, time: Number(value) * 1000}))
+    }
 
     const onBlurWaitingTime = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const {value, min, max} = e.target;
-        const time = Math.max(Number(min), Math.min(Number(max), Number(value)));
-        dispatch(changeWaitingTime({elementId: id, time: time * 1000}));
-    };
+        const {value, min, max} = e.target
+        const time = Math.max(Number(min), Math.min(Number(max), Number(value)))
+        dispatch(changeWaitingTime({elementId: id, time: time * 1000}))
+    }
 
     const onAddAnswer = () => {
-        if (!menu.isShow) return;
-        const unusedBtn = menu.buttons.find(btn => !btn.isUsed);
-        if (!unusedBtn) return;
+        if (!menu.isShow) return
+        const unusedBtn = menu.buttons.find(btn => !btn.isUsed)
+        if (!unusedBtn) return
 
-        dispatch(addAnswer({elementId: id, button: unusedBtn.name}));
-    };
+        dispatch(addAnswer({elementId: id, button: unusedBtn.name}))
+    }
 
     const onRemoveAnswer = (answerId: string) => {
-        dispatch(removeAnswer({elementId: id, answerId}));
-    };
+        dispatch(removeAnswer({elementId: id, answerId}))
+    }
 
     return (
         <Card isActive={selected || isFocus}
@@ -195,7 +195,7 @@ const ReplicaElement = React.memo(({
                                                        onClick={(e) => onOpenMenu(e, ans.button)}/>
                                         </>
                                     }
-                                </div>,
+                                </div>
                             )}
                             {
                                 menu.isShow &&
@@ -231,7 +231,7 @@ const ReplicaElement = React.memo(({
                     position={Position.Bottom}
                     className={classNames(styles.handle, styles.round)}/>}
         </Card>
-    );
-});
+    )
+})
 
-export default ReplicaElement;
+export default ReplicaElement

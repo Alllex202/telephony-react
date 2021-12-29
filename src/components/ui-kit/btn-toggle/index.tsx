@@ -1,7 +1,7 @@
-import React, {MouseEventHandler} from 'react';
-import styles from './styles.module.scss';
-import BtnCircleDefault from '../btn-circle-default';
-import {classNames} from 'shared/utils';
+import React, {MouseEventHandler} from 'react'
+import styles from './styles.module.scss'
+import BtnCircleDefault from '../btn-circle-default'
+import {classNames} from 'shared/utils'
 
 type Props = {
     iconName: string,
@@ -20,7 +20,7 @@ function BtnToggle({iconName, className, onClick, iconType, isActive, activeStyl
                           isActive={isActive}
                           onClick={onClick}
                           activeStyle={activeStyle || styles.active}/>
-    );
+    )
 }
 
-export default BtnToggle;
+export default BtnToggle

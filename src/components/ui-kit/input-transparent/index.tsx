@@ -1,5 +1,5 @@
-import React, {ForwardedRef} from 'react';
-import styles from './styles.module.scss';
+import React, {ForwardedRef} from 'react'
+import styles from './styles.module.scss'
 
 type Props = {
     value?: string | number,
@@ -28,7 +28,7 @@ const InputTransparent = React.forwardRef(({
                                                onKeyPress,
                                                maxLength,
                                                onBlur,
-                                               onKeyDown,
+                                               onKeyDown
                                            }: Props, ref: ForwardedRef<HTMLInputElement>) => {
     return (
         <input className={[styles.input, className].join(' ')}
@@ -44,7 +44,7 @@ const InputTransparent = React.forwardRef(({
                onBlur={onBlur}
                ref={ref}
                onKeyDown={onKeyDown}/>
-    );
-});
+    )
+})
 
-export default InputTransparent;
+export default InputTransparent

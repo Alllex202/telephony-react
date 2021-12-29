@@ -1,7 +1,7 @@
-import React, {MouseEventHandler} from 'react';
-import Icon from '../icon';
-import styles from './styles.module.scss';
-import {classNames} from 'shared/utils';
+import React, {MouseEventHandler} from 'react'
+import Icon from '../icon'
+import styles from './styles.module.scss'
+import {classNames} from 'shared/utils'
 
 type Props = {
     text: string,
@@ -24,7 +24,7 @@ function BtnDefault({text, iconName, iconType, iconPosition, className, onClick,
                   className={classNames(styles.icon, styles.icon_custom, 'icon')}/>}
             <div className={classNames(styles.text, 'text')}>{text}</div>
         </button>
-    );
+    )
 }
 
-export default BtnDefault;
+export default BtnDefault

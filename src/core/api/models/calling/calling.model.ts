@@ -25,14 +25,14 @@ export interface CallingStatusModel {
 export const callingStatuses: Record<CallingStatuses, CallingStatusModel> = {
     RUN: {
         name: 'RUN',
-        message: 'Текущие',
+        message: 'Текущие'
     },
     SCHEDULED: {
         name: 'SCHEDULED',
-        message: 'Запланированные',
+        message: 'Запланированные'
     },
     DONE: {
         name: 'DONE',
-        message: 'Завершенные',
-    },
-};
+        message: 'Завершенные'
+    }
+}

@@ -1,5 +1,5 @@
-import React, {ReactNode} from 'react';
-import styles from './styles.module.scss';
+import React, {ReactNode} from 'react'
+import styles from './styles.module.scss'
 
 type Props = {
     children: ReactNode,
@@ -13,7 +13,7 @@ function RightSidebar({children, className}: Props) {
                 {children}
             </div>
         </>
-    );
+    )
 }
 
-export default RightSidebar;
+export default RightSidebar

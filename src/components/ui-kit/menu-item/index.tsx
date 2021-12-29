@@ -1,8 +1,8 @@
-import React from 'react';
-import {MenuItem as MuiMenuItem} from '@mui/material';
-import './custom-styles.scss';
-import {classNames} from 'shared/utils';
-import Icon from '../icon';
+import React from 'react'
+import {MenuItem as MuiMenuItem} from '@mui/material'
+import './custom-styles.scss'
+import {classNames} from 'shared/utils'
+import Icon from '../icon'
 
 type Props = {
     onClick?: Function,
@@ -15,7 +15,7 @@ type Props = {
 
 function MenuItem({onClick, children, isDanger, iconName, iconPosition, iconType}: Props) {
     function handleClick() {
-        onClick && onClick();
+        onClick && onClick()
     }
 
     return (
@@ -28,7 +28,7 @@ function MenuItem({onClick, children, isDanger, iconName, iconPosition, iconType
                                type={iconType}/>}
             {children}
         </MuiMenuItem>
-    );
+    )
 }
 
-export default MenuItem;
+export default MenuItem

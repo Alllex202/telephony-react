@@ -1,6 +1,6 @@
-import React from 'react';
-import './custom-styles.scss';
-import {Menu as MuiMenu} from '@mui/material';
+import React from 'react'
+import './custom-styles.scss'
+import {Menu as MuiMenu} from '@mui/material'
 
 type Props = {
     anchorEl: Element | null,
@@ -20,7 +20,7 @@ function Menu({anchorEl, open, onClose, children}: Props) {
                  marginThreshold={20}>
             {children}
         </MuiMenu>
-    );
+    )
 }
 
-export default Menu;
+export default Menu

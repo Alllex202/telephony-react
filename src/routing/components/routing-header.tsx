@@ -1,13 +1,13 @@
-import React from 'react';
-import {Route, Switch} from 'react-router-dom';
-import routes from '../routes';
-import CallersBaseListHeader from 'modules/callers-base/list/header';
-import CallersBaseAddHeader from 'modules/callers-base/add/header';
-import CallersBaseViewHeader from 'modules/callers-base/view/header';
-import TestHeader from 'modules/test/header';
-import ScenarioListHeader from 'modules/scenario/list/header';
-import CallingCreatingHeader from 'modules/calling/creating/header';
-import CallingListHeader from 'modules/calling/list/header';
+import React from 'react'
+import {Route, Switch} from 'react-router-dom'
+import routes from '../routes'
+import CallersBaseListHeader from 'modules/callers-base/list/header'
+import CallersBaseAddHeader from 'modules/callers-base/add/header'
+import CallersBaseViewHeader from 'modules/callers-base/view/header'
+import TestHeader from 'modules/test/header'
+import ScenarioListHeader from 'modules/scenario/list/header'
+import CallingCreatingHeader from 'modules/calling/creating/header'
+import CallingListHeader from 'modules/calling/list/header'
 
 export default function RoutingHeader() {
     return (
@@ -35,5 +35,5 @@ export default function RoutingHeader() {
                    component={TestHeader}/>
             <Route children={<>Стандартная шапка</>}/>
         </Switch>
-    );
+    )
 }

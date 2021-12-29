@@ -1,87 +1,87 @@
-import React, {useEffect, useState} from 'react';
-import styles from './styles.module.scss';
-import BtnCircle from 'components/ui-kit/btn-circle';
-import {Controls, useStoreState, useZoomPanHelper} from 'react-flow-renderer';
-import BtnSecond from 'components/ui-kit/btn-second';
-import {Link} from 'react-router-dom';
-import routes from 'routing/routes';
-import {useDispatch, useSelector} from 'react-redux';
-import {RootState} from 'store';
-import {CallersBaseHeaderModel} from 'core/api';
-import {getCallersBasesHeader} from 'core/api/requests';
-import {DefaultAxiosError} from 'shared/types/base-response-error';
-import Menu from 'components/ui-kit/menu';
-import MenuItem from 'components/ui-kit/menu-item';
-import {getCallersBaseHeader, setConnectionId} from 'store/features/scenario/view';
-import Tag from 'components/ui-kit/tag';
-import cardStyles from 'shared/styles/card/styles.module.scss';
+import React, {useEffect, useState} from 'react'
+import styles from './styles.module.scss'
+import BtnCircle from 'components/ui-kit/btn-circle'
+import {Controls, useStoreState, useZoomPanHelper} from 'react-flow-renderer'
+import BtnSecond from 'components/ui-kit/btn-second'
+import {Link} from 'react-router-dom'
+import routes from 'routing/routes'
+import {useDispatch, useSelector} from 'react-redux'
+import {RootState} from 'store'
+import {CallersBaseHeaderModel} from 'core/api'
+import {getCallersBasesHeader} from 'core/api/requests'
+import {DefaultAxiosError} from 'shared/types/base-response-error'
+import Menu from 'components/ui-kit/menu'
+import MenuItem from 'components/ui-kit/menu-item'
+import {getCallersBaseHeader, setConnectionId} from 'store/features/scenario/view'
+import Tag from 'components/ui-kit/tag'
+import cardStyles from 'shared/styles/card/styles.module.scss'
 
-const maxShowVariables = 10;
+const maxShowVariables = 10
 
 const ScenarioRightSidebar = () => {
-    const {zoomIn, zoomOut, fitView} = useZoomPanHelper();
-    const {transform} = useStoreState(state => state);
-    const {data, statuses, callersBaseHeader} = useSelector((state: RootState) => state.scenarioView);
-    const currentZoom = transform[2];
-    const [anchorEl, setAnchorEl] = useState<Element | null>(null);
-    const dispatch = useDispatch();
-    const [callersBasesHeader, setCallersBasesHeader] = useState<CallersBaseHeaderModel[] | null>(null);
+    const {zoomIn, zoomOut, fitView} = useZoomPanHelper()
+    const {transform} = useStoreState(state => state)
+    const {data, statuses, callersBaseHeader} = useSelector((state: RootState) => state.scenarioView)
+    const currentZoom = transform[2]
+    const [anchorEl, setAnchorEl] = useState<Element | null>(null)
+    const dispatch = useDispatch()
+    const [callersBasesHeader, setCallersBasesHeader] = useState<CallersBaseHeaderModel[] | null>(null)
 
     useEffect(() => {
         getCallersBasesHeader({page: 0, size: 100})
             .then(res => {
-                setCallersBasesHeader(res.data.content);
+                setCallersBasesHeader(res.data.content)
             })
             .catch((err: DefaultAxiosError) => {
-                console.log(err);
-            });
-    }, []);
+                console.log(err)
+            })
+    }, [])
 
     useEffect(() => {
-        dispatch(getCallersBaseHeader());
+        dispatch(getCallersBaseHeader())
         // eslint-disable-next-line
-    }, [data?.connectedCallerBaseId]);
+    }, [data?.connectedCallerBaseId])
 
     const onZoomIn = () => {
-        zoomIn(200);
-    };
+        zoomIn(200)
+    }
 
     const onZoomOut = () => {
-        zoomOut(200);
-    };
+        zoomOut(200)
+    }
 
     const onFitView = () => {
-        fitView({duration: 500, padding: 0.35}, 500);
-    };
+        fitView({duration: 500, padding: 0.35}, 500)
+    }
 
     const onOpenMenu = (e: React.MouseEvent<HTMLButtonElement>) => {
         if (statuses.isLoading) {
-            return;
+            return
         }
 
-        setAnchorEl(e.currentTarget);
-    };
+        setAnchorEl(e.currentTarget)
+    }
 
     const onCloseMenu = () => {
-        setAnchorEl(null);
-    };
+        setAnchorEl(null)
+    }
 
     const onConnect = (id: number | string) => {
         if (statuses.isLoading) {
-            return;
+            return
         }
 
-        onCloseMenu();
-        dispatch(setConnectionId(id));
-    };
+        onCloseMenu()
+        dispatch(setConnectionId(id))
+    }
 
     const onDisconnect = () => {
         if (statuses.isLoading) {
-            return;
+            return
         }
 
-        dispatch(setConnectionId(null));
-    };
+        dispatch(setConnectionId(null))
+    }
 
     return (
         <div className={styles.rightSidebar}>
@@ -164,7 +164,7 @@ const ScenarioRightSidebar = () => {
                 </div>
             }
         </div>
-    );
-};
+    )
+}
 
-export default ScenarioRightSidebar;
+export default ScenarioRightSidebar

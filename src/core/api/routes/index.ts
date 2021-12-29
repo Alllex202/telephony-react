@@ -1,8 +1,8 @@
-import {serverApi} from 'config';
+import {serverApi} from 'config'
 
-const callersBase = 'callers-base';
-const scenario = 'scenario';
-const calling = 'dialing';
+const callersBase = 'callers-base'
+const scenario = 'scenario'
+const calling = 'dialing'
 
 export const apiRoutes = {
     callersBase: {
@@ -11,14 +11,14 @@ export const apiRoutes = {
         header: () => `${serverApi}/${callersBase}/header`,
         headerById: (id: string | number) => `${serverApi}/${callersBase}/header/${id}`,
         uploadExcel: () => `${serverApi}/${callersBase}/upload/exel`,
-        variablesTypes: () => `${serverApi}/${callersBase}/variables/types`,
+        variablesTypes: () => `${serverApi}/${callersBase}/variables/types`
     },
     scenario: {
         scenario: () => `${serverApi}/${scenario}`,
-        byId: (id: string | number) => `${serverApi}/${scenario}/${id}`,
+        byId: (id: string | number) => `${serverApi}/${scenario}/${id}`
     },
     calling: {
         calling: () => `${serverApi}/${calling}`,
-        byId: (id: string | number) => `${serverApi}/${calling}/${id}`,
-    },
-};
+        byId: (id: string | number) => `${serverApi}/${calling}/${id}`
+    }
+}

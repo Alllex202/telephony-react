@@ -9,7 +9,7 @@ const routes = {
     scenarioView: (id: string | number) => `/scenario/view/id${id}`,
     settingsView: (): string => '/settings',
     statisticsView: (): string => '/statistics',
-    test: (): string => '/test',
-};
+    test: (): string => '/test'
+}
 
-export default routes;
+export default routes

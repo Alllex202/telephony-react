@@ -10,18 +10,18 @@ const month: { [key: number]: string } = {
     8: 'Сентябрь',
     9: 'Октябрь',
     10: 'Ноябрь',
-    11: 'Декабрь',
-};
+    11: 'Декабрь'
+}
 
 export function formatDate(ms: number, shortMonth?: boolean): string {
-    const date = new Date(ms);
-    let _month = month[date.getMonth()];
+    const date = new Date(ms)
+    let _month = month[date.getMonth()]
     if (shortMonth) {
         _month = _month.substr(0, 3)
-            .toLowerCase();
+            .toLowerCase()
     }
 
-    return `${date.getDate()} ${_month} ${date.getFullYear()}`;
+    return `${date.getDate()} ${_month} ${date.getFullYear()}`
 }
 
 

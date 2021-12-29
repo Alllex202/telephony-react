@@ -1,32 +1,32 @@
-import React, {useState} from 'react';
-import Btn from 'components/ui-kit/btn';
-import styles from './styles.module.scss';
-import BtnSecond from 'components/ui-kit/btn-second';
-import BtnDefault from 'components/ui-kit/btn-default';
-import BtnToggle from 'components/ui-kit/btn-toggle';
-import BtnCircle from 'components/ui-kit/btn-circle';
-import Input from 'components/ui-kit/input';
-import BtnCircleDefault from 'components/ui-kit/btn-circle-default';
-import Modal from 'components/modal';
-import Card from 'components/ui-kit/card';
-import Tag from 'components/ui-kit/tag';
-import Menu from 'components/ui-kit/menu';
-import MenuItem from 'components/ui-kit/menu-item';
-import InputTransparent from 'components/ui-kit/input-transparent';
-import HiddenInput from 'components/hidden-input';
+import React, {useState} from 'react'
+import Btn from 'components/ui-kit/btn'
+import styles from './styles.module.scss'
+import BtnSecond from 'components/ui-kit/btn-second'
+import BtnDefault from 'components/ui-kit/btn-default'
+import BtnToggle from 'components/ui-kit/btn-toggle'
+import BtnCircle from 'components/ui-kit/btn-circle'
+import Input from 'components/ui-kit/input'
+import BtnCircleDefault from 'components/ui-kit/btn-circle-default'
+import Modal from 'components/modal'
+import Card from 'components/ui-kit/card'
+import Tag from 'components/ui-kit/tag'
+import Menu from 'components/ui-kit/menu'
+import MenuItem from 'components/ui-kit/menu-item'
+import InputTransparent from 'components/ui-kit/input-transparent'
+import HiddenInput from 'components/hidden-input'
 
 function Test() {
-    const [modal, setModal] = useState<boolean>(false);
-    const [text, setText] = useState<string>('Скрытый ввод');
-    const [lastText, setLastText] = useState<string>(text);
+    const [modal, setModal] = useState<boolean>(false)
+    const [text, setText] = useState<string>('Скрытый ввод')
+    const [lastText, setLastText] = useState<string>(text)
 
-    const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+    const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null)
     const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-        setAnchorEl(event.currentTarget);
-    };
+        setAnchorEl(event.currentTarget)
+    }
     const handleClose = () => {
-        setAnchorEl(null);
-    };
+        setAnchorEl(null)
+    }
 
     return (
         <div className={styles.wrapper}>
@@ -169,7 +169,7 @@ function Test() {
                     справа</MenuItem>
             </Menu>
         </div>
-    );
+    )
 }
 
-export default Test;
+export default Test

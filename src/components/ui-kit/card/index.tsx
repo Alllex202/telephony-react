@@ -1,6 +1,6 @@
-import React from 'react';
-import styles from './styles.module.scss';
-import {classNames} from 'shared/utils';
+import React from 'react'
+import styles from './styles.module.scss'
+import {classNames} from 'shared/utils'
 
 type Props = {
     className?: string,
@@ -24,7 +24,7 @@ function Card({children, className, isActive, disableHover, onFocus, onBlur}: Pr
                 {children}
             </div>
         </div>
-    );
+    )
 }
 
-export default Card;
+export default Card

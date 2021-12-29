@@ -1,6 +1,6 @@
-import React from 'react';
-import './styles.scss';
-import {Switch as MuiSwitch} from '@mui/material';
+import React from 'react'
+import './styles.scss'
+import {Switch as MuiSwitch} from '@mui/material'
 
 type Props = {
     checked?: boolean,
@@ -15,7 +15,7 @@ const Switch = ({checked, onChange, disabled}: Props) => {
                    disabled={disabled}
                    disableRipple
                    className={'switchCustom'}/>
-    );
-};
+    )
+}
 
-export default Switch;
+export default Switch

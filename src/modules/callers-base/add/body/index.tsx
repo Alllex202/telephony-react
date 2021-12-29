@@ -1,79 +1,79 @@
-import React, {useRef, useState} from 'react';
-import styles from './styles.module.scss';
-import Icon from 'components/ui-kit/icon';
-import {classNames} from 'shared/utils';
-import {uploadCallersBaseExcel} from 'core/api/requests';
-import {DefaultAxiosError} from 'shared/types/base-response-error';
-import {useHistory} from 'react-router-dom';
-import routes from 'routing/routes';
-import InputName from 'shared/components/input-name';
+import React, {useRef, useState} from 'react'
+import styles from './styles.module.scss'
+import Icon from 'components/ui-kit/icon'
+import {classNames} from 'shared/utils'
+import {uploadCallersBaseExcel} from 'core/api/requests'
+import {DefaultAxiosError} from 'shared/types/base-response-error'
+import {useHistory} from 'react-router-dom'
+import routes from 'routing/routes'
+import InputName from 'shared/components/input-name'
 
-const fileType = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet';
+const fileType = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
 
 function CallersBaseAddBody() {
-    const [name, setName] = useState<string>('Новая база данных');
-    const [lastName, setLastName] = useState<string>(name);
-    const [file, setFile] = useState<File | null>(null);
-    const [isDrag, setDrag] = useState<boolean>(false);
-    const [error, setError] = useState<string>('');
-    const history = useHistory();
-    const inputFile = useRef<HTMLInputElement | null>(null);
+    const [name, setName] = useState<string>('Новая база данных')
+    const [lastName, setLastName] = useState<string>(name)
+    const [file, setFile] = useState<File | null>(null)
+    const [isDrag, setDrag] = useState<boolean>(false)
+    const [error, setError] = useState<string>('')
+    const history = useHistory()
+    const inputFile = useRef<HTMLInputElement | null>(null)
 
     function onDrop(e: React.DragEvent) {
-        e.preventDefault();
-        setDrag(false);
-        tryUploadFile(e.dataTransfer.files);
+        e.preventDefault()
+        setDrag(false)
+        tryUploadFile(e.dataTransfer.files)
     }
 
     function onDragStart(e: React.DragEvent) {
-        e.preventDefault();
-        setDrag(true);
+        e.preventDefault()
+        setDrag(true)
     }
 
     function onDragLeave(e: React.DragEvent) {
-        e.preventDefault();
-        setDrag(false);
+        e.preventDefault()
+        setDrag(false)
     }
 
     function handlerOpenFileExplorer() {
-        inputFile.current?.click();
+        inputFile.current?.click()
     }
 
     function handlerChangeInputFile(e: React.ChangeEvent<HTMLInputElement>) {
-        tryUploadFile(e.currentTarget.files);
+        tryUploadFile(e.currentTarget.files)
     }
 
     function tryUploadFile(files: FileList | null) {
-        if (!files) return;
+        if (!files) return
         if (!name) {
-            setError('Необходимо ввести название');
-            setFile(null);
-            return;
+            setError('Необходимо ввести название')
+            setFile(null)
+            return
         }
         if (files.length !== 1) {
-            setError('Можно загрузить только 1 файл');
-            setFile(null);
-            return;
+            setError('Можно загрузить только 1 файл')
+            setFile(null)
+            return
         }
         if (files[0].type !== fileType) {
-            setError('Неподдерживаемый формат файла');
-            setFile(null);
-            return;
+            setError('Неподдерживаемый формат файла')
+            setFile(null)
+            return
         }
 
-        setError('');
-        setFile(files[0]);
-        const formData = new FormData();
-        formData.append('file', files[0]);
-        formData.append('name', name);
+        setError('')
+        setFile(files[0])
+        const formData = new FormData()
+        formData.append('file', files[0])
+        formData.append('name', name)
         uploadCallersBaseExcel(formData)
             .then(res => {
-                history.push(routes.callersBaseView(res.data.id));
+                history.push(routes.callersBaseView(res.data.id))
             })
             .catch((err: DefaultAxiosError) => {
-                setError(err.response?.data.message || 'Ошибка при отправке');
-                setFile(null);
-            });
+                setError(err.response?.data.message || 'Ошибка при отправке')
+                setFile(null)
+            })
     }
 
     return (
@@ -109,7 +109,7 @@ function CallersBaseAddBody() {
             </div>
             <div className={styles.error}>{error}</div>
         </>
-    );
+    )
 }
 
-export default CallersBaseAddBody;
+export default CallersBaseAddBody

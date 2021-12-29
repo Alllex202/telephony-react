@@ -1,7 +1,7 @@
-import React from 'react';
-import styles from './styles.module.scss';
-import Icon from '../icon';
-import {classNames} from 'shared/utils';
+import React from 'react'
+import styles from './styles.module.scss'
+import Icon from '../icon'
+import {classNames} from 'shared/utils'
 
 type Props = {
     iconName: string,
@@ -22,8 +22,8 @@ function BtnCircleDefault({className, iconName, iconType, onClick, isActive, act
             <Icon name={iconName}
                   type={iconType}/>
         </button>
-    );
+    )
 }
 
-export default BtnCircleDefault;
+export default BtnCircleDefault
 

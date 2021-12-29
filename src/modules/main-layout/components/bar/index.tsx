@@ -1,17 +1,17 @@
-import React, {ReactNode, useState} from 'react';
-import styles from './styles.module.scss';
-import Logo from './components/logo';
-import BtnToggle from 'components/ui-kit/btn-toggle';
+import React, {ReactNode, useState} from 'react'
+import styles from './styles.module.scss'
+import Logo from './components/logo'
+import BtnToggle from 'components/ui-kit/btn-toggle'
 
 type Props = {
     children: ReactNode,
 }
 
 const Bar = ({children}: Props) => {
-    const [isOpen, setOpen] = useState<boolean>(false);
+    const [isOpen, setOpen] = useState<boolean>(false)
 
     function toggleProfile() {
-        setOpen(!isOpen);
+        setOpen(!isOpen)
     }
 
     return (
@@ -30,7 +30,7 @@ const Bar = ({children}: Props) => {
                            iconType={'round'}/>
             </div>
         </div>
-    );
-};
+    )
+}
 
-export default Bar;
+export default Bar

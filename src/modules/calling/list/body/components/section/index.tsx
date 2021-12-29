@@ -1,36 +1,36 @@
-import React, {useEffect, useState} from 'react';
-import styles from './styles.module.scss';
-import listStyles from 'shared/styles/body-list/styles.module.scss';
-import './styles.scss';
-import {Accordion, AccordionDetails, AccordionSummary} from '@mui/material';
-import Icon from 'components/ui-kit/icon';
-import CallingCard from 'modules/calling/list/body/components/card';
-import {useDispatch, useSelector} from 'react-redux';
-import {RootState} from 'store';
-import {callingStatuses, CallingStatuses} from 'core/api';
-import {getCallingsByPage} from 'store/features/calling/list';
-import BtnSecond from 'components/ui-kit/btn-second';
+import React, {useEffect, useState} from 'react'
+import styles from './styles.module.scss'
+import listStyles from 'shared/styles/body-list/styles.module.scss'
+import './styles.scss'
+import {Accordion, AccordionDetails, AccordionSummary} from '@mui/material'
+import Icon from 'components/ui-kit/icon'
+import CallingCard from 'modules/calling/list/body/components/card'
+import {useDispatch, useSelector} from 'react-redux'
+import {RootState} from 'store'
+import {callingStatuses, CallingStatuses} from 'core/api'
+import {getCallingsByPage} from 'store/features/calling/list'
+import BtnSecond from 'components/ui-kit/btn-second'
 
 type Props = {
     callingStatus: CallingStatuses,
 }
 
 const CallingSection = ({callingStatus}: Props) => {
-    const store = useSelector((state: RootState) => state.callingList);
-    const filter = useSelector((state: RootState) => state.filter);
-    const dispatch = useDispatch();
-    const [isOpened, setOpen] = useState<boolean>(false);
+    const store = useSelector((state: RootState) => state.callingList)
+    const filter = useSelector((state: RootState) => state.filter)
+    const dispatch = useDispatch()
+    const [isOpened, setOpen] = useState<boolean>(false)
 
     useEffect(() => {
-        getData(store[callingStatus].page, callingStatus);
+        getData(store[callingStatus].page, callingStatus)
         // eslint-disable-next-line
-    }, [filter]);
+    }, [filter])
 
     const loadNextPage = () => {
-        if (store[callingStatus].isLastPage || store[callingStatus].statuses.isLoading) return;
+        if (store[callingStatus].isLastPage || store[callingStatus].statuses.isLoading) return
 
-        getData(store[callingStatus].page + 1, callingStatus);
-    };
+        getData(store[callingStatus].page + 1, callingStatus)
+    }
 
     const getData = (page: number, callingStatus: CallingStatuses) => {
         dispatch(getCallingsByPage(callingStatus, {
@@ -39,16 +39,16 @@ const CallingSection = ({callingStatus}: Props) => {
                 direction: filter.direction,
                 name: filter.name,
                 sortBy: filter.sortBy,
-                status: callingStatus,
-            },
-        ));
-    };
+                status: callingStatus
+            }
+        ))
+    }
 
     const onOpen = (event: React.SyntheticEvent, expanded: boolean) => {
-        if (!store[callingStatus].statuses.isSuccess) return;
+        if (!store[callingStatus].statuses.isSuccess) return
 
-        setOpen(expanded);
-    };
+        setOpen(expanded)
+    }
 
     return (
         <>
@@ -77,7 +77,7 @@ const CallingSection = ({callingStatus}: Props) => {
                 </AccordionDetails>
             </Accordion>
         </>
-    );
-};
+    )
+}
 
-export default CallingSection;
+export default CallingSection

@@ -1,10 +1,10 @@
-import React, {useEffect} from 'react';
-import bodyStyles from 'shared/styles/body-list/styles.module.scss';
-import {useDispatch, useSelector} from 'react-redux';
-import {RootState} from 'store';
-import {getScenariosByPage, resetScenariosStates as clearData} from 'store/features/scenario/list';
-import BtnSecond from 'components/ui-kit/btn-second';
-import ScenarioCard from 'modules/scenario/list/body/components/card';
+import React, {useEffect} from 'react'
+import bodyStyles from 'shared/styles/body-list/styles.module.scss'
+import {useDispatch, useSelector} from 'react-redux'
+import {RootState} from 'store'
+import {getScenariosByPage, resetScenariosStates as clearData} from 'store/features/scenario/list'
+import BtnSecond from 'components/ui-kit/btn-second'
+import ScenarioCard from 'modules/scenario/list/body/components/card'
 
 const ScenarioListBody = () => {
     const {
@@ -13,17 +13,17 @@ const ScenarioListBody = () => {
         error,
         page,
         size,
-        isLastPage,
-    } = useSelector((state: RootState) => state.scenarioList);
-    const filter = useSelector((state: RootState) => state.filter);
+        isLastPage
+    } = useSelector((state: RootState) => state.scenarioList)
+    const filter = useSelector((state: RootState) => state.filter)
 
-    const dispatch = useDispatch();
+    const dispatch = useDispatch()
 
     const loadNextPage = () => {
-        if (isLastPage || statuses.isLoading) return;
+        if (isLastPage || statuses.isLoading) return
 
-        getData(page + 1);
-    };
+        getData(page + 1)
+    }
 
     function getData(page: number) {
         dispatch(getScenariosByPage({
@@ -31,29 +31,29 @@ const ScenarioListBody = () => {
                 size,
                 direction: filter.direction,
                 name: filter.name,
-                sortBy: filter.sortBy,
-            },
-        ));
+                sortBy: filter.sortBy
+            }
+        ))
     }
 
     useEffect(() => {
         return () => {
-            dispatch(clearData());
-        };
+            dispatch(clearData())
+        }
         // eslint-disable-next-line
-    }, []);
+    }, [])
 
     useEffect(() => {
-        getData(page);
+        getData(page)
         // eslint-disable-next-line
-    }, [filter]);
+    }, [filter])
 
     if (scenarioList.length < 1 && statuses.isLoading) {
-        return <h1>Загрузка...</h1>;
+        return <h1>Загрузка...</h1>
     }
 
     if (scenarioList.length < 1 && statuses.isError) {
-        return <h1>Ошибка при загрузке | {error}</h1>;
+        return <h1>Ошибка при загрузке | {error}</h1>
     }
 
     return (
@@ -65,7 +65,7 @@ const ScenarioListBody = () => {
                      {scenarioList.map(el =>
                          <ScenarioCard key={el.id}
                                        data={el}
-                                       className={bodyStyles.card}/>,
+                                       className={bodyStyles.card}/>
                      )}
                  </div>
              </>
@@ -79,7 +79,7 @@ const ScenarioListBody = () => {
                            text={'Показать больше'}/>}
             </div>
         </>
-    );
-};
+    )
+}
 
-export default ScenarioListBody;
+export default ScenarioListBody

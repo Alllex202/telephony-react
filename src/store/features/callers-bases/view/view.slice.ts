@@ -1,15 +1,15 @@
-import {createSlice, Dispatch, PayloadAction} from '@reduxjs/toolkit';
-import {CallersBaseDataModel, CallersBaseHeaderModel, VariableTypeModel} from 'core/api';
-import {FetchStatuses} from 'shared/types/fetch-statuses';
+import {createSlice, Dispatch, PayloadAction} from '@reduxjs/toolkit'
+import {CallersBaseDataModel, CallersBaseHeaderModel, VariableTypeModel} from 'core/api'
+import {FetchStatuses} from 'shared/types/fetch-statuses'
 import {
     getCallersBaseDataById,
     getCallersBaseHeaderById,
     getVariablesTypes,
     ParamsPaginatorDataModel,
-    putCallersBaseHeaderById,
-} from 'core/api/requests';
-import {DefaultAxiosError} from 'shared/types/base-response-error';
-import {RootState} from 'store';
+    putCallersBaseHeaderById
+} from 'core/api/requests'
+import {DefaultAxiosError} from 'shared/types/base-response-error'
+import {RootState} from 'store'
 
 export interface ViewState {
     header: CallersBaseHeaderModel | null;
@@ -34,163 +34,163 @@ const initialState: ViewState = {
     page: 0,
     isLastPage: false,
     size: 50,
-    onlyInvalid: false,
-};
+    onlyInvalid: false
+}
 
 export const callersBaseViewSlice = createSlice({
     name: 'callersBaseView',
     initialState,
     reducers: {
         setType: (state: ViewState, action: PayloadAction<boolean>) => {
-            state.onlyInvalid = action.payload;
+            state.onlyInvalid = action.payload
         },
         setVariables: (state: ViewState, action: PayloadAction<VariableTypeModel[]>) => {
-            state.variablesTypes = action.payload;
+            state.variablesTypes = action.payload
         },
         setHeader: (state: ViewState, action: PayloadAction<CallersBaseHeaderModel>) => {
-            state.header = action.payload;
+            state.header = action.payload
         },
         pushDataPage: (state: ViewState, action: PayloadAction<CallersBaseDataModel[]>) => {
             if (state.data === null) {
-                state.data = action.payload;
+                state.data = action.payload
             } else {
-                state.data.push(...action.payload);
+                state.data.push(...action.payload)
             }
         },
         resetData: (state: ViewState) => {
-            state.data = null;
-            state.page = 0;
-            state.isLastPage = false;
+            state.data = null
+            state.page = 0
+            state.isLastPage = false
         },
         setPage: (state: ViewState, action: PayloadAction<number>) => {
-            state.page = action.payload;
+            state.page = action.payload
         },
         setLastPage: (state: ViewState, action: PayloadAction<boolean>) => {
-            state.isLastPage = action.payload;
+            state.isLastPage = action.payload
         },
         resetPage: (state: ViewState) => {
-            state.page = 0;
-            state.isLastPage = false;
+            state.page = 0
+            state.isLastPage = false
         },
         setHeaderLoading: (state: ViewState) => {
-            state.statusesHeader = {isLoading: true};
+            state.statusesHeader = {isLoading: true}
         },
         setHeaderSuccess: (state: ViewState) => {
-            state.statusesHeader = {isSuccess: true};
+            state.statusesHeader = {isSuccess: true}
         },
         setHeaderError: (state: ViewState, action: PayloadAction<string>) => {
-            state.statusesHeader = {isError: true, error: action.payload};
+            state.statusesHeader = {isError: true, error: action.payload}
         },
         resetHeaderStatuses: (state: ViewState) => {
-            state.statusesHeader = {};
+            state.statusesHeader = {}
         },
         setDataLoading: (state: ViewState) => {
-            state.statusesData = {isLoading: true};
+            state.statusesData = {isLoading: true}
         },
         setDataSuccess: (state: ViewState) => {
-            state.statusesData = {isSuccess: true};
+            state.statusesData = {isSuccess: true}
         },
         setDataError: (state: ViewState, action: PayloadAction<string>) => {
-            state.statusesData = {isError: true, error: action.payload};
+            state.statusesData = {isError: true, error: action.payload}
         },
         resetDataStatuses: (state: ViewState) => {
-            state.statusesData = {};
+            state.statusesData = {}
         },
         setVariablesLoading: (state: ViewState) => {
-            state.statusesVariables = {isLoading: true};
+            state.statusesVariables = {isLoading: true}
         },
         setVariablesSuccess: (state: ViewState) => {
-            state.statusesVariables = {isSuccess: true};
+            state.statusesVariables = {isSuccess: true}
         },
         setVariablesError: (state: ViewState, action: PayloadAction<string>) => {
-            state.statusesVariables = {isError: true, error: action.payload};
+            state.statusesVariables = {isError: true, error: action.payload}
         },
         resetVariablesStatuses: (state: ViewState) => {
-            state.statusesVariables = {};
+            state.statusesVariables = {}
         },
         resetAll: (state: ViewState) => {
-            state.header = null;
-            state.data = null;
-            state.statusesHeader = {};
-            state.statusesData = {};
-            state.page = 0;
-            state.isLastPage = false;
-            state.onlyInvalid = false;
-        },
-    },
-});
+            state.header = null
+            state.data = null
+            state.statusesHeader = {}
+            state.statusesData = {}
+            state.page = 0
+            state.isLastPage = false
+            state.onlyInvalid = false
+        }
+    }
+})
 
 export const getCallersBaseById = (id: number | string) => (dispatch: Dispatch) => {
-    dispatch(setHeaderLoading());
+    dispatch(setHeaderLoading())
     getCallersBaseHeaderById(id)
         .then(res => {
-            dispatch(setHeader(res.data));
-            dispatch(setHeaderSuccess());
+            dispatch(setHeader(res.data))
+            dispatch(setHeaderSuccess())
         })
         .catch((err: DefaultAxiosError) => {
-            dispatch(setHeaderError(err.response?.data.message || 'Ошибка при получении данных'));
-        });
-};
+            dispatch(setHeaderError(err.response?.data.message || 'Ошибка при получении данных'))
+        })
+}
 
 export const getCallersBaseDataByPage = (id: number | string, params: ParamsPaginatorDataModel) => (dispatch: Dispatch) => {
-    dispatch(setDataLoading());
+    dispatch(setDataLoading())
     getCallersBaseDataById(id, params)
         .then(res => {
-            dispatch(pushDataPage(res.data.content));
+            dispatch(pushDataPage(res.data.content))
             if (res.data.last) {
-                dispatch(setLastPage(true));
+                dispatch(setLastPage(true))
             }
-            dispatch(setPage(res.data.pageable.pageNumber));
-            dispatch(setDataSuccess());
+            dispatch(setPage(res.data.pageable.pageNumber))
+            dispatch(setDataSuccess())
         })
         .catch((err: DefaultAxiosError) => {
-            dispatch(setDataError(err.response?.data.message || 'Ошибка при получении данных'));
-        });
-};
+            dispatch(setDataError(err.response?.data.message || 'Ошибка при получении данных'))
+        })
+}
 
 export const updateCallersBaseDataByPage = (id: number | string, params: ParamsPaginatorDataModel) => (dispatch: Dispatch) => {
-    dispatch(setDataLoading());
+    dispatch(setDataLoading())
     getCallersBaseDataById(id, params)
         .then(res => {
-            dispatch(resetData());
-            dispatch(pushDataPage(res.data.content));
+            dispatch(resetData())
+            dispatch(pushDataPage(res.data.content))
             if (res.data.last) {
-                dispatch(setLastPage(true));
+                dispatch(setLastPage(true))
             }
-            dispatch(setPage(res.data.pageable.pageNumber));
-            dispatch(setDataSuccess());
+            dispatch(setPage(res.data.pageable.pageNumber))
+            dispatch(setDataSuccess())
         })
         .catch((err: DefaultAxiosError) => {
-            dispatch(setDataError(err.response?.data.message || 'Ошибка при получении данных'));
-        });
-};
+            dispatch(setDataError(err.response?.data.message || 'Ошибка при получении данных'))
+        })
+}
 
 export const loadVariablesTypes = () => (dispatch: Dispatch, getState: () => RootState) => {
-    const state = getState();
-    if (state.callersBaseView.variablesTypes && state.callersBaseView.statusesVariables.isSuccess) return;
+    const state = getState()
+    if (state.callersBaseView.variablesTypes && state.callersBaseView.statusesVariables.isSuccess) return
 
-    dispatch(setVariablesLoading());
+    dispatch(setVariablesLoading())
     getVariablesTypes()
         .then(res => {
-            dispatch(setVariables(res.data));
-            dispatch(setVariablesSuccess());
+            dispatch(setVariables(res.data))
+            dispatch(setVariablesSuccess())
         })
         .catch((err: DefaultAxiosError) => {
-            dispatch(setVariablesError(err.response?.data.message || 'Ошибка при получении данных'));
-        });
-};
+            dispatch(setVariablesError(err.response?.data.message || 'Ошибка при получении данных'))
+        })
+}
 
 export const changeCallersBaseHeaderById = (data: CallersBaseHeaderModel) => (dispatch: Dispatch) => {
-    dispatch(setHeaderLoading());
+    dispatch(setHeaderLoading())
     putCallersBaseHeaderById(data.id, data)
         .then(res => {
-            dispatch(setHeader(res.data));
-            dispatch(setHeaderSuccess());
+            dispatch(setHeader(res.data))
+            dispatch(setHeaderSuccess())
         })
         .catch((err: DefaultAxiosError) => {
-            dispatch(setHeaderError(err.response?.data.message || 'Ошибка при отправке'));
-        });
-};
+            dispatch(setHeaderError(err.response?.data.message || 'Ошибка при отправке'))
+        })
+}
 
 export const {
     resetDataStatuses,
@@ -213,7 +213,7 @@ export const {
     setVariablesLoading,
     setVariablesSuccess,
     resetData,
-    setType,
-} = callersBaseViewSlice.actions;
+    setType
+} = callersBaseViewSlice.actions
 
-export const callersBaseViewReducer = callersBaseViewSlice.reducer;
+export const callersBaseViewReducer = callersBaseViewSlice.reducer

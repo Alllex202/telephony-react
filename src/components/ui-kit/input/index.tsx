@@ -1,5 +1,5 @@
-import React from 'react';
-import styles from './styles.module.scss';
+import React from 'react'
+import styles from './styles.module.scss'
 
 type Props = {
     value?: string | number,
@@ -18,7 +18,7 @@ type Props = {
 
 function Input({
                    value, onChange, placeholder, className, type, name, autoCompleteOff, id, onKeyPress, max,
-                   min, onBlur,
+                   min, onBlur
                }: Props) {
     return (
         <input className={[styles.input, className].join(' ')}
@@ -33,7 +33,7 @@ function Input({
                max={max}
                min={min}
                onBlur={onBlur}/>
-    );
+    )
 }
 
-export default Input;
+export default Input

@@ -1,15 +1,15 @@
-import React from 'react';
-import styles from './styles.module.scss';
-import RightSidebar from 'components/right-sidebar';
-import {useSelector} from 'react-redux';
-import {RootState} from 'store';
-import {Link} from 'react-router-dom';
-import {formatDate} from 'shared/utils/format-date';
-import Info from './components/info';
-import routes from 'routing/routes';
+import React from 'react'
+import styles from './styles.module.scss'
+import RightSidebar from 'components/right-sidebar'
+import {useSelector} from 'react-redux'
+import {RootState} from 'store'
+import {Link} from 'react-router-dom'
+import {formatDate} from 'shared/utils/format-date'
+import Info from './components/info'
+import routes from 'routing/routes'
 
 function CallersBaseViewRightSidebar() {
-    const {header} = useSelector((state: RootState) => state.callersBaseView);
+    const {header} = useSelector((state: RootState) => state.callersBaseView)
 
     return (
         <RightSidebar>
@@ -28,7 +28,7 @@ function CallersBaseViewRightSidebar() {
                              'Короткое',
                              'Очень-очень длинное название',
                              'Обзванивание 2',
-                             'овероверовердлинноеслово',
+                             'овероверовердлинноеслово'
                          ]
                              .map((el, ind) =>
                                  <span key={ind}
@@ -44,7 +44,7 @@ function CallersBaseViewRightSidebar() {
             }
 
         </RightSidebar>
-    );
+    )
 }
 
-export default CallersBaseViewRightSidebar;
+export default CallersBaseViewRightSidebar

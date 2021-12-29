@@ -1,23 +1,23 @@
-import React, {useEffect, useState} from 'react';
-import styles from './styles.module.scss';
-import './styles.scss';
-import {useDispatch, useSelector} from 'react-redux';
-import {RootState} from 'store';
+import React, {useEffect, useState} from 'react'
+import styles from './styles.module.scss'
+import './styles.scss'
+import {useDispatch, useSelector} from 'react-redux'
+import {RootState} from 'store'
 import {
     changeCallersBaseHeaderById,
     getCallersBaseDataByPage,
     loadVariablesTypes,
-    updateCallersBaseDataByPage,
-} from 'store/features/callers-bases/view';
-import {Table, TableBody, TableCell, TableHead, TableRow as MuiTableRow} from '@mui/material';
-import BtnCircle from 'components/ui-kit/btn-circle';
-import Menu from 'components/ui-kit/menu';
-import MenuItem from 'components/ui-kit/menu-item';
-import {CallersBaseDataModel, CallersBaseHeaderColumnModel, VariableTypeModel} from 'core/api';
-import InputVariableName from './components/input-variable-name';
+    updateCallersBaseDataByPage
+} from 'store/features/callers-bases/view'
+import {Table, TableBody, TableCell, TableHead, TableRow as MuiTableRow} from '@mui/material'
+import BtnCircle from 'components/ui-kit/btn-circle'
+import Menu from 'components/ui-kit/menu'
+import MenuItem from 'components/ui-kit/menu-item'
+import {CallersBaseDataModel, CallersBaseHeaderColumnModel, VariableTypeModel} from 'core/api'
+import InputVariableName from './components/input-variable-name'
 
 const CallersBaseViewTable = React.memo(() => {
-    const dispatch = useDispatch();
+    const dispatch = useDispatch()
     const {
         header,
         statusesData,
@@ -28,62 +28,62 @@ const CallersBaseViewTable = React.memo(() => {
         data,
         variablesTypes,
         statusesHeader,
-        onlyInvalid,
-    } = useSelector((state: RootState) => state.callersBaseView);
-    const [anchorEl, setAnchorEl] = useState<Element | null>(null);
-    const [selectedVariable, selectVariable] = useState<CallersBaseHeaderColumnModel | null>(null);
+        onlyInvalid
+    } = useSelector((state: RootState) => state.callersBaseView)
+    const [anchorEl, setAnchorEl] = useState<Element | null>(null)
+    const [selectedVariable, selectVariable] = useState<CallersBaseHeaderColumnModel | null>(null)
 
     useEffect(() => {
         if (!variablesTypes) {
-            dispatch(loadVariablesTypes());
+            dispatch(loadVariablesTypes())
         }
         if (header) {
-            dispatch(updateCallersBaseDataByPage(header.id, {size, page: 0, onlyInvalid}));
+            dispatch(updateCallersBaseDataByPage(header.id, {size, page: 0, onlyInvalid}))
         }
         // eslint-disable-next-line
-    }, [header, onlyInvalid]);
+    }, [header, onlyInvalid])
 
     function handlerScroll(e: React.UIEvent<HTMLDivElement>) {
-        if (statusesData.isLoading || statusesHeader.isLoading) return;
-        if (e.currentTarget.scrollTop + e.currentTarget.clientHeight + 500 < e.currentTarget.scrollHeight) return;
-        if (isLastPage) return;
-        if (!header) return;
+        if (statusesData.isLoading || statusesHeader.isLoading) return
+        if (e.currentTarget.scrollTop + e.currentTarget.clientHeight + 500 < e.currentTarget.scrollHeight) return
+        if (isLastPage) return
+        if (!header) return
 
-        dispatch(getCallersBaseDataByPage(header.id, {page: page + 1, size, onlyInvalid}));
+        dispatch(getCallersBaseDataByPage(header.id, {page: page + 1, size, onlyInvalid}))
     }
 
     function handlerShowMenuType(anchor: Element, variable: CallersBaseHeaderColumnModel) {
-        if (statusesData.isLoading || statusesHeader.isLoading) return;
-        setAnchorEl(anchor);
-        selectVariable(variable);
+        if (statusesData.isLoading || statusesHeader.isLoading) return
+        setAnchorEl(anchor)
+        selectVariable(variable)
     }
 
     function handlerHideMenuType() {
-        setAnchorEl(null);
-        selectVariable(null);
+        setAnchorEl(null)
+        selectVariable(null)
     }
 
     function handlerChangeVariableType(newType: VariableTypeModel) {
-        if (statusesData.isLoading || statusesHeader.isLoading) return;
-        if (!header) return;
+        if (statusesData.isLoading || statusesHeader.isLoading) return
+        if (!header) return
         if (newType.name === selectedVariable?.type) {
-            handlerHideMenuType();
-            return;
+            handlerHideMenuType()
+            return
         }
 
         dispatch(changeCallersBaseHeaderById({
             ...header,
-            columns: header.columns.map(el => el.id === selectedVariable?.id ? {...el, type: newType.name} : el),
-        }));
-        handlerHideMenuType();
+            columns: header.columns.map(el => el.id === selectedVariable?.id ? {...el, type: newType.name} : el)
+        }))
+        handlerHideMenuType()
     }
 
     function conditionSaveVariablesName() {
-        return !(statusesHeader.isLoading || statusesData.isLoading);
+        return !(statusesHeader.isLoading || statusesData.isLoading)
     }
 
     if (statusesData.isError || statusesVariables.isError) {
-        return <h1>{statusesData.error || statusesVariables.error}</h1>;
+        return <h1>{statusesData.error || statusesVariables.error}</h1>
     }
 
     return (
@@ -140,8 +140,8 @@ const CallersBaseViewTable = React.memo(() => {
                 </div>
             </Menu>}
         </>
-    );
-});
+    )
+})
 
 type PropsRow = {
     ind: number,
@@ -157,10 +157,10 @@ const TableRow = React.memo(({el, ind}: PropsRow) => {
                 <TableCell key={el.id}
                            className={!el.valid ? styles.invalidCell : ''}>
                     {el.value}
-                </TableCell>,
+                </TableCell>
             )}
         </MuiTableRow>
-    );
-});
+    )
+})
 
-export default CallersBaseViewTable;
+export default CallersBaseViewTable

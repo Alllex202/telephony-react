@@ -1,5 +1,5 @@
-import {DirectionSort, SortType} from 'shared/data/sort-items';
-import {CallingStatuses} from 'core/api/models/calling';
+import {DirectionSort, SortType} from 'shared/data/sort-items'
+import {CallingStatuses} from 'core/api/models/calling'
 
 export interface ParamsPaginatorModel {
     page: number,

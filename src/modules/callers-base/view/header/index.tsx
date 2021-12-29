@@ -1,30 +1,30 @@
-import React from 'react';
-import styles from './styles.module.scss';
-import BtnSecond from 'components/ui-kit/btn-second';
-import Btn from 'components/ui-kit/btn';
-import {useHistory} from 'react-router-dom';
-import routes from 'routing/routes';
-import {useDispatch, useSelector} from 'react-redux';
-import {RootState} from 'store';
-import {changeCallersBaseHeaderById} from 'store/features/callers-bases/view';
+import React from 'react'
+import styles from './styles.module.scss'
+import BtnSecond from 'components/ui-kit/btn-second'
+import Btn from 'components/ui-kit/btn'
+import {useHistory} from 'react-router-dom'
+import routes from 'routing/routes'
+import {useDispatch, useSelector} from 'react-redux'
+import {RootState} from 'store'
+import {changeCallersBaseHeaderById} from 'store/features/callers-bases/view'
 
 function CallersBaseViewHeader() {
-    const dispatch = useDispatch();
-    const {header, statusesHeader} = useSelector((state: RootState) => state.callersBaseView);
-    const history = useHistory();
+    const dispatch = useDispatch()
+    const {header, statusesHeader} = useSelector((state: RootState) => state.callersBaseView)
+    const history = useHistory()
 
     function handlerBack() {
-        history.push(routes.callersBaseList());
+        history.push(routes.callersBaseList())
     }
 
     function handlerCalling() {
         // TODO Создать обзвон с текущей базой
-        history.push(routes.callingCreate());
+        history.push(routes.callingCreate())
     }
 
     function handlerSave() {
         if (header) {
-            dispatch(changeCallersBaseHeaderById({...header, confirmed: true}));
+            dispatch(changeCallersBaseHeaderById({...header, confirmed: true}))
         }
     }
 
@@ -49,7 +49,7 @@ function CallersBaseViewHeader() {
                  onClick={handlerSave}
                  disabled={statusesHeader.isLoading}/>}
         </div>
-    );
+    )
 }
 
-export default CallersBaseViewHeader;
+export default CallersBaseViewHeader

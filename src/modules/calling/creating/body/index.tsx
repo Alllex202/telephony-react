@@ -1,60 +1,60 @@
-import React, {useEffect, useState} from 'react';
-import styles from './styles.module.scss';
-import {useDispatch, useSelector} from 'react-redux';
-import {RootState} from 'store';
-import {resetState, setCallersBaseId, setName, setScenarioId, setStartDate} from 'store/features/calling/creating';
-import InputName from 'shared/components/input-name';
-import {FormControl, InputLabel, MenuItem, Select, SelectChangeEvent} from '@mui/material';
-import {CallersBaseHeaderModel, ScenarioInfoModel} from 'core/api';
-import {getCallersBasesHeader, getScenariosByPage} from 'core/api/requests';
-import {DefaultAxiosError} from 'shared/types/base-response-error';
+import React, {useEffect, useState} from 'react'
+import styles from './styles.module.scss'
+import {useDispatch, useSelector} from 'react-redux'
+import {RootState} from 'store'
+import {resetState, setCallersBaseId, setName, setScenarioId, setStartDate} from 'store/features/calling/creating'
+import InputName from 'shared/components/input-name'
+import {FormControl, InputLabel, MenuItem, Select, SelectChangeEvent} from '@mui/material'
+import {CallersBaseHeaderModel, ScenarioInfoModel} from 'core/api'
+import {getCallersBasesHeader, getScenariosByPage} from 'core/api/requests'
+import {DefaultAxiosError} from 'shared/types/base-response-error'
 
 const CallingCreatingBody = () => {
-    const {statuses, name} = useSelector((state: RootState) => state.callingCreating);
-    const [bases, setBases] = useState<CallersBaseHeaderModel[] | null>(null);
-    const [scenarios, setScenarios] = useState<ScenarioInfoModel[] | null>(null);
-    const [_name, _setName] = useState<string>(name);
-    const [lastName, setLastName] = useState<string>(name);
-    const dispatch = useDispatch();
+    const {statuses, name} = useSelector((state: RootState) => state.callingCreating)
+    const [bases, setBases] = useState<CallersBaseHeaderModel[] | null>(null)
+    const [scenarios, setScenarios] = useState<ScenarioInfoModel[] | null>(null)
+    const [_name, _setName] = useState<string>(name)
+    const [lastName, setLastName] = useState<string>(name)
+    const dispatch = useDispatch()
 
     useEffect(() => {
         getScenariosByPage({page: 0, size: 100})
             .then((res) => {
-                setScenarios(res.data.content);
+                setScenarios(res.data.content)
             })
             .catch((err: DefaultAxiosError) => {
-                console.log(err.response?.data.message || 'Ошибка при загрузке сценариев');
-            });
+                console.log(err.response?.data.message || 'Ошибка при загрузке сценариев')
+            })
 
         getCallersBasesHeader({page: 0, size: 100})
             .then((res) => {
-                setBases(res.data.content);
+                setBases(res.data.content)
             })
             .catch((err: DefaultAxiosError) => {
-                console.log(err.response?.data.message || 'Ошибка при загрузке сценариев');
-            });
+                console.log(err.response?.data.message || 'Ошибка при загрузке сценариев')
+            })
 
         return () => {
-            dispatch(resetState());
-        };
+            dispatch(resetState())
+        }
         // eslint-disable-next-line
-    }, []);
+    }, [])
 
     const onSelectBase = (e: SelectChangeEvent) => {
-        dispatch(setCallersBaseId(e.target.value));
-    };
+        dispatch(setCallersBaseId(e.target.value))
+    }
 
     const onSelectScenario = (e: SelectChangeEvent) => {
-        dispatch(setScenarioId(e.target.value));
-    };
+        dispatch(setScenarioId(e.target.value))
+    }
 
     const onChangeName = (value: string) => {
-        dispatch(setName(value));
-    };
+        dispatch(setName(value))
+    }
 
     const onChangeDateTime = (e: React.ChangeEvent<HTMLInputElement>) => {
-        dispatch(setStartDate((new Date(e.target.value)).getTime()));
-    };
+        dispatch(setStartDate((new Date(e.target.value)).getTime()))
+    }
 
     return (
         <div className={styles.wrapper}>
@@ -97,8 +97,8 @@ const CallingCreatingBody = () => {
                        onChange={onChangeDateTime}/>
             </div>
         </div>
-    );
-};
+    )
+}
 
-export default CallingCreatingBody;
+export default CallingCreatingBody
 

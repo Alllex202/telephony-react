@@ -1,6 +1,6 @@
-import React from 'react';
-import styles from './styles.module.scss';
-import {NavLink} from 'react-router-dom';
+import React from 'react'
+import styles from './styles.module.scss'
+import {NavLink} from 'react-router-dom'
 
 type Props = {
     to: string,
@@ -13,7 +13,7 @@ const MenuItem = ({to, label}: Props) => {
         <NavLink className={styles.menuItem}
                  to={to}
                  activeClassName={styles.active}>{label}</NavLink>
-    );
-};
+    )
+}
 
-export default MenuItem;
+export default MenuItem
