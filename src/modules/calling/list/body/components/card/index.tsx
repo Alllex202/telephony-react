@@ -15,7 +15,7 @@ import Icon from 'components/ui-kit/icon';
 import {formatDate} from 'shared/utils/format-date';
 import {CallingModel, callingStatuses, CallingStatuses} from 'core/api';
 import {deleteCalling} from 'core/api/requests/calling';
-import {deleteCallingById} from 'store/features/calling/list/list';
+import {deleteCallingById} from 'store/features/calling/list';
 import {LinearProgress} from '@mui/material';
 
 type Props = {

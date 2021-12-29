@@ -6,7 +6,7 @@ import {uploadCallersBaseExcel} from 'core/api/requests';
 import {DefaultAxiosError} from 'shared/types/base-response-error';
 import {useHistory} from 'react-router-dom';
 import routes from 'routing/routes';
-import InputName from 'modules/components/input-name';
+import InputName from 'shared/components/input-name';
 
 const fileType = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet';
 

@@ -2,7 +2,7 @@ import React, {useEffect} from 'react';
 import bodyStyles from 'shared/styles/body-list/styles.module.scss';
 import {useDispatch, useSelector} from 'react-redux';
 import {RootState} from 'store';
-import {getCallersBasesByPage, resetCallersBasesStates as clearData} from 'store/features/callers-bases/list/list';
+import {getCallersBasesByPage, resetCallersBasesStates as clearData} from 'store/features/callers-bases/list';
 import CallersBaseCard from './components/card';
 import BtnSecond from 'components/ui-kit/btn-second';
 

@@ -6,7 +6,7 @@ import {useHistory} from 'react-router-dom';
 import {changeFilter, resetFilter} from 'store/features/filter';
 import routes from 'routing/routes';
 import {DirectionSort, sortItems, SortType} from 'shared/data/sort-items';
-import {resetCallingStates} from 'store/features/calling/list/list';
+import {resetCallingStates} from 'store/features/calling/list';
 import Btn from 'components/ui-kit/btn';
 import Input from 'components/ui-kit/input';
 import BtnSecond from 'components/ui-kit/btn-second';

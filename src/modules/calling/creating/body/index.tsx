@@ -3,7 +3,7 @@ import styles from './styles.module.scss';
 import {useDispatch, useSelector} from 'react-redux';
 import {RootState} from 'store';
 import {resetState, setCallersBaseId, setName, setScenarioId, setStartDate} from 'store/features/calling/creating';
-import InputName from 'modules/components/input-name';
+import InputName from 'shared/components/input-name';
 import {FormControl, InputLabel, MenuItem, Select, SelectChangeEvent} from '@mui/material';
 import {CallersBaseHeaderModel, ScenarioInfoModel} from 'core/api';
 import {getCallersBasesHeader, getScenariosByPage} from 'core/api/requests';

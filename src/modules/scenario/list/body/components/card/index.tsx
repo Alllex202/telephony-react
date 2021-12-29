@@ -4,7 +4,7 @@ import styles from './styles.module.scss';
 import {FetchStatuses} from 'shared/types/fetch-statuses';
 import {useDispatch} from 'react-redux';
 import {deleteScenario} from 'core/api/requests';
-import {deleteScenarioById} from 'store/features/scenario/list/list';
+import {deleteScenarioById} from 'store/features/scenario/list';
 import {DefaultAxiosError} from 'shared/types/base-response-error';
 import {Link} from 'react-router-dom';
 import routes from 'routing/routes';

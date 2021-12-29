@@ -7,7 +7,7 @@ import Btn from 'components/ui-kit/btn';
 import {useDispatch, useSelector} from 'react-redux';
 import {RootState} from 'store';
 import {changeName, saveScenario} from 'store/features/scenario/view';
-import InputName from 'modules/components/input-name';
+import InputName from 'shared/components/input-name';
 
 const ScenarioViewHeader = () => {
     const dispatch = useDispatch();

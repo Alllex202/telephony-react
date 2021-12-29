@@ -3,7 +3,7 @@ import bodyStyles from 'shared/styles/body-list/styles.module.scss';
 import BtnSecond from 'components/ui-kit/btn-second';
 import {useDispatch, useSelector} from 'react-redux';
 import {RootState} from 'store';
-import {getCallingsByPage, resetCallingStates} from 'store/features/calling/list/list';
+import {getCallingsByPage, resetCallingStates} from 'store/features/calling/list';
 import CallingCard from 'modules/calling/list/body/components/card';
 
 const CallingListBody = () => {

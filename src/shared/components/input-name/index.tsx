@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from 'modules/components/input-name/styles.module.scss';
+import styles from 'shared/components/input-name/styles.module.scss';
 import Icon from 'components/ui-kit/icon';
 import HiddenInput from 'components/hidden-input';
 import {classNames} from 'shared/utils';

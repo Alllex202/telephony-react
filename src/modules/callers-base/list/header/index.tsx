@@ -10,7 +10,7 @@ import MenuItem from 'components/ui-kit/menu-item';
 import {useHistory} from 'react-router-dom';
 import routes from 'routing/routes';
 import {changeFilter, resetFilter} from 'store/features/filter';
-import {resetCallersBasesStates} from 'store/features/callers-bases/list/list';
+import {resetCallersBasesStates} from 'store/features/callers-bases/list';
 import {classNames} from 'shared/utils';
 import {DirectionSort, sortItems, SortType} from 'shared/data/sort-items';
 

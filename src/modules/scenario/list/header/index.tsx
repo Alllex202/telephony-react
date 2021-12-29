@@ -12,7 +12,7 @@ import {RootState} from 'store';
 import {useHistory} from 'react-router-dom';
 import {changeFilter, resetFilter} from 'store/features/filter';
 import routes from 'routing/routes';
-import {resetScenariosStates} from 'store/features/scenario/list/list';
+import {resetScenariosStates} from 'store/features/scenario/list';
 import {createScenario} from 'core/api/requests';
 import {DefaultAxiosError} from 'shared/types/base-response-error';
 import {FetchStatuses} from 'shared/types/fetch-statuses';

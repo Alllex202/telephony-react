@@ -1,10 +1,10 @@
 import {configureStore} from '@reduxjs/toolkit';
 import filter from './features/filter';
-import callersBaseList from './features/callers-bases/list/list';
+import callersBaseList from 'store/features/callers-bases/list';
 import callersBaseView from './features/callers-bases/view';
-import scenarioList from './features/scenario/list/list';
+import scenarioList from 'store/features/scenario/list';
 import scenarioView from './features/scenario/view';
-import callingList from './features/calling/list/list';
+import callingList from 'store/features/calling/list';
 import callingCreating from './features/calling/creating';
 
 export const store = configureStore({

@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import styles from './styles.module.scss';
-import InputName from 'modules/components/input-name';
+import InputName from 'shared/components/input-name';
 import {useParams} from 'react-router-dom';
 import {useDispatch, useSelector} from 'react-redux';
 import {changeCallersBaseHeaderById, getCallersBaseById, resetAll, setType} from 'store/features/callers-bases/view';
