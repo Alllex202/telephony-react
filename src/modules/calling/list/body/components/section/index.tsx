@@ -62,7 +62,7 @@ const CallingSection = ({callingStatus}: Props) => {
                                               ? null : <Icon name={'expand_more'}
                                                              type={'round'}
                                                              className={styles.expandIcon}/>}>
-                    {callingStatuses[callingStatus].message} ({store[callingStatus].callingList.length})
+                    {callingStatuses[callingStatus].message} ({store[callingStatus].totalElements})
                 </AccordionSummary>
                 <AccordionDetails>
                     <div className={listStyles.list}>

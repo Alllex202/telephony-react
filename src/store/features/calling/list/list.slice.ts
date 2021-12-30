@@ -12,6 +12,7 @@ export interface CallingListState {
     page: number,
     size: number,
     isLastPage: boolean,
+    totalElements: number,
 }
 
 const initialState: Record<CallingStatuses, CallingListState> = {
@@ -20,21 +21,24 @@ const initialState: Record<CallingStatuses, CallingListState> = {
         statuses: {},
         isLastPage: false,
         size: 10,
-        page: 0
+        page: 0,
+        totalElements: 0
     },
     SCHEDULED: {
         callingList: [],
         statuses: {},
         isLastPage: false,
         size: 10,
-        page: 0
+        page: 0,
+        totalElements: 0
     },
     DONE: {
         callingList: [],
         statuses: {},
         isLastPage: false,
         size: 10,
-        page: 0
+        page: 0,
+        totalElements: 0
     }
 }
 
@@ -57,9 +61,6 @@ export const callingListSlice = createSlice({
                 ...action.payload.data
             ]
         },
-        // resetCallings: (state) => {
-        //     state.callingList = [];
-        // },
         deleteCallingById: (state, action: PayloadAction<{ id: number | string, callingStatus: CallingStatuses }>) => {
             state[action.payload.callingStatus].callingList =
                 state[action.payload.callingStatus].callingList.filter(el => el.id !== action.payload.id)
@@ -70,24 +71,30 @@ export const callingListSlice = createSlice({
         setLastPage: (state, action: PayloadAction<{ isLast: boolean, callingStatus: CallingStatuses }>) => {
             state[action.payload.callingStatus].isLastPage = action.payload.isLast
         },
+        setTotalElements: (state, action: PayloadAction<{ totalElements: number, callingStatus: CallingStatuses }>) => {
+            state[action.payload.callingStatus].totalElements = action.payload.totalElements
+        },
         resetCallingStates: (state) => {
             state.RUN.callingList = []
             state.RUN.statuses = {}
             state.RUN.page = 0
             state.RUN.isLastPage = false
             state.RUN.size = 10
+            state.RUN.totalElements = 0
 
             state.SCHEDULED.callingList = []
             state.SCHEDULED.statuses = {}
             state.SCHEDULED.page = 0
             state.SCHEDULED.isLastPage = false
             state.SCHEDULED.size = 10
+            state.SCHEDULED.totalElements = 0
 
             state.DONE.callingList = []
             state.DONE.statuses = {}
             state.DONE.page = 0
             state.DONE.isLastPage = false
             state.DONE.size = 10
+            state.DONE.totalElements = 0
         }
     }
 })
@@ -103,6 +110,7 @@ export const getCallingsByPage =
                         dispatch(setLastPage({isLast: res.data.last, callingStatus}))
                     }
                     dispatch(setPage({page: res.data.pageable.pageNumber, callingStatus}))
+                    dispatch(setTotalElements({totalElements: res.data.totalElements, callingStatus}))
                     dispatch(setSuccess(callingStatus))
                 })
                 .catch(handlerError(dispatch, (err: DefaultAxiosError) => {
@@ -121,7 +129,8 @@ export const {
     setLastPage,
     setPage,
     deleteCallingById,
-    setError
+    setError,
+    setTotalElements
 } = callingListSlice.actions
 
 export const callingListReducers = callingListSlice.reducer
