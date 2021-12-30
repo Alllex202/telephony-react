@@ -14,13 +14,32 @@ import Menu from 'components/ui-kit/menu'
 import MenuItem from 'components/ui-kit/menu-item'
 import InputTransparent from 'components/ui-kit/input-transparent'
 import HiddenInput from 'components/hidden-input'
+import {useDispatch} from 'react-redux'
+import {enqueueSnackbar} from 'store/features/notifications'
 
 function Test() {
     const [modal, setModal] = useState<boolean>(false)
     const [text, setText] = useState<string>('Скрытый ввод')
     const [lastText, setLastText] = useState<string>(text)
-
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null)
+    const dispatch = useDispatch()
+
+    const notifyDefault = () => {
+        dispatch(enqueueSnackbar({message: 'Обычное', type: 'DEFAULT'}))
+    }
+
+    const notifyAlert = () => {
+        dispatch(enqueueSnackbar({message: 'Предупреждение', type: 'ALERT'}))
+    }
+
+    const notifyError = () => {
+        dispatch(enqueueSnackbar({message: 'Ошибка', type: 'ERROR'}))
+    }
+
+    const notifySuccess = () => {
+        dispatch(enqueueSnackbar({message: 'Успех', type: 'SUCCESS'}))
+    }
+
     const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
         setAnchorEl(event.currentTarget)
     }
@@ -149,6 +168,16 @@ function Test() {
                                  lastText={lastText}
                                  setLastText={setLastText}/>
                 </div>
+
+
+                <Btn text={'Показать обычное уведомление'}
+                     onClick={notifyDefault}/>
+                <Btn text={'Показать предупреждение'}
+                     onClick={notifyAlert}/>
+                <Btn text={'Показать уведомление об ошибке'}
+                     onClick={notifyError}/>
+                <Btn text={'Показать уведомление об успехе'}
+                     onClick={notifySuccess}/>
             </div>
             {modal &&
             <Modal isOpened={modal}

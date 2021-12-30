@@ -1,20 +1,24 @@
 import {createSlice, PayloadAction} from '@reduxjs/toolkit'
-import {OptionsObject, SnackbarKey, SnackbarMessage} from 'notistack'
+import {SnackbarKey, SnackbarMessage} from 'notistack'
 import {getUniqueId} from 'shared/utils'
+
+export type NotificationType = 'DEFAULT' | 'ALERT' | 'ERROR' | 'SUCCESS'
 
 export interface Notification {
     message: SnackbarMessage
-    options?: OptionsObject
     key?: string
     dismissed?: boolean
+    type: NotificationType
 }
 
 export interface NotificationsState {
-    notifications: Notification[],
+    notifications: Notification[]
+    max: number
 }
 
 const initialState: NotificationsState = {
-    notifications: []
+    notifications: [],
+    max: 5
 }
 
 export const notificationSlice = createSlice({
@@ -22,14 +26,13 @@ export const notificationSlice = createSlice({
     initialState,
     reducers: {
         enqueueSnackbar: (state, action: PayloadAction<Notification>) => {
-            const notify = action.payload.options ? action.payload : {message: action.payload.message, options: {}}
-            // @ts-ignore
-            state.notifications.push({...notify, key: getUniqueId()})
+            state.notifications.push({...action.payload, key: getUniqueId()})
         },
         closeSnackbar: (state, action: PayloadAction<SnackbarKey | undefined>) => {
-            state.notifications = state.notifications.map(el => !action.payload || el.key === action.payload
-                                                                ? {...el, dismissed: true}
-                                                                : el)
+            state.notifications = state.notifications.map(el => ({
+                ...el,
+                dismissed: !action.payload || el.key === action.payload
+            }))
         },
         removeSnackbar: (state, action: PayloadAction<SnackbarKey>) => {
             state.notifications = state.notifications.filter(el => el.key !== action.payload)

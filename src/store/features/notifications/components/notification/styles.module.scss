@@ -1,0 +1,30 @@
+.notification {
+  height: 48px;
+  width: 300px;
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  font: var(--font-body-medium);
+  color: var(--notification-text);
+  background-color: var(--notification-fill);
+  border: 1px solid var(--notification-border);
+  border-radius: 2px;
+
+  &.alert {
+    color: var(--notification-text-alert);
+    background-color: var(--notification-fill-alert);
+    border-color: var(--notification-border-alert);
+  }
+
+  &.error {
+    color: var(--notification-text-error);
+    background-color: var(--notification-fill-error);
+    border-color: var(--notification-border-error);
+  }
+
+  &.success {
+    color: var(--notification-text-success);
+    background-color: var(--notification-fill-success);
+    border-color: var(--notification-border-success);
+  }
+}

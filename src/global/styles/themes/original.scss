@@ -100,5 +100,18 @@
   --scenario-answer-circle-fill: var(--grey-50);
   --scenario-answer-circle-fill-hover: var(--grey-100);
 
+  --notification-fill: var(--blue-50);
+  --notification-border: var(--blue-200);
+  --notification-text: var(--grey-900);
+  --notification-fill-alert: var(--orange-50);
+  --notification-border-alert: var(--orange-200);
+  --notification-text-alert: var(--grey-900);
+  --notification-fill-error: var(--red-50);
+  --notification-border-error: var(--red-200);
+  --notification-text-error: var(--grey-900);
+  --notification-fill-success: var(--green-50);
+  --notification-border-success: var(--green-400);
+  --notification-text-success: var(--grey-900);
+
   --shadow: rgba(33, 35, 36, 0.2);
 }
