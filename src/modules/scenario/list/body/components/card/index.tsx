@@ -17,6 +17,8 @@ import Icon from 'components/ui-kit/icon'
 import {formatDate} from 'shared/utils/format-date'
 // import Tag from 'components/ui-kit/tag';
 import {ScenarioInfoModel} from 'core/api'
+import {enqueueSnackbar} from 'store/features/notifications'
+import {handlerError} from 'shared/middleware'
 
 type Props = {
     data: ScenarioInfoModel,
@@ -41,16 +43,13 @@ const ScenarioCard = ({data, className}: Props) => {
         setStatuses({isLoading: true, isSuccess: false, isError: false})
         deleteScenario(data.id)
             .then(res => {
-                // TODO show noty
-                console.log('Сценарий удалена')
                 dispatch(deleteScenarioById(data.id))
+                dispatch(enqueueSnackbar({message: 'Сценарий удален', type: 'SUCCESS'}))
                 // setStatuses({isLoading: false, isSuccess: true, isError: false});
             })
-            .catch((err: DefaultAxiosError) => {
-                // show noty
-                console.log(err.response?.data.message || 'Необработанная ошибка')
+            .catch(handlerError(dispatch, (err: DefaultAxiosError) => {
                 setStatuses({isLoading: false, isSuccess: false, isError: true})
-            })
+            }))
     }
 
     return (

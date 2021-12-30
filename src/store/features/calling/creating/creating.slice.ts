@@ -3,6 +3,8 @@ import {FetchStatuses} from 'shared/types/fetch-statuses'
 import {RootState} from 'store/index'
 import {createCalling} from 'core/api/requests/calling'
 import {DefaultAxiosError} from 'shared/types/base-response-error'
+import {enqueueSnackbar} from 'store/features/notifications'
+import {handlerError} from 'shared/middleware'
 
 export interface CreatingState {
     callersBaseId?: number | string | null;
@@ -66,10 +68,11 @@ export const saveCalling = () => (dispatch: Dispatch, getState: () => RootState)
     })
         .then((res) => {
             dispatch(setSuccess())
+            dispatch(enqueueSnackbar({message: 'Обзванивание создано', type: 'SUCCESS'}))
         })
-        .catch((err: DefaultAxiosError) => {
+        .catch(handlerError(dispatch, (err: DefaultAxiosError) => {
             dispatch(setError(err.response?.data.message || 'Ошибка при сохранении обзвона'))
-        })
+        }))
 }
 
 export const {

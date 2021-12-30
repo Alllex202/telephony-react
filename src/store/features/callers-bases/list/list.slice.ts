@@ -6,6 +6,7 @@ import {DefaultAxiosError} from 'shared/types/base-response-error'
 import {DirectionSort, SortType} from 'shared/data/sort-items'
 import {ParamsPaginatorWithFilterModel} from 'core/api/models'
 import {getCallersBasesHeader} from 'core/api/requests'
+import {handlerError} from 'shared/middleware'
 
 export interface CallersBaseState {
     callersBaseList: CallersBaseHeaderModel[],
@@ -84,9 +85,9 @@ export const getCallersBasesByPage =
                     dispatch(setPage(res.data.pageable.pageNumber))
                     dispatch(setSuccess())
                 })
-                .catch((err: DefaultAxiosError) => {
+                .catch(handlerError(dispatch, (err: DefaultAxiosError) => {
                     dispatch(setError(err.response?.data.error || 'Необработанная ошибка'))
-                })
+                }))
         }
 
 export const {

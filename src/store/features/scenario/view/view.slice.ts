@@ -23,6 +23,8 @@ import {
     XYPosition
 } from 'react-flow-renderer'
 import {getUniqueId} from 'shared/utils'
+import {handlerError} from 'shared/middleware'
+import {enqueueSnackbar} from 'store/features/notifications'
 
 export type ElementType = Node<NodeDataModel> | Edge;
 
@@ -269,9 +271,9 @@ export const getScenario = (id: string | number) => (dispatch: Dispatch, getStat
             dispatch(setSuccess())
             dispatch(setLoaded())
         })
-        .catch((err: DefaultAxiosError) => {
+        .catch(handlerError(dispatch, (err: DefaultAxiosError) => {
             dispatch(setError(err.response?.data.message || 'Ошибка при получении сценария'))
-        })
+        }))
 }
 
 export const getCallersBaseHeader = () => (dispatch: Dispatch, getState: () => RootState) => {
@@ -281,9 +283,7 @@ export const getCallersBaseHeader = () => (dispatch: Dispatch, getState: () => R
             .then((res) => {
                 dispatch(setCallerBaseHeader(res.data))
             })
-            .catch((err: DefaultAxiosError) => {
-                console.log(err)
-            })
+            .catch(handlerError(dispatch))
     } else {
         dispatch(setCallerBaseHeader(null))
     }
@@ -314,10 +314,11 @@ export const saveScenario = () => (dispatch: Dispatch, getState: () => RootState
     putScenarioById({...state.scenarioView.data, edges, nodes, rootId})
         .then(res => {
             dispatch(setSuccess())
+            dispatch(enqueueSnackbar({message: 'Сценарий сохранен', type: 'SUCCESS'}))
         })
-        .catch((err: DefaultAxiosError) => {
+        .catch(handlerError(dispatch, (err: DefaultAxiosError) => {
             dispatch(setError(err.response?.data.message || 'Ошибка при сохранении сценария'))
-        })
+        }))
 }
 
 export const {

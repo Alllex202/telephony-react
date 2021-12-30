@@ -16,6 +16,8 @@ import {resetScenariosStates} from 'store/features/scenario/list'
 import {createScenario} from 'core/api/requests'
 import {DefaultAxiosError} from 'shared/types/base-response-error'
 import {FetchStatuses} from 'shared/types/fetch-statuses'
+import {enqueueSnackbar} from 'store/features/notifications'
+import {handlerError} from 'shared/middleware'
 
 const ScenarioListHeader = () => {
     const [input, setInput] = useState<string>('')
@@ -39,11 +41,13 @@ const ScenarioListHeader = () => {
 
         setCreating({isLoading: true})
         createScenario('Новый сценарий')
-            .then(res => history.push(routes.scenarioView(res.data.id)))
-            .catch((err: DefaultAxiosError) => {
-                console.log(err.response?.data.message || 'Ошибка при создании')
-                setCreating({isError: true, error: err.response?.data.message || 'Ошибка при создании'})
+            .then(res => {
+                history.push(routes.scenarioView(res.data.id))
+                dispatch(enqueueSnackbar({message: 'Создан новый сценарий', type: 'SUCCESS'}))
             })
+            .catch(handlerError(dispatch, (err: DefaultAxiosError) => {
+                setCreating({isError: true, error: err.response?.data.message || 'Ошибка при создании'})
+            }))
     }
 
     function handlerOpenSort(e: any) {

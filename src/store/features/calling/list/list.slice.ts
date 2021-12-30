@@ -4,6 +4,7 @@ import {createSlice, Dispatch, PayloadAction} from '@reduxjs/toolkit'
 import {AxiosRequestConfig} from 'axios'
 import {getCallings} from 'core/api/requests/calling'
 import {DefaultAxiosError} from 'shared/types/base-response-error'
+import {handlerError} from 'shared/middleware'
 
 export interface CallingListState {
     callingList: CallingModel[],
@@ -104,12 +105,12 @@ export const getCallingsByPage =
                     dispatch(setPage({page: res.data.pageable.pageNumber, callingStatus}))
                     dispatch(setSuccess(callingStatus))
                 })
-                .catch((err: DefaultAxiosError) => {
+                .catch(handlerError(dispatch, (err: DefaultAxiosError) => {
                     dispatch(setError({
                         error: err.response?.data.message || 'Ошибка при полученни данных',
                         callingStatus
                     }))
-                })
+                }))
         }
 
 export const {

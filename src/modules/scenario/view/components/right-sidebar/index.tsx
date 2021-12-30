@@ -9,12 +9,12 @@ import {useDispatch, useSelector} from 'react-redux'
 import {RootState} from 'store'
 import {CallersBaseHeaderModel} from 'core/api'
 import {getCallersBasesHeader} from 'core/api/requests'
-import {DefaultAxiosError} from 'shared/types/base-response-error'
 import Menu from 'components/ui-kit/menu'
 import MenuItem from 'components/ui-kit/menu-item'
 import {getCallersBaseHeader, setConnectionId} from 'store/features/scenario/view'
 import Tag from 'components/ui-kit/tag'
 import cardStyles from 'shared/styles/card/styles.module.scss'
+import {handlerError} from 'shared/middleware'
 
 const maxShowVariables = 10
 
@@ -32,9 +32,8 @@ const ScenarioRightSidebar = () => {
             .then(res => {
                 setCallersBasesHeader(res.data.content)
             })
-            .catch((err: DefaultAxiosError) => {
-                console.log(err)
-            })
+            .catch(handlerError(dispatch))
+        // eslint-disable-next-line
     }, [])
 
     useEffect(() => {

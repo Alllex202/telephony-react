@@ -12,11 +12,12 @@ import Menu from 'components/ui-kit/menu'
 import MenuItem from 'components/ui-kit/menu-item'
 import {deleteCallersBase} from 'core/api/requests'
 import {FetchStatuses} from 'shared/types/fetch-statuses'
-import {DefaultAxiosError} from 'shared/types/base-response-error'
 import routes from 'routing/routes'
 import {Link} from 'react-router-dom'
 import {useDispatch} from 'react-redux'
 import {deleteCallersBaseById} from 'store/features/callers-bases/list'
+import {enqueueSnackbar} from 'store/features/notifications'
+import {handlerError} from 'shared/middleware'
 
 type Props = {
     data: CallersBaseHeaderModel,
@@ -41,16 +42,12 @@ function CallersBaseCard({data, className}: Props) {
         setStatuses({isLoading: true, isSuccess: false, isError: false})
         deleteCallersBase(data.id)
             .then(res => {
-                // TODO show noty
-                console.log('База клиентов удалена')
                 dispatch(deleteCallersBaseById(data.id))
-                // setStatuses({isLoading: false, isSuccess: true, isError: false});
+                dispatch(enqueueSnackbar({message: 'База клиентов удалена', type: 'SUCCESS'}))
             })
-            .catch((err: DefaultAxiosError) => {
-                // show noty
-                console.log(err.response?.data.message || 'Необработанная ошибка')
+            .catch(handlerError(dispatch, () => {
                 setStatuses({isLoading: false, isSuccess: false, isError: true})
-            })
+            }))
     }
 
     return (

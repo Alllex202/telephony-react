@@ -17,6 +17,8 @@ import {deleteCalling} from 'core/api/requests/calling'
 import {deleteCallingById} from 'store/features/calling/list'
 import {LinearProgress} from '@mui/material'
 import BtnSecond from 'components/ui-kit/btn-second'
+import {enqueueSnackbar} from 'store/features/notifications'
+import {handlerError} from 'shared/middleware'
 
 type Props = {
     data: CallingModel,
@@ -44,17 +46,14 @@ const CallingCard = ({data, callingStatus, className}: Props) => {
         setStatuses({isLoading: true})
         deleteCalling(data.id)
             .then(res => {
-                // TODO show noty
-                console.log('Сценарий удалена')
                 if (data.id) {
                     dispatch(deleteCallingById({id: data.id, callingStatus}))
                 }
+                dispatch(enqueueSnackbar({message: 'Сценарий удален', type: 'SUCCESS'}))
             })
-            .catch((err: DefaultAxiosError) => {
-                // show noty
-                console.log(err.response?.data.message || 'Необработанная ошибка')
+            .catch(handlerError(dispatch, (err: DefaultAxiosError) => {
                 setStatuses({isError: true})
-            })
+            }))
     }
 
     const handlerCancel = () => {

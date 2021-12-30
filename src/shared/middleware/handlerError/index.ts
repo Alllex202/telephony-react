@@ -18,13 +18,13 @@ type handlersKeys =
 
 const handlers: Record<handlersKeys, (dispatch: Dispatch, err: DefaultAxiosError) => void> = {
     'Universal': (dispatch) => {
-        dispatch(enqueueSnackbar({type: 'ERROR', message: 'Необработанная ошибка'}))
+        dispatch(enqueueSnackbar({type: 'ERROR', message: 'Неожиданная ошибка'}))
     },
 
     'Universal Server': (dispatch) => {
         dispatch(enqueueSnackbar({
             type: 'ERROR',
-            message: 'Ошибка на сервере. Попробуйте обновить страницу немного позже'
+            message: 'Необработанная ошибка'
         }))
     },
 

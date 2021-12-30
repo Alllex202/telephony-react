@@ -7,6 +7,9 @@ import {DefaultAxiosError} from 'shared/types/base-response-error'
 import {useHistory} from 'react-router-dom'
 import routes from 'routing/routes'
 import InputName from 'shared/components/input-name'
+import {handlerError} from 'shared/middleware'
+import {useDispatch} from 'react-redux'
+import {enqueueSnackbar} from 'store/features/notifications'
 
 const fileType = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
 
@@ -18,6 +21,7 @@ function CallersBaseAddBody() {
     const [error, setError] = useState<string>('')
     const history = useHistory()
     const inputFile = useRef<HTMLInputElement | null>(null)
+    const dispatch = useDispatch()
 
     function onDrop(e: React.DragEvent) {
         e.preventDefault()
@@ -68,12 +72,13 @@ function CallersBaseAddBody() {
         formData.append('name', name)
         uploadCallersBaseExcel(formData)
             .then(res => {
+                dispatch(enqueueSnackbar({message: 'База успешно загружена', type: 'SUCCESS'}))
                 history.push(routes.callersBaseView(res.data.id))
             })
-            .catch((err: DefaultAxiosError) => {
+            .catch(handlerError(dispatch, (err: DefaultAxiosError) => {
                 setError(err.response?.data.message || 'Ошибка при отправке')
                 setFile(null)
-            })
+            }))
     }
 
     return (

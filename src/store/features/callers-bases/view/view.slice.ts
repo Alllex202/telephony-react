@@ -10,6 +10,8 @@ import {
 } from 'core/api/requests'
 import {DefaultAxiosError} from 'shared/types/base-response-error'
 import {RootState} from 'store'
+import {handlerError} from 'shared/middleware'
+import {enqueueSnackbar} from 'store/features/notifications'
 
 export interface ViewState {
     header: CallersBaseHeaderModel | null;
@@ -127,9 +129,9 @@ export const getCallersBaseById = (id: number | string) => (dispatch: Dispatch) 
             dispatch(setHeader(res.data))
             dispatch(setHeaderSuccess())
         })
-        .catch((err: DefaultAxiosError) => {
+        .catch(handlerError(dispatch, (err: DefaultAxiosError) => {
             dispatch(setHeaderError(err.response?.data.message || 'Ошибка при получении данных'))
-        })
+        }))
 }
 
 export const getCallersBaseDataByPage = (id: number | string, params: ParamsPaginatorDataModel) => (dispatch: Dispatch) => {
@@ -143,9 +145,9 @@ export const getCallersBaseDataByPage = (id: number | string, params: ParamsPagi
             dispatch(setPage(res.data.pageable.pageNumber))
             dispatch(setDataSuccess())
         })
-        .catch((err: DefaultAxiosError) => {
+        .catch(handlerError(dispatch, (err: DefaultAxiosError) => {
             dispatch(setDataError(err.response?.data.message || 'Ошибка при получении данных'))
-        })
+        }))
 }
 
 export const updateCallersBaseDataByPage = (id: number | string, params: ParamsPaginatorDataModel) => (dispatch: Dispatch) => {
@@ -160,9 +162,9 @@ export const updateCallersBaseDataByPage = (id: number | string, params: ParamsP
             dispatch(setPage(res.data.pageable.pageNumber))
             dispatch(setDataSuccess())
         })
-        .catch((err: DefaultAxiosError) => {
+        .catch(handlerError(dispatch, (err: DefaultAxiosError) => {
             dispatch(setDataError(err.response?.data.message || 'Ошибка при получении данных'))
-        })
+        }))
 }
 
 export const loadVariablesTypes = () => (dispatch: Dispatch, getState: () => RootState) => {
@@ -175,9 +177,9 @@ export const loadVariablesTypes = () => (dispatch: Dispatch, getState: () => Roo
             dispatch(setVariables(res.data))
             dispatch(setVariablesSuccess())
         })
-        .catch((err: DefaultAxiosError) => {
+        .catch(handlerError(dispatch, (err: DefaultAxiosError) => {
             dispatch(setVariablesError(err.response?.data.message || 'Ошибка при получении данных'))
-        })
+        }))
 }
 
 export const changeCallersBaseHeaderById = (data: CallersBaseHeaderModel) => (dispatch: Dispatch) => {
@@ -186,10 +188,11 @@ export const changeCallersBaseHeaderById = (data: CallersBaseHeaderModel) => (di
         .then(res => {
             dispatch(setHeader(res.data))
             dispatch(setHeaderSuccess())
+            dispatch(enqueueSnackbar({message: 'Данные изменены', type: 'SUCCESS'}))
         })
-        .catch((err: DefaultAxiosError) => {
+        .catch(handlerError(dispatch, (err: DefaultAxiosError) => {
             dispatch(setHeaderError(err.response?.data.message || 'Ошибка при отправке'))
-        })
+        }))
 }
 
 export const {

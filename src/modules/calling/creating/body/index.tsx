@@ -7,7 +7,7 @@ import InputName from 'shared/components/input-name'
 import {FormControl, InputLabel, MenuItem, Select, SelectChangeEvent} from '@mui/material'
 import {CallersBaseHeaderModel, ScenarioInfoModel} from 'core/api'
 import {getCallersBasesHeader, getScenariosByPage} from 'core/api/requests'
-import {DefaultAxiosError} from 'shared/types/base-response-error'
+import {handlerError} from 'shared/middleware'
 
 const CallingCreatingBody = () => {
     const {statuses, name} = useSelector((state: RootState) => state.callingCreating)
@@ -22,17 +22,13 @@ const CallingCreatingBody = () => {
             .then((res) => {
                 setScenarios(res.data.content)
             })
-            .catch((err: DefaultAxiosError) => {
-                console.log(err.response?.data.message || 'Ошибка при загрузке сценариев')
-            })
+            .catch(handlerError(dispatch))
 
         getCallersBasesHeader({page: 0, size: 100})
             .then((res) => {
                 setBases(res.data.content)
             })
-            .catch((err: DefaultAxiosError) => {
-                console.log(err.response?.data.message || 'Ошибка при загрузке сценариев')
-            })
+            .catch(handlerError(dispatch))
 
         return () => {
             dispatch(resetState())
