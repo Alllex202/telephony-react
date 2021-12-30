@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React from 'react'
 import useNotifier from 'shared/hoocks/use-notifier'
 import {SnackbarProvider} from 'notistack'
 import {useSelector} from 'react-redux'
@@ -9,7 +9,7 @@ type Props = {
 }
 
 const Snackbars = ({children}: Props) => {
-    const {max} = useSelector((state: RootState) => state.notifications);
+    const {max} = useSelector((state: RootState) => state.notifications)
 
     return (
         <SnackbarProvider maxSnack={max}>
