@@ -1,4 +1,6 @@
-// declare module '*.scss' {
-//     const content: {[className: string]: string};
-//     export = content;
-// }
+declare module '*.scss';
+
+declare module "*.svg" {
+    const content:string;
+    export default content;
+}
