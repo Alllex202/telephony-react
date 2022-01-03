@@ -6,7 +6,7 @@
 <h2 name="context">Содержание</h2>
 
 - <a href="#installation">Установка</a>
-- <a href="#run">Запуск</a>
+- <a href="#commands">Команды</a>
 
 ---
 
@@ -45,15 +45,37 @@ REACT_APP_SERVER_API=путь к api (без последнего слэша "/"
 
 ---
 
-<h2 name="run">Запуск</h2>
+<h2 name="commands">Команды</h2>
 <p>(<a href="#context">к содержанию</a>)</p>
 
-В консоли с открытой папкой корня проекта ввести
+* Запуск проекта в режиме разработки<a href="#first">*</a> (<a href="http://localhost:3000">localhost:3000</a>)
 
 ```no-highlight
 npm start
 ```
 
-Проект запустится по адресу <a href="http://localhost:3000">localhost:3000</a>
+* Запуск проекта в режиме продакшн<a href="#second">**</a> (<a href="http://localhost:3000">localhost:3000</a>)
+
+```no-highlight
+npm run demo
+```
+
+* Сборка проекта в режиме разработки<a href="#first">*</a>
+
+```no-highlight
+npm run dev
+```
+
+* Сборка проекта в режиме продакшн<a href="#second">**</a>
+
+```no-highlight
+npm run prod
+```
+
+Файлы сборки располагаются по пути "./dist"
+
+_<h6 name="first">(*) Режим разработки - сборка происходит без различных преобразований</h6>_
+
+_<h6 name="second">(**) Режим продакшн - сборка происходит с различными преобразованиями исходных файлов</h6>_
 
 ---

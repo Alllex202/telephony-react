@@ -4,4 +4,4 @@
 
 // if you use real env variables on PC then you should not use predix
 
-export const serverApi = process.env.SERVER_API || process.env.REACT_APP_SERVER_API
+export const serverApi = process.env.SERVER_API
