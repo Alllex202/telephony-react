@@ -1,23 +1,14 @@
-import React, {useEffect} from 'react'
+import React from 'react'
 import styles from './styles.module.scss'
 import BtnSecond from 'components/ui-kit/btn-second'
 import {useHistory} from 'react-router-dom'
 import routes from 'routing/routes'
-import Btn from 'components/ui-kit/btn'
-import {useDispatch, useSelector} from 'react-redux'
+import {useSelector} from 'react-redux'
 import {RootState} from 'store'
-import {saveCalling} from 'store/features/calling/creating'
 
 const CallingCreatingHeader = () => {
     const history = useHistory()
     const {statuses} = useSelector((state: RootState) => state.callingCreating)
-
-    useEffect(() => {
-        if (statuses.isSuccess) {
-            history.push(routes.callingList())
-        }
-        // eslint-disable-next-line
-    }, [statuses.isSuccess])
 
     const onCancel = () => {
         if (statuses.isLoading) return

@@ -4,6 +4,7 @@ import './styles.scss'
 import {useDispatch, useSelector} from 'react-redux'
 import {RootState} from 'store'
 import {
+    getCalling,
     resetState,
     saveCalling,
     setCallersBaseId,
@@ -23,16 +24,32 @@ import DateAdapter from '@mui/lab/AdapterDateFns'
 import {DesktopDatePicker, DesktopTimePicker, LocalizationProvider} from '@mui/lab'
 import Checkbox from 'components/ui-kit/checkbox'
 import {classNames} from 'shared/utils'
+import routes from 'routing/routes'
+import {useHistory, useParams} from 'react-router-dom'
 
 const CallingCreatingBody = () => {
-    const {statuses, name, isNow, startDate} = useSelector((state: RootState) => state.callingCreating)
+    const {
+        statuses,
+        name,
+        isNow,
+        startDate,
+        scenarioId,
+        callersBaseId,
+        id
+    } = useSelector((state: RootState) => state.callingCreating)
+    const {callingId} = useParams<{ callingId: string }>()
+    const history = useHistory()
     const [bases, setBases] = useState<CallersBaseHeaderModel[] | null>(null)
     const [scenarios, setScenarios] = useState<ScenarioInfoModel[] | null>(null)
-    const [_name, _setName] = useState<string>(name)
-    const [lastName, setLastName] = useState<string>(name)
+    const [_name, _setName] = useState<string>(callingId ? '' : name)
+    const [lastName, setLastName] = useState<string>(callingId ? '' : name)
     const dispatch = useDispatch()
 
     useEffect(() => {
+        if (callingId) {
+            dispatch(getCalling(callingId))
+        }
+
         getScenariosByPage({page: 0, size: 100})
             .then((res) => {
                 setScenarios(res.data.content)
@@ -50,6 +67,20 @@ const CallingCreatingBody = () => {
         }
         // eslint-disable-next-line
     }, [])
+
+    useEffect(() => {
+        if (id && callingId) {
+            _setName(name)
+            setLastName(name)
+        }
+    }, [id])
+
+    useEffect(() => {
+        if (statuses.isSuccess) {
+            history.push(routes.callingList())
+        }
+        // eslint-disable-next-line
+    }, [statuses.isSuccess])
 
     const onSelectBase = (e: SelectChangeEvent) => {
         dispatch(setCallersBaseId(e.target.value))
@@ -103,7 +134,7 @@ const CallingCreatingBody = () => {
                                     labelId={'base'}
                                     label={'Выберите базу данных'}
                                     onChange={onSelectBase}
-                                    defaultValue={''}
+                                    value={callingId && bases ? (callersBaseId as string) ?? '' : ''}
                                 >
                                     {bases?.map(el => <MenuItem key={el.id}
                                                                 value={el.id}>{el.name}</MenuItem>)}
@@ -132,7 +163,7 @@ const CallingCreatingBody = () => {
                                     labelId={'scenario'}
                                     label={'Выберите сценарий'}
                                     onChange={onSelectScenario}
-                                    defaultValue={''}
+                                    value={callingId && scenarios ? (scenarioId as string) ?? '' : ''}
                                 >
                                     {scenarios?.map(el => <MenuItem key={el.id}
                                                                     value={el.id}>{el.name}</MenuItem>)}
@@ -180,7 +211,7 @@ const CallingCreatingBody = () => {
                                           label={'Запустить сейчас'}/>
                     </div>
                 </div>
-                <Btn text={isNow ? 'Начать обзванивание' : 'Добавить в очередь'}
+                <Btn text={isNow ? 'Начать обзванивание' : callingId ? 'Обнов. обзванивание' : 'Добавить в очередь'}
                      className={styles.btn}
                      onClick={onSave}/>
             </div>

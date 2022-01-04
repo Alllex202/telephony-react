@@ -30,6 +30,9 @@ export default function RoutingHeader() {
             <Route path={routes.callingCreate()}
                    exact
                    component={CallingCreatingHeader}/>
+            <Route path={routes.callingCreate(':callingId')}
+                   exact
+                   component={CallingCreatingHeader}/>
             <Route path={routes.test()}
                    exact
                    component={TestHeader}/>

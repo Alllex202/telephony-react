@@ -30,6 +30,9 @@ export default function RoutingBody() {
             <Route path={routes.callingCreate()}
                    exact
                    component={CallingCreatingBody}/>
+            <Route path={routes.callingCreate(':callingId')}
+                   exact
+                   component={CallingCreatingBody}/>
             <Route path={routes.test()}
                    exact
                    component={Test}/>

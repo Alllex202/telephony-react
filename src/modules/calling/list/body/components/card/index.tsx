@@ -76,7 +76,7 @@ const CallingCard = ({data, callingStatus, className}: Props) => {
         <>
             {
                 data.id &&
-                <Link to={routes.callingView(data.id)}
+                <Link to={callingStatus === 'SCHEDULED' ? routes.callingCreate(data.id) : routes.callingView(data.id)}
                       className={statuses.isLoading ? 'd-none' : ''}>
                     <Card className={classNames(className, cardStyles.card, styles.card)}
                           isActive={!!anchorEl}>

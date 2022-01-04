@@ -4,7 +4,7 @@ export interface CallingModel {
         name?: string,
     },
     created?: number,
-    id?: number | string,
+    id?: number | string | null,
     name: string,
     percentEnd?: number,
     scenario: {

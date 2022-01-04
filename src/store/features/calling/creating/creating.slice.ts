@@ -1,14 +1,15 @@
 import {createSlice, Dispatch, PayloadAction} from '@reduxjs/toolkit'
 import {FetchStatuses} from 'shared/types/fetch-statuses'
 import {RootState} from 'store/index'
-import {createCalling} from 'core/api/requests/calling'
+import {createCalling, getCallingById, updateCalling} from 'core/api/requests/calling'
 import {DefaultAxiosError} from 'shared/types/base-response-error'
 import {enqueueSnackbar} from 'store/features/notifications'
 import {handlerError} from 'shared/middleware'
-import {CallingStatuses} from 'core/api'
+import {CallingModel} from 'core/api'
 
 export interface CreatingState {
     callersBaseId?: number | string | null
+    id?: number | string | null
     name: string
     scenarioId?: number | string | null
     startDate?: number | null
@@ -50,6 +51,14 @@ const callingCreatingSlice = createSlice({
         setStartDate: (state, action: PayloadAction<number | null | undefined>) => {
             state.startDate = action.payload
         },
+        setCalling: (state, action: PayloadAction<CallingModel>) => {
+            state.isNow = action.payload.status !== 'SCHEDULED'
+            state.callersBaseId = action.payload.callersBase.id
+            state.name = action.payload.name
+            state.scenarioId = action.payload.scenario.id
+            state.startDate = action.payload.startDate
+            state.id = action.payload.id
+        },
         resetState: (state) => {
             state.statuses = {}
             state.callersBaseId = undefined
@@ -57,6 +66,7 @@ const callingCreatingSlice = createSlice({
             state.scenarioId = undefined
             state.startDate = undefined
             state.isNow = false
+            state.id = null
         }
     }
 })
@@ -66,20 +76,42 @@ export const saveCalling = () => (dispatch: Dispatch, getState: () => RootState)
     if (state.statuses.isLoading || !state.name || !state.callersBaseId || !state.scenarioId) return
 
     dispatch(setLoading())
-    createCalling({
+    const data: CallingModel = {
+        id: state.id ?? null,
         name: state.name,
         callersBase: {id: state.callersBaseId},
         scenario: {id: state.scenarioId},
-        startDate: state.startDate,
-        status: state.startDate ? 'SCHEDULED' : 'RUN'
-    })
+        startDate: state.isNow ? null : state.startDate,
+        status: state.isNow ? 'RUN' : 'SCHEDULED'
+    }
+
+    if (state.id) {
+        updateCalling(state.id, data)
+            .then((res) => {
+                dispatch(setSuccess())
+                dispatch(enqueueSnackbar({message: 'Обзванивание обновлено', type: 'SUCCESS'}))
+            })
+            .catch(handlerError(dispatch, (err: DefaultAxiosError) => {
+                dispatch(setError(err.response?.data.message || 'Ошибка при обновлении обзвона'))
+            }))
+    } else {
+        createCalling(data)
+            .then((res) => {
+                dispatch(setSuccess())
+                dispatch(enqueueSnackbar({message: 'Обзванивание создано', type: 'SUCCESS'}))
+            })
+            .catch(handlerError(dispatch, (err: DefaultAxiosError) => {
+                dispatch(setError(err.response?.data.message || 'Ошибка при сохранении обзвона'))
+            }))
+    }
+}
+
+export const getCalling = (id: number | string) => (dispatch: Dispatch) => {
+    getCallingById(id)
         .then((res) => {
-            dispatch(setSuccess())
-            dispatch(enqueueSnackbar({message: 'Обзванивание создано', type: 'SUCCESS'}))
+            dispatch(setCalling(res.data))
         })
-        .catch(handlerError(dispatch, (err: DefaultAxiosError) => {
-            dispatch(setError(err.response?.data.message || 'Ошибка при сохранении обзвона'))
-        }))
+        .catch(handlerError(dispatch))
 }
 
 export const {
@@ -91,7 +123,8 @@ export const {
     setLoading,
     setError,
     setStartDate,
-    setIsNow
+    setIsNow,
+    setCalling
 } = callingCreatingSlice.actions
 
 export const callingCreatingReducers = callingCreatingSlice.reducer

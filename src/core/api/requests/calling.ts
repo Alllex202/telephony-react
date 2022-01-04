@@ -18,3 +18,11 @@ export const createCalling = (data: CallingModel, config?: AxiosRequestConfig): 
 export const getCallingsByCallersBaseId = (id: number | string, config?: AxiosRequestConfig): BaseResponse<CallingModel[]> => {
     return axios.get<CallingModel[]>(apiRoutes.calling.byCallersBaseId(id), config)
 }
+
+export const getCallingById = (id: string | number, config?: AxiosRequestConfig): BaseResponse<CallingModel> => {
+    return axios.get<CallingModel>(apiRoutes.calling.byId(id), config)
+}
+
+export const updateCalling = (id: string | number, data: CallingModel, config?: AxiosRequestConfig): BaseResponse<CallingModel> => {
+    return axios.put<CallingModel>(apiRoutes.calling.byId(id), data, config)
+}
