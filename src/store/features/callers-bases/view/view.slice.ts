@@ -119,6 +119,7 @@ export const callersBaseViewSlice = createSlice({
         resetAll: (state: ViewState) => {
             state.header = null
             state.data = null
+            state.callings = null
             state.statusesHeader = {}
             state.statusesData = {}
             state.page = 0
