@@ -46,3 +46,7 @@ Dockerfile
 
 # development env
 .env
+
+
+# stats
+stats.json

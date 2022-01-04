@@ -18,7 +18,7 @@ module.exports = {
     mode: isProd ? 'production' : 'development',
     entry: './src/index.tsx',
     output: {
-        filename: isDev ? '[name].[fullhash].js' : '[fullhash].js',
+        filename: '[name].[fullhash].js',
         path: path.resolve(__dirname, 'dist'),
         publicPath: '/'
     },
