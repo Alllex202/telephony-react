@@ -11,7 +11,6 @@ import {saveCalling} from 'store/features/calling/creating'
 const CallingCreatingHeader = () => {
     const history = useHistory()
     const {statuses} = useSelector((state: RootState) => state.callingCreating)
-    const dispatch = useDispatch()
 
     useEffect(() => {
         if (statuses.isSuccess) {
@@ -26,12 +25,6 @@ const CallingCreatingHeader = () => {
         history.push(routes.callingList())
     }
 
-    const onSave = () => {
-        if (statuses.isLoading) return
-
-        dispatch(saveCalling())
-    }
-
     return (
         <div className={styles.header}>
             <BtnSecond text={'Отменить'}
@@ -40,9 +33,6 @@ const CallingCreatingHeader = () => {
                        iconName={'arrow_back'}
                        iconType={'round'}
                        iconPosition={'start'}/>
-            <Btn text={'Запустить обзванивание'}
-                 className={styles.save}
-                 onClick={onSave}/>
         </div>
     )
 }

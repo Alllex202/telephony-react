@@ -10,7 +10,38 @@
   .form {
     display: flex;
     flex-direction: column;
-    gap: 24px;
+    gap: 40px;
 
+    .btn {
+      width: 220px;
+    }
+
+    .block {
+      width: 464px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+
+      .subtitle {
+        font: var(--font-caption-medium);
+        color: var(--text-light);
+      }
+
+      .content {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+
+        .doubleInput {
+          display: flex;
+          flex-direction: row;
+          justify-content: space-between;
+
+          .dateTime {
+            width: 220px;
+          }
+        }
+      }
+    }
   }
 }

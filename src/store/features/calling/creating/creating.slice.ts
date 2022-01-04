@@ -5,17 +5,20 @@ import {createCalling} from 'core/api/requests/calling'
 import {DefaultAxiosError} from 'shared/types/base-response-error'
 import {enqueueSnackbar} from 'store/features/notifications'
 import {handlerError} from 'shared/middleware'
+import {CallingStatuses} from 'core/api'
 
 export interface CreatingState {
-    callersBaseId?: number | string | null;
-    name: string;
-    scenarioId?: number | string | null;
-    startDate?: number,
-    statuses: FetchStatuses,
+    callersBaseId?: number | string | null
+    name: string
+    scenarioId?: number | string | null
+    startDate?: number | null
+    isNow: boolean
+    statuses: FetchStatuses
 }
 
 const initialState: CreatingState = {
     name: 'Новое обзванивание',
+    isNow: false,
     statuses: {}
 }
 
@@ -29,6 +32,9 @@ const callingCreatingSlice = createSlice({
         setSuccess: (state) => {
             state.statuses = {isSuccess: true}
         },
+        setIsNow: (state, action: PayloadAction<boolean>) => {
+            state.isNow = action.payload
+        },
         setError: (state, action: PayloadAction<string>) => {
             state.statuses = {isError: true, error: action.payload}
         },
@@ -41,7 +47,7 @@ const callingCreatingSlice = createSlice({
         setCallersBaseId: (state, action: PayloadAction<number | string | null>) => {
             state.callersBaseId = action.payload
         },
-        setStartDate: (state, action: PayloadAction<number>) => {
+        setStartDate: (state, action: PayloadAction<number | null | undefined>) => {
             state.startDate = action.payload
         },
         resetState: (state) => {
@@ -50,6 +56,7 @@ const callingCreatingSlice = createSlice({
             state.name = 'Новое обзванивание'
             state.scenarioId = undefined
             state.startDate = undefined
+            state.isNow = false
         }
     }
 })
@@ -83,7 +90,8 @@ export const {
     setSuccess,
     setLoading,
     setError,
-    setStartDate
+    setStartDate,
+    setIsNow
 } = callingCreatingSlice.actions
 
 export const callingCreatingReducers = callingCreatingSlice.reducer

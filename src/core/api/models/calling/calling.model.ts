@@ -11,7 +11,7 @@ export interface CallingModel {
         id: number | string,
         name?: string,
     },
-    startDate?: number,
+    startDate?: number | null,
     status: CallingStatuses,
 }
 

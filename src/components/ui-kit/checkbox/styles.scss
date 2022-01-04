@@ -1,0 +1,7 @@
+.custom-checkbox {
+  &.Mui-checked {
+    path {
+      color: var(--checkbox-checked);
+    }
+  }
+}
