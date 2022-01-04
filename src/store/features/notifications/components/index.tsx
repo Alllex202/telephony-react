@@ -1,5 +1,5 @@
 import React from 'react'
-import useNotifier from 'shared/hoocks/use-notifier'
+import useNotifier from 'store/features/notifications/hoocks/use-notifier'
 import {SnackbarProvider} from 'notistack'
 import {useSelector} from 'react-redux'
 import {RootState} from 'store/index'

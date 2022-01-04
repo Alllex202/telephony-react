@@ -1,8 +1,8 @@
 import {useEffect} from 'react'
 import {useDispatch, useSelector} from 'react-redux'
 import {OptionsObject, SnackbarKey, SnackbarMessage, useSnackbar} from 'notistack'
-import {RootState} from 'store'
-import {removeSnackbar} from 'store/features/notifications'
+import {RootState} from 'store/index'
+import {removeSnackbar} from 'store/features/notifications/index'
 import {getUniqueId} from 'shared/utils'
 import Notification from 'store/features/notifications/components/notification'
 
