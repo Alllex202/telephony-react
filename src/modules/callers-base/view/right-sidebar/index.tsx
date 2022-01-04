@@ -9,7 +9,7 @@ import Info from './components/info'
 import routes from 'routing/routes'
 
 function CallersBaseViewRightSidebar() {
-    const {header} = useSelector((state: RootState) => state.callersBaseView)
+    const {header, callings} = useSelector((state: RootState) => state.callersBaseView)
 
     return (
         <RightSidebar>
@@ -17,32 +17,22 @@ function CallersBaseViewRightSidebar() {
              ?
              <div className={styles.infoBlock}>
                  <Info title={'Элементов'}>{header.countCallers}</Info>
-                 {header.confirmed &&
-                 <>
-                     <Info title={'Дата и время загрузки'}>{formatDate(header.created)}</Info>
-                     <Info title={'Последнее обновление'}>{formatDate(header.updated)}</Info>
-                     <Info title={'Обзванивания (fake)'}>
-                         {[
-                             'Обзванивание',
-                             'Обзванивание пример',
-                             'Короткое',
-                             'Очень-очень длинное название',
-                             'Обзванивание 2',
-                             'овероверовердлинноеслово'
-                         ]
-                             .map((el, ind) =>
-                                 <span key={ind}
-                                       className={styles.linkWrapper}>
-                                        <Link to={routes.callingView('')}
-                                              className={styles.link}>{el}</Link>
-                                    </span>)}
-                     </Info>
-                 </>}
+                 <Info title={'Дата и время загрузки'}>{formatDate(header.created)}</Info>
+                 <Info title={'Последнее обновление'}>{formatDate(header.updated)}</Info>
+                 <Info title={'Обзванивания'}>
+                     {
+                         callings?.map((el) =>
+                             <span key={el.id}
+                                   className={styles.linkWrapper}>
+                                <Link to={routes.callingView(el.id ?? '')}
+                                      className={styles.link}>{el.name}</Link>
+                             </span>)
+                     }
+                 </Info>
              </div>
              :
              <>Загрузка...</>
             }
-
         </RightSidebar>
     )
 }

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useState} from 'react'
 import styles from './styles.module.scss'
 import BtnSecond from 'components/ui-kit/btn-second'
 import Btn from 'components/ui-kit/btn'
@@ -6,15 +6,29 @@ import {useHistory} from 'react-router-dom'
 import routes from 'routing/routes'
 import {useDispatch, useSelector} from 'react-redux'
 import {RootState} from 'store'
-import {changeCallersBaseHeaderById} from 'store/features/callers-bases/view'
+import {useQuery} from 'shared/hoocks/use-query'
+import {deleteCallersBase} from 'core/api/requests'
+import {enqueueSnackbar} from 'store/features/notifications'
+import {handlerError} from 'shared/middleware'
 
 function CallersBaseViewHeader() {
     const dispatch = useDispatch()
     const {header, statusesHeader} = useSelector((state: RootState) => state.callersBaseView)
     const history = useHistory()
+    const [created, setCreated] = useState<boolean>(!!useQuery('created').values.created[0])
 
     function handlerBack() {
-        history.push(routes.callersBaseList())
+        if (created && header?.id) {
+            deleteCallersBase(header.id)
+                .then(() => {
+                    dispatch(enqueueSnackbar({type: 'ALERT', message: 'База клиентов удалена'}))
+                    history.replace(routes.callersBaseView(header.id))
+                    history.push(routes.callersBaseList())
+                })
+                .catch(handlerError(dispatch))
+        } else {
+            history.push(routes.callersBaseList())
+        }
     }
 
     function handlerCalling() {
@@ -23,15 +37,16 @@ function CallersBaseViewHeader() {
     }
 
     function handlerSave() {
-        if (header) {
-            dispatch(changeCallersBaseHeaderById({...header, confirmed: true}))
+        if (created && header?.id) {
+            setCreated(false)
+            history.replace(routes.callersBaseView(header.id))
         }
     }
 
     return (
         <div className={styles.header}>
             <BtnSecond className={styles.back}
-                       text={header?.confirmed === false ? 'Отмена' : 'Назад'}
+                       text={created ? 'Отмена' : 'Назад'}
                        iconType={'round'}
                        iconName={'arrow_back'}
                        onClick={handlerBack}/>
@@ -43,11 +58,13 @@ function CallersBaseViewHeader() {
                        iconPosition={'end'}
                        onClick={handlerCalling}
                        disabled={statusesHeader.isLoading}/>}
-            {header?.confirmed === false &&
-            <Btn className={styles.save}
-                 text={'Сохранить'}
-                 onClick={handlerSave}
-                 disabled={statusesHeader.isLoading}/>}
+            {
+                created &&
+                <Btn className={styles.save}
+                     text={'Сохранить'}
+                     onClick={handlerSave}
+                     disabled={statusesHeader.isLoading}/>
+            }
         </div>
     )
 }

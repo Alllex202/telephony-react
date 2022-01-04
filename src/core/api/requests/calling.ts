@@ -14,3 +14,7 @@ export const getCallings = (params: ParamsPaginatorWithFilterAndStatusModel, con
 export const createCalling = (data: CallingModel, config?: AxiosRequestConfig): BaseResponse<CallingModel> => {
     return axios.post<CallingModel>(apiRoutes.calling.calling(), data, config)
 }
+
+export const getCallingsByCallersBaseId = (id: number | string, config?: AxiosRequestConfig): BaseResponse<CallingModel[]> => {
+    return axios.get<CallingModel[]>(apiRoutes.calling.byCallersBaseId(id), config)
+}

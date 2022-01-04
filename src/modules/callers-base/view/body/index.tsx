@@ -3,7 +3,13 @@ import styles from './styles.module.scss'
 import InputName from 'shared/components/input-name'
 import {useParams} from 'react-router-dom'
 import {useDispatch, useSelector} from 'react-redux'
-import {changeCallersBaseHeaderById, getCallersBaseById, resetAll, setType} from 'store/features/callers-bases/view'
+import {
+    changeCallersBaseHeaderById,
+    getCallersBaseById,
+    getCallingsByCallersBaseId,
+    resetAll,
+    setType
+} from 'store/features/callers-bases/view'
 import {RootState} from 'store'
 import CallersBaseViewTable from './components/table'
 import Switch from 'components/ui-kit/switch'
@@ -23,6 +29,7 @@ function CallersBaseViewBody() {
 
     useEffect(() => {
         dispatch(getCallersBaseById(callersBaseId))
+        dispatch(getCallingsByCallersBaseId(callersBaseId))
         return () => {
             if (!statusesHeader.isLoading && header?.confirmed === false) {
                 deleteCallersBase(header.id)

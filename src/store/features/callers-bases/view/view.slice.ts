@@ -1,9 +1,10 @@
 import {createSlice, Dispatch, PayloadAction} from '@reduxjs/toolkit'
-import {CallersBaseDataModel, CallersBaseHeaderModel, VariableTypeModel} from 'core/api'
+import {CallersBaseDataModel, CallersBaseHeaderModel, CallingModel, VariableTypeModel} from 'core/api'
 import {FetchStatuses} from 'shared/types/fetch-statuses'
 import {
     getCallersBaseDataById,
     getCallersBaseHeaderById,
+    getCallingsByCallersBaseId as _getCallingsByCallersBaseId,
     getVariablesTypes,
     ParamsPaginatorDataModel,
     putCallersBaseHeaderById
@@ -14,21 +15,23 @@ import {handlerError} from 'shared/middleware'
 import {enqueueSnackbar} from 'store/features/notifications'
 
 export interface ViewState {
-    header: CallersBaseHeaderModel | null;
-    data: CallersBaseDataModel[] | null;
-    page: number;
-    size: number;
-    isLastPage: boolean;
-    statusesHeader: FetchStatuses;
-    statusesData: FetchStatuses;
-    statusesVariables: FetchStatuses;
-    variablesTypes: VariableTypeModel[] | null,
-    onlyInvalid: boolean,
+    header: CallersBaseHeaderModel | null
+    data: CallersBaseDataModel[] | null
+    callings: CallingModel[] | null
+    page: number
+    size: number
+    isLastPage: boolean
+    statusesHeader: FetchStatuses
+    statusesData: FetchStatuses
+    statusesVariables: FetchStatuses
+    variablesTypes: VariableTypeModel[] | null
+    onlyInvalid: boolean
 }
 
 const initialState: ViewState = {
     header: null,
     data: null,
+    callings: null,
     statusesHeader: {},
     statusesData: {},
     statusesVariables: {},
@@ -110,6 +113,9 @@ export const callersBaseViewSlice = createSlice({
         resetVariablesStatuses: (state: ViewState) => {
             state.statusesVariables = {}
         },
+        setCallings: (state: ViewState, action: PayloadAction<CallingModel[]>) => {
+            state.callings = action.payload
+        },
         resetAll: (state: ViewState) => {
             state.header = null
             state.data = null
@@ -121,6 +127,16 @@ export const callersBaseViewSlice = createSlice({
         }
     }
 })
+
+export const getCallingsByCallersBaseId = (id: number | string) => (dispatch: Dispatch) => {
+    _getCallingsByCallersBaseId(id)
+        .then(res => {
+            dispatch(setCallings(res.data))
+        })
+        .catch(handlerError(dispatch, () => {
+            dispatch(setCallings([]))
+        }))
+}
 
 export const getCallersBaseById = (id: number | string) => (dispatch: Dispatch) => {
     dispatch(setHeaderLoading())
@@ -216,7 +232,8 @@ export const {
     setVariablesLoading,
     setVariablesSuccess,
     resetData,
-    setType
+    setType,
+    setCallings
 } = callersBaseViewSlice.actions
 
 export const callersBaseViewReducer = callersBaseViewSlice.reducer

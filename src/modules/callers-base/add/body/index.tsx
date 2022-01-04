@@ -73,7 +73,7 @@ function CallersBaseAddBody() {
         uploadCallersBaseExcel(formData)
             .then(res => {
                 dispatch(enqueueSnackbar({message: 'База успешно загружена', type: 'SUCCESS'}))
-                history.push(routes.callersBaseView(res.data.id))
+                history.push(`${routes.callersBaseView(res.data.id)}?created=true`)
             })
             .catch(handlerError(dispatch, (err: DefaultAxiosError) => {
                 setError(err.response?.data.message || 'Ошибка при отправке')

@@ -19,6 +19,7 @@ export const apiRoutes = {
     },
     calling: {
         calling: () => `${serverApi}/${calling}`,
-        byId: (id: string | number) => `${serverApi}/${calling}/${id}`
+        byId: (id: string | number) => `${serverApi}/${calling}/${id}`,
+        byCallersBaseId: (id: string | number) => `${serverApi}/${calling}/${callersBase}/${id}`,
     }
 }
