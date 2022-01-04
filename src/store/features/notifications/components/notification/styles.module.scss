@@ -26,12 +26,8 @@
     margin: 0 0 0 auto;
     color: var(--notification-text);
     font: var(--font-body-bold);
-    background-color: var(--notification-fill);
+    background-color: var(--trasparent);
     cursor: pointer;
-
-    &:hover {
-      background-color: var(--notification-fill-btn-hover);
-    }
   }
 
   &.info {
