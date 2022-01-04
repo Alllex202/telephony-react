@@ -24,12 +24,12 @@ function Test() {
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null)
     const dispatch = useDispatch()
 
-    const notifyDefault = () => {
-        dispatch(enqueueSnackbar({message: 'Обычное', type: 'DEFAULT'}))
+    const notifyAlert = () => {
+        dispatch(enqueueSnackbar({message: 'Информация', type: 'INFO'}))
     }
 
-    const notifyAlert = () => {
-        dispatch(enqueueSnackbar({message: 'Предупреждение', type: 'ALERT'}))
+    const notifyAlertLong = () => {
+        dispatch(enqueueSnackbar({message: 'Пиздец, это так сложно - делать вид, будто ничего не произошло. Все, что было - было. И это было прекрасно. Было и прошло. Я не хочу вспоминать об этом, я хочу забыть. Но как? Как можно забыть о том, с кем ты был счастлив? Да, именно был. Потому что я не могу быть счастлив с тем, кто не считает меня своей. Кто говорит "я тебя не знаю", а сам при этом думает, как бы не встретиться со мной. Нет, я не ревную. Мне надоело чувствовать себя пустым местом. Ты не хочешь меня, а я не хочу тебя.', type: 'INFO'}))
     }
 
     const notifyError = () => {
@@ -170,14 +170,14 @@ function Test() {
                 </div>
 
 
-                <Btn text={'Показать обычное уведомление'}
-                     onClick={notifyDefault}/>
-                <Btn text={'Показать предупреждение'}
+                <Btn text={'Показать информацию'}
                      onClick={notifyAlert}/>
                 <Btn text={'Показать уведомление об ошибке'}
                      onClick={notifyError}/>
                 <Btn text={'Показать уведомление об успехе'}
                      onClick={notifySuccess}/>
+                <Btn text={'Показать длинную информацию'}
+                     onClick={notifyAlertLong}/>
             </div>
             {modal &&
             <Modal isOpened={modal}

@@ -21,7 +21,7 @@ function CallersBaseViewHeader() {
         if (created && header?.id) {
             deleteCallersBase(header.id)
                 .then(() => {
-                    dispatch(enqueueSnackbar({type: 'ALERT', message: 'База клиентов удалена'}))
+                    dispatch(enqueueSnackbar({type: 'INFO', message: 'База клиентов удалена'}))
                     history.replace(routes.callersBaseView(header.id))
                     history.push(routes.callersBaseList())
                 })

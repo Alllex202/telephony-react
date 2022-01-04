@@ -22,7 +22,7 @@ const useNotifier = () => {
     }
 
     useEffect(() => {
-        notifications.forEach(({key = getUniqueId(), message, dismissed = false, type}) => {
+        notifications.forEach(({key = getUniqueId(), message, dismissed = false, type, action}) => {
             if (dismissed) {
                 closeSnackbar(key)
                 return
@@ -32,7 +32,7 @@ const useNotifier = () => {
 
             const options: OptionsObject = {
                 autoHideDuration: 3000,
-                content: (key: SnackbarKey, message: SnackbarMessage) => Notification({key, message, type})
+                content: (key: SnackbarKey, message: SnackbarMessage) => Notification({key, message, type, action})
             }
 
             enqueueSnackbar(message, {

@@ -2,13 +2,19 @@ import {createSlice, PayloadAction} from '@reduxjs/toolkit'
 import {SnackbarKey, SnackbarMessage} from 'notistack'
 import {getUniqueId} from 'shared/utils'
 
-export type NotificationType = 'DEFAULT' | 'ALERT' | 'ERROR' | 'SUCCESS'
+export type NotificationType = 'INFO' | 'ERROR' | 'SUCCESS'
+
+export interface Action {
+    text: string
+    callback: () => void
+}
 
 export interface Notification {
     message: SnackbarMessage
     key?: string
     dismissed?: boolean
     type: NotificationType
+    action?: Action
 }
 
 export interface NotificationsState {

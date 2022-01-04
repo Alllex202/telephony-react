@@ -1,30 +1,54 @@
 .notification {
-  height: 48px;
-  width: 300px;
+  height: 56px;
+  width: 464px;
   display: flex;
+  gap: 8px;
   align-items: center;
-  padding: 10px;
-  font: var(--font-body-medium);
-  color: var(--notification-text);
+  padding: 18px;
   background-color: var(--notification-fill);
-  border: 1px solid var(--notification-border);
+  //border: 1px solid var(--notification-border);
   border-radius: 2px;
 
-  &.alert {
-    color: var(--notification-text-alert);
-    background-color: var(--notification-fill-alert);
-    border-color: var(--notification-border-alert);
+  .text {
+    font: var(--font-body-medium);
+    color: var(--notification-text);
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+
+  .icon {
+    color: var(--notification-text);
+    font-size: 24px;
+  }
+
+  .action {
+    margin: 0 0 0 auto;
+    color: var(--notification-text);
+    font: var(--font-body-bold);
+    background-color: var(--notification-fill);
+    cursor: pointer;
+
+    &:hover {
+      background-color: var(--notification-fill-btn-hover);
+    }
+  }
+
+  &.info {
+    //color: var(--notification-text-info);
+    background-color: var(--notification-fill-info);
+    //border-color: var(--notification-border-info);
   }
 
   &.error {
-    color: var(--notification-text-error);
+    //color: var(--notification-text-error);
     background-color: var(--notification-fill-error);
-    border-color: var(--notification-border-error);
+    //border-color: var(--notification-border-error);
   }
 
   &.success {
-    color: var(--notification-text-success);
+    //color: var(--notification-text-success);
     background-color: var(--notification-fill-success);
-    border-color: var(--notification-border-success);
+    //border-color: var(--notification-border-success);
   }
 }
