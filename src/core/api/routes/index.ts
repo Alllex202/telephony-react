@@ -21,5 +21,6 @@ export const apiRoutes = {
         calling: () => `${serverApi}/${calling}`,
         byId: (id: string | number) => `${serverApi}/${calling}/${id}`,
         byCallersBaseId: (id: string | number) => `${serverApi}/${calling}/${callersBase}/${id}`,
+        scheduledByIdStart: (id: string | number) => `${serverApi}/${calling}/scheduled/${id}/start`
     }
 }

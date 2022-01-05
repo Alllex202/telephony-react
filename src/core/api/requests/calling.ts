@@ -26,3 +26,7 @@ export const getCallingById = (id: string | number, config?: AxiosRequestConfig)
 export const updateCalling = (id: string | number, data: CallingModel, config?: AxiosRequestConfig): BaseResponse<CallingModel> => {
     return axios.put<CallingModel>(apiRoutes.calling.byId(id), data, config)
 }
+
+export const startScheduledCalling = (id: string | number, config?: AxiosRequestConfig): BaseResponse<null> => {
+    return axios.post<null>(apiRoutes.calling.scheduledByIdStart(id), config)
+}

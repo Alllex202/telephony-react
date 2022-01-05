@@ -13,8 +13,8 @@ import Menu from 'components/ui-kit/menu'
 import MenuItem from 'components/ui-kit/menu-item'
 import Icon from 'components/ui-kit/icon'
 import {CallingModel, CallingStatuses} from 'core/api'
-import {deleteCalling} from 'core/api/requests/calling'
-import {deleteCallingById} from 'store/features/calling/list'
+import {deleteCalling, startScheduledCalling} from 'core/api/requests/calling'
+import {callingByIdMoveFromScheduledToRun, deleteCallingById} from 'store/features/calling/list'
 import {LinearProgress} from '@mui/material'
 import BtnSecond from 'components/ui-kit/btn-second'
 import {enqueueSnackbar} from 'store/features/notifications'
@@ -59,17 +59,29 @@ const CallingCard = ({data, callingStatus, className}: Props) => {
     const handlerCancel = () => {
         closeOptions()
         if (!data.id) return
+        // todo Удаление обзвона
     }
 
     const handlerStop = () => {
         closeOptions()
         if (!data.id) return
+        // todo Остановка обзвона
     }
 
     const handlerRun = (e: React.MouseEvent) => {
         e.preventDefault()
         closeOptions()
         if (!data.id) return
+
+        setStatuses({isLoading: true})
+        startScheduledCalling(data.id)
+            .then(() => {
+                data.id && dispatch(callingByIdMoveFromScheduledToRun(data.id))
+                dispatch(enqueueSnackbar({message: 'Сценарий запущен', type: 'SUCCESS'}))
+            })
+            .catch(handlerError(dispatch, (err: DefaultAxiosError) => {
+                setStatuses({isError: true})
+            }))
     }
 
     return (

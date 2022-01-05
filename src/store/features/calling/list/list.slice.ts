@@ -7,12 +7,12 @@ import {DefaultAxiosError} from 'shared/types/base-response-error'
 import {handlerError} from 'shared/middleware'
 
 export interface CallingListState {
-    callingList: CallingModel[],
-    statuses: FetchStatuses,
-    page: number,
-    size: number,
-    isLastPage: boolean,
-    totalElements: number,
+    callingList: CallingModel[]
+    statuses: FetchStatuses
+    page: number
+    size: number
+    isLastPage: boolean
+    totalElements: number
 }
 
 const initialState: Record<CallingStatuses, CallingListState> = {
@@ -60,6 +60,15 @@ export const callingListSlice = createSlice({
                 ...state[action.payload.callingStatus].callingList,
                 ...action.payload.data
             ]
+        },
+        callingByIdMoveFromScheduledToRun: (state, action: PayloadAction<string | number>) => {
+            state.RUN.callingList = [
+                ...state.SCHEDULED.callingList.filter(e => e.id === action.payload),
+                ...state.RUN.callingList
+            ]
+            state.SCHEDULED.callingList = [...state.SCHEDULED.callingList.filter(e => e.id !== action.payload)]
+            state.RUN.totalElements++
+            state.SCHEDULED.totalElements--
         },
         deleteCallingById: (state, action: PayloadAction<{ id: number | string, callingStatus: CallingStatuses }>) => {
             state[action.payload.callingStatus].callingList =
@@ -130,7 +139,8 @@ export const {
     setPage,
     deleteCallingById,
     setError,
-    setTotalElements
+    setTotalElements,
+    callingByIdMoveFromScheduledToRun
 } = callingListSlice.actions
 
 export const callingListReducers = callingListSlice.reducer
