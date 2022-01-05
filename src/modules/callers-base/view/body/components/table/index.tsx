@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react'
-import styles from './styles.module.scss'
-import './styles.scss'
+import styles from 'shared/styles/table/styles.module.scss'
+import 'shared/styles/table/styles.scss'
 import {useDispatch, useSelector} from 'react-redux'
 import {RootState} from 'store'
 import {

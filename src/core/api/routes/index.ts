@@ -21,6 +21,15 @@ export const apiRoutes = {
         calling: () => `${serverApi}/${calling}`,
         byId: (id: string | number) => `${serverApi}/${calling}/${id}`,
         byCallersBaseId: (id: string | number) => `${serverApi}/${calling}/${callersBase}/${id}`,
-        scheduledByIdStart: (id: string | number) => `${serverApi}/${calling}/scheduled/${id}/start`
+        scheduledByIdStart: (id: string | number) => `${serverApi}/${calling}/scheduled/${id}/start`,
+        result: {
+            common: (id: number | string) => `${serverApi}/${calling}/${id}/result/common`,
+            pieChart: (id: number | string) => `${serverApi}/${calling}/${id}/result/pie-chart`,
+            chart: (id: number | string) => `${serverApi}/${calling}/${id}/result/success-calls-chart`,
+            table: {
+                data: (id: number | string) => `${serverApi}/${calling}/${id}/result/table/data`,
+                header: (id: number | string) => `${serverApi}/${calling}/${id}/result/table/header`,
+            }
+        }
     }
 }

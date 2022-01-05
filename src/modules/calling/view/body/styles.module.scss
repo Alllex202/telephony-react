@@ -1,0 +1,142 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  margin-bottom: 80px;
+
+  .name {
+    font: var(--font-h2-bold);
+  }
+
+  .cards {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+
+    .rowCards {
+      display: flex;
+      flex-direction: row;
+      gap: 24px;
+
+      .card {
+        width: 464px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+
+        &.progress {
+          height: 144px;
+        }
+
+        &.callersBase {
+          height: 144px;
+        }
+
+        &.dateTime {
+          height: 144px;
+        }
+
+        &.scenario {
+          height: 144px;
+        }
+
+        &.pieChart {
+          height: 312px;
+        }
+
+        &.chart {
+          height: 312px;
+        }
+
+        .head {
+          display: flex;
+          flex-direction: column;
+          gap: 4px;
+
+          .smallLightFont {
+            font: var(--font-caption-medium);
+            color: var(--text-light);
+          }
+
+          .smallBlackFont {
+            font: var(--font-caption-medium);
+            color: var(--text);
+          }
+
+          .bigLightFont {
+            font: var(--font-h3-bold);
+            color: var(--text-light);
+          }
+
+          .bigBlackFont {
+            font: var(--font-h3-bold);
+            color: var(--text);
+          }
+        }
+
+        .body {
+
+          .pieChart {
+            display: flex;
+            align-items: center;
+            gap: 32px;
+          }
+
+          .legend {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+
+            .legendElement {
+              display: inline-flex;
+              align-items: center;
+              font: var(--font-caption-medium);
+              color: var(--text);
+              list-style-type: none;
+
+              div {
+                display: inline-block;
+                height: 12px;
+                width: 12px;
+                border-radius: 2px;
+                margin-right: 8px;
+              }
+            }
+          }
+
+          .link {
+            margin-top: auto;
+            margin-bottom: 0;
+            font: var(--font-body-medium);
+            color: var(--text-link);
+            text-decoration: underline;
+          }
+
+          .progressBar {
+            margin-top: auto;
+            margin-bottom: 0;
+            height: 16px;
+            background-color: var(--grey-200);
+            border-radius: 2px;
+
+            &.running {
+              background-color: var(--orange-100);
+            }
+
+            span {
+              border-radius: 2px;
+            }
+
+            span:first-of-type {
+              background-color: var(--orange-600);
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .table {
+
+  }
+}

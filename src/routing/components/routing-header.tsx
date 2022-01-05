@@ -8,6 +8,7 @@ import TestHeader from 'modules/test/header'
 import ScenarioListHeader from 'modules/scenario/list/header'
 import CallingCreatingHeader from 'modules/calling/creating/header'
 import CallingListHeader from 'modules/calling/list/header'
+import CallingViewHead from 'modules/calling/view/head/callingViewHead'
 
 export default function RoutingHeader() {
     return (
@@ -33,6 +34,9 @@ export default function RoutingHeader() {
             <Route path={routes.callingCreate(':callingId')}
                    exact
                    component={CallingCreatingHeader}/>
+            <Route path={routes.callingView(':callingId')}
+                   exact
+                   component={CallingViewHead}/>
             <Route path={routes.test()}
                    exact
                    component={TestHeader}/>

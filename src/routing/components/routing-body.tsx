@@ -8,6 +8,7 @@ import CallersBaseViewBody from 'modules/callers-base/view/body'
 import ScenarioListBody from 'modules/scenario/list/body'
 import CallingListBody from 'modules/calling/list/body'
 import CallingCreatingBody from 'modules/calling/creating/body'
+import CallingViewBody from 'modules/calling/view/body'
 
 export default function RoutingBody() {
     return (
@@ -33,6 +34,9 @@ export default function RoutingBody() {
             <Route path={routes.callingCreate(':callingId')}
                    exact
                    component={CallingCreatingBody}/>
+            <Route path={routes.callingView(':callingId')}
+                   exact
+                   component={CallingViewBody}/>
             <Route path={routes.test()}
                    exact
                    component={Test}/>

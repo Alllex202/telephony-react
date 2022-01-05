@@ -6,6 +6,7 @@ import scenarioList from 'store/features/scenario/list'
 import scenarioView from './features/scenario/view'
 import callingList from 'store/features/calling/list'
 import callingCreating from './features/calling/creating'
+import callingView from './features/calling/view'
 import notifications from './features/notifications'
 
 export const store = configureStore({
@@ -16,6 +17,7 @@ export const store = configureStore({
         scenarioView,
         callingList,
         callingCreating,
+        callingView,
         filter,
         notifications
     }

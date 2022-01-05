@@ -13,15 +13,24 @@ const month: { [key: number]: string } = {
     11: 'Декабрь'
 }
 
-export function formatDate(ms: number, shortMonth?: boolean): string {
+export function formatDate(ms: number, shortMonth?: boolean, isTime?: boolean): string {
     const date = new Date(ms)
     let _month = month[date.getMonth()]
+    let time: string = '';
     if (shortMonth) {
-        _month = _month.substr(0, 3)
+        _month = _month.substring(0, 3)
             .toLowerCase()
     }
+    if (isTime) {
+        const _time = {
+            hours: date.getHours(),
+            minutes: date.getMinutes()
+        }
 
-    return `${date.getDate()} ${_month} ${date.getFullYear()}`
+        time = `, ${_time.hours}:${_time.minutes}`
+    }
+
+    return `${date.getDate()} ${_month} ${date.getFullYear()}${time}`
 }
 
 
