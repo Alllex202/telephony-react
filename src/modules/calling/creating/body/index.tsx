@@ -135,7 +135,7 @@ const CallingCreatingBody = () => {
                                     label={'Выберите базу данных'}
                                     onChange={onSelectBase}
                                     value={callingId && bases ? (callersBaseId as string) ?? ''
-                                                              : (callersBaseId as string)}
+                                                              : (callersBaseId as string) ?? ''}
                                 >
                                     {bases?.map(el => <MenuItem key={el.id}
                                                                 value={el.id}>{el.name}</MenuItem>)}
@@ -165,7 +165,7 @@ const CallingCreatingBody = () => {
                                     label={'Выберите сценарий'}
                                     onChange={onSelectScenario}
                                     value={callingId && scenarios ? (scenarioId as string) ?? ''
-                                                                  : (callersBaseId as string)}
+                                                                  : (scenarioId as string) ?? ''}
                                 >
                                     {scenarios?.map(el => <MenuItem key={el.id}
                                                                     value={el.id}>{el.name}</MenuItem>)}
