@@ -17,10 +17,6 @@ import {handlerError} from 'shared/middleware'
 
 type CallingResultTypes = 'common' | 'pieChart' | 'chart' | 'tableHeader' | 'tableBody' | 'variables'
 
-interface ExtraDataChartModel extends DataChartModel {
-    name: string
-}
-
 interface ExtraPieChartPartModel extends PieChartPartModel {
     color: string
     number: number
@@ -40,7 +36,7 @@ interface ViewState {
         status: FetchStatuses
     }
     chart: {
-        result: ExtraDataChartModel[] | null
+        result: DataChartModel[] | null
         status: FetchStatuses
     }
     tableHeader: {
@@ -116,22 +112,7 @@ const callingViewSlice = createSlice({
             state.variables.result = action.payload
         },
         setChartResult: (state, action: PayloadAction<DataChartModel[]>) => {
-            const pad = (num: number | string, size: number): string => {
-                num = num.toString()
-                while (num.length < size) {
-                    num = '0' + num
-                }
-                return num
-            }
-
-            state.chart.result = action.payload.map(el => {
-                const date = new Date(el.date)
-
-                return {
-                    ...el,
-                    name: `${pad(date.getHours(), 2)}:${pad(date.getMinutes(), 2)}`
-                }
-            })
+            state.chart.result = action.payload
         },
         setPieChartResult: (state, action: PayloadAction<CallingResultPieChartModel>) => {
             const compare = (a: ExtraPieChartPartModel, b: ExtraPieChartPartModel): number => {
@@ -207,6 +188,157 @@ const callingViewSlice = createSlice({
     }
 })
 
+const fakeChart: DataChartModel[] = [
+    {
+        date: Date.parse('1995-12-17T00:00:00'),
+        time: '00:00',
+        successCalls: 15
+    },
+    {
+        date: Date.parse('1995-12-17T01:00:00'),
+        time: '01:00',
+        successCalls: 5
+    },
+    {
+        date: Date.parse('1995-12-17T02:00:00'),
+        time: '02:00',
+        successCalls: 3
+    },
+    {
+        date: Date.parse('1995-12-17T03:00:00'),
+        time: '03:00',
+        successCalls: 9
+    },
+    {
+        date: Date.parse('1995-12-17T04:00:00'),
+        time: '04:00',
+        successCalls: 15
+    },
+    {
+        date: Date.parse('1995-12-17T05:00:00'),
+        time: '05:00',
+        successCalls: 17
+    },
+    {
+        date: Date.parse('1995-12-17T06:00:00'),
+        time: '06:00',
+        successCalls: 30
+    },
+    {
+        date: Date.parse('1995-12-17T07:00:00'),
+        time: '07:00',
+        successCalls: 10
+    },
+    {
+        date: Date.parse('1995-12-17T08:00:00'),
+        time: '08:00',
+        successCalls: 50
+    },
+    {
+        date: Date.parse('1995-12-17T09:00:00'),
+        time: '09:00',
+        successCalls: 100
+    },
+    {
+        date: Date.parse('1995-12-17T10:00:00'),
+        time: '10:00',
+        successCalls: 5
+    },
+    {
+        date: Date.parse('1995-12-17T11:00:00'),
+        time: '11:00',
+        successCalls: 25
+    },
+    {
+        date: Date.parse('1995-12-17T12:00:00'),
+        time: '12:00',
+        successCalls: 14
+    },
+    {
+        date: Date.parse('1995-12-17T13:00:00'),
+        time: '13:00',
+        successCalls: 43
+    },
+    {
+        date: Date.parse('1995-12-17T14:00:00'),
+        time: '14:00',
+        successCalls: 23
+    },
+    {
+        date: Date.parse('1995-12-17T15:00:00'),
+        time: '15:00',
+        successCalls: 43
+    },
+    {
+        date: Date.parse('1995-12-17T16:00:00'),
+        time: '16:00',
+        successCalls: 52
+    },
+    {
+        date: Date.parse('1995-12-17T17:00:00'),
+        time: '17:00',
+        successCalls: 1
+    },
+    {
+        date: Date.parse('1995-12-17T18:00:00'),
+        time: '18:00',
+        successCalls: 12
+    },
+    {
+        date: Date.parse('1995-12-17T19:00:00'),
+        time: '19:00',
+        successCalls: 31
+    },
+    {
+        date: Date.parse('1995-12-17T20:00:00'),
+        time: '20:00',
+        successCalls: 67
+    },
+    {
+        date: Date.parse('1995-12-17T21:00:00'),
+        time: '21:00',
+        successCalls: 31
+    },
+    {
+        date: Date.parse('1995-12-17T22:00:00'),
+        time: '22:00',
+        successCalls: 35
+    },
+    {
+        date: Date.parse('1995-12-17T23:00:00'),
+        time: '23:00',
+        successCalls: 32
+    }
+]
+
+const fakePieChart: CallingResultPieChartModel = {
+    countSuccess: 100,
+    countCallers: 70,
+    percentSuccess: 70,
+    parts: [
+        {
+            name: 'Успешно завершенные',
+            value: 70,
+            key: 'CORRECT'
+        },
+        {
+            name: 'Сценарий не завершен',
+            value: 8,
+            key: 'SCENARIO_NOT_END'
+        },
+        {
+            name: 'Не дозвонились',
+            value: 8,
+            key: 'HAVEN_NOT_REACHED'
+        },
+        {
+            name: 'В процессе',
+            value: 14,
+            key: 'IN_PROGRESS'
+        }
+    ]
+}
+
 export const getVariables = () => (dispatch: Dispatch) => {
     dispatch(setLoading({type: 'variables'}))
     getVariablesTypes()
@@ -263,104 +395,7 @@ export const getCallingResultChartById = (id: number | string) => (dispatch: Dis
         .then((res) => {
             // todo фейковые данные убрать
             // dispatch(setChartResult(res.data))
-            dispatch(setChartResult([
-                {
-                    date: Date.parse('1995-12-17T00:00:00'),
-                    successCalls: 15
-                },
-                {
-                    date: Date.parse('1995-12-17T01:00:00'),
-                    successCalls: 5
-                },
-                {
-                    date: Date.parse('1995-12-17T02:00:00'),
-                    successCalls: 3
-                },
-                {
-                    date: Date.parse('1995-12-17T03:00:00'),
-                    successCalls: 9
-                },
-                {
-                    date: Date.parse('1995-12-17T04:00:00'),
-                    successCalls: 15
-                },
-                {
-                    date: Date.parse('1995-12-17T05:00:00'),
-                    successCalls: 17
-                },
-                {
-                    date: Date.parse('1995-12-17T06:00:00'),
-                    successCalls: 30
-                },
-                {
-                    date: Date.parse('1995-12-17T07:00:00'),
-                    successCalls: 10
-                },
-                {
-                    date: Date.parse('1995-12-17T08:00:00'),
-                    successCalls: 50
-                },
-                {
-                    date: Date.parse('1995-12-17T09:00:00'),
-                    successCalls: 100
-                },
-                {
-                    date: Date.parse('1995-12-17T10:00:00'),
-                    successCalls: 5
-                },
-                {
-                    date: Date.parse('1995-12-17T11:00:00'),
-                    successCalls: 25
-                },
-                {
-                    date: Date.parse('1995-12-17T12:00:00'),
-                    successCalls: 14
-                },
-                {
-                    date: Date.parse('1995-12-17T13:00:00'),
-                    successCalls: 43
-                },
-                {
-                    date: Date.parse('1995-12-17T14:00:00'),
-                    successCalls: 23
-                },
-                {
-                    date: Date.parse('1995-12-17T15:00:00'),
-                    successCalls: 43
-                },
-                {
-                    date: Date.parse('1995-12-17T16:00:00'),
-                    successCalls: 52
-                },
-                {
-                    date: Date.parse('1995-12-17T17:00:00'),
-                    successCalls: 1
-                },
-                {
-                    date: Date.parse('1995-12-17T18:00:00'),
-                    successCalls: 12
-                },
-                {
-                    date: Date.parse('1995-12-17T19:00:00'),
-                    successCalls: 31
-                },
-                {
-                    date: Date.parse('1995-12-17T20:00:00'),
-                    successCalls: 67
-                },
-                {
-                    date: Date.parse('1995-12-17T21:00:00'),
-                    successCalls: 31
-                },
-                {
-                    date: Date.parse('1995-12-17T22:00:00'),
-                    successCalls: 35
-                },
-                {
-                    date: Date.parse('1995-12-17T23:00:00'),
-                    successCalls: 32
-                }
-            ]))
+            dispatch(setChartResult(fakeChart))
             dispatch(setSuccess({type: 'chart'}))
         })
         .catch(handlerError(dispatch, (err) => {
@@ -374,33 +409,7 @@ export const getCallingResultPieChartById = (id: number | string) => (dispatch: 
         .then((res) => {
             // todo фейковые данные убрать
             // dispatch(setPieChartResult(res.data))
-            dispatch(setPieChartResult({
-                countSuccess: 100,
-                countCallers: 70,
-                percentSuccess: 70,
-                parts: [
-                    {
-                        name: 'Успешно завершенные',
-                        value: 70,
-                        key: 'CORRECT'
-                    },
-                    {
-                        name: 'Сценарий не завершен',
-                        value: 8,
-                        key: 'SCENARIO_NOT_END'
-                    },
-                    {
-                        name: 'Не дозвонились',
-                        value: 8,
-                        key: 'HAVEN_NOT_REACHED'
-                    },
-                    {
-                        name: 'В процессе',
-                        value: 14,
-                        key: 'IN_PROGRESS'
-                    }
-                ]
-            }))
+            dispatch(setPieChartResult(fakePieChart))
             dispatch(setSuccess({type: 'pieChart'}))
         })
         .catch(handlerError(dispatch, (err) => {

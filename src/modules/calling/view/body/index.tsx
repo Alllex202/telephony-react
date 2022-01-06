@@ -196,7 +196,7 @@ const CallingViewBody = () => {
                                 <ResponsiveContainer width={'100%'}
                                                      height={250}>
                                     <LineChart data={chart.result ?? []}>
-                                        <XAxis dataKey="name"/>
+                                        <XAxis dataKey="time"/>
                                         <YAxis/>
                                         <Tooltip formatter={tooltipFormatter}/>
                                         <Line type={'monotone'}
