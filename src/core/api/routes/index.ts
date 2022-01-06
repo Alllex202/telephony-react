@@ -3,6 +3,7 @@ import {serverApi} from 'config'
 const callersBase = 'callers-base'
 const scenario = 'scenario'
 const calling = 'dialing'
+const stats = 'statistic'
 
 export const apiRoutes = {
     callersBase: {
@@ -31,5 +32,10 @@ export const apiRoutes = {
                 header: (id: number | string) => `${serverApi}/${calling}/${id}/result/table/header`,
             }
         }
+    },
+    stats: {
+        common: () => `${serverApi}/${stats}/common`,
+        pieChart: () => `${serverApi}/${stats}/pie-chart`,
+        chart: () => `${serverApi}/${stats}/success-calls-chart`
     }
 }

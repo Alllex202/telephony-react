@@ -8,6 +8,7 @@ import callingList from 'store/features/calling/list'
 import callingCreating from './features/calling/creating'
 import callingView from './features/calling/view'
 import notifications from './features/notifications'
+import stats from './features/stats'
 
 export const store = configureStore({
     reducer: {
@@ -19,7 +20,8 @@ export const store = configureStore({
         callingCreating,
         callingView,
         filter,
-        notifications
+        notifications,
+        stats
     }
 })
 

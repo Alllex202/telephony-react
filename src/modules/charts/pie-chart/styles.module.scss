@@ -1,0 +1,28 @@
+.pieChart {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+
+  .legend {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+
+    .legendElement {
+      display: inline-flex;
+      align-items: center;
+      font: var(--font-caption-medium);
+      color: var(--text);
+      list-style-type: none;
+
+      div {
+        display: inline-block;
+        height: 12px;
+        width: 12px;
+        border-radius: 2px;
+        margin-right: 8px;
+      }
+    }
+  }
+
+}

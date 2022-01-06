@@ -14,10 +14,11 @@ import {
     getVariablesTypes
 } from 'core/api/requests'
 import {handlerError} from 'shared/middleware'
+import {compare, getColor, getNumber} from 'shared/utils'
 
 type CallingResultTypes = 'common' | 'pieChart' | 'chart' | 'tableHeader' | 'tableBody' | 'variables'
 
-interface ExtraPieChartPartModel extends PieChartPartModel {
+export interface ExtraPieChartPartModel extends PieChartPartModel {
     color: string
     number: number
 }
@@ -115,40 +116,6 @@ const callingViewSlice = createSlice({
             state.chart.result = action.payload
         },
         setPieChartResult: (state, action: PayloadAction<CallingResultPieChartModel>) => {
-            const compare = (a: ExtraPieChartPartModel, b: ExtraPieChartPartModel): number => {
-                return a.number - b.number
-            }
-
-            const getColor = (key: PieChartTypes): string => {
-                switch (key) {
-                    case 'CORRECT':
-                        return '#b5d300'
-                    case 'HAVEN_NOT_REACHED':
-                        return '#7a7b7c'
-                    case 'SCENARIO_NOT_END':
-                        return '#ff3504'
-                    case 'IN_PROGRESS':
-                        return '#bdbdbd'
-                    default:
-                        return ''
-                }
-            }
-
-            const getNumber = (key: PieChartTypes): number => {
-                switch (key) {
-                    case 'CORRECT':
-                        return 0
-                    case 'HAVEN_NOT_REACHED':
-                        return 2
-                    case 'SCENARIO_NOT_END':
-                        return 1
-                    case 'IN_PROGRESS':
-                        return 3
-                    default:
-                        return 10
-                }
-            }
-
             state.pieChart.result = {
                 ...action.payload,
                 parts: action.payload.parts.map((el) => {

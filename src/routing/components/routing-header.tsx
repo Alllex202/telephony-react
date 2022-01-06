@@ -40,7 +40,7 @@ export default function RoutingHeader() {
             <Route path={routes.test()}
                    exact
                    component={TestHeader}/>
-            <Route children={<>Стандартная шапка</>}/>
+            {/*<Route children={<>Стандартная шапка</>}/>*/}
         </Switch>
     )
 }

@@ -8,7 +8,7 @@ const routes = {
     scenarioList: (): string => '/scenarios',
     scenarioView: (id: string | number) => `/scenario/view/id${id}`,
     settingsView: (): string => '/settings',
-    statisticsView: (): string => '/statistics',
+    statsView: (): string => '/stats',
     test: (): string => '/test'
 }
 
