@@ -279,8 +279,8 @@ const fakeChart: DataChartModel[] = [
 ]
 
 const fakePieChart: CallingResultPieChartModel = {
-    countSuccess: 100,
-    countCallers: 70,
+    countSuccess: 70,
+    countCallers: 100,
     percentSuccess: 70,
     parts: [
         {

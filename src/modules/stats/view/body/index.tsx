@@ -8,6 +8,7 @@ import LineChart from 'modules/charts/line-chart'
 import {useDispatch, useSelector} from 'react-redux'
 import {RootState} from 'store'
 import {getStatsChart, getStatsCommon, getStatsPieChart, resetState} from 'store/features/stats'
+import {formatTimeObject} from 'shared/utils/format-time-object'
 
 const StatsBody = () => {
     const dispatch = useDispatch()
@@ -42,7 +43,7 @@ const StatsBody = () => {
                         <div className={stylesCard.head}>
                             <div className={stylesCard.smallLightFont}>Средняя продолжительность обзванивания</div>
                             <div className={stylesCard.bigBlackFont}>
-                                {common.result?.averageDiallingDuration}
+                                {formatTimeObject(common.result?.averageDiallingDuration)}
                             </div>
                         </div>
                         <div className={stylesCard.body}>
@@ -64,7 +65,7 @@ const StatsBody = () => {
                         <div className={stylesCard.head}>
                             <div className={stylesCard.smallLightFont}>Средняя продолжительность звонка</div>
                             <div className={stylesCard.bigBlackFont}>
-                                {common.result?.averageCallDuration}
+                                {formatTimeObject(common.result?.averageCallDuration)}
                             </div>
                         </div>
                         <div className={stylesCard.body}>

@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useEffect, useState} from 'react'
 import styles from './styles.module.scss'
 import BtnSecond from 'components/ui-kit/btn-second'
 import Btn from 'components/ui-kit/btn'
@@ -17,12 +17,17 @@ function CallersBaseViewHeader() {
     const history = useHistory()
     const [created, setCreated] = useState<boolean>(!!useQuery('created').values.created[0])
 
+    useEffect(() => {
+        if (created && header?.id) {
+            history.replace(routes.callersBaseView(header.id))
+        }
+    }, [header?.id])
+
     function handlerBack() {
         if (created && header?.id) {
             deleteCallersBase(header.id)
                 .then(() => {
                     dispatch(enqueueSnackbar({type: 'INFO', message: 'База клиентов удалена'}))
-                    history.replace(routes.callersBaseView(header.id))
                     history.push(routes.callersBaseList())
                 })
                 .catch(handlerError(dispatch))

@@ -4,6 +4,7 @@ const callersBase = 'callers-base'
 const scenario = 'scenario'
 const calling = 'dialing'
 const stats = 'statistic'
+const _export = 'export'
 
 export const apiRoutes = {
     callersBase: {
@@ -29,7 +30,7 @@ export const apiRoutes = {
             chart: (id: number | string) => `${serverApi}/${calling}/${id}/result/success-calls-chart`,
             table: {
                 data: (id: number | string) => `${serverApi}/${calling}/${id}/result/table/data`,
-                header: (id: number | string) => `${serverApi}/${calling}/${id}/result/table/header`,
+                header: (id: number | string) => `${serverApi}/${calling}/${id}/result/table/header`
             }
         }
     },
@@ -37,5 +38,8 @@ export const apiRoutes = {
         common: () => `${serverApi}/${stats}/common`,
         pieChart: () => `${serverApi}/${stats}/pie-chart`,
         chart: () => `${serverApi}/${stats}/success-calls-chart`
+    },
+    export: {
+        calling: (id: string | number) => `${serverApi}/${_export}/results/${id}`
     }
 }

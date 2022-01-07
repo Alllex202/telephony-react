@@ -123,12 +123,11 @@ const CallingCreatingBody = () => {
             <div className={styles.form}>
                 <div className={styles.block}>
                     <div className={styles.subtitle}>
-                        База данных
                     </div>
                     <div className={styles.content}>
                         <div className={'custom-input'}>
                             <FormControl fullWidth>
-                                <InputLabel id={'base'}>Выберите базу данных</InputLabel>
+                                <InputLabel id={'base'}>База данных</InputLabel>
                                 <Select
                                     readOnly={statuses.isLoading}
                                     labelId={'base'}
@@ -153,12 +152,11 @@ const CallingCreatingBody = () => {
 
                 <div className={styles.block}>
                     <div className={styles.subtitle}>
-                        Сценарий обзванивания
                     </div>
                     <div className={styles.content}>
                         <div className={'custom-input'}>
                             <FormControl fullWidth>
-                                <InputLabel id={'scenario'}>Выберите сценарий</InputLabel>
+                                <InputLabel id={'scenario'}>Сценарий обзванивания</InputLabel>
                                 <Select
                                     readOnly={statuses.isLoading}
                                     labelId={'scenario'}

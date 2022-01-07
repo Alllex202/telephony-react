@@ -13,14 +13,13 @@ import {
 import {RootState} from 'store'
 import CallersBaseViewTable from './components/table'
 import Switch from 'components/ui-kit/switch'
-import {deleteCallersBase} from 'core/api/requests'
 
 function CallersBaseViewBody() {
     const {
         statusesHeader,
         header,
         statusesData,
-        onlyInvalid
+        onlyInvalid,
     } = useSelector((state: RootState) => state.callersBaseView)
     const [name, setName] = useState<string>(header?.name || '')
     const [lastName, setLastName] = useState<string>(name)
@@ -31,9 +30,6 @@ function CallersBaseViewBody() {
         dispatch(getCallersBaseById(callersBaseId))
         dispatch(getCallingsByCallersBaseId(callersBaseId))
         return () => {
-            if (!statusesHeader.isLoading && header?.confirmed === false) {
-                deleteCallersBase(header.id)
-            }
             dispatch(resetAll())
         }
         // eslint-disable-next-line

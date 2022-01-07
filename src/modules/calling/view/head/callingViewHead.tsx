@@ -4,6 +4,8 @@ import BtnSecond from 'components/ui-kit/btn-second'
 import Btn from 'components/ui-kit/btn'
 import {useHistory, useParams} from 'react-router-dom'
 import routes from 'routing/routes'
+import {useDispatch} from 'react-redux'
+import {apiRoutes} from 'core/api'
 
 const CallingViewHead = () => {
     const history = useHistory()
@@ -14,8 +16,9 @@ const CallingViewHead = () => {
     }
 
     const onExport = () => {
-        console.log(`Выгрузка обзвона ${callingId}`)
-        // todo скачать отчет
+        const link = document.createElement('a')
+        link.href = `${apiRoutes.export.calling(callingId)}`
+        link.click()
     }
 
     return (

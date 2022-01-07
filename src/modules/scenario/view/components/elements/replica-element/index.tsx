@@ -128,8 +128,7 @@ const ReplicaElement = React.memo(({
 
     return (
         <Card isActive={selected || isFocus}
-              className={classNames(styles.replicaWrapper, 'element-wrapper', selected || isFocus ? styles.selected
-                                                                                                  : '',
+              className={classNames(styles.replicaWrapper, 'element-wrapper', styles.selected,
                   data.needAnswer ? styles.extended : '')}
               disableHover={true}
               onFocus={onFocus}
@@ -138,13 +137,13 @@ const ReplicaElement = React.memo(({
                 <div className={classNames(styles.title, 'draggable-handle')}>Реплика</div>
                 <ReplicaInput value={data.replica}
                               onChange={onChangeReplica}/>
-                {(selected || isFocus || data.needAnswer) && <div className={styles.waitingTime}>
+                <div className={styles.waitingTime}>
                     <span className={styles.label}>
                         Ожидание ответа
                     </span>
                     <Switch checked={data.needAnswer}
                             onChange={onChangeNeedAnswer}/>
-                </div>}
+                </div>
                 {
                     data.needAnswer &&
                     <div className={styles.options}>

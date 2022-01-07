@@ -261,7 +261,7 @@ export const getStatsPieChart = () => (dispatch: Dispatch) => {
     dispatch(setLoading({type: 'pieChart'}))
     _getStatsPieChart()
         .then(res => {
-            dispatch(setPieChartResult(res.data))
+            // dispatch(setPieChartResult(res.data))
             dispatch(setSuccess({type: 'pieChart'}))
         })
         .catch(handlerError(dispatch, (err) => {
@@ -276,7 +276,7 @@ export const getStatsChart = () => (dispatch: Dispatch) => {
     dispatch(setLoading({type: 'chart'}))
     _getStatsChart()
         .then(res => {
-            dispatch(setChartResult(res.data))
+            // dispatch(setChartResult(res.data))
             dispatch(setSuccess({type: 'chart'}))
         })
         .catch(handlerError(dispatch, (err) => {
