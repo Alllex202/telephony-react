@@ -33,7 +33,7 @@ const StatsBody = () => {
                         <div className={stylesCard.head}>
                             <div className={stylesCard.smallLightFont}>Обзваниваний запущено</div>
                             <div className={stylesCard.bigBlackFont}>
-                                {common.result?.totalDiallings}
+                                {common.result?.totalDialings}
                             </div>
                         </div>
                         <div className={stylesCard.body}>
@@ -43,7 +43,7 @@ const StatsBody = () => {
                         <div className={stylesCard.head}>
                             <div className={stylesCard.smallLightFont}>Средняя продолжительность обзванивания</div>
                             <div className={stylesCard.bigBlackFont}>
-                                {formatTimeObject(common.result?.averageDiallingDuration)}
+                                {formatTimeObject(common.result?.averageDialingDuration)}
                             </div>
                         </div>
                         <div className={stylesCard.body}>
@@ -55,7 +55,7 @@ const StatsBody = () => {
                         <div className={stylesCard.head}>
                             <div className={stylesCard.smallLightFont}>Среднее кол-во звонков за обзванивание</div>
                             <div className={stylesCard.bigBlackFont}>
-                                {common.result?.averageNumberOfCallsPerDialling}
+                                {common.result?.averageNumberOfCallsPerDialing}
                             </div>
                         </div>
                         <div className={stylesCard.body}>

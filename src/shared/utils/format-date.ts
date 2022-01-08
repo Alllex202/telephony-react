@@ -1,3 +1,5 @@
+import {pad} from 'shared/utils/pad'
+
 const month: { [key: number]: string } = {
     0: 'Январь',
     1: 'Февраль',
@@ -23,8 +25,8 @@ export function formatDate(ms: number, shortMonth?: boolean, isTime?: boolean): 
     }
     if (isTime) {
         const _time = {
-            hours: date.getHours(),
-            minutes: date.getMinutes()
+            hours: pad(date.getHours(), 2),
+            minutes: pad(date.getMinutes(), 2)
         }
 
         time = `, ${_time.hours}:${_time.minutes}`
