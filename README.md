@@ -38,7 +38,7 @@ npm i
 В корневой папке создать файл ".env" и записать в него необходимые переменные:
 
 ```no-highlight
-REACT_APP_SERVER_API=путь к api (без последнего слэша "/")
+SERVER_API=путь к api (без последнего слэша "/")
 ```
 
 Более подробно в файле по пути <a href="https://github.com/Alllex202/telephony-react/blob/dev/src/config/index.ts">/src/config/index.ts</a>
@@ -67,6 +67,12 @@ npm run dev
 ```
 
 * Сборка проекта в режиме продакшн<a href="#second">**</a>
+
+```no-highlight
+npm run prod
+```
+
+* Сборка проекта в режиме продакшн<a href="#second">**</a> и вывод статистики по используемым файлам
 
 ```no-highlight
 npm run prod
