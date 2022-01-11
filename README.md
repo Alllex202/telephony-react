@@ -75,7 +75,7 @@ npm run prod
 * Сборка проекта в режиме продакшн<a href="#second">**</a> и вывод статистики по используемым файлам
 
 ```no-highlight
-npm run prod
+npm run stats
 ```
 
 Файлы сборки располагаются по пути "./dist"
