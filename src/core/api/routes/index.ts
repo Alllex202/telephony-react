@@ -9,9 +9,13 @@ const _export = 'export'
 export const apiRoutes = {
     callersBase: {
         byId: (id: string | number) => `${serverApi}/${callersBase}/${id}`,
-        dataById: (id: string | number) => `${serverApi}/${callersBase}/data/${id}`,
-        header: () => `${serverApi}/${callersBase}/header`,
-        headerById: (id: string | number) => `${serverApi}/${callersBase}/header/${id}`,
+        data: {
+            byId: (id: string | number) => `${serverApi}/${callersBase}/data/${id}`,
+        },
+        header: {
+            list: () => `${serverApi}/${callersBase}/header`,
+            byId: (id: string | number) => `${serverApi}/${callersBase}/header/${id}`,
+        },
         uploadExcel: () => `${serverApi}/${callersBase}/upload/exel`,
         variablesTypes: () => `${serverApi}/${callersBase}/variables/types`
     },

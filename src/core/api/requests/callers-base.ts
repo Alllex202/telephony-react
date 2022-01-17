@@ -20,19 +20,19 @@ export const deleteCallersBase = (id: number | string, config?: AxiosRequestConf
 }
 
 export const getCallersBaseDataById = (id: number | string, params: ParamsPaginatorDataModel, config?: AxiosRequestConfig): BaseResponse<PaginatorModel<CallersBaseDataModel>> => {
-    return axios.get<PaginatorModel<CallersBaseDataModel>>(apiRoutes.callersBase.dataById(id), {...config, params})
+    return axios.get<PaginatorModel<CallersBaseDataModel>>(apiRoutes.callersBase.data.byId(id), {...config, params})
 }
 
 export const getCallersBasesHeader = (params: ParamsPaginatorWithFilterModel<SortType, DirectionSort>, config?: AxiosRequestConfig): BaseResponse<PaginatorModel<CallersBaseHeaderModel>> => {
-    return axios.get<PaginatorModel<CallersBaseHeaderModel>>(apiRoutes.callersBase.header(), {...config, params})
+    return axios.get<PaginatorModel<CallersBaseHeaderModel>>(apiRoutes.callersBase.header.list(), {...config, params})
 }
 
 export const getCallersBaseHeaderById = (id: number | string, config?: AxiosRequestConfig): BaseResponse<CallersBaseHeaderModel> => {
-    return axios.get<CallersBaseHeaderModel>(apiRoutes.callersBase.headerById(id), config)
+    return axios.get<CallersBaseHeaderModel>(apiRoutes.callersBase.header.byId(id), config)
 }
 
 export const putCallersBaseHeaderById = (id: number | string, data: CallersBaseHeaderModel, config?: AxiosRequestConfig): BaseResponse<CallersBaseHeaderModel> => {
-    return axios.put<CallersBaseHeaderModel>(apiRoutes.callersBase.headerById(id), data, config)
+    return axios.put<CallersBaseHeaderModel>(apiRoutes.callersBase.header.byId(id), data, config)
 }
 
 export const uploadCallersBaseExcel = (formData: FormData, config?: AxiosRequestConfig): BaseResponse<CallersBaseHeaderModel> => {
