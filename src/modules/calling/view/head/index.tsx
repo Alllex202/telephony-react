@@ -4,15 +4,14 @@ import BtnSecond from 'components/ui-kit/btn-second'
 import Btn from 'components/ui-kit/btn'
 import {useHistory, useParams} from 'react-router-dom'
 import {routes} from 'routing/routes'
-import {useDispatch} from 'react-redux'
 import {apiRoutes} from 'core/api'
 
-const CallingViewHead = () => {
+const CallingViewHeader = () => {
     const history = useHistory()
     const {callingId} = useParams<{ callingId: string }>()
 
     const onBack = () => {
-        history.push(routes.callingList())
+        history.push(routes.calling.list())
     }
 
     const onExport = () => {
@@ -35,4 +34,4 @@ const CallingViewHead = () => {
     )
 }
 
-export default CallingViewHead
+export default CallingViewHeader

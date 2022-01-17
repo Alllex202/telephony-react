@@ -51,7 +51,7 @@ function CallersBaseCard({data, className}: Props) {
     }
 
     return (
-        <Link to={routes.callersBaseView(data.id)}
+        <Link to={routes.callersBase.view(data.id)}
               className={statuses.isLoading ? 'd-none' : ''}>
             <Card className={classNames(className, cardStyles.card)}
                   isActive={!!anchorEl}>

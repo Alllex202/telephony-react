@@ -6,9 +6,9 @@ interface MenuItemModel {
 }
 
 export const menuItems: MenuItemModel[] = [
-    {link: routes.callingList(), label: 'Обзванивание'},
-    {link: routes.scenarioList(), label: 'Сценарии'},
-    {link: routes.callersBaseList(), label: 'Базы клиентов'},
-    {link: routes.statsView(), label: 'Статистика'},
+    {link: routes.calling.list(), label: 'Обзванивание'},
+    {link: routes.scenario.list(), label: 'Сценарии'},
+    {link: routes.callersBase.list(), label: 'Базы клиентов'},
+    {link: routes.stats(), label: 'Статистика'},
     {link: routes.test(), label: 'Test'}
 ]

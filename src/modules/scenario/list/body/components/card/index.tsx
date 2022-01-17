@@ -53,7 +53,7 @@ const ScenarioCard = ({data, className}: Props) => {
     }
 
     return (
-        <Link to={routes.scenarioView(data.id)}
+        <Link to={routes.scenario.view(data.id)}
               className={statuses.isLoading ? 'd-none' : ''}>
             <Card className={classNames(className, cardStyles.card, styles.card)}
                   isActive={!!anchorEl}>

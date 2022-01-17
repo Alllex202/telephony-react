@@ -31,7 +31,7 @@ function CallersBaseListHeader() {
     }, [])
 
     function handlerAdd() {
-        history.push(routes.callersBaseAdd())
+        history.push(routes.callersBase.add())
     }
 
     function handlerOpenSort(e: any) {

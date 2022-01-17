@@ -1,7 +1,7 @@
 import React from 'react'
 import styles from './styles.module.scss'
 
-const StatsHead = () => {
+const StatsHeader = () => {
     return (
         <div>
 
@@ -9,4 +9,4 @@ const StatsHead = () => {
     )
 }
 
-export default StatsHead
+export default StatsHeader

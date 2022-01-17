@@ -19,7 +19,7 @@ function CallersBaseViewHeader() {
 
     useEffect(() => {
         if (created && header?.id) {
-            history.replace(routes.callersBaseView(header.id))
+            history.replace(routes.callersBase.view(header.id))
         }
     }, [header?.id])
 
@@ -28,23 +28,23 @@ function CallersBaseViewHeader() {
             deleteCallersBase(header.id)
                 .then(() => {
                     dispatch(enqueueSnackbar({type: 'INFO', message: 'База клиентов удалена'}))
-                    history.push(routes.callersBaseList())
+                    history.push(routes.callersBase.list())
                 })
                 .catch(handlerError(dispatch))
         } else {
-            history.push(routes.callersBaseList())
+            history.push(routes.callersBase.list())
         }
     }
 
     function handlerCalling() {
         // TODO Создать обзвон с текущей базой
-        history.push(routes.callingCreate())
+        history.push(routes.calling.create())
     }
 
     function handlerSave() {
         if (created && header?.id) {
             setCreated(false)
-            history.replace(routes.callersBaseView(header.id))
+            history.replace(routes.callersBase.view(header.id))
         }
     }
 

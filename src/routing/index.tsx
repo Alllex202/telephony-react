@@ -1,26 +1,22 @@
 import React from 'react'
-import {BrowserRouter as Router, Route, Switch} from 'react-router-dom'
-import MainLayout from 'modules/main-layout'
-import RoutingBody from './components/routing-body'
-import RoutingHeader from './components/routing-header'
-import RoutingFooter from './components/routing-footer'
-import RoutingRightSidebar from './components/routing-right-sidebar'
+import {BrowserRouter as Router, Redirect, Route, Switch} from 'react-router-dom'
 import {routes} from 'routing/routes'
-import EditorLayout from 'modules/editor-layout'
-import ScenarioView from 'modules/scenario/view'
+import {privateSiteRoutes, publicSiteRoutes} from 'routing/site-routing'
+import PrivateRoute from 'routing/private-route'
 
-function Routing() {
+const Routing = () => {
     return (
         <Router>
             <Switch>
-                <Route path={routes.scenarioView(':scenarioId')}
-                       exact
-                       children={<EditorLayout children={<ScenarioView/>}/>}/>
+                {publicSiteRoutes.map((route, index) => (
+                    <Route key={`public-${index}`} {...route}/>
+                ))}
 
-                <Route children={<MainLayout childrenBody={<RoutingBody/>}
-                                             childrenHeader={<RoutingHeader/>}
-                                             childrenFooter={<RoutingFooter/>}
-                                             childrenRightSidebar={<RoutingRightSidebar/>}/>}/>
+                {privateSiteRoutes.map((route, index) => (
+                    <PrivateRoute key={`private-${index}`} {...route}/>
+                ))}
+
+                <Redirect to={routes.calling.list()}/>
             </Switch>
         </Router>
     )

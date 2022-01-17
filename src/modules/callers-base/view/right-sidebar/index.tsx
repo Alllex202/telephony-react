@@ -24,7 +24,7 @@ function CallersBaseViewRightSidebar() {
                          callings?.map((el) =>
                              <span key={el.id}
                                    className={styles.linkWrapper}>
-                                <Link to={routes.callingView(el.id ?? '')}
+                                <Link to={routes.calling.view(el.id ?? '')}
                                       className={styles.link}>{el.name}</Link>
                              </span>)
                      }

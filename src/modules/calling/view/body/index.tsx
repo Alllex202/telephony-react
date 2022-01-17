@@ -72,7 +72,7 @@ const CallingViewBody = () => {
                         <div className={stylesCard.body}>
                             {
                                 common.result &&
-                                <Link to={routes.callersBaseView(common.result.callersBase.id)}
+                                <Link to={routes.callersBase.view(common.result.callersBase.id)}
                                       className={stylesCard.link}>
                                     Перейти к базе
                                 </Link>
@@ -118,7 +118,7 @@ const CallingViewBody = () => {
                         <div className={stylesCard.body}>
                             {
                                 common.result &&
-                                <Link to={routes.scenarioView(common.result.scenario.scenarioId)}
+                                <Link to={routes.scenario.view(common.result.scenario.scenarioId)}
                                       className={stylesCard.link}>
                                     Перейти к сценарию
                                 </Link>

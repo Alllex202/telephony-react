@@ -13,7 +13,7 @@ const CallingCreatingHeader = () => {
     const onCancel = () => {
         if (statuses.isLoading) return
 
-        history.push(routes.callingList())
+        history.push(routes.calling.list())
     }
 
     return (

@@ -31,7 +31,7 @@ const CallingListHeader = () => {
     }, [])
 
     function handlerAdd() {
-        history.push(routes.callingCreate())
+        history.push(routes.calling.create())
     }
 
     function handlerOpenSort(e: any) {

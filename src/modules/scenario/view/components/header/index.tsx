@@ -22,7 +22,7 @@ const ScenarioViewHeader = () => {
     }, [data?.name])
 
     const handlerBack = () => {
-        history.push(routes.scenarioList())
+        history.push(routes.scenario.list())
     }
 
     const handlerSave = () => {

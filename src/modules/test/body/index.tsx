@@ -17,7 +17,7 @@ import HiddenInput from 'components/hidden-input'
 import {useDispatch} from 'react-redux'
 import {enqueueSnackbar} from 'store/features/notifications'
 
-function Test() {
+function TestBody() {
     const [modal, setModal] = useState<boolean>(false)
     const [text, setText] = useState<string>('Скрытый ввод')
     const [lastText, setLastText] = useState<string>(text)
@@ -201,4 +201,4 @@ function Test() {
     )
 }
 
-export default Test
+export default TestBody

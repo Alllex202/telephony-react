@@ -42,7 +42,7 @@ const ScenarioListHeader = () => {
         setCreating({isLoading: true})
         createScenario('Новый сценарий')
             .then(res => {
-                history.push(routes.scenarioView(res.data.id))
+                history.push(routes.scenario.view(res.data.id))
                 dispatch(enqueueSnackbar({message: 'Создан новый сценарий', type: 'SUCCESS'}))
             })
             .catch(handlerError(dispatch, (err: DefaultAxiosError) => {

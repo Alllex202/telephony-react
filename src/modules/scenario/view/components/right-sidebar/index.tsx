@@ -120,7 +120,7 @@ const ScenarioRightSidebar = () => {
                         {
                             callersBaseHeader &&
                             <Link className={styles.link}
-                                  to={routes.callersBaseView(callersBaseHeader.id)}>{callersBaseHeader.name}</Link>
+                                  to={routes.callersBase.view(callersBaseHeader.id)}>{callersBaseHeader.name}</Link>
                         }
                     </div>
                     {

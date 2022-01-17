@@ -8,7 +8,7 @@ function CallersBaseAddHeader() {
     const history = useHistory()
 
     function handlerBack() {
-        history.push(routes.callersBaseList())
+        history.push(routes.callersBase.list())
     }
 
     return (

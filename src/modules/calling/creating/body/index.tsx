@@ -77,7 +77,7 @@ const CallingCreatingBody = () => {
 
     useEffect(() => {
         if (statuses.isSuccess) {
-            history.push(routes.callingList())
+            history.push(routes.calling.list())
         }
         // eslint-disable-next-line
     }, [statuses.isSuccess])

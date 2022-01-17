@@ -1,13 +1,13 @@
-import React, {ReactNode} from 'react'
+import React from 'react'
 import Bar from './components/bar'
 import Menu from './components/menu'
 import styles from './styles.module.scss'
 
 type Props = {
-    childrenBody: ReactNode,
-    childrenHeader: ReactNode,
-    childrenFooter?: ReactNode,
-    childrenRightSidebar?: ReactNode,
+    childrenBody?: React.ReactNode,
+    childrenHeader?: React.ReactNode,
+    childrenFooter?: React.ReactNode,
+    childrenRightSidebar?: React.ReactNode,
 }
 
 const MainLayout = ({childrenBody, childrenHeader, childrenFooter, childrenRightSidebar}: Props) => {
