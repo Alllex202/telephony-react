@@ -1,11 +1,11 @@
-const dotenv = require('dotenv')
-const path = require('path')
-const webpack = require('webpack')
-const HTMLWebpackPlugin = require('html-webpack-plugin')
-const {CleanWebpackPlugin} = require('clean-webpack-plugin')
-const MiniCSSExtractPlugin = require('mini-css-extract-plugin')
-const CssMinimizerWebpackPlugin = require('css-minimizer-webpack-plugin')
-const TerserWebpackPlugin = require('terser-webpack-plugin')
+import dotenv from 'dotenv'
+import path from 'path'
+import webpack from 'webpack'
+import HTMLWebpackPlugin from 'html-webpack-plugin'
+import MiniCSSExtractPlugin from 'mini-css-extract-plugin'
+import CssMinimizerWebpackPlugin from 'css-minimizer-webpack-plugin'
+import TerserWebpackPlugin from 'terser-webpack-plugin'
+import 'webpack-dev-server'
 
 const isProd = process.env.NODE_ENV === 'production'
 const isDev = !isProd
@@ -14,13 +14,14 @@ if (isDev) {
     dotenv.config()
 }
 
-module.exports = {
+const config: webpack.Configuration = {
     mode: isProd ? 'production' : 'development',
     entry: './src/index.tsx',
     output: {
         filename: '[name].[fullhash].js',
         path: path.resolve(__dirname, 'dist'),
-        publicPath: '/'
+        publicPath: '/',
+        clean: true
     },
     resolve: {
         extensions: [
@@ -57,7 +58,7 @@ module.exports = {
     module: {
         rules: [
             {
-                exclude: /node_modules/,
+                include: path.resolve(__dirname, 'src'),
                 test: /\.tsx?$/,
                 use: 'ts-loader'
             },
@@ -94,14 +95,13 @@ module.exports = {
                 ]
             },
             {
-                exclude: /node_modules/,
+                include: path.resolve(__dirname, 'src'),
                 test: /\.svg$/,
                 use: 'url-loader'
             }
         ]
     },
     plugins: [
-        new CleanWebpackPlugin(),
         new HTMLWebpackPlugin({
             template: './public/index.html',
             minify: isProd
@@ -114,3 +114,5 @@ module.exports = {
         })
     ]
 }
+
+export default config
