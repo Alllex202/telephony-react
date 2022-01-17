@@ -3,7 +3,7 @@ import styles from './styles.module.scss'
 import BtnSecond from 'components/ui-kit/btn-second'
 import Btn from 'components/ui-kit/btn'
 import {useHistory, useParams} from 'react-router-dom'
-import routes from 'routing/routes'
+import {routes} from 'routing/routes'
 import {useDispatch} from 'react-redux'
 import {apiRoutes} from 'core/api'
 

@@ -1,6 +1,6 @@
 import React from 'react'
 import {Route, Switch} from 'react-router-dom'
-import routes from '../routes'
+import {routes} from '../routes'
 import CallersBaseListBody from 'modules/callers-base/list/body'
 import CallersBaseAddBody from 'modules/callers-base/add/body'
 import Test from 'modules/test/body'

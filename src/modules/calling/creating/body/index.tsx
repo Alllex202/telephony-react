@@ -24,7 +24,7 @@ import DateAdapter from '@mui/lab/AdapterDateFns'
 import {DesktopDatePicker, DesktopTimePicker, LocalizationProvider} from '@mui/lab'
 import Checkbox from 'components/ui-kit/checkbox'
 import {classNames} from 'shared/utils'
-import routes from 'routing/routes'
+import {routes} from 'routing/routes'
 import {useHistory, useParams} from 'react-router-dom'
 
 const CallingCreatingBody = () => {

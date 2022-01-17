@@ -1,4 +1,4 @@
-const routes = {
+export const routes = {
     callersBaseAdd: (): string => `/callers-base/add`,
     callersBaseList: (): string => `/callers-bases`,
     callersBaseView: (id: string | number): string => `/callers-base/view/id${id}`,
@@ -11,5 +11,3 @@ const routes = {
     statsView: (): string => '/stats',
     test: (): string => '/test'
 }
-
-export default routes

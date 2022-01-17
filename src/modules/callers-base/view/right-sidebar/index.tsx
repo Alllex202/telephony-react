@@ -6,7 +6,7 @@ import {RootState} from 'store'
 import {Link} from 'react-router-dom'
 import {formatDate} from 'shared/utils/format-date'
 import Info from './components/info'
-import routes from 'routing/routes'
+import {routes} from 'routing/routes'
 
 function CallersBaseViewRightSidebar() {
     const {header, callings} = useSelector((state: RootState) => state.callersBaseView)

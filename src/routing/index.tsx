@@ -5,7 +5,7 @@ import RoutingBody from './components/routing-body'
 import RoutingHeader from './components/routing-header'
 import RoutingFooter from './components/routing-footer'
 import RoutingRightSidebar from './components/routing-right-sidebar'
-import routes from 'routing/routes'
+import {routes} from 'routing/routes'
 import EditorLayout from 'modules/editor-layout'
 import ScenarioView from 'modules/scenario/view'
 

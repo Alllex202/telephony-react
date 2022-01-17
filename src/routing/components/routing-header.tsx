@@ -1,6 +1,6 @@
 import React from 'react'
 import {Route, Switch} from 'react-router-dom'
-import routes from '../routes'
+import {routes} from '../routes'
 import CallersBaseListHeader from 'modules/callers-base/list/header'
 import CallersBaseAddHeader from 'modules/callers-base/add/header'
 import CallersBaseViewHeader from 'modules/callers-base/view/header'
