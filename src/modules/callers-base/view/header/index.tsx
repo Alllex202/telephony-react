@@ -28,11 +28,11 @@ function CallersBaseViewHeader() {
             deleteCallersBase(header.id)
                 .then(() => {
                     dispatch(enqueueSnackbar({type: 'INFO', message: 'База клиентов удалена'}))
-                    history.push(routes.callersBase.list())
+                    history.goBack()
                 })
                 .catch(handlerError(dispatch))
         } else {
-            history.push(routes.callersBase.list())
+            history.goBack()
         }
     }
 

@@ -2,13 +2,12 @@ import React from 'react'
 import styles from './styles.module.scss'
 import BtnSecond from 'components/ui-kit/btn-second'
 import {useHistory} from 'react-router-dom'
-import {routes} from 'routing/routes'
 
 function CallersBaseAddHeader() {
     const history = useHistory()
 
     function handlerBack() {
-        history.push(routes.callersBase.list())
+        history.goBack()
     }
 
     return (

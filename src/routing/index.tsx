@@ -1,12 +1,14 @@
 import React from 'react'
-import {BrowserRouter as Router, Redirect, Route, Switch} from 'react-router-dom'
+import {Redirect, Route, Switch} from 'react-router-dom'
 import {routes} from 'routing/routes'
 import {privateSiteRoutes, publicSiteRoutes} from 'routing/site-routing'
 import PrivateRoute from 'routing/private-route'
+import {ConnectedRouter} from 'connected-react-router'
+import {history} from 'store/features/router'
 
 const Routing = () => {
     return (
-        <Router>
+        <ConnectedRouter history={history}>
             <Switch>
                 {publicSiteRoutes.map((route, index) => (
                     <Route key={`public-${index}`} {...route}/>
@@ -18,7 +20,7 @@ const Routing = () => {
 
                 <Redirect to={routes.calling.list()}/>
             </Switch>
-        </Router>
+        </ConnectedRouter>
     )
 }
 

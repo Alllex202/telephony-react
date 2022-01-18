@@ -9,6 +9,8 @@ import callingCreating from './features/calling/creating'
 import callingView from './features/calling/view'
 import notifications from './features/notifications'
 import stats from './features/stats'
+import {connectRouter, routerMiddleware} from 'connected-react-router'
+import {history} from 'store/features/router'
 
 export const store = configureStore({
     reducer: {
@@ -21,8 +23,11 @@ export const store = configureStore({
         callingView,
         filter,
         notifications,
-        stats
-    }
+        stats,
+        router: connectRouter(history) as any  // todo Что-то с типами роутера
+    },
+    middleware: (getDefaultMiddleware) => getDefaultMiddleware()
+        .concat(routerMiddleware(history))
 })
 
 export type RootState = ReturnType<typeof store.getState>

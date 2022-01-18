@@ -13,6 +13,7 @@ import {ExtraPieChartPartModel} from 'store/features/calling/view'
 import {compare, getColor, getNumber} from 'shared/utils'
 import {handlerError} from 'shared/middleware'
 import {enqueueSnackbar} from 'store/features/notifications'
+import {push} from 'connected-react-router'
 
 type StatsResultTypes = 'common' | 'pieChart' | 'chart'
 

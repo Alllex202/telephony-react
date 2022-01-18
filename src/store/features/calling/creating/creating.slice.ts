@@ -6,6 +6,7 @@ import {DefaultAxiosError} from 'shared/types/base-response-error'
 import {enqueueSnackbar} from 'store/features/notifications'
 import {handlerError} from 'shared/middleware'
 import {CallingModel} from 'core/api'
+import {goBack} from 'connected-react-router'
 
 export interface CreatingState {
     callersBaseId?: number | string | null
@@ -90,6 +91,7 @@ export const saveCalling = () => (dispatch: Dispatch, getState: () => RootState)
             .then((res) => {
                 dispatch(setSuccess())
                 dispatch(enqueueSnackbar({message: 'Обзванивание обновлено', type: 'SUCCESS'}))
+                dispatch(goBack())
             })
             .catch(handlerError(dispatch, (err: DefaultAxiosError) => {
                 dispatch(setError(err.response?.data.message || 'Ошибка при обновлении обзвона'))
@@ -99,6 +101,7 @@ export const saveCalling = () => (dispatch: Dispatch, getState: () => RootState)
             .then((res) => {
                 dispatch(setSuccess())
                 dispatch(enqueueSnackbar({message: 'Обзванивание создано', type: 'SUCCESS'}))
+                dispatch(goBack())
             })
             .catch(handlerError(dispatch, (err: DefaultAxiosError) => {
                 dispatch(setError(err.response?.data.message || 'Ошибка при сохранении обзвона'))

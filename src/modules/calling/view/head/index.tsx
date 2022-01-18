@@ -11,7 +11,7 @@ const CallingViewHeader = () => {
     const {callingId} = useParams<{ callingId: string }>()
 
     const onBack = () => {
-        history.push(routes.calling.list())
+        history.goBack()
     }
 
     const onExport = () => {

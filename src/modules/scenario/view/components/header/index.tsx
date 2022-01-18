@@ -2,7 +2,6 @@ import React, {useEffect, useState} from 'react'
 import styles from './styles.module.scss'
 import BtnSecond from 'components/ui-kit/btn-second'
 import {useHistory} from 'react-router-dom'
-import {routes} from 'routing/routes'
 import Btn from 'components/ui-kit/btn'
 import {useDispatch, useSelector} from 'react-redux'
 import {RootState} from 'store'
@@ -22,7 +21,7 @@ const ScenarioViewHeader = () => {
     }, [data?.name])
 
     const handlerBack = () => {
-        history.push(routes.scenario.list())
+        history.goBack()
     }
 
     const handlerSave = () => {

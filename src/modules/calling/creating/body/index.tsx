@@ -24,8 +24,7 @@ import DateAdapter from '@mui/lab/AdapterDateFns'
 import {DesktopDatePicker, DesktopTimePicker, LocalizationProvider} from '@mui/lab'
 import Checkbox from 'components/ui-kit/checkbox'
 import {classNames} from 'shared/utils'
-import {routes} from 'routing/routes'
-import {useHistory, useParams} from 'react-router-dom'
+import {useParams} from 'react-router-dom'
 
 const CallingCreatingBody = () => {
     const {
@@ -38,7 +37,6 @@ const CallingCreatingBody = () => {
         id
     } = useSelector((state: RootState) => state.callingCreating)
     const {callingId} = useParams<{ callingId: string }>()
-    const history = useHistory()
     const [bases, setBases] = useState<CallersBaseHeaderModel[] | null>(null)
     const [scenarios, setScenarios] = useState<ScenarioInfoModel[] | null>(null)
     const [_name, _setName] = useState<string>(callingId ? '' : name)
@@ -65,7 +63,6 @@ const CallingCreatingBody = () => {
         return () => {
             dispatch(resetState())
         }
-        // eslint-disable-next-line
     }, [])
 
     useEffect(() => {
@@ -74,13 +71,6 @@ const CallingCreatingBody = () => {
             setLastName(name)
         }
     }, [id])
-
-    useEffect(() => {
-        if (statuses.isSuccess) {
-            history.push(routes.calling.list())
-        }
-        // eslint-disable-next-line
-    }, [statuses.isSuccess])
 
     const onSelectBase = (e: SelectChangeEvent) => {
         dispatch(setCallersBaseId(e.target.value))
