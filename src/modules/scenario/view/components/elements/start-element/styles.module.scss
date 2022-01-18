@@ -1,8 +1,8 @@
 @import '../handle/styles';
 
 .start {
-  width: 172px;
-  height: 48px;
+  width: 172px !important;
+  height: 48px !important;
   font: var(--font-h3-medium);
   border-radius: 2px 2px 25px 25px;
   cursor: grab;

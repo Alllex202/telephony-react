@@ -8,8 +8,7 @@ import {NodeDataModel} from 'core/api'
 import Card from 'components/ui-kit/card'
 
 const FinishElement = React.memo((
-    {id, data, selected, dragHandle, xPos, yPos, isDragging}: NodeProps<NodeDataModel>
-) => {
+    {id, data, selected, dragHandle, xPos, yPos, isDragging}: NodeProps<NodeDataModel>) => {
     const dispatch = useDispatch()
 
     useEffect(() => {

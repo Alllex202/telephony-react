@@ -17,6 +17,7 @@ const StartElement = React.memo((
         }
         // eslint-disable-next-line
     }, [isDragging])
+
     return (
         <Card className={classNames(styles.start, 'draggable-handle', 'element-wrapper', 'start-wrapper')}
               disableHover={true}
@@ -30,4 +31,3 @@ const StartElement = React.memo((
 })
 
 export default StartElement
-
