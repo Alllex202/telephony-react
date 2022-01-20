@@ -1,6 +1,5 @@
 import {createSlice, Dispatch, PayloadAction} from '@reduxjs/toolkit'
 import {
-    CallingResultPieChartModel,
     DataChartModel,
     getStatsChart as _getStatsChart,
     getStatsCommon as _getStatsCommon,
@@ -12,8 +11,6 @@ import {FetchStatuses} from 'shared/types/fetch-statuses'
 import {ExtraPieChartPartModel} from 'store/features/calling/view'
 import {compare, getColor, getNumber} from 'shared/utils'
 import {handlerError} from 'shared/middleware'
-import {enqueueSnackbar} from 'store/features/notifications'
-import {push} from 'connected-react-router'
 
 type StatsResultTypes = 'common' | 'pieChart' | 'chart'
 
@@ -55,13 +52,13 @@ const statsSlice = createSlice({
     initialState,
     name: 'stats',
     reducers: {
-        setLoading: (state, action: PayloadAction<{ type: StatsResultTypes }>) => {
+        setLoading: (state, action: PayloadAction<{type: StatsResultTypes}>) => {
             state[action.payload.type].status = {isLoading: true}
         },
-        setSuccess: (state, action: PayloadAction<{ type: StatsResultTypes }>) => {
+        setSuccess: (state, action: PayloadAction<{type: StatsResultTypes}>) => {
             state[action.payload.type].status = {isSuccess: true}
         },
-        setError: (state, action: PayloadAction<{ error: string, type: StatsResultTypes }>) => {
+        setError: (state, action: PayloadAction<{error: string; type: StatsResultTypes}>) => {
             state[action.payload.type].status = {isError: true, error: action.payload.error}
         },
         setCommonResult: (state, action: PayloadAction<StatsCommonModel>) => {
@@ -73,7 +70,8 @@ const statsSlice = createSlice({
         setPieChartResult: (state, action: PayloadAction<StatsPieChartModel>) => {
             state.pieChart.result = {
                 ...action.payload,
-                parts: action.payload.parts.map((el) => {
+                parts: action.payload.parts
+                    .map((el) => {
                         return {
                             ...el,
                             color: getColor(el.key),
@@ -246,14 +244,24 @@ const fakePieChart: StatsPieChartModel = {
 export const getStatsCommon = () => (dispatch: Dispatch) => {
     dispatch(setLoading({type: 'common'}))
     _getStatsCommon()
-        .then(res => {
+        .then((res) => {
             dispatch(setCommonResult(res.data))
             dispatch(setSuccess({type: 'common'}))
         })
-        .catch(handlerError(dispatch, (err) => {
-            console.log({type: 'ERROR', message: err.response?.data.message ?? 'getStatsCommon'})
-            dispatch(setError({type: 'common', error: err.response?.data.message ?? 'getStatsCommon'}))
-        }))
+        .catch(
+            handlerError(dispatch, (err) => {
+                console.log({
+                    type: 'ERROR',
+                    message: err.response?.data.message ?? 'getStatsCommon'
+                })
+                dispatch(
+                    setError({
+                        type: 'common',
+                        error: err.response?.data.message ?? 'getStatsCommon'
+                    })
+                )
+            })
+        )
 }
 
 export const getStatsPieChart = () => (dispatch: Dispatch) => {
@@ -261,14 +269,24 @@ export const getStatsPieChart = () => (dispatch: Dispatch) => {
     dispatch(setPieChartResult(fakePieChart))
     dispatch(setLoading({type: 'pieChart'}))
     _getStatsPieChart()
-        .then(res => {
+        .then((res) => {
             // dispatch(setPieChartResult(res.data))
             dispatch(setSuccess({type: 'pieChart'}))
         })
-        .catch(handlerError(dispatch, (err) => {
-            console.log({type: 'ERROR', message: err.response?.data.message ?? 'getStatsPieChart'})
-            dispatch(setError({type: 'pieChart', error: err.response?.data.message ?? 'getStatsCommon'}))
-        }))
+        .catch(
+            handlerError(dispatch, (err) => {
+                console.log({
+                    type: 'ERROR',
+                    message: err.response?.data.message ?? 'getStatsPieChart'
+                })
+                dispatch(
+                    setError({
+                        type: 'pieChart',
+                        error: err.response?.data.message ?? 'getStatsCommon'
+                    })
+                )
+            })
+        )
 }
 
 export const getStatsChart = () => (dispatch: Dispatch) => {
@@ -276,14 +294,18 @@ export const getStatsChart = () => (dispatch: Dispatch) => {
     dispatch(setChartResult(fakeChart))
     dispatch(setLoading({type: 'chart'}))
     _getStatsChart()
-        .then(res => {
+        .then((res) => {
             // dispatch(setChartResult(res.data))
             dispatch(setSuccess({type: 'chart'}))
         })
-        .catch(handlerError(dispatch, (err) => {
-            console.log({type: 'ERROR', message: err.response?.data.message ?? 'getStatsChart'})
-            dispatch(setError({type: 'chart', error: err.response?.data.message ?? 'getStatsCommon'}))
-        }))
+        .catch(
+            handlerError(dispatch, (err) => {
+                console.log({type: 'ERROR', message: err.response?.data.message ?? 'getStatsChart'})
+                dispatch(
+                    setError({type: 'chart', error: err.response?.data.message ?? 'getStatsCommon'})
+                )
+            })
+        )
 }
 
 export const {

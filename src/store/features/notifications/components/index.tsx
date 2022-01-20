@@ -13,9 +13,7 @@ const Snackbars = ({children}: Props) => {
 
     return (
         <SnackbarProvider maxSnack={max}>
-            <SnackbarsRedux>
-                {children}
-            </SnackbarsRedux>
+            <SnackbarsRedux>{children}</SnackbarsRedux>
         </SnackbarProvider>
     )
 }
@@ -23,12 +21,7 @@ const Snackbars = ({children}: Props) => {
 const SnackbarsRedux = ({children}: Props) => {
     useNotifier()
 
-    return (
-        <>
-            {children}
-        </>
-    )
-
+    return <>{children}</>
 }
 
 export default Snackbars

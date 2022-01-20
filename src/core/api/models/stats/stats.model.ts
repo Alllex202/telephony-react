@@ -13,5 +13,5 @@ export interface StatsCommonModel {
     averageCallDuration: TimeModel
 }
 
-export interface StatsPieChartModel extends Omit<CallingResultPieChartModel, 'countCallers' | 'countSuccess'> {
-}
+export interface StatsPieChartModel
+    extends Omit<CallingResultPieChartModel, 'countCallers' | 'countSuccess'> {}

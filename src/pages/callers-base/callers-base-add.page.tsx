@@ -5,8 +5,10 @@ import CallersBaseAddHeader from 'modules/callers-base/add/header'
 
 const CallersBaseAddPage = () => {
     return (
-        <MainLayout childrenBody={<CallersBaseAddBody/>}
-                    childrenHeader={<CallersBaseAddHeader/>}/>
+        <MainLayout
+            childrenBody={<CallersBaseAddBody />}
+            childrenHeader={<CallersBaseAddHeader />}
+        />
     )
 }
 

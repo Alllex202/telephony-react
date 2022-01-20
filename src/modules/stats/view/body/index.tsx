@@ -36,40 +36,42 @@ const StatsBody = () => {
                                 {common.result?.totalDialings}
                             </div>
                         </div>
-                        <div className={stylesCard.body}>
-                        </div>
+                        <div className={stylesCard.body}></div>
                     </Substrate>
                     <Substrate className={classNames(stylesCard.card, stylesCard.callersBase)}>
                         <div className={stylesCard.head}>
-                            <div className={stylesCard.smallLightFont}>Средняя продолжительность обзванивания</div>
+                            <div className={stylesCard.smallLightFont}>
+                                Средняя продолжительность обзванивания
+                            </div>
                             <div className={stylesCard.bigBlackFont}>
                                 {formatTimeObject(common.result?.averageDialingDuration)}
                             </div>
                         </div>
-                        <div className={stylesCard.body}>
-                        </div>
+                        <div className={stylesCard.body}></div>
                     </Substrate>
                 </div>
                 <div className={stylesCard.rowCards}>
                     <Substrate className={classNames(stylesCard.card, stylesCard.dateTime)}>
                         <div className={stylesCard.head}>
-                            <div className={stylesCard.smallLightFont}>Среднее кол-во звонков за обзванивание</div>
+                            <div className={stylesCard.smallLightFont}>
+                                Среднее кол-во звонков за обзванивание
+                            </div>
                             <div className={stylesCard.bigBlackFont}>
                                 {common.result?.averageNumberOfCallsPerDialing}
                             </div>
                         </div>
-                        <div className={stylesCard.body}>
-                        </div>
+                        <div className={stylesCard.body}></div>
                     </Substrate>
                     <Substrate className={classNames(stylesCard.card, stylesCard.scenario)}>
                         <div className={stylesCard.head}>
-                            <div className={stylesCard.smallLightFont}>Средняя продолжительность звонка</div>
+                            <div className={stylesCard.smallLightFont}>
+                                Средняя продолжительность звонка
+                            </div>
                             <div className={stylesCard.bigBlackFont}>
                                 {formatTimeObject(common.result?.averageCallDuration)}
                             </div>
                         </div>
-                        <div className={stylesCard.body}>
-                        </div>
+                        <div className={stylesCard.body}></div>
                     </Substrate>
                 </div>
                 <div className={stylesCard.rowCards}>
@@ -81,16 +83,17 @@ const StatsBody = () => {
                             </div>
                         </div>
                         <div className={stylesCard.body}>
-                            <PieChart data={pieChart.result?.parts ?? []}/>
+                            <PieChart data={pieChart.result?.parts ?? []} />
                         </div>
                     </Substrate>
                     <Substrate className={classNames(stylesCard.card, stylesCard.chart)}>
                         <div className={stylesCard.head}>
-                            <div className={stylesCard.smallLightFont}>Время суток / успешные звонки</div>
+                            <div className={stylesCard.smallLightFont}>
+                                Время суток / успешные звонки
+                            </div>
                         </div>
                         <div className={stylesCard.body}>
-                            <LineChart data={chart.result ?? []}
-                                       nameTooltip={'Успешные звонки'}/>
+                            <LineChart data={chart.result ?? []} nameTooltip={'Успешные звонки'} />
                         </div>
                     </Substrate>
                 </div>

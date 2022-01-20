@@ -20,13 +20,17 @@ import {enqueueSnackbar} from 'store/features/notifications'
 import {handlerError} from 'shared/middleware'
 
 type Props = {
-    data: CallersBaseHeaderModel,
-    className?: string,
+    data: CallersBaseHeaderModel
+    className?: string
 }
 
 function CallersBaseCard({data, className}: Props) {
     const [anchorEl, setAnchorEl] = useState<Element | null>(null)
-    const [statuses, setStatuses] = useState<FetchStatuses>({isLoading: false, isSuccess: false, isError: false})
+    const [statuses, setStatuses] = useState<FetchStatuses>({
+        isLoading: false,
+        isSuccess: false,
+        isError: false
+    })
     const dispatch = useDispatch()
 
     function openOptions(e: any) {
@@ -41,35 +45,36 @@ function CallersBaseCard({data, className}: Props) {
         closeOptions()
         setStatuses({isLoading: true, isSuccess: false, isError: false})
         deleteCallersBase(data.id)
-            .then(res => {
+            .then((res) => {
                 dispatch(deleteCallersBaseById(data.id))
                 dispatch(enqueueSnackbar({message: 'База клиентов удалена', type: 'SUCCESS'}))
             })
-            .catch(handlerError(dispatch, () => {
-                setStatuses({isLoading: false, isSuccess: false, isError: true})
-            }))
+            .catch(
+                handlerError(dispatch, () => {
+                    setStatuses({isLoading: false, isSuccess: false, isError: true})
+                })
+            )
     }
 
     return (
-        <Link to={routes.callersBase.view(data.id)}
-              className={statuses.isLoading ? 'd-none' : ''}>
-            <Card className={classNames(className, cardStyles.card)}
-                  isActive={!!anchorEl}>
+        <Link to={routes.callersBase.view(data.id)} className={statuses.isLoading ? 'd-none' : ''}>
+            <Card className={classNames(className, cardStyles.card)} isActive={!!anchorEl}>
                 <div className={cardStyles.wrapper}>
-                    <div onClick={e => e.preventDefault()}
-                         className={cardStyles.options_wrapper}>
-                        <BtnCircle iconName={'more_horiz'}
-                                   iconType={'round'}
-                                   className={cardStyles.options_btn}
-                                   onClick={openOptions}
-                                   isActive={!!anchorEl}/>
-                        <Menu anchorEl={anchorEl}
-                              open={!!anchorEl}
-                              onClose={closeOptions}>
-                            <MenuItem onClick={handlerDelete}
-                                      isDanger
-                                      iconName={'delete_forever'}
-                                      iconType={'round'}>
+                    <div onClick={(e) => e.preventDefault()} className={cardStyles.options_wrapper}>
+                        <BtnCircle
+                            iconName={'more_horiz'}
+                            iconType={'round'}
+                            className={cardStyles.options_btn}
+                            onClick={openOptions}
+                            isActive={!!anchorEl}
+                        />
+                        <Menu anchorEl={anchorEl} open={!!anchorEl} onClose={closeOptions}>
+                            <MenuItem
+                                onClick={handlerDelete}
+                                isDanger
+                                iconName={'delete_forever'}
+                                iconType={'round'}
+                            >
                                 Удалить
                             </MenuItem>
                         </Menu>
@@ -78,27 +83,34 @@ function CallersBaseCard({data, className}: Props) {
                         <h2 className={cardStyles.title}>{data.name}</h2>
                         <div className={cardStyles.description}>
                             <div className={cardStyles.info}>
-                                <Icon name={'calendar_today'}
-                                      type={'round'}
-                                      className={cardStyles.icon}/>
+                                <Icon
+                                    name={'calendar_today'}
+                                    type={'round'}
+                                    className={cardStyles.icon}
+                                />
                                 {formatDate(data.created)}
                             </div>
                             <div className={cardStyles.info}>
-                                <Icon name={'table_rows'}
-                                      type={'round'}
-                                      className={cardStyles.icon}/>
+                                <Icon
+                                    name={'table_rows'}
+                                    type={'round'}
+                                    className={cardStyles.icon}
+                                />
                                 {data.countCallers} эл
                             </div>
                         </div>
                     </div>
                     <div className={cardStyles.tags}>
-                        {data.columns.slice(0, 5)
-                            .map(el => <Tag text={`#${el.nameInTable}`}
-                                            key={el.id}
-                                            className={cardStyles.tag}/>)}
-                        {data.columns.length - 5 > 0 &&
-                        <Tag text={`+${data.columns.length - 5}`}
-                             className={cardStyles.tag}/>}
+                        {data.columns.slice(0, 5).map((el) => (
+                            <Tag
+                                text={`#${el.nameInTable}`}
+                                key={el.id}
+                                className={cardStyles.tag}
+                            />
+                        ))}
+                        {data.columns.length - 5 > 0 && (
+                            <Tag text={`+${data.columns.length - 5}`} className={cardStyles.tag} />
+                        )}
                     </div>
                 </div>
             </Card>

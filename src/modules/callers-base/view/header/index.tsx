@@ -50,26 +50,32 @@ function CallersBaseViewHeader() {
 
     return (
         <div className={styles.header}>
-            <BtnSecond className={styles.back}
-                       text={created ? 'Отмена' : 'Назад'}
-                       iconType={'round'}
-                       iconName={'arrow_back'}
-                       onClick={handlerBack}/>
-            {header &&
-            <BtnSecond className={styles.calling}
-                       text={'Обзванивание'}
-                       iconType={'round'}
-                       iconName={'add_ic_call'}
-                       iconPosition={'end'}
-                       onClick={handlerCalling}
-                       disabled={statusesHeader.isLoading}/>}
-            {
-                created &&
-                <Btn className={styles.save}
-                     text={'Сохранить'}
-                     onClick={handlerSave}
-                     disabled={statusesHeader.isLoading}/>
-            }
+            <BtnSecond
+                className={styles.back}
+                text={created ? 'Отмена' : 'Назад'}
+                iconType={'round'}
+                iconName={'arrow_back'}
+                onClick={handlerBack}
+            />
+            {header && (
+                <BtnSecond
+                    className={styles.calling}
+                    text={'Обзванивание'}
+                    iconType={'round'}
+                    iconName={'add_ic_call'}
+                    iconPosition={'end'}
+                    onClick={handlerCalling}
+                    disabled={statusesHeader.isLoading}
+                />
+            )}
+            {created && (
+                <Btn
+                    className={styles.save}
+                    text={'Сохранить'}
+                    onClick={handlerSave}
+                    disabled={statusesHeader.isLoading}
+                />
+            )}
         </div>
     )
 }

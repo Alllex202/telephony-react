@@ -5,8 +5,10 @@ import CallingCreatingHeader from 'modules/calling/creating/header'
 
 const CallingCreatingPage = () => {
     return (
-        <MainLayout childrenBody={<CallingCreatingBody/>}
-                    childrenHeader={<CallingCreatingHeader/>}/>
+        <MainLayout
+            childrenBody={<CallingCreatingBody />}
+            childrenHeader={<CallingCreatingHeader />}
+        />
     )
 }
 

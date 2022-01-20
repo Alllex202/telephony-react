@@ -7,9 +7,9 @@ import {RootState} from 'store'
 import {CallersBaseHeaderColumnModel} from 'core/api'
 
 type Props = {
-    value: string,
+    value: string
     onChange: React.ChangeEventHandler<HTMLTextAreaElement>
-};
+}
 
 const ReplicaInput = React.memo(({value, onChange}: Props) => {
     const {callersBaseHeader} = useSelector((state: RootState) => state.scenarioView)
@@ -26,12 +26,13 @@ const ReplicaInput = React.memo(({value, onChange}: Props) => {
             trigger={{
                 '*': {
                     dataProvider: (token) => {
-                        return variables.filter((el) => el.currentName.toLowerCase()
-                            .includes(token.toLowerCase()))
+                        return variables.filter((el) =>
+                            el.currentName.toLowerCase().includes(token.toLowerCase())
+                        )
                     },
                     component: Item,
                     output: (item, trigger) => {
-                        const _item = (item as CallersBaseHeaderColumnModel)
+                        const _item = item as CallersBaseHeaderColumnModel
                         return `*${_item.currentName}`
                     }
                 }

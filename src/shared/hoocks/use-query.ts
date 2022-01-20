@@ -7,7 +7,7 @@ export const useQuery = (...queryParams: string[]) => {
     return React.useMemo(() => {
         const query = new URLSearchParams(search)
         // todo динамическая типизация для ключей
-        const res: { values: { [key: string]: string[] }, query: URLSearchParams } = {
+        const res: {values: {[key: string]: string[]}; query: URLSearchParams} = {
             values: {},
             query
         }

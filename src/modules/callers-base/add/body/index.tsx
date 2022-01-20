@@ -71,46 +71,61 @@ function CallersBaseAddBody() {
         formData.append('file', files[0])
         formData.append('name', name)
         uploadCallersBaseExcel(formData)
-            .then(res => {
+            .then((res) => {
                 dispatch(enqueueSnackbar({message: 'База успешно загружена', type: 'SUCCESS'}))
                 history.replace(`${routes.callersBase.view(res.data.id)}?created=true`)
             })
-            .catch(handlerError(dispatch, (err: DefaultAxiosError) => {
-                setError(err.response?.data.message || 'Ошибка при отправке')
-                setFile(null)
-            }))
+            .catch(
+                handlerError(dispatch, (err: DefaultAxiosError) => {
+                    setError(err.response?.data.message || 'Ошибка при отправке')
+                    setFile(null)
+                })
+            )
     }
 
     return (
         <>
-            <InputName text={name}
-                       lastText={lastName}
-                       setText={setName}
-                       setLastText={setLastName}/>
+            <InputName
+                text={name}
+                lastText={lastName}
+                setText={setName}
+                setLastText={setLastName}
+            />
             <div className={styles.info}>
-                <Icon className={styles.icon}
-                      name={'info'}
-                      type={'round'}/>
+                <Icon className={styles.icon} name={'info'} type={'round'} />
                 <div className={styles.text}>
                     Здесь описание необходимого формата таблицы, строк и прочее
                 </div>
             </div>
-            <div className={classNames(styles.drop, isDrag ? styles.dropped : '')}
-                 onDrop={onDrop}
-                 onDragStart={onDragStart}
-                 onDragLeave={onDragLeave}
-                 onDragOver={onDragStart}
-                 onClick={handlerOpenFileExplorer}>
-                <input type="file"
-                       id="file"
-                       className={styles.inputFile}
-                       onChange={handlerChangeInputFile}
-                       ref={inputFile}
-                       accept={fileType}/>
-                {!file
-                 ?
-                 <span>Перетащите базу данных сюда или нажмите, чтобы выбрать файл<br/>Поддерживаемые форматы: xlsx.</span>
-                 : <span>{file.name}<br/>Отправка...</span>}
+            <div
+                className={classNames(styles.drop, isDrag ? styles.dropped : '')}
+                onDrop={onDrop}
+                onDragStart={onDragStart}
+                onDragLeave={onDragLeave}
+                onDragOver={onDragStart}
+                onClick={handlerOpenFileExplorer}
+            >
+                <input
+                    type='file'
+                    id='file'
+                    className={styles.inputFile}
+                    onChange={handlerChangeInputFile}
+                    ref={inputFile}
+                    accept={fileType}
+                />
+                {!file ? (
+                    <span>
+                        Перетащите базу данных сюда или нажмите, чтобы выбрать файл
+                        <br />
+                        Поддерживаемые форматы: xlsx.
+                    </span>
+                ) : (
+                    <span>
+                        {file.name}
+                        <br />
+                        Отправка...
+                    </span>
+                )}
             </div>
             <div className={styles.error}>{error}</div>
         </>

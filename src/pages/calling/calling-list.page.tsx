@@ -4,10 +4,7 @@ import CallingListBody from 'modules/calling/list/body'
 import CallingListHeader from 'modules/calling/list/header'
 
 const CallingListPage = () => {
-    return (
-        <MainLayout childrenBody={<CallingListBody/>}
-                    childrenHeader={<CallingListHeader/>}/>
-    )
+    return <MainLayout childrenBody={<CallingListBody />} childrenHeader={<CallingListHeader />} />
 }
 
 export default CallingListPage

@@ -6,10 +6,10 @@ import {changeCallersBaseHeaderById} from 'store/features/callers-bases/view'
 import {CallersBaseHeaderColumnModel, CallersBaseHeaderModel} from 'core/api'
 
 type Props = {
-    conditionSave: () => boolean,
-    initState: string,
-    data: CallersBaseHeaderModel | null,
-    el: CallersBaseHeaderColumnModel,
+    conditionSave: () => boolean
+    initState: string
+    data: CallersBaseHeaderModel | null
+    el: CallersBaseHeaderColumnModel
 }
 
 function InputVariableName({conditionSave, initState, data, el}: Props) {
@@ -24,20 +24,26 @@ function InputVariableName({conditionSave, initState, data, el}: Props) {
             return
         }
 
-        dispatch(changeCallersBaseHeaderById({
-            ...data,
-            columns: data.columns.map(elem => elem.id === el.id ? {...elem, currentName: currentValue} : elem)
-        }))
+        dispatch(
+            changeCallersBaseHeaderById({
+                ...data,
+                columns: data.columns.map((elem) =>
+                    elem.id === el.id ? {...elem, currentName: currentValue} : elem
+                )
+            })
+        )
     }
 
     return (
-        <HiddenInput text={name}
-                     lastText={lastName}
-                     setText={setName}
-                     setLastText={setLastName}
-                     callback={save}
-                     classText={styles.text}
-                     classInput={styles.input}/>
+        <HiddenInput
+            text={name}
+            lastText={lastName}
+            setText={setName}
+            setLastText={setLastName}
+            callback={save}
+            classText={styles.text}
+            classInput={styles.input}
+        />
     )
 }
 

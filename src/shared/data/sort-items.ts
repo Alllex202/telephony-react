@@ -1,10 +1,10 @@
-export type SortType = 'NAME' | 'CREATION_DATE';
-export type DirectionSort = 'ASC' | 'DESC';
+export type SortType = 'NAME' | 'CREATION_DATE'
+export type DirectionSort = 'ASC' | 'DESC'
 
 export interface SortItem {
-    sortBy: SortType,
-    direction: DirectionSort,
-    text: string,
+    sortBy: SortType
+    direction: DirectionSort
+    text: string
 }
 
 export const sortItems: SortItem[] = [

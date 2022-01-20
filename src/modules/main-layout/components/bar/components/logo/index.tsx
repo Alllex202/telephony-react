@@ -5,9 +5,9 @@ import {Link} from 'react-router-dom'
 
 function Logo() {
     return (
-        <Link to={'/'}><img src={LogoSvg}
-                            alt={'logo'}
-                            className={styles.logo}/></Link>
+        <Link to={'/'}>
+            <img src={LogoSvg} alt={'logo'} className={styles.logo} />
+        </Link>
     )
 }
 

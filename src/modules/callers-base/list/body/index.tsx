@@ -2,19 +2,17 @@ import React, {useEffect} from 'react'
 import bodyStyles from 'shared/styles/body-list/styles.module.scss'
 import {useDispatch, useSelector} from 'react-redux'
 import {RootState} from 'store'
-import {getCallersBasesByPage, resetCallersBasesStates as clearData} from 'store/features/callers-bases/list'
+import {
+    getCallersBasesByPage,
+    resetCallersBasesStates as clearData
+} from 'store/features/callers-bases/list'
 import CallersBaseCard from './components/card'
 import BtnSecond from 'components/ui-kit/btn-second'
 
 function CallersBaseListBody() {
-    const {
-        callersBaseList,
-        statuses,
-        error,
-        page,
-        size,
-        isLastPage
-    } = useSelector((state: RootState) => state.callersBaseList)
+    const {callersBaseList, statuses, error, page, size, isLastPage} = useSelector(
+        (state: RootState) => state.callersBaseList
+    )
     const filter = useSelector((state: RootState) => state.filter)
 
     const dispatch = useDispatch()
@@ -31,14 +29,15 @@ function CallersBaseListBody() {
     }, [filter])
 
     function getData(page: number) {
-        dispatch(getCallersBasesByPage({
+        dispatch(
+            getCallersBasesByPage({
                 page,
                 size,
                 direction: filter.direction,
                 name: filter.name,
                 sortBy: filter.sortBy
-            }
-        ))
+            })
+        )
     }
 
     useEffect(() => {
@@ -58,25 +57,27 @@ function CallersBaseListBody() {
 
     return (
         <>
-            {callersBaseList.length < 1
-             ? <h1>Здесь пусто :(</h1>
-             : <>
-                 <div className={bodyStyles.list}>
-                     {callersBaseList.map(el =>
-                         <CallersBaseCard key={el.id}
-                                          data={el}
-                                          className={bodyStyles.card}/>
-                     )}
-                 </div>
-             </>
-            }
+            {callersBaseList.length < 1 ? (
+                <h1>Здесь пусто :(</h1>
+            ) : (
+                <>
+                    <div className={bodyStyles.list}>
+                        {callersBaseList.map((el) => (
+                            <CallersBaseCard key={el.id} data={el} className={bodyStyles.card} />
+                        ))}
+                    </div>
+                </>
+            )}
 
             <div className={bodyStyles.footer}>
                 {statuses.isLoading && <h1>Загрузка...</h1>}
-                {!isLastPage && !statuses.isLoading &&
-                <BtnSecond className={bodyStyles.more}
-                           onClick={loadNextPage}
-                           text={'Показать больше'}/>}
+                {!isLastPage && !statuses.isLoading && (
+                    <BtnSecond
+                        className={bodyStyles.more}
+                        onClick={loadNextPage}
+                        text={'Показать больше'}
+                    />
+                )}
             </div>
         </>
     )

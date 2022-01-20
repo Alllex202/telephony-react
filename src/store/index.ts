@@ -24,10 +24,9 @@ export const store = configureStore({
         filter,
         notifications,
         stats,
-        router: connectRouter(history) as any  // todo Что-то с типами роутера
+        router: connectRouter(history) as any // todo Что-то с типами роутера
     },
-    middleware: (getDefaultMiddleware) => getDefaultMiddleware()
-        .concat(routerMiddleware(history))
+    middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(routerMiddleware(history))
 })
 
 export type RootState = ReturnType<typeof store.getState>

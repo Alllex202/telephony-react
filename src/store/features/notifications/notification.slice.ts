@@ -35,13 +35,13 @@ export const notificationSlice = createSlice({
             state.notifications.push({...action.payload, key: getUniqueId()})
         },
         closeSnackbar: (state, action: PayloadAction<SnackbarKey | undefined>) => {
-            state.notifications = state.notifications.map(el => ({
+            state.notifications = state.notifications.map((el) => ({
                 ...el,
                 dismissed: !action.payload || el.key === action.payload
             }))
         },
         removeSnackbar: (state, action: PayloadAction<SnackbarKey>) => {
-            state.notifications = state.notifications.filter(el => el.key !== action.payload)
+            state.notifications = state.notifications.filter((el) => el.key !== action.payload)
         }
     }
 })

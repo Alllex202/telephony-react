@@ -1,6 +1,6 @@
 import {pad} from 'shared/utils/pad'
 
-const month: { [key: number]: string } = {
+const month: {[key: number]: string} = {
     0: 'Январь',
     1: 'Февраль',
     2: 'Март',
@@ -18,10 +18,9 @@ const month: { [key: number]: string } = {
 export function formatDate(ms: number, shortMonth?: boolean, isTime?: boolean): string {
     const date = new Date(ms)
     let _month = month[date.getMonth()]
-    let time: string = '';
+    let time: string = ''
     if (shortMonth) {
-        _month = _month.substring(0, 3)
-            .toLowerCase()
+        _month = _month.substring(0, 3).toLowerCase()
     }
     if (isTime) {
         const _time = {

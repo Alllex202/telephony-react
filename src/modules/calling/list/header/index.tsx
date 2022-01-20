@@ -42,23 +42,36 @@ const CallingListHeader = () => {
         setAnchorEl(null)
     }
 
-    function handlerSortItem(options: { sortBy: SortType, direction: DirectionSort, text: string }) {
+    function handlerSortItem(options: {sortBy: SortType; direction: DirectionSort; text: string}) {
         handlerCloseSort()
-        if (store['RUN'].statuses.isLoading ||
+        if (
+            store['RUN'].statuses.isLoading ||
             store['SCHEDULED'].statuses.isLoading ||
             store['DONE'].statuses.isLoading ||
-            (options.sortBy === sortBy && options.direction === direction)) return
+            (options.sortBy === sortBy && options.direction === direction)
+        )
+            return
 
         dispatch(resetCallingStates())
-        dispatch(changeFilter({sortBy: options.sortBy, name: input, direction: options.direction, text: options.text}))
+        dispatch(
+            changeFilter({
+                sortBy: options.sortBy,
+                name: input,
+                direction: options.direction,
+                text: options.text
+            })
+        )
     }
 
     function handlerSearch(event: React.KeyboardEvent) {
         if (event.key === 'Enter') {
-            if (store['RUN'].statuses.isLoading ||
+            if (
+                store['RUN'].statuses.isLoading ||
                 store['SCHEDULED'].statuses.isLoading ||
                 store['DONE'].statuses.isLoading ||
-                input === lastInput) return
+                input === lastInput
+            )
+                return
 
             setLastInput(input)
             dispatch(resetCallingStates())
@@ -68,38 +81,50 @@ const CallingListHeader = () => {
 
     return (
         <div className={headStyles.header}>
-            <Btn text={'Обзванивание'}
-                 iconName={'add_ic_call'}
-                 iconType={'round'}
-                 className={headStyles.add}
-                 onClick={handlerAdd}
-                 iconPosition={'end'}/>
-            <Input value={input}
-                   onChange={e => setInput(e.target.value)}
-                   className={headStyles.search}
-                   type={'text'}
-                   placeholder={'Поиск'}
-                   autoCompleteOff
-                   onKeyPress={handlerSearch}/>
-            <BtnSecond text={text}
-                       iconName={'sort'}
-                       iconType={'round'}
-                       onClick={handlerOpenSort}
-                       className={classNames(headStyles.sort, direction === 'ASC' ? headStyles.revert : '')}
-                       isActive={!!anchorEl}
-                       iconPosition={'end'}/>
-            <Menu anchorEl={anchorEl}
-                  open={!!anchorEl}
-                  onClose={handlerCloseSort}>
-                {sortItems.map((el, index) =>
-                    <MenuItem key={index}
-                              onClick={() => handlerSortItem({
-                                  sortBy: el.sortBy,
-                                  direction: el.direction,
-                                  text: el.text
-                              })}>
+            <Btn
+                text={'Обзванивание'}
+                iconName={'add_ic_call'}
+                iconType={'round'}
+                className={headStyles.add}
+                onClick={handlerAdd}
+                iconPosition={'end'}
+            />
+            <Input
+                value={input}
+                onChange={(e) => setInput(e.target.value)}
+                className={headStyles.search}
+                type={'text'}
+                placeholder={'Поиск'}
+                autoCompleteOff
+                onKeyPress={handlerSearch}
+            />
+            <BtnSecond
+                text={text}
+                iconName={'sort'}
+                iconType={'round'}
+                onClick={handlerOpenSort}
+                className={classNames(
+                    headStyles.sort,
+                    direction === 'ASC' ? headStyles.revert : ''
+                )}
+                isActive={!!anchorEl}
+                iconPosition={'end'}
+            />
+            <Menu anchorEl={anchorEl} open={!!anchorEl} onClose={handlerCloseSort}>
+                {sortItems.map((el, index) => (
+                    <MenuItem
+                        key={index}
+                        onClick={() =>
+                            handlerSortItem({
+                                sortBy: el.sortBy,
+                                direction: el.direction,
+                                text: el.text
+                            })
+                        }
+                    >
                         {el.text}
-                    </MenuItem>)}
+                    </MenuItem>
+                ))}
             </Menu>
         </div>
     )

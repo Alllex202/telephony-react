@@ -52,10 +52,19 @@ export const callingListSlice = createSlice({
         setSuccess: (state, action: PayloadAction<CallingStatuses>) => {
             state[action.payload].statuses = {isSuccess: true}
         },
-        setError: (state, action: PayloadAction<{ error: string, callingStatus: CallingStatuses }>) => {
-            state[action.payload.callingStatus].statuses = {isError: true, error: action.payload.error}
+        setError: (
+            state,
+            action: PayloadAction<{error: string; callingStatus: CallingStatuses}>
+        ) => {
+            state[action.payload.callingStatus].statuses = {
+                isError: true,
+                error: action.payload.error
+            }
         },
-        addCallings: (state, action: PayloadAction<{ data: CallingModel[], callingStatus: CallingStatuses }>) => {
+        addCallings: (
+            state,
+            action: PayloadAction<{data: CallingModel[]; callingStatus: CallingStatuses}>
+        ) => {
             state[action.payload.callingStatus].callingList = [
                 ...state[action.payload.callingStatus].callingList,
                 ...action.payload.data
@@ -63,24 +72,36 @@ export const callingListSlice = createSlice({
         },
         callingByIdMoveFromScheduledToRun: (state, action: PayloadAction<string | number>) => {
             state.RUN.callingList = [
-                ...state.SCHEDULED.callingList.filter(e => e.id === action.payload),
+                ...state.SCHEDULED.callingList.filter((e) => e.id === action.payload),
                 ...state.RUN.callingList
             ]
-            state.SCHEDULED.callingList = [...state.SCHEDULED.callingList.filter(e => e.id !== action.payload)]
+            state.SCHEDULED.callingList = [
+                ...state.SCHEDULED.callingList.filter((e) => e.id !== action.payload)
+            ]
             state.RUN.totalElements++
             state.SCHEDULED.totalElements--
         },
-        deleteCallingById: (state, action: PayloadAction<{ id: number | string, callingStatus: CallingStatuses }>) => {
-            state[action.payload.callingStatus].callingList =
-                state[action.payload.callingStatus].callingList.filter(el => el.id !== action.payload.id)
+        deleteCallingById: (
+            state,
+            action: PayloadAction<{id: number | string; callingStatus: CallingStatuses}>
+        ) => {
+            state[action.payload.callingStatus].callingList = state[
+                action.payload.callingStatus
+            ].callingList.filter((el) => el.id !== action.payload.id)
         },
-        setPage: (state, action: PayloadAction<{ page: number, callingStatus: CallingStatuses }>) => {
+        setPage: (state, action: PayloadAction<{page: number; callingStatus: CallingStatuses}>) => {
             state[action.payload.callingStatus].page = action.payload.page
         },
-        setLastPage: (state, action: PayloadAction<{ isLast: boolean, callingStatus: CallingStatuses }>) => {
+        setLastPage: (
+            state,
+            action: PayloadAction<{isLast: boolean; callingStatus: CallingStatuses}>
+        ) => {
             state[action.payload.callingStatus].isLastPage = action.payload.isLast
         },
-        setTotalElements: (state, action: PayloadAction<{ totalElements: number, callingStatus: CallingStatuses }>) => {
+        setTotalElements: (
+            state,
+            action: PayloadAction<{totalElements: number; callingStatus: CallingStatuses}>
+        ) => {
             state[action.payload.callingStatus].totalElements = action.payload.totalElements
         },
         resetCallingStates: (state) => {
@@ -109,26 +130,34 @@ export const callingListSlice = createSlice({
 })
 
 export const getCallingsByPage =
-    (callingStatus: CallingStatuses, params: ParamsPaginatorWithFilterAndStatusModel, otherConfig?: AxiosRequestConfig) =>
-        (dispatch: Dispatch) => {
-            dispatch(setLoading(callingStatus))
-            getCallings(params, otherConfig)
-                .then((res) => {
-                    dispatch(addCallings({data: res.data.content, callingStatus}))
-                    if (res.data.last) {
-                        dispatch(setLastPage({isLast: res.data.last, callingStatus}))
-                    }
-                    dispatch(setPage({page: res.data.pageable.pageNumber, callingStatus}))
-                    dispatch(setTotalElements({totalElements: res.data.totalElements, callingStatus}))
-                    dispatch(setSuccess(callingStatus))
+    (
+        callingStatus: CallingStatuses,
+        params: ParamsPaginatorWithFilterAndStatusModel,
+        otherConfig?: AxiosRequestConfig
+    ) =>
+    (dispatch: Dispatch) => {
+        dispatch(setLoading(callingStatus))
+        getCallings(params, otherConfig)
+            .then((res) => {
+                dispatch(addCallings({data: res.data.content, callingStatus}))
+                if (res.data.last) {
+                    dispatch(setLastPage({isLast: res.data.last, callingStatus}))
+                }
+                dispatch(setPage({page: res.data.pageable.pageNumber, callingStatus}))
+                dispatch(setTotalElements({totalElements: res.data.totalElements, callingStatus}))
+                dispatch(setSuccess(callingStatus))
+            })
+            .catch(
+                handlerError(dispatch, (err: DefaultAxiosError) => {
+                    dispatch(
+                        setError({
+                            error: err.response?.data.message || 'Ошибка при полученни данных',
+                            callingStatus
+                        })
+                    )
                 })
-                .catch(handlerError(dispatch, (err: DefaultAxiosError) => {
-                    dispatch(setError({
-                        error: err.response?.data.message || 'Ошибка при полученни данных',
-                        callingStatus
-                    }))
-                }))
-        }
+            )
+    }
 
 export const {
     setLoading,

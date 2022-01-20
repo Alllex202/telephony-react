@@ -7,14 +7,9 @@ import BtnSecond from 'components/ui-kit/btn-second'
 import ScenarioCard from 'modules/scenario/list/body/components/card'
 
 const ScenarioListBody = () => {
-    const {
-        scenarioList,
-        statuses,
-        error,
-        page,
-        size,
-        isLastPage
-    } = useSelector((state: RootState) => state.scenarioList)
+    const {scenarioList, statuses, error, page, size, isLastPage} = useSelector(
+        (state: RootState) => state.scenarioList
+    )
     const filter = useSelector((state: RootState) => state.filter)
 
     const dispatch = useDispatch()
@@ -26,14 +21,15 @@ const ScenarioListBody = () => {
     }
 
     function getData(page: number) {
-        dispatch(getScenariosByPage({
+        dispatch(
+            getScenariosByPage({
                 page,
                 size,
                 direction: filter.direction,
                 name: filter.name,
                 sortBy: filter.sortBy
-            }
-        ))
+            })
+        )
     }
 
     useEffect(() => {
@@ -58,25 +54,27 @@ const ScenarioListBody = () => {
 
     return (
         <>
-            {scenarioList.length < 1
-             ? <h1>Здесь пусто :(</h1>
-             : <>
-                 <div className={bodyStyles.list}>
-                     {scenarioList.map(el =>
-                         <ScenarioCard key={el.id}
-                                       data={el}
-                                       className={bodyStyles.card}/>
-                     )}
-                 </div>
-             </>
-            }
+            {scenarioList.length < 1 ? (
+                <h1>Здесь пусто :(</h1>
+            ) : (
+                <>
+                    <div className={bodyStyles.list}>
+                        {scenarioList.map((el) => (
+                            <ScenarioCard key={el.id} data={el} className={bodyStyles.card} />
+                        ))}
+                    </div>
+                </>
+            )}
 
             <div className={bodyStyles.footer}>
                 {statuses.isLoading && <h1>Загрузка...</h1>}
-                {!isLastPage && !statuses.isLoading &&
-                <BtnSecond className={bodyStyles.more}
-                           onClick={loadNextPage}
-                           text={'Показать больше'}/>}
+                {!isLastPage && !statuses.isLoading && (
+                    <BtnSecond
+                        className={bodyStyles.more}
+                        onClick={loadNextPage}
+                        text={'Показать больше'}
+                    />
+                )}
             </div>
         </>
     )

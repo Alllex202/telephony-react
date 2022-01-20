@@ -12,17 +12,18 @@ const LineChart = ({nameTooltip, data}: Props) => {
     }
 
     return (
-        <ResponsiveContainer width={'100%'}
-                             height={250}>
+        <ResponsiveContainer width={'100%'} height={250}>
             <_LineChart data={data}>
-                <XAxis dataKey="time"/>
-                <YAxis/>
-                <Tooltip formatter={tooltipFormatter}/>
-                <Line type={'monotone'}
-                      dataKey={'successCalls'}
-                      stroke={'#ffae00'}
-                      strokeWidth={4}
-                      dot={false}/>
+                <XAxis dataKey='time' />
+                <YAxis />
+                <Tooltip formatter={tooltipFormatter} />
+                <Line
+                    type={'monotone'}
+                    dataKey={'successCalls'}
+                    stroke={'#ffae00'}
+                    strokeWidth={4}
+                    dot={false}
+                />
             </_LineChart>
         </ResponsiveContainer>
     )

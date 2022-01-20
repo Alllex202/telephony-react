@@ -13,26 +13,24 @@ function CallersBaseViewRightSidebar() {
 
     return (
         <RightSidebar>
-            {header
-             ?
-             <div className={styles.infoBlock}>
-                 <Info title={'Элементов'}>{header.countCallers}</Info>
-                 <Info title={'Дата и время загрузки'}>{formatDate(header.created)}</Info>
-                 <Info title={'Последнее обновление'}>{formatDate(header.updated)}</Info>
-                 <Info title={'Обзванивания'}>
-                     {
-                         callings?.map((el) =>
-                             <span key={el.id}
-                                   className={styles.linkWrapper}>
-                                <Link to={routes.calling.view(el.id ?? '')}
-                                      className={styles.link}>{el.name}</Link>
-                             </span>)
-                     }
-                 </Info>
-             </div>
-             :
-             <>Загрузка...</>
-            }
+            {header ? (
+                <div className={styles.infoBlock}>
+                    <Info title={'Элементов'}>{header.countCallers}</Info>
+                    <Info title={'Дата и время загрузки'}>{formatDate(header.created)}</Info>
+                    <Info title={'Последнее обновление'}>{formatDate(header.updated)}</Info>
+                    <Info title={'Обзванивания'}>
+                        {callings?.map((el) => (
+                            <span key={el.id} className={styles.linkWrapper}>
+                                <Link to={routes.calling.view(el.id ?? '')} className={styles.link}>
+                                    {el.name}
+                                </Link>
+                            </span>
+                        ))}
+                    </Info>
+                </div>
+            ) : (
+                <>Загрузка...</>
+            )}
         </RightSidebar>
     )
 }

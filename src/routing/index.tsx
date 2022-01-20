@@ -11,14 +11,14 @@ const Routing = () => {
         <ConnectedRouter history={history}>
             <Switch>
                 {publicSiteRoutes.map((route, index) => (
-                    <Route key={`public-${index}`} {...route}/>
+                    <Route key={`public-${index}`} {...route} />
                 ))}
 
                 {privateSiteRoutes.map((route, index) => (
-                    <PrivateRoute key={`private-${index}`} {...route}/>
+                    <PrivateRoute key={`private-${index}`} {...route} />
                 ))}
 
-                <Redirect to={routes.calling.list()}/>
+                <Redirect to={routes.calling.list()} />
             </Switch>
         </ConnectedRouter>
     )

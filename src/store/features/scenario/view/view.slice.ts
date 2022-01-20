@@ -26,16 +26,16 @@ import {getUniqueId} from 'shared/utils'
 import {handlerError} from 'shared/middleware'
 import {enqueueSnackbar} from 'store/features/notifications'
 
-export type ElementType = Node<NodeDataModel> | Edge;
+export type ElementType = Node<NodeDataModel> | Edge
 
 export interface ScenarioState {
-    data: ScenarioModel | null,
-    elements: ElementType[],
-    statuses: FetchStatuses,
-    isLoaded: boolean,
-    startId: string | null,
-    finishId: string | null,
-    callersBaseHeader: CallersBaseHeaderModel | null,
+    data: ScenarioModel | null
+    elements: ElementType[]
+    statuses: FetchStatuses
+    isLoaded: boolean
+    startId: string | null
+    finishId: string | null
+    callersBaseHeader: CallersBaseHeaderModel | null
 }
 
 const initialState: ScenarioState = {
@@ -78,110 +78,193 @@ export const scenarioSlice = createSlice({
             state.finishId = null
             state.isLoaded = false
         },
-        changeReplica: (state: ScenarioState, action: PayloadAction<{ elementId: string, replica: string }>) => {
-            state.elements = state.elements.map(el => el.id === action.payload.elementId ? {
-                ...el,
-                data: {...el.data, replica: action.payload.replica}
-            } : el)
+        changeReplica: (
+            state: ScenarioState,
+            action: PayloadAction<{elementId: string; replica: string}>
+        ) => {
+            state.elements = state.elements.map((el) =>
+                el.id === action.payload.elementId
+                    ? {
+                          ...el,
+                          data: {...el.data, replica: action.payload.replica}
+                      }
+                    : el
+            )
         },
-        changeNeedAnswer: (state: ScenarioState, action: PayloadAction<{ elementId: string, isNeed: boolean }>) => {
-            const target = (state.elements.find(el => (el as Edge).source === action.payload.elementId) as Edge)?.target
+        changeNeedAnswer: (
+            state: ScenarioState,
+            action: PayloadAction<{elementId: string; isNeed: boolean}>
+        ) => {
+            const target = (
+                state.elements.find(
+                    (el) => (el as Edge).source === action.payload.elementId
+                ) as Edge
+            )?.target
             const answerId = getUniqueId()
 
             state.elements = state.elements
-                .filter(el => (el as Edge).source !== action.payload.elementId)
-                .map(el => (el as Node).id === action.payload.elementId ? {
-                    ...el,
-                    data: {
-                        ...el.data,
-                        answers: action.payload.isNeed ? [{id: answerId, button: '1'}] : null,
-                        waitingTime: 30 * 1000,
-                        needAnswer: action.payload.isNeed
-                    }
-                } : el)
+                .filter((el) => (el as Edge).source !== action.payload.elementId)
+                .map((el) =>
+                    (el as Node).id === action.payload.elementId
+                        ? {
+                              ...el,
+                              data: {
+                                  ...el.data,
+                                  answers: action.payload.isNeed
+                                      ? [{id: answerId, button: '1'}]
+                                      : null,
+                                  waitingTime: 30 * 1000,
+                                  needAnswer: action.payload.isNeed
+                              }
+                          }
+                        : el
+                )
 
             if (target) {
-                state.elements = _addEdge({
-                    source: action.payload.elementId,
-                    sourceHandle: action.payload.isNeed ? answerId : null,
-                    target,
-                    targetHandle: null,
-                    id: getUniqueId(),
-                    arrowHeadType: ArrowHeadType.Arrow,
-                    type: 'smoothstep'
-                }, state.elements)
+                state.elements = _addEdge(
+                    {
+                        source: action.payload.elementId,
+                        sourceHandle: action.payload.isNeed ? answerId : null,
+                        target,
+                        targetHandle: null,
+                        id: getUniqueId(),
+                        arrowHeadType: ArrowHeadType.Arrow,
+                        type: 'smoothstep'
+                    },
+                    state.elements
+                )
             }
         },
-        changeWaitingTime: (state: ScenarioState, action: PayloadAction<{ elementId: string, time: number }>) => {
-            state.elements = state.elements.map(el => el.id === action.payload.elementId ? {
-                ...el,
-                data: {...el.data, waitingTime: action.payload.time}
-            } : el)
+        changeWaitingTime: (
+            state: ScenarioState,
+            action: PayloadAction<{elementId: string; time: number}>
+        ) => {
+            state.elements = state.elements.map((el) =>
+                el.id === action.payload.elementId
+                    ? {
+                          ...el,
+                          data: {...el.data, waitingTime: action.payload.time}
+                      }
+                    : el
+            )
         },
-        addAnswer: (state: ScenarioState, action: PayloadAction<{ elementId: string, button: string }>) => {
-            state.elements = state.elements.map(el => el.id === action.payload.elementId ? {
-                ...el,
-                data: {
-                    ...el.data,
-                    answers: [...(el.data.answers || []), {id: getUniqueId(), button: action.payload.button}]
-                }
-            } : el)
+        addAnswer: (
+            state: ScenarioState,
+            action: PayloadAction<{elementId: string; button: string}>
+        ) => {
+            state.elements = state.elements.map((el) =>
+                el.id === action.payload.elementId
+                    ? {
+                          ...el,
+                          data: {
+                              ...el.data,
+                              answers: [
+                                  ...(el.data.answers || []),
+                                  {id: getUniqueId(), button: action.payload.button}
+                              ]
+                          }
+                      }
+                    : el
+            )
         },
-        changeAnswer: (state: ScenarioState, action: PayloadAction<{ elementId: string, newButton: string, oldButton: string }>) => {
-            state.elements = state.elements.map(el => el.id === action.payload.elementId ? {
-                ...el,
-                data: {
-                    ...el.data,
-                    answers: el.data.answers.map((ans: AnswerModel): AnswerModel =>
-                        ans.button === action.payload.oldButton ?
-                            {...ans, button: action.payload.newButton} :
-                        ans)
-                }
-            } : el)
+        changeAnswer: (
+            state: ScenarioState,
+            action: PayloadAction<{elementId: string; newButton: string; oldButton: string}>
+        ) => {
+            state.elements = state.elements.map((el) =>
+                el.id === action.payload.elementId
+                    ? {
+                          ...el,
+                          data: {
+                              ...el.data,
+                              answers: el.data.answers.map(
+                                  (ans: AnswerModel): AnswerModel =>
+                                      ans.button === action.payload.oldButton
+                                          ? {...ans, button: action.payload.newButton}
+                                          : ans
+                              )
+                          }
+                      }
+                    : el
+            )
         },
-        removeAnswer: (state: ScenarioState, action: PayloadAction<{ elementId: string, answerId: string }>) => {
+        removeAnswer: (
+            state: ScenarioState,
+            action: PayloadAction<{elementId: string; answerId: string}>
+        ) => {
             state.elements = state.elements
-                .filter(el => !((el as Edge).source === action.payload.elementId &&
-                    (el as Edge).sourceHandle === action.payload.answerId))
-                .map(el => el.id === action.payload.elementId ? {
-                    ...el,
-                    data: {
-                        ...el.data,
-                        answers: el.data.answers.filter((ans: AnswerModel) => ans.id !== action.payload.answerId)
-                    }
-                } : el)
+                .filter(
+                    (el) =>
+                        !(
+                            (el as Edge).source === action.payload.elementId &&
+                            (el as Edge).sourceHandle === action.payload.answerId
+                        )
+                )
+                .map((el) =>
+                    el.id === action.payload.elementId
+                        ? {
+                              ...el,
+                              data: {
+                                  ...el.data,
+                                  answers: el.data.answers.filter(
+                                      (ans: AnswerModel) => ans.id !== action.payload.answerId
+                                  )
+                              }
+                          }
+                        : el
+                )
         },
         addEdge: (state: ScenarioState, action: PayloadAction<Edge | Connection>) => {
-            if (state.elements.some(el => ((el as Edge).source === action.payload.target &&
-                    (el as Edge).target === action.payload.source) ||
-                ((el as Edge).source === action.payload.source &&
-                    (el as Edge).source === state.startId) ||
-                ((el as Edge).source === action.payload.source &&
-                    (el as Edge).sourceHandle === action.payload.sourceHandle))) {
+            if (
+                state.elements.some(
+                    (el) =>
+                        ((el as Edge).source === action.payload.target &&
+                            (el as Edge).target === action.payload.source) ||
+                        ((el as Edge).source === action.payload.source &&
+                            (el as Edge).source === state.startId) ||
+                        ((el as Edge).source === action.payload.source &&
+                            (el as Edge).sourceHandle === action.payload.sourceHandle)
+                )
+            ) {
                 return
             }
 
-            state.elements = _addEdge({
-                ...action.payload,
-                id: getUniqueId(),
-                arrowHeadType: ArrowHeadType.Arrow,
-                type: 'smoothstep'
-            }, state.elements)
+            state.elements = _addEdge(
+                {
+                    ...action.payload,
+                    id: getUniqueId(),
+                    arrowHeadType: ArrowHeadType.Arrow,
+                    type: 'smoothstep'
+                },
+                state.elements
+            )
         },
         changeName: (state: ScenarioState, action: PayloadAction<string>) => {
             if (state.data) {
                 state.data.name = action.payload
             }
         },
-        changePosition: (state: ScenarioState, action: PayloadAction<{ elementId: string, x: number, y: number }>) => {
-            state.elements = state.elements.map(el => el.id === action.payload.elementId ? {
-                ...el,
-                position: {x: action.payload.x, y: action.payload.y}
-            } : el)
+        changePosition: (
+            state: ScenarioState,
+            action: PayloadAction<{elementId: string; x: number; y: number}>
+        ) => {
+            state.elements = state.elements.map((el) =>
+                el.id === action.payload.elementId
+                    ? {
+                          ...el,
+                          position: {x: action.payload.x, y: action.payload.y}
+                      }
+                    : el
+            )
         },
-        addNode: (state: ScenarioState, action: PayloadAction<{ nodeType: NodeType, position: XYPosition }>) => {
-            if ((action.payload.nodeType === 'START' && state.startId) ||
-                (action.payload.nodeType === 'FINISH' && state.finishId)) {
+        addNode: (
+            state: ScenarioState,
+            action: PayloadAction<{nodeType: NodeType; position: XYPosition}>
+        ) => {
+            if (
+                (action.payload.nodeType === 'START' && state.startId) ||
+                (action.payload.nodeType === 'FINISH' && state.finishId)
+            ) {
                 return
             }
 
@@ -206,10 +289,10 @@ export const scenarioSlice = createSlice({
             state.elements = [...state.elements, newNode]
         },
         removeElements: (state: ScenarioState, action: PayloadAction<Elements>) => {
-            if (action.payload.some(el => (el as NodeModel).type === 'START')) {
+            if (action.payload.some((el) => (el as NodeModel).type === 'START')) {
                 state.startId = null
             }
-            if (action.payload.some(el => (el as NodeModel).type === 'FINISH')) {
+            if (action.payload.some((el) => (el as NodeModel).type === 'FINISH')) {
                 state.finishId = null
             }
             state.elements = _removeElements(action.payload, state.elements)
@@ -226,55 +309,63 @@ export const scenarioSlice = createSlice({
             }
             state.data.connectedCallerBaseId = action.payload
         },
-        setCallerBaseHeader: (state: ScenarioState, action: PayloadAction<CallersBaseHeaderModel | null>) => {
+        setCallerBaseHeader: (
+            state: ScenarioState,
+            action: PayloadAction<CallersBaseHeaderModel | null>
+        ) => {
             state.callersBaseHeader = action.payload
         }
     }
 })
 
-export const getScenario = (id: string | number) => (dispatch: Dispatch, getState: () => RootState) => {
-    const state = getState()
-    if (state.scenarioView.statuses.isLoading) return
+export const getScenario =
+    (id: string | number) => (dispatch: Dispatch, getState: () => RootState) => {
+        const state = getState()
+        if (state.scenarioView.statuses.isLoading) return
 
-    dispatch(setLoading())
-    getScenarioById(id)
-        .then(res => {
-            const elements: ElementType[] = []
-            res.data.nodes.forEach((value) => {
-                if (value.type === 'START') {
-                    dispatch(setStartId(value.id))
-                }
-                if (value.type === 'FINISH') {
-                    dispatch(setFinishId(value.id))
-                }
-                elements.push({
-                    id: value.id,
-                    position: value.position,
-                    data: value.data,
-                    type: value.type,
-                    selectable: true,
-                    dragHandle: '.draggable-handle'
+        dispatch(setLoading())
+        getScenarioById(id)
+            .then((res) => {
+                const elements: ElementType[] = []
+                res.data.nodes.forEach((value) => {
+                    if (value.type === 'START') {
+                        dispatch(setStartId(value.id))
+                    }
+                    if (value.type === 'FINISH') {
+                        dispatch(setFinishId(value.id))
+                    }
+                    elements.push({
+                        id: value.id,
+                        position: value.position,
+                        data: value.data,
+                        type: value.type,
+                        selectable: true,
+                        dragHandle: '.draggable-handle'
+                    })
                 })
-            })
-            res.data.edges.forEach((value) => {
-                elements.push({
-                    id: value.id,
-                    source: value.source,
-                    target: value.target,
-                    sourceHandle: value.sourceHandle,
-                    arrowHeadType: ArrowHeadType.Arrow,
-                    type: 'smoothstep'
+                res.data.edges.forEach((value) => {
+                    elements.push({
+                        id: value.id,
+                        source: value.source,
+                        target: value.target,
+                        sourceHandle: value.sourceHandle,
+                        arrowHeadType: ArrowHeadType.Arrow,
+                        type: 'smoothstep'
+                    })
                 })
+                dispatch(setData(res.data))
+                dispatch(setElements(elements))
+                dispatch(setSuccess())
+                dispatch(setLoaded())
             })
-            dispatch(setData(res.data))
-            dispatch(setElements(elements))
-            dispatch(setSuccess())
-            dispatch(setLoaded())
-        })
-        .catch(handlerError(dispatch, (err: DefaultAxiosError) => {
-            dispatch(setError(err.response?.data.message || 'Ошибка при получении сценария'))
-        }))
-}
+            .catch(
+                handlerError(dispatch, (err: DefaultAxiosError) => {
+                    dispatch(
+                        setError(err.response?.data.message || 'Ошибка при получении сценария')
+                    )
+                })
+            )
+    }
 
 export const getCallersBaseHeader = () => (dispatch: Dispatch, getState: () => RootState) => {
     const state = getState()
@@ -299,26 +390,28 @@ export const saveScenario = () => (dispatch: Dispatch, getState: () => RootState
     // TODO **Проверка интерфейсов
     for (let el of state.scenarioView.elements) {
         if (!!(el as Node).data) {
-            nodes.push((el as NodeModel))
+            nodes.push(el as NodeModel)
             if ((el as Node).type === 'START') {
                 rootId = (el as Node).id
             }
         }
         if (!(el as Edge).data) {
-            edges.push((el as EdgeModel))
+            edges.push(el as EdgeModel)
         }
     }
     if (!rootId || nodes.length < 1 || edges.length < 1) return
 
     dispatch(setLoading())
     putScenarioById({...state.scenarioView.data, edges, nodes, rootId})
-        .then(res => {
+        .then((res) => {
             dispatch(setSuccess())
             dispatch(enqueueSnackbar({message: 'Сценарий сохранен', type: 'SUCCESS'}))
         })
-        .catch(handlerError(dispatch, (err: DefaultAxiosError) => {
-            dispatch(setError(err.response?.data.message || 'Ошибка при сохранении сценария'))
-        }))
+        .catch(
+            handlerError(dispatch, (err: DefaultAxiosError) => {
+                dispatch(setError(err.response?.data.message || 'Ошибка при сохранении сценария'))
+            })
+        )
 }
 
 export const {

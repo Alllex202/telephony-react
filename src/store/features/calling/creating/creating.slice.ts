@@ -93,9 +93,13 @@ export const saveCalling = () => (dispatch: Dispatch, getState: () => RootState)
                 dispatch(enqueueSnackbar({message: 'Обзванивание обновлено', type: 'SUCCESS'}))
                 dispatch(goBack())
             })
-            .catch(handlerError(dispatch, (err: DefaultAxiosError) => {
-                dispatch(setError(err.response?.data.message || 'Ошибка при обновлении обзвона'))
-            }))
+            .catch(
+                handlerError(dispatch, (err: DefaultAxiosError) => {
+                    dispatch(
+                        setError(err.response?.data.message || 'Ошибка при обновлении обзвона')
+                    )
+                })
+            )
     } else {
         createCalling(data)
             .then((res) => {
@@ -103,9 +107,13 @@ export const saveCalling = () => (dispatch: Dispatch, getState: () => RootState)
                 dispatch(enqueueSnackbar({message: 'Обзванивание создано', type: 'SUCCESS'}))
                 dispatch(goBack())
             })
-            .catch(handlerError(dispatch, (err: DefaultAxiosError) => {
-                dispatch(setError(err.response?.data.message || 'Ошибка при сохранении обзвона'))
-            }))
+            .catch(
+                handlerError(dispatch, (err: DefaultAxiosError) => {
+                    dispatch(
+                        setError(err.response?.data.message || 'Ошибка при сохранении обзвона')
+                    )
+                })
+            )
     }
 }
 

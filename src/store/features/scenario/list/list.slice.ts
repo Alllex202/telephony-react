@@ -9,12 +9,12 @@ import {getScenariosByPage as getScenarios} from 'core/api/requests'
 import {handlerError} from 'shared/middleware'
 
 export interface ScenariosState {
-    scenarioList: ScenarioInfoModel[],
-    error: string,
-    statuses: FetchStatuses,
-    page: number,
-    size: number,
-    isLastPage: boolean,
+    scenarioList: ScenarioInfoModel[]
+    error: string
+    statuses: FetchStatuses
+    page: number
+    size: number
+    isLastPage: boolean
 }
 
 const initialState: ScenariosState = {
@@ -40,7 +40,7 @@ export const scenarioListSlice = createSlice({
             state.scenarioList = []
         },
         deleteScenarioById: (state, action: PayloadAction<number | string>) => {
-            state.scenarioList = state.scenarioList.filter(el => el.id !== action.payload)
+            state.scenarioList = state.scenarioList.filter((el) => el.id !== action.payload)
         },
         setError: (state, action: PayloadAction<string>) => {
             state.error = action.payload
@@ -73,22 +73,27 @@ export const scenarioListSlice = createSlice({
 })
 
 export const getScenariosByPage =
-    (params: ParamsPaginatorWithFilterModel<SortType, DirectionSort>, otherConfig?: AxiosRequestConfig) =>
-        (dispatch: Dispatch) => {
-            dispatch(setLoading())
-            getScenarios(params, otherConfig)
-                .then((res) => {
-                    dispatch(addScenarios(res.data.content))
-                    if (res.data.last) {
-                        dispatch(setLastPage(res.data.last))
-                    }
-                    dispatch(setPage(res.data.pageable.pageNumber))
-                    dispatch(setSuccess())
-                })
-                .catch(handlerError(dispatch, (err: DefaultAxiosError) => {
+    (
+        params: ParamsPaginatorWithFilterModel<SortType, DirectionSort>,
+        otherConfig?: AxiosRequestConfig
+    ) =>
+    (dispatch: Dispatch) => {
+        dispatch(setLoading())
+        getScenarios(params, otherConfig)
+            .then((res) => {
+                dispatch(addScenarios(res.data.content))
+                if (res.data.last) {
+                    dispatch(setLastPage(res.data.last))
+                }
+                dispatch(setPage(res.data.pageable.pageNumber))
+                dispatch(setSuccess())
+            })
+            .catch(
+                handlerError(dispatch, (err: DefaultAxiosError) => {
                     dispatch(setError(err.response?.data.error || 'Необработанная ошибка'))
-                }))
-        }
+                })
+            )
+    }
 
 export const {
     addScenarios,

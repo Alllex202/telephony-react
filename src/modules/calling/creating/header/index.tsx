@@ -17,12 +17,14 @@ const CallingCreatingHeader = () => {
 
     return (
         <div className={styles.header}>
-            <BtnSecond text={'Отменить'}
-                       className={styles.cancel}
-                       onClick={onCancel}
-                       iconName={'arrow_back'}
-                       iconType={'round'}
-                       iconPosition={'start'}/>
+            <BtnSecond
+                text={'Отменить'}
+                className={styles.cancel}
+                onClick={onCancel}
+                iconName={'arrow_back'}
+                iconType={'round'}
+                iconPosition={'start'}
+            />
         </div>
     )
 }

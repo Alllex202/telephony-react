@@ -3,15 +3,13 @@ import styles from './styles.module.scss'
 import './styles.scss'
 
 type Props = {
-    children: ReactNode,
+    children: ReactNode
 }
 
 const EditorLayout = ({children}: Props) => {
     return (
         <>
-            <div className={styles.wrapper}>
-                {children}
-            </div>
+            <div className={styles.wrapper}>{children}</div>
         </>
     )
 }

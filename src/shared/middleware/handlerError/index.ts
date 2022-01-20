@@ -3,7 +3,7 @@ import {Dispatch} from '@reduxjs/toolkit'
 import {enqueueSnackbar} from 'store/features/notifications'
 
 type handlersKeys =
-    'Network Error'
+    | 'Network Error'
     | 'Universal'
     | 'Universal Server'
     | 400
@@ -17,22 +17,26 @@ type handlersKeys =
     | 502
 
 const handlers: Record<handlersKeys, (dispatch: Dispatch, err: DefaultAxiosError) => void> = {
-    'Universal': (dispatch) => {
+    Universal: (dispatch) => {
         dispatch(enqueueSnackbar({type: 'ERROR', message: 'Неожиданная ошибка'}))
     },
 
     'Universal Server': (dispatch) => {
-        dispatch(enqueueSnackbar({
-            type: 'ERROR',
-            message: 'Необработанная ошибка'
-        }))
+        dispatch(
+            enqueueSnackbar({
+                type: 'ERROR',
+                message: 'Необработанная ошибка'
+            })
+        )
     },
 
     'Network Error': (dispatch) => {
-        dispatch(enqueueSnackbar({
-            type: 'ERROR',
-            message: 'Проверте соединение с Интернетом и попробуйте обновить страницу'
-        }))
+        dispatch(
+            enqueueSnackbar({
+                type: 'ERROR',
+                message: 'Проверте соединение с Интернетом и попробуйте обновить страницу'
+            })
+        )
     },
 
     // Bad Request
@@ -62,12 +66,19 @@ const handlers: Record<handlersKeys, (dispatch: Dispatch, err: DefaultAxiosError
 
     // Request Timeout
     408: (dispatch) => {
-        dispatch(enqueueSnackbar({type: 'ERROR', message: 'Истекло время ожидания. Попробуйте позже'}))
+        dispatch(
+            enqueueSnackbar({type: 'ERROR', message: 'Истекло время ожидания. Попробуйте позже'})
+        )
     },
 
     // Internal Server Error
     500: (dispatch) => {
-        dispatch(enqueueSnackbar({type: 'ERROR', message: 'Произошла ошибка на сервере. Попробуйте позднее'}))
+        dispatch(
+            enqueueSnackbar({
+                type: 'ERROR',
+                message: 'Произошла ошибка на сервере. Попробуйте позднее'
+            })
+        )
     },
 
     // Not Implemented
@@ -81,16 +92,19 @@ const handlers: Record<handlersKeys, (dispatch: Dispatch, err: DefaultAxiosError
     }
 }
 
-export const handlerError = (dispatch: Dispatch, callback?: (err: DefaultAxiosError) => void) => (err: DefaultAxiosError) => {
-    if (err.isAxiosError) {
-        const handler = handlers[err.message as handlersKeys]
-            ?? (err.response?.status && handlers[err.response?.status as handlersKeys])
-            ?? handlers['Universal Server']
+export const handlerError =
+    (dispatch: Dispatch, callback?: (err: DefaultAxiosError) => void) =>
+    (err: DefaultAxiosError) => {
+        if (err.isAxiosError) {
+            const handler =
+                handlers[err.message as handlersKeys] ??
+                (err.response?.status && handlers[err.response?.status as handlersKeys]) ??
+                handlers['Universal Server']
 
-        handler(dispatch, err)
-    } else {
-        handlers['Universal'](dispatch, err)
+            handler(dispatch, err)
+        } else {
+            handlers['Universal'](dispatch, err)
+        }
+
+        callback && callback(err)
     }
-
-    callback && callback(err)
-}

@@ -9,12 +9,12 @@ import {getCallersBasesHeader} from 'core/api/requests'
 import {handlerError} from 'shared/middleware'
 
 export interface CallersBaseState {
-    callersBaseList: CallersBaseHeaderModel[],
-    error: string,
-    statuses: FetchStatuses,
-    page: number,
-    size: number,
-    isLastPage: boolean,
+    callersBaseList: CallersBaseHeaderModel[]
+    error: string
+    statuses: FetchStatuses
+    page: number
+    size: number
+    isLastPage: boolean
 }
 
 const initialState: CallersBaseState = {
@@ -40,7 +40,7 @@ export const callersBaseListSlice = createSlice({
             state.callersBaseList = []
         },
         deleteCallersBaseById: (state, action: PayloadAction<number | string>) => {
-            state.callersBaseList = state.callersBaseList.filter(el => el.id !== action.payload)
+            state.callersBaseList = state.callersBaseList.filter((el) => el.id !== action.payload)
         },
         setError: (state, action: PayloadAction<string>) => {
             state.error = action.payload
@@ -73,22 +73,27 @@ export const callersBaseListSlice = createSlice({
 })
 
 export const getCallersBasesByPage =
-    (params: ParamsPaginatorWithFilterModel<SortType, DirectionSort>, otherConfig?: AxiosRequestConfig) =>
-        (dispatch: Dispatch) => {
-            dispatch(setLoading())
-            getCallersBasesHeader(params, otherConfig)
-                .then((res) => {
-                    dispatch(addCallersBases(res.data.content))
-                    if (res.data.last) {
-                        dispatch(setLastPage(res.data.last))
-                    }
-                    dispatch(setPage(res.data.pageable.pageNumber))
-                    dispatch(setSuccess())
-                })
-                .catch(handlerError(dispatch, (err: DefaultAxiosError) => {
+    (
+        params: ParamsPaginatorWithFilterModel<SortType, DirectionSort>,
+        otherConfig?: AxiosRequestConfig
+    ) =>
+    (dispatch: Dispatch) => {
+        dispatch(setLoading())
+        getCallersBasesHeader(params, otherConfig)
+            .then((res) => {
+                dispatch(addCallersBases(res.data.content))
+                if (res.data.last) {
+                    dispatch(setLastPage(res.data.last))
+                }
+                dispatch(setPage(res.data.pageable.pageNumber))
+                dispatch(setSuccess())
+            })
+            .catch(
+                handlerError(dispatch, (err: DefaultAxiosError) => {
                     dispatch(setError(err.response?.data.error || 'Необработанная ошибка'))
-                }))
-        }
+                })
+            )
+    }
 
 export const {
     addCallersBases,

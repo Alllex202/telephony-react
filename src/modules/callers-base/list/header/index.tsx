@@ -42,12 +42,20 @@ function CallersBaseListHeader() {
         setAnchorEl(null)
     }
 
-    function handlerSortItem(options: { sortBy: SortType, direction: DirectionSort, text: string }) {
+    function handlerSortItem(options: {sortBy: SortType; direction: DirectionSort; text: string}) {
         handlerCloseSort()
-        if (statuses.isLoading || (options.sortBy === sortBy && options.direction === direction)) return
+        if (statuses.isLoading || (options.sortBy === sortBy && options.direction === direction))
+            return
 
         dispatch(resetCallersBasesStates())
-        dispatch(changeFilter({sortBy: options.sortBy, name: input, direction: options.direction, text: options.text}))
+        dispatch(
+            changeFilter({
+                sortBy: options.sortBy,
+                name: input,
+                direction: options.direction,
+                text: options.text
+            })
+        )
     }
 
     function handlerSearch(event: React.KeyboardEvent) {
@@ -62,38 +70,47 @@ function CallersBaseListHeader() {
 
     return (
         <div className={styles.header}>
-            <Btn text={'Добавить базу'}
-                 iconName={'upload'}
-                 iconType={'round'}
-                 className={styles.add}
-                 onClick={handlerAdd}
-                 iconPosition={'end'}/>
-            <Input value={input}
-                   onChange={e => setInput(e.target.value)}
-                   className={styles.search}
-                   type={'text'}
-                   placeholder={'Поиск'}
-                   autoCompleteOff
-                   onKeyPress={handlerSearch}/>
-            <BtnSecond text={text}
-                       iconName={'sort'}
-                       iconType={'round'}
-                       onClick={handlerOpenSort}
-                       className={classNames(styles.sort, direction === 'ASC' ? styles.revert : '')}
-                       isActive={!!anchorEl}
-                       iconPosition={'end'}/>
-            <Menu anchorEl={anchorEl}
-                  open={!!anchorEl}
-                  onClose={handlerCloseSort}>
-                {sortItems.map((el, index) =>
-                    <MenuItem key={index}
-                              onClick={() => handlerSortItem({
-                                  sortBy: el.sortBy,
-                                  direction: el.direction,
-                                  text: el.text
-                              })}>
+            <Btn
+                text={'Добавить базу'}
+                iconName={'upload'}
+                iconType={'round'}
+                className={styles.add}
+                onClick={handlerAdd}
+                iconPosition={'end'}
+            />
+            <Input
+                value={input}
+                onChange={(e) => setInput(e.target.value)}
+                className={styles.search}
+                type={'text'}
+                placeholder={'Поиск'}
+                autoCompleteOff
+                onKeyPress={handlerSearch}
+            />
+            <BtnSecond
+                text={text}
+                iconName={'sort'}
+                iconType={'round'}
+                onClick={handlerOpenSort}
+                className={classNames(styles.sort, direction === 'ASC' ? styles.revert : '')}
+                isActive={!!anchorEl}
+                iconPosition={'end'}
+            />
+            <Menu anchorEl={anchorEl} open={!!anchorEl} onClose={handlerCloseSort}>
+                {sortItems.map((el, index) => (
+                    <MenuItem
+                        key={index}
+                        onClick={() =>
+                            handlerSortItem({
+                                sortBy: el.sortBy,
+                                direction: el.direction,
+                                text: el.text
+                            })
+                        }
+                    >
                         {el.text}
-                    </MenuItem>)}
+                    </MenuItem>
+                ))}
             </Menu>
         </div>
     )

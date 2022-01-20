@@ -2,7 +2,7 @@ import {createSlice, PayloadAction} from '@reduxjs/toolkit'
 import {SortItem, sortItems} from 'shared/data/sort-items'
 
 export interface FilterState extends SortItem {
-    name: string,
+    name: string
 }
 
 const initialState: FilterState = {

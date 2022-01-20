@@ -1,8 +1,8 @@
 import {routes} from 'routing/routes'
 
 interface MenuItemModel {
-    link: string,
-    label: string,
+    link: string
+    label: string
 }
 
 export const menuItems: MenuItemModel[] = [

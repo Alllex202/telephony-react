@@ -5,12 +5,12 @@ import {classNames} from 'shared/utils'
 import Icon from '../icon'
 
 type Props = {
-    onClick?: Function,
-    children?: React.ReactNode,
-    isDanger?: boolean,
-    iconName?: string,
-    iconType?: 'outlined' | 'round' | 'sharp' | 'two-tone',
-    iconPosition?: 'start' | 'end',
+    onClick?: Function
+    children?: React.ReactNode
+    isDanger?: boolean
+    iconName?: string
+    iconType?: 'outlined' | 'round' | 'sharp' | 'two-tone'
+    iconPosition?: 'start' | 'end'
 }
 
 function MenuItem({onClick, children, isDanger, iconName, iconPosition, iconType}: Props) {
@@ -22,10 +22,13 @@ function MenuItem({onClick, children, isDanger, iconName, iconPosition, iconType
         <MuiMenuItem
             onClick={handleClick}
             disableRipple
-            className={classNames('custom', isDanger ? 'danger' : '', iconPosition === 'end' ? 'reverse' : '')}
+            className={classNames(
+                'custom',
+                isDanger ? 'danger' : '',
+                iconPosition === 'end' ? 'reverse' : ''
+            )}
         >
-            {iconName && <Icon name={iconName}
-                               type={iconType}/>}
+            {iconName && <Icon name={iconName} type={iconType} />}
             {children}
         </MuiMenuItem>
     )

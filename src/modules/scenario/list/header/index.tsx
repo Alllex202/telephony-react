@@ -41,13 +41,18 @@ const ScenarioListHeader = () => {
 
         setCreating({isLoading: true})
         createScenario('Новый сценарий')
-            .then(res => {
+            .then((res) => {
                 history.push(routes.scenario.view(res.data.id))
                 dispatch(enqueueSnackbar({message: 'Создан новый сценарий', type: 'SUCCESS'}))
             })
-            .catch(handlerError(dispatch, (err: DefaultAxiosError) => {
-                setCreating({isError: true, error: err.response?.data.message || 'Ошибка при создании'})
-            }))
+            .catch(
+                handlerError(dispatch, (err: DefaultAxiosError) => {
+                    setCreating({
+                        isError: true,
+                        error: err.response?.data.message || 'Ошибка при создании'
+                    })
+                })
+            )
     }
 
     function handlerOpenSort(e: any) {
@@ -58,12 +63,20 @@ const ScenarioListHeader = () => {
         setAnchorEl(null)
     }
 
-    function handlerSortItem(options: { sortBy: SortType, direction: DirectionSort, text: string }) {
+    function handlerSortItem(options: {sortBy: SortType; direction: DirectionSort; text: string}) {
         handlerCloseSort()
-        if (statuses.isLoading || (options.sortBy === sortBy && options.direction === direction)) return
+        if (statuses.isLoading || (options.sortBy === sortBy && options.direction === direction))
+            return
 
         dispatch(resetScenariosStates())
-        dispatch(changeFilter({sortBy: options.sortBy, name: input, direction: options.direction, text: options.text}))
+        dispatch(
+            changeFilter({
+                sortBy: options.sortBy,
+                name: input,
+                direction: options.direction,
+                text: options.text
+            })
+        )
     }
 
     function handlerSearch(event: React.KeyboardEvent) {
@@ -87,32 +100,42 @@ const ScenarioListHeader = () => {
                 iconPosition={'end'}
                 disabled={creating.isLoading}
             />
-            <Input value={input}
-                   onChange={e => setInput(e.target.value)}
-                   className={headerStyles.search}
-                   type={'text'}
-                   placeholder={'Поиск'}
-                   autoCompleteOff
-                   onKeyPress={handlerSearch}/>
-            <BtnSecond text={text}
-                       iconName={'sort'}
-                       iconType={'round'}
-                       onClick={handlerOpenSort}
-                       className={classNames(headerStyles.sort, direction === 'ASC' ? headerStyles.revert : '')}
-                       isActive={!!anchorEl}
-                       iconPosition={'end'}/>
-            <Menu anchorEl={anchorEl}
-                  open={!!anchorEl}
-                  onClose={handlerCloseSort}>
-                {sortItems.map((el, index) =>
-                    <MenuItem key={index}
-                              onClick={() => handlerSortItem({
-                                  sortBy: el.sortBy,
-                                  direction: el.direction,
-                                  text: el.text
-                              })}>
+            <Input
+                value={input}
+                onChange={(e) => setInput(e.target.value)}
+                className={headerStyles.search}
+                type={'text'}
+                placeholder={'Поиск'}
+                autoCompleteOff
+                onKeyPress={handlerSearch}
+            />
+            <BtnSecond
+                text={text}
+                iconName={'sort'}
+                iconType={'round'}
+                onClick={handlerOpenSort}
+                className={classNames(
+                    headerStyles.sort,
+                    direction === 'ASC' ? headerStyles.revert : ''
+                )}
+                isActive={!!anchorEl}
+                iconPosition={'end'}
+            />
+            <Menu anchorEl={anchorEl} open={!!anchorEl} onClose={handlerCloseSort}>
+                {sortItems.map((el, index) => (
+                    <MenuItem
+                        key={index}
+                        onClick={() =>
+                            handlerSortItem({
+                                sortBy: el.sortBy,
+                                direction: el.direction,
+                                text: el.text
+                            })
+                        }
+                    >
                         {el.text}
-                    </MenuItem>)}
+                    </MenuItem>
+                ))}
             </Menu>
         </div>
     )

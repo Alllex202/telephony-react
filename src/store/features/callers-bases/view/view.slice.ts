@@ -1,5 +1,10 @@
 import {createSlice, Dispatch, PayloadAction} from '@reduxjs/toolkit'
-import {CallersBaseDataModel, CallersBaseHeaderModel, CallingModel, VariableTypeModel} from 'core/api'
+import {
+    CallersBaseDataModel,
+    CallersBaseHeaderModel,
+    CallingModel,
+    VariableTypeModel
+} from 'core/api'
 import {FetchStatuses} from 'shared/types/fetch-statuses'
 import {
     getCallersBaseDataById,
@@ -131,86 +136,110 @@ export const callersBaseViewSlice = createSlice({
 
 export const getCallingsByCallersBaseId = (id: number | string) => (dispatch: Dispatch) => {
     _getCallingsByCallersBaseId(id)
-        .then(res => {
+        .then((res) => {
             dispatch(setCallings(res.data))
         })
-        .catch(handlerError(dispatch, () => {
-            dispatch(setCallings([]))
-        }))
+        .catch(
+            handlerError(dispatch, () => {
+                dispatch(setCallings([]))
+            })
+        )
 }
 
 export const getCallersBaseById = (id: number | string) => (dispatch: Dispatch) => {
     dispatch(setHeaderLoading())
     getCallersBaseHeaderById(id)
-        .then(res => {
+        .then((res) => {
             dispatch(setHeader(res.data))
             dispatch(setHeaderSuccess())
         })
-        .catch(handlerError(dispatch, (err: DefaultAxiosError) => {
-            dispatch(setHeaderError(err.response?.data.message || 'Ошибка при получении данных'))
-        }))
+        .catch(
+            handlerError(dispatch, (err: DefaultAxiosError) => {
+                dispatch(
+                    setHeaderError(err.response?.data.message || 'Ошибка при получении данных')
+                )
+            })
+        )
 }
 
-export const getCallersBaseDataByPage = (id: number | string, params: ParamsPaginatorDataModel) => (dispatch: Dispatch) => {
-    dispatch(setDataLoading())
-    getCallersBaseDataById(id, params)
-        .then(res => {
-            dispatch(pushDataPage(res.data.content))
-            if (res.data.last) {
-                dispatch(setLastPage(true))
-            }
-            dispatch(setPage(res.data.pageable.pageNumber))
-            dispatch(setDataSuccess())
-        })
-        .catch(handlerError(dispatch, (err: DefaultAxiosError) => {
-            dispatch(setDataError(err.response?.data.message || 'Ошибка при получении данных'))
-        }))
-}
+export const getCallersBaseDataByPage =
+    (id: number | string, params: ParamsPaginatorDataModel) => (dispatch: Dispatch) => {
+        dispatch(setDataLoading())
+        getCallersBaseDataById(id, params)
+            .then((res) => {
+                dispatch(pushDataPage(res.data.content))
+                if (res.data.last) {
+                    dispatch(setLastPage(true))
+                }
+                dispatch(setPage(res.data.pageable.pageNumber))
+                dispatch(setDataSuccess())
+            })
+            .catch(
+                handlerError(dispatch, (err: DefaultAxiosError) => {
+                    dispatch(
+                        setDataError(err.response?.data.message || 'Ошибка при получении данных')
+                    )
+                })
+            )
+    }
 
-export const updateCallersBaseDataByPage = (id: number | string, params: ParamsPaginatorDataModel) => (dispatch: Dispatch) => {
-    dispatch(setDataLoading())
-    getCallersBaseDataById(id, params)
-        .then(res => {
-            dispatch(resetData())
-            dispatch(pushDataPage(res.data.content))
-            if (res.data.last) {
-                dispatch(setLastPage(true))
-            }
-            dispatch(setPage(res.data.pageable.pageNumber))
-            dispatch(setDataSuccess())
-        })
-        .catch(handlerError(dispatch, (err: DefaultAxiosError) => {
-            dispatch(setDataError(err.response?.data.message || 'Ошибка при получении данных'))
-        }))
-}
+export const updateCallersBaseDataByPage =
+    (id: number | string, params: ParamsPaginatorDataModel) => (dispatch: Dispatch) => {
+        dispatch(setDataLoading())
+        getCallersBaseDataById(id, params)
+            .then((res) => {
+                dispatch(resetData())
+                dispatch(pushDataPage(res.data.content))
+                if (res.data.last) {
+                    dispatch(setLastPage(true))
+                }
+                dispatch(setPage(res.data.pageable.pageNumber))
+                dispatch(setDataSuccess())
+            })
+            .catch(
+                handlerError(dispatch, (err: DefaultAxiosError) => {
+                    dispatch(
+                        setDataError(err.response?.data.message || 'Ошибка при получении данных')
+                    )
+                })
+            )
+    }
 
 export const loadVariablesTypes = () => (dispatch: Dispatch, getState: () => RootState) => {
     const state = getState()
-    if (state.callersBaseView.variablesTypes && state.callersBaseView.statusesVariables.isSuccess) return
+    if (state.callersBaseView.variablesTypes && state.callersBaseView.statusesVariables.isSuccess)
+        return
 
     dispatch(setVariablesLoading())
     getVariablesTypes()
-        .then(res => {
+        .then((res) => {
             dispatch(setVariables(res.data))
             dispatch(setVariablesSuccess())
         })
-        .catch(handlerError(dispatch, (err: DefaultAxiosError) => {
-            dispatch(setVariablesError(err.response?.data.message || 'Ошибка при получении данных'))
-        }))
+        .catch(
+            handlerError(dispatch, (err: DefaultAxiosError) => {
+                dispatch(
+                    setVariablesError(err.response?.data.message || 'Ошибка при получении данных')
+                )
+            })
+        )
 }
 
-export const changeCallersBaseHeaderById = (data: CallersBaseHeaderModel) => (dispatch: Dispatch) => {
-    dispatch(setHeaderLoading())
-    putCallersBaseHeaderById(data.id, data)
-        .then(res => {
-            dispatch(setHeader(res.data))
-            dispatch(setHeaderSuccess())
-            dispatch(enqueueSnackbar({message: 'Данные изменены', type: 'SUCCESS'}))
-        })
-        .catch(handlerError(dispatch, (err: DefaultAxiosError) => {
-            dispatch(setHeaderError(err.response?.data.message || 'Ошибка при отправке'))
-        }))
-}
+export const changeCallersBaseHeaderById =
+    (data: CallersBaseHeaderModel) => (dispatch: Dispatch) => {
+        dispatch(setHeaderLoading())
+        putCallersBaseHeaderById(data.id, data)
+            .then((res) => {
+                dispatch(setHeader(res.data))
+                dispatch(setHeaderSuccess())
+                dispatch(enqueueSnackbar({message: 'Данные изменены', type: 'SUCCESS'}))
+            })
+            .catch(
+                handlerError(dispatch, (err: DefaultAxiosError) => {
+                    dispatch(setHeaderError(err.response?.data.message || 'Ошибка при отправке'))
+                })
+            )
+    }
 
 export const {
     resetDataStatuses,

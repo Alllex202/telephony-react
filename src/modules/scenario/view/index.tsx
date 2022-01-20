@@ -13,7 +13,7 @@ import {ReactFlowProvider} from 'react-flow-renderer'
 const ScenarioView = () => {
     const {isLoaded} = useSelector((state: RootState) => state.scenarioView)
     const dispatch = useDispatch()
-    const {scenarioId} = useParams<{ scenarioId: string }>()
+    const {scenarioId} = useParams<{scenarioId: string}>()
 
     useEffect(() => {
         dispatch(getScenario(scenarioId))
@@ -29,15 +29,14 @@ const ScenarioView = () => {
     return (
         <ReactFlowProvider>
             <div className={styles.wrapper}>
-                <ScenarioViewHeader/>
-                {
-                    isLoaded &&
+                <ScenarioViewHeader />
+                {isLoaded && (
                     <>
-                        <ScenarioLeftSidebar/>
-                        <ScenarioRightSidebar/>
+                        <ScenarioLeftSidebar />
+                        <ScenarioRightSidebar />
                     </>
-                }
-                <ScenarioEditor/>
+                )}
+                <ScenarioEditor />
             </div>
         </ReactFlowProvider>
     )

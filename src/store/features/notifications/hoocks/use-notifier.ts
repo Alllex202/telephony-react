@@ -18,7 +18,7 @@ const useNotifier = () => {
     }
 
     const removeDisplayed = (id: SnackbarKey) => {
-        displayed = displayed.filter(key => id !== key)
+        displayed = displayed.filter((key) => id !== key)
     }
 
     useEffect(() => {
@@ -32,7 +32,8 @@ const useNotifier = () => {
 
             const options: OptionsObject = {
                 autoHideDuration: 3000,
-                content: (key: SnackbarKey, message: SnackbarMessage) => Notification({key, message, type, action})
+                content: (key: SnackbarKey, message: SnackbarMessage) =>
+                    Notification({key, message, type, action})
             }
 
             enqueueSnackbar(message, {

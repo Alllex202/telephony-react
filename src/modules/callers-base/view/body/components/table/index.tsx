@@ -45,7 +45,11 @@ const CallersBaseViewTable = React.memo(() => {
 
     function handlerScroll(e: React.UIEvent<HTMLDivElement>) {
         if (statusesData.isLoading || statusesHeader.isLoading) return
-        if (e.currentTarget.scrollTop + e.currentTarget.clientHeight + 500 < e.currentTarget.scrollHeight) return
+        if (
+            e.currentTarget.scrollTop + e.currentTarget.clientHeight + 500 <
+            e.currentTarget.scrollHeight
+        )
+            return
         if (isLastPage) return
         if (!header) return
 
@@ -71,10 +75,14 @@ const CallersBaseViewTable = React.memo(() => {
             return
         }
 
-        dispatch(changeCallersBaseHeaderById({
-            ...header,
-            columns: header.columns.map(el => el.id === selectedVariable?.id ? {...el, type: newType.name} : el)
-        }))
+        dispatch(
+            changeCallersBaseHeaderById({
+                ...header,
+                columns: header.columns.map((el) =>
+                    el.id === selectedVariable?.id ? {...el, type: newType.name} : el
+                )
+            })
+        )
         handlerHideMenuType()
     }
 
@@ -88,77 +96,84 @@ const CallersBaseViewTable = React.memo(() => {
 
     return (
         <>
-            <div className={styles.wrapper}
-                 onScroll={handlerScroll}>
-                <Table stickyHeader
-                       className={'data-view'}>
+            <div className={styles.wrapper} onScroll={handlerScroll}>
+                <Table stickyHeader className={'data-view'}>
                     <TableHead>
                         <MuiTableRow>
                             <TableCell></TableCell>
-                            {header?.columns.map((el, ind) =>
+                            {header?.columns.map((el, ind) => (
                                 <TableCell key={el.id}>
                                     <div className={styles.variable}>
                                         <div className={styles.type}>
                                             <span className={styles.text}>
-                                                {variablesTypes && variablesTypes?.find(e => e.name === el.type)?.description}
+                                                {variablesTypes &&
+                                                    variablesTypes?.find((e) => e.name === el.type)
+                                                        ?.description}
                                             </span>
-                                            <BtnCircle iconName={'arrow_drop_down'}
-                                                       className={styles.btn}
-                                                       iconType={'round'}
-                                                       onClick={e => handlerShowMenuType(e.currentTarget, el)}
-                                                       isActive={!!anchorEl && selectedVariable?.id === el.id}
-                                                       activeStyle={styles.active}/>
+                                            <BtnCircle
+                                                iconName={'arrow_drop_down'}
+                                                className={styles.btn}
+                                                iconType={'round'}
+                                                onClick={(e) =>
+                                                    handlerShowMenuType(e.currentTarget, el)
+                                                }
+                                                isActive={
+                                                    !!anchorEl && selectedVariable?.id === el.id
+                                                }
+                                                activeStyle={styles.active}
+                                            />
                                         </div>
                                         <div className={styles.name}>
                                             {/*{el.currentName}*/}
-                                            <InputVariableName initState={el.currentName}
-                                                               el={el}
-                                                               conditionSave={conditionSaveVariablesName}
-                                                               data={header}/>
+                                            <InputVariableName
+                                                initState={el.currentName}
+                                                el={el}
+                                                conditionSave={conditionSaveVariablesName}
+                                                data={header}
+                                            />
                                         </div>
                                     </div>
-                                </TableCell>)}
+                                </TableCell>
+                            ))}
                         </MuiTableRow>
                     </TableHead>
                     <TableBody>
-                        {data?.map((el, ind) =>
-                            <TableRow key={el.id}
-                                      el={el}
-                                      ind={ind}/>)}
+                        {data?.map((el, ind) => (
+                            <TableRow key={el.id} el={el} ind={ind} />
+                        ))}
                     </TableBody>
                 </Table>
             </div>
-            {variablesTypes && <Menu anchorEl={anchorEl}
-                                     open={!!anchorEl}
-                                     onClose={handlerHideMenuType}>
-                <div className={styles.menuWrapper}>
-                    {variablesTypes?.map(el =>
-                        <MenuItem key={el.name}
-                                  onClick={() => handlerChangeVariableType(el)}>
-                            {el.description}
-                        </MenuItem>)}
-                </div>
-            </Menu>}
+            {variablesTypes && (
+                <Menu anchorEl={anchorEl} open={!!anchorEl} onClose={handlerHideMenuType}>
+                    <div className={styles.menuWrapper}>
+                        {variablesTypes?.map((el) => (
+                            <MenuItem key={el.name} onClick={() => handlerChangeVariableType(el)}>
+                                {el.description}
+                            </MenuItem>
+                        ))}
+                    </div>
+                </Menu>
+            )}
         </>
     )
 })
 
 type PropsRow = {
-    ind: number,
-    el: CallersBaseDataModel,
+    ind: number
+    el: CallersBaseDataModel
 }
 
 const TableRow = React.memo(({el, ind}: PropsRow) => {
     return (
         <MuiTableRow key={el.id}>
             <TableCell>{ind + 1}</TableCell>
-            {el.variables.map(el =>
+            {el.variables.map((el) => (
                 // <TableCellRender key={el.id} el={el}/>
-                <TableCell key={el.id}
-                           className={!el.valid ? styles.invalidCell : ''}>
+                <TableCell key={el.id} className={!el.valid ? styles.invalidCell : ''}>
                     {el.value}
                 </TableCell>
-            )}
+            ))}
         </MuiTableRow>
     )
 })

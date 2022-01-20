@@ -7,12 +7,9 @@ const Menu = () => {
     return (
         <>
             <div className={styles.menu}>
-                {
-                    menuItems.map((item, ind) =>
-                        <MenuItem key={ind}
-                                  to={item.link}
-                                  label={item.label}/>)
-                }
+                {menuItems.map((item, ind) => (
+                    <MenuItem key={ind} to={item.link} label={item.label} />
+                ))}
             </div>
         </>
     )

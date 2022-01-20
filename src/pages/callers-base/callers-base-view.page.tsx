@@ -6,9 +6,11 @@ import CallersBaseViewRightSidebar from 'modules/callers-base/view/right-sidebar
 
 const CallersBaseViewPage = () => {
     return (
-        <MainLayout childrenBody={<CallersBaseViewBody/>}
-                    childrenHeader={<CallersBaseViewHeader/>}
-                    childrenRightSidebar={<CallersBaseViewRightSidebar/>}/>
+        <MainLayout
+            childrenBody={<CallersBaseViewBody />}
+            childrenHeader={<CallersBaseViewHeader />}
+            childrenRightSidebar={<CallersBaseViewRightSidebar />}
+        />
     )
 }
 

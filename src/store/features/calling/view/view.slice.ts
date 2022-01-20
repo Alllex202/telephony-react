@@ -1,22 +1,33 @@
 import {createSlice, Dispatch, PayloadAction} from '@reduxjs/toolkit'
 import {
     CallingResultCommonModel,
-    CallingResultPieChartModel, CallingResultTableBody, CallingResultTableHeader,
-    DataChartModel, ParamsPaginatorModel,
+    CallingResultPieChartModel,
+    CallingResultTableBody,
+    CallingResultTableHeader,
+    DataChartModel,
+    ParamsPaginatorModel,
     PieChartPartModel,
-    PieChartTypes, VariableTypeModel
+    VariableTypeModel
 } from 'core/api'
 import {FetchStatuses} from 'shared/types/fetch-statuses'
 import {
     getCallingResultChart,
     getCallingResultCommon,
-    getCallingResultPieChart, getCallingResultTableBody, getCallingResultTableHeader,
+    getCallingResultPieChart,
+    getCallingResultTableBody,
+    getCallingResultTableHeader,
     getVariablesTypes
 } from 'core/api/requests'
 import {handlerError} from 'shared/middleware'
 import {compare, getColor, getNumber} from 'shared/utils'
 
-type CallingResultTypes = 'common' | 'pieChart' | 'chart' | 'tableHeader' | 'tableBody' | 'variables'
+type CallingResultTypes =
+    | 'common'
+    | 'pieChart'
+    | 'chart'
+    | 'tableHeader'
+    | 'tableBody'
+    | 'variables'
 
 export interface ExtraPieChartPartModel extends PieChartPartModel {
     color: string
@@ -91,13 +102,13 @@ const callingViewSlice = createSlice({
     name: 'callingViewSlice',
     initialState,
     reducers: {
-        setLoading: (state, action: PayloadAction<{ type: CallingResultTypes }>) => {
+        setLoading: (state, action: PayloadAction<{type: CallingResultTypes}>) => {
             state[action.payload.type].status = {isLoading: true}
         },
-        setSuccess: (state, action: PayloadAction<{ type: CallingResultTypes }>) => {
+        setSuccess: (state, action: PayloadAction<{type: CallingResultTypes}>) => {
             state[action.payload.type].status = {isSuccess: true}
         },
-        setError: (state, action: PayloadAction<{ error: string, type: CallingResultTypes }>) => {
+        setError: (state, action: PayloadAction<{error: string; type: CallingResultTypes}>) => {
             state[action.payload.type].status = {isError: true, error: action.payload.error}
         },
         setCommonResult: (state, action: PayloadAction<CallingResultCommonModel>) => {
@@ -118,7 +129,8 @@ const callingViewSlice = createSlice({
         setPieChartResult: (state, action: PayloadAction<CallingResultPieChartModel>) => {
             state.pieChart.result = {
                 ...action.payload,
-                parts: action.payload.parts.map((el) => {
+                parts: action.payload.parts
+                    .map((el) => {
                         return {
                             ...el,
                             color: getColor(el.key),
@@ -313,9 +325,16 @@ export const getVariables = () => (dispatch: Dispatch) => {
             dispatch(setVariables(res.data))
             dispatch(setSuccess({type: 'variables'}))
         })
-        .catch(handlerError(dispatch, (err) => {
-            dispatch(setError({error: err.response?.data.message ?? 'Непредусмотренная ошибка', type: 'variables'}))
-        }))
+        .catch(
+            handlerError(dispatch, (err) => {
+                dispatch(
+                    setError({
+                        error: err.response?.data.message ?? 'Непредусмотренная ошибка',
+                        type: 'variables'
+                    })
+                )
+            })
+        )
 }
 
 export const getCallingResultTableHeaderById = (id: number | string) => (dispatch: Dispatch) => {
@@ -325,24 +344,39 @@ export const getCallingResultTableHeaderById = (id: number | string) => (dispatc
             dispatch(setTableHeaderResult(res.data))
             dispatch(setSuccess({type: 'tableHeader'}))
         })
-        .catch(handlerError(dispatch, (err) => {
-            dispatch(setError({error: err.response?.data.message ?? 'Непредусмотренная ошибка', type: 'tableHeader'}))
-        }))
+        .catch(
+            handlerError(dispatch, (err) => {
+                dispatch(
+                    setError({
+                        error: err.response?.data.message ?? 'Непредусмотренная ошибка',
+                        type: 'tableHeader'
+                    })
+                )
+            })
+        )
 }
 
-export const getCallingResultTableBodyById = (id: number | string, params: ParamsPaginatorModel) => (dispatch: Dispatch) => {
-    dispatch(setLoading({type: 'tableBody'}))
-    getCallingResultTableBody(id, params)
-        .then((res) => {
-            dispatch(setTableBodyResult(res.data.content))
-            dispatch(setPage(res.data.pageable.pageNumber + 1))
-            dispatch(setIsLastPage(res.data.last))
-            dispatch(setSuccess({type: 'tableBody'}))
-        })
-        .catch(handlerError(dispatch, (err) => {
-            dispatch(setError({error: err.response?.data.message ?? 'Непредусмотренная ошибка', type: 'tableBody'}))
-        }))
-}
+export const getCallingResultTableBodyById =
+    (id: number | string, params: ParamsPaginatorModel) => (dispatch: Dispatch) => {
+        dispatch(setLoading({type: 'tableBody'}))
+        getCallingResultTableBody(id, params)
+            .then((res) => {
+                dispatch(setTableBodyResult(res.data.content))
+                dispatch(setPage(res.data.pageable.pageNumber + 1))
+                dispatch(setIsLastPage(res.data.last))
+                dispatch(setSuccess({type: 'tableBody'}))
+            })
+            .catch(
+                handlerError(dispatch, (err) => {
+                    dispatch(
+                        setError({
+                            error: err.response?.data.message ?? 'Непредусмотренная ошибка',
+                            type: 'tableBody'
+                        })
+                    )
+                })
+            )
+    }
 
 export const getCallingResultCommonById = (id: number | string) => (dispatch: Dispatch) => {
     dispatch(setLoading({type: 'common'}))
@@ -351,9 +385,16 @@ export const getCallingResultCommonById = (id: number | string) => (dispatch: Di
             dispatch(setCommonResult(res.data))
             dispatch(setSuccess({type: 'common'}))
         })
-        .catch(handlerError(dispatch, (err) => {
-            dispatch(setError({error: err.response?.data.message ?? 'Непредусмотренная ошибка', type: 'common'}))
-        }))
+        .catch(
+            handlerError(dispatch, (err) => {
+                dispatch(
+                    setError({
+                        error: err.response?.data.message ?? 'Непредусмотренная ошибка',
+                        type: 'common'
+                    })
+                )
+            })
+        )
 }
 
 export const getCallingResultChartById = (id: number | string) => (dispatch: Dispatch) => {
@@ -365,9 +406,16 @@ export const getCallingResultChartById = (id: number | string) => (dispatch: Dis
             dispatch(setChartResult(fakeChart))
             dispatch(setSuccess({type: 'chart'}))
         })
-        .catch(handlerError(dispatch, (err) => {
-            dispatch(setError({error: err.response?.data.message ?? 'Непредусмотренная ошибка', type: 'chart'}))
-        }))
+        .catch(
+            handlerError(dispatch, (err) => {
+                dispatch(
+                    setError({
+                        error: err.response?.data.message ?? 'Непредусмотренная ошибка',
+                        type: 'chart'
+                    })
+                )
+            })
+        )
 }
 
 export const getCallingResultPieChartById = (id: number | string) => (dispatch: Dispatch) => {
@@ -379,9 +427,16 @@ export const getCallingResultPieChartById = (id: number | string) => (dispatch: 
             dispatch(setPieChartResult(fakePieChart))
             dispatch(setSuccess({type: 'pieChart'}))
         })
-        .catch(handlerError(dispatch, (err) => {
-            dispatch(setError({error: err.response?.data.message ?? 'Непредусмотренная ошибка', type: 'pieChart'}))
-        }))
+        .catch(
+            handlerError(dispatch, (err) => {
+                dispatch(
+                    setError({
+                        error: err.response?.data.message ?? 'Непредусмотренная ошибка',
+                        type: 'pieChart'
+                    })
+                )
+            })
+        )
 }
 
 export const {

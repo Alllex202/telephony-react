@@ -15,15 +15,12 @@ import CallersBaseViewTable from './components/table'
 import Switch from 'components/ui-kit/switch'
 
 function CallersBaseViewBody() {
-    const {
-        statusesHeader,
-        header,
-        statusesData,
-        onlyInvalid,
-    } = useSelector((state: RootState) => state.callersBaseView)
+    const {statusesHeader, header, statusesData, onlyInvalid} = useSelector(
+        (state: RootState) => state.callersBaseView
+    )
     const [name, setName] = useState<string>(header?.name || '')
     const [lastName, setLastName] = useState<string>(name)
-    const {callersBaseId} = useParams<{ callersBaseId: string }>()
+    const {callersBaseId} = useParams<{callersBaseId: string}>()
     const dispatch = useDispatch()
 
     useEffect(() => {
@@ -32,7 +29,6 @@ function CallersBaseViewBody() {
         return () => {
             dispatch(resetAll())
         }
-        // eslint-disable-next-line
     }, [])
 
     useEffect(() => {
@@ -73,28 +69,30 @@ function CallersBaseViewBody() {
 
     return (
         <>
-            {header &&
-            <>
-                <div className={styles.head}>
-                    <InputName text={name}
-                               lastText={lastName}
-                               setText={setName}
-                               setLastText={setLastName}
-                               callback={onSave}
-                               classNameWrapper={styles.name}
-                               classNameInput={styles.nameInput}
-                               classNameText={styles.nameText}/>
-                    <div className={styles.toggleBlock}>
-                        <Switch checked={onlyInvalid}
-                                onChange={onChangeFilter}/>
-                        <span>Невалидные</span>
+            {header && (
+                <>
+                    <div className={styles.head}>
+                        <InputName
+                            text={name}
+                            lastText={lastName}
+                            setText={setName}
+                            setLastText={setLastName}
+                            callback={onSave}
+                            classNameWrapper={styles.name}
+                            classNameInput={styles.nameInput}
+                            classNameText={styles.nameText}
+                        />
+                        <div className={styles.toggleBlock}>
+                            <Switch checked={onlyInvalid} onChange={onChangeFilter} />
+                            <span>Невалидные</span>
+                        </div>
                     </div>
-                </div>
 
-                <div className={styles.table}>
-                    <CallersBaseViewTable/>
-                </div>
-            </>}
+                    <div className={styles.table}>
+                        <CallersBaseViewTable />
+                    </div>
+                </>
+            )}
         </>
     )
 }

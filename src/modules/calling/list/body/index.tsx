@@ -15,9 +15,9 @@ const CallingListBody = () => {
 
     return (
         <>
-            <CallingSection callingStatus={'RUN'}/>
-            <CallingSection callingStatus={'SCHEDULED'}/>
-            <CallingSection callingStatus={'DONE'}/>
+            <CallingSection callingStatus={'RUN'} />
+            <CallingSection callingStatus={'SCHEDULED'} />
+            <CallingSection callingStatus={'DONE'} />
         </>
     )
 }

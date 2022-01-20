@@ -12,7 +12,7 @@ import {getCallingsByPage} from 'store/features/calling/list'
 import BtnSecond from 'components/ui-kit/btn-second'
 
 type Props = {
-    callingStatus: CallingStatuses,
+    callingStatus: CallingStatuses
 }
 
 const CallingSection = ({callingStatus}: Props) => {
@@ -33,15 +33,16 @@ const CallingSection = ({callingStatus}: Props) => {
     }
 
     const getData = (page: number, callingStatus: CallingStatuses) => {
-        dispatch(getCallingsByPage(callingStatus, {
+        dispatch(
+            getCallingsByPage(callingStatus, {
                 page,
                 size: store[callingStatus].size,
                 direction: filter.direction,
                 name: filter.name,
                 sortBy: filter.sortBy,
                 status: callingStatus
-            }
-        ))
+            })
+        )
     }
 
     const onOpen = (event: React.SyntheticEvent, expanded: boolean) => {
@@ -52,28 +53,47 @@ const CallingSection = ({callingStatus}: Props) => {
 
     return (
         <>
-            <Accordion square={true}
-                       className={'calling-section'}
-                       expanded={store[callingStatus].statuses.isSuccess && store[callingStatus].callingList.length > 0
-                                 ? (callingStatus === 'DONE' ? true : isOpened)
-                                 : false}
-                       onChange={onOpen}>
-                <AccordionSummary expandIcon={callingStatus === 'DONE' || store[callingStatus].callingList.length < 1
-                                              ? null : <Icon name={'expand_more'}
-                                                             type={'round'}
-                                                             className={styles.expandIcon}/>}>
+            <Accordion
+                square={true}
+                className={'calling-section'}
+                expanded={
+                    store[callingStatus].statuses.isSuccess &&
+                    store[callingStatus].callingList.length > 0
+                        ? callingStatus === 'DONE'
+                            ? true
+                            : isOpened
+                        : false
+                }
+                onChange={onOpen}
+            >
+                <AccordionSummary
+                    expandIcon={
+                        callingStatus === 'DONE' ||
+                        store[callingStatus].callingList.length < 1 ? null : (
+                            <Icon
+                                name={'expand_more'}
+                                type={'round'}
+                                className={styles.expandIcon}
+                            />
+                        )
+                    }
+                >
                     {callingStatuses[callingStatus].message} ({store[callingStatus].totalElements})
                 </AccordionSummary>
                 <AccordionDetails>
                     <div className={listStyles.list}>
-                        {store[callingStatus].callingList.map(el => <CallingCard key={el.id}
-                                                                                 data={el}
-                                                                                 callingStatus={callingStatus}/>)}
+                        {store[callingStatus].callingList.map((el) => (
+                            <CallingCard key={el.id} data={el} callingStatus={callingStatus} />
+                        ))}
                     </div>
-                    {!store[callingStatus].isLastPage && !store[callingStatus].statuses.isLoading &&
-                    <BtnSecond className={styles.more}
-                               onClick={loadNextPage}
-                               text={'Показать больше'}/>}
+                    {!store[callingStatus].isLastPage &&
+                        !store[callingStatus].statuses.isLoading && (
+                            <BtnSecond
+                                className={styles.more}
+                                onClick={loadNextPage}
+                                text={'Показать больше'}
+                            />
+                        )}
                 </AccordionDetails>
             </Accordion>
         </>

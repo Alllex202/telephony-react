@@ -14,7 +14,15 @@ import {
     setStartDate
 } from 'store/features/calling/creating'
 import InputName from 'shared/components/input-name'
-import {FormControl, FormControlLabel, InputLabel, MenuItem, Select, SelectChangeEvent, TextField} from '@mui/material'
+import {
+    FormControl,
+    FormControlLabel,
+    InputLabel,
+    MenuItem,
+    Select,
+    SelectChangeEvent,
+    TextField
+} from '@mui/material'
 import {CallersBaseHeaderModel, ScenarioInfoModel} from 'core/api'
 import {getCallersBasesHeader, getScenariosByPage} from 'core/api/requests'
 import {handlerError} from 'shared/middleware'
@@ -27,16 +35,10 @@ import {classNames} from 'shared/utils'
 import {useParams} from 'react-router-dom'
 
 const CallingCreatingBody = () => {
-    const {
-        statuses,
-        name,
-        isNow,
-        startDate,
-        scenarioId,
-        callersBaseId,
-        id
-    } = useSelector((state: RootState) => state.callingCreating)
-    const {callingId} = useParams<{ callingId: string }>()
+    const {statuses, name, isNow, startDate, scenarioId, callersBaseId, id} = useSelector(
+        (state: RootState) => state.callingCreating
+    )
+    const {callingId} = useParams<{callingId: string}>()
     const [bases, setBases] = useState<CallersBaseHeaderModel[] | null>(null)
     const [scenarios, setScenarios] = useState<ScenarioInfoModel[] | null>(null)
     const [_name, _setName] = useState<string>(callingId ? '' : name)
@@ -84,7 +86,7 @@ const CallingCreatingBody = () => {
         dispatch(setName(value))
     }
 
-    const onChangeDateTime = (_date: (number | null | undefined)) => {
+    const onChangeDateTime = (_date: number | null | undefined) => {
         if (_date) {
             const date = new Date(_date)
             dispatch(setStartDate(date.getTime()))
@@ -104,16 +106,17 @@ const CallingCreatingBody = () => {
     return (
         <div className={styles.wrapper}>
             <div className={styles.header}>
-                <InputName text={_name}
-                           lastText={lastName}
-                           setText={_setName}
-                           setLastText={setLastName}
-                           callback={onChangeName}/>
+                <InputName
+                    text={_name}
+                    lastText={lastName}
+                    setText={_setName}
+                    setLastText={setLastName}
+                    callback={onChangeName}
+                />
             </div>
             <div className={styles.form}>
                 <div className={styles.block}>
-                    <div className={styles.subtitle}>
-                    </div>
+                    <div className={styles.subtitle}></div>
                     <div className={styles.content}>
                         <div className={'custom-input'}>
                             <FormControl fullWidth>
@@ -123,26 +126,33 @@ const CallingCreatingBody = () => {
                                     labelId={'base'}
                                     label={'Выберите базу данных'}
                                     onChange={onSelectBase}
-                                    value={callingId && bases ? (callersBaseId as string) ?? ''
-                                                              : (callersBaseId as string) ?? ''}
+                                    value={
+                                        callingId && bases
+                                            ? (callersBaseId as string) ?? ''
+                                            : (callersBaseId as string) ?? ''
+                                    }
                                 >
-                                    {bases?.map(el => <MenuItem key={el.id}
-                                                                value={el.id}>{el.name}</MenuItem>)}
+                                    {bases?.map((el) => (
+                                        <MenuItem key={el.id} value={el.id}>
+                                            {el.name}
+                                        </MenuItem>
+                                    ))}
                                 </Select>
                             </FormControl>
                         </div>
 
-                        <BtnSecond text={'Загрузить базу'}
-                                   iconPosition={'end'}
-                                   iconName={'upload'}
-                                   iconType={'round'}
-                                   className={styles.btn}/>
+                        <BtnSecond
+                            text={'Загрузить базу'}
+                            iconPosition={'end'}
+                            iconName={'upload'}
+                            iconType={'round'}
+                            className={styles.btn}
+                        />
                     </div>
                 </div>
 
                 <div className={styles.block}>
-                    <div className={styles.subtitle}>
-                    </div>
+                    <div className={styles.subtitle}></div>
                     <div className={styles.content}>
                         <div className={'custom-input'}>
                             <FormControl fullWidth>
@@ -152,27 +162,32 @@ const CallingCreatingBody = () => {
                                     labelId={'scenario'}
                                     label={'Выберите сценарий'}
                                     onChange={onSelectScenario}
-                                    value={callingId && scenarios ? (scenarioId as string) ?? ''
-                                                                  : (scenarioId as string) ?? ''}
+                                    value={
+                                        callingId && scenarios
+                                            ? (scenarioId as string) ?? ''
+                                            : (scenarioId as string) ?? ''
+                                    }
                                 >
-                                    {scenarios?.map(el => <MenuItem key={el.id}
-                                                                    value={el.id}>{el.name}</MenuItem>)}
+                                    {scenarios?.map((el) => (
+                                        <MenuItem key={el.id} value={el.id}>
+                                            {el.name}
+                                        </MenuItem>
+                                    ))}
                                 </Select>
                             </FormControl>
                         </div>
-                        <BtnSecond text={'Новый сценарий'}
-                                   iconPosition={'end'}
-                                   iconName={'forum'}
-                                   iconType={'round'}
-                                   className={styles.btn}/>
+                        <BtnSecond
+                            text={'Новый сценарий'}
+                            iconPosition={'end'}
+                            iconName={'forum'}
+                            iconType={'round'}
+                            className={styles.btn}
+                        />
                     </div>
-
                 </div>
 
                 <div className={styles.block}>
-                    <div className={styles.subtitle}>
-                        Дата и время запуска обзванивания
-                    </div>
+                    <div className={styles.subtitle}>Дата и время запуска обзванивания</div>
                     <div className={styles.content}>
                         <LocalizationProvider dateAdapter={DateAdapter}>
                             <div className={styles.doubleInput}>
@@ -195,15 +210,29 @@ const CallingCreatingBody = () => {
                                 </div>
                             </div>
                         </LocalizationProvider>
-                        <FormControlLabel control={<Checkbox checked={isNow}
-                                                             className={styles.checkbox}
-                                                             onChange={onChangeIsNow}/>}
-                                          label={'Запустить сейчас'}/>
+                        <FormControlLabel
+                            control={
+                                <Checkbox
+                                    checked={isNow}
+                                    className={styles.checkbox}
+                                    onChange={onChangeIsNow}
+                                />
+                            }
+                            label={'Запустить сейчас'}
+                        />
                     </div>
                 </div>
-                <Btn text={isNow ? 'Начать обзванивание' : callingId ? 'Обнов. обзванивание' : 'Добавить в очередь'}
-                     className={styles.btn}
-                     onClick={onSave}/>
+                <Btn
+                    text={
+                        isNow
+                            ? 'Начать обзванивание'
+                            : callingId
+                            ? 'Обнов. обзванивание'
+                            : 'Добавить в очередь'
+                    }
+                    className={styles.btn}
+                    onClick={onSave}
+                />
             </div>
         </div>
     )

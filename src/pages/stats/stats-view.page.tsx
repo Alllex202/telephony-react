@@ -4,10 +4,7 @@ import StatsBody from 'modules/stats/view/body'
 import StatsHeader from 'modules/stats/view/head'
 
 const StatsViewPage = () => {
-    return (
-        <MainLayout childrenBody={<StatsBody/>}
-                    childrenHeader={<StatsHeader/>}/>
-    )
+    return <MainLayout childrenBody={<StatsBody />} childrenHeader={<StatsHeader />} />
 }
 
 export default StatsViewPage

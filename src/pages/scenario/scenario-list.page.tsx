@@ -5,8 +5,7 @@ import ScenarioListHeader from 'modules/scenario/list/header'
 
 const ScenarioListPage = () => {
     return (
-        <MainLayout childrenBody={<ScenarioListBody/>}
-                    childrenHeader={<ScenarioListHeader/>}/>
+        <MainLayout childrenBody={<ScenarioListBody />} childrenHeader={<ScenarioListHeader />} />
     )
 }
 

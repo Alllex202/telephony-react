@@ -21,8 +21,8 @@ import {enqueueSnackbar} from 'store/features/notifications'
 import {handlerError} from 'shared/middleware'
 
 type Props = {
-    data: ScenarioInfoModel,
-    className?: string,
+    data: ScenarioInfoModel
+    className?: string
 }
 
 const ScenarioCard = ({data, className}: Props) => {
@@ -42,36 +42,40 @@ const ScenarioCard = ({data, className}: Props) => {
         closeOptions()
         setStatuses({isLoading: true, isSuccess: false, isError: false})
         deleteScenario(data.id)
-            .then(res => {
+            .then((res) => {
                 dispatch(deleteScenarioById(data.id))
                 dispatch(enqueueSnackbar({message: 'Сценарий удален', type: 'SUCCESS'}))
                 // setStatuses({isLoading: false, isSuccess: true, isError: false});
             })
-            .catch(handlerError(dispatch, (err: DefaultAxiosError) => {
-                setStatuses({isLoading: false, isSuccess: false, isError: true})
-            }))
+            .catch(
+                handlerError(dispatch, (err: DefaultAxiosError) => {
+                    setStatuses({isLoading: false, isSuccess: false, isError: true})
+                })
+            )
     }
 
     return (
-        <Link to={routes.scenario.view(data.id)}
-              className={statuses.isLoading ? 'd-none' : ''}>
-            <Card className={classNames(className, cardStyles.card, styles.card)}
-                  isActive={!!anchorEl}>
+        <Link to={routes.scenario.view(data.id)} className={statuses.isLoading ? 'd-none' : ''}>
+            <Card
+                className={classNames(className, cardStyles.card, styles.card)}
+                isActive={!!anchorEl}
+            >
                 <div className={cardStyles.wrapper}>
-                    <div onClick={e => e.preventDefault()}
-                         className={cardStyles.options_wrapper}>
-                        <BtnCircle iconName={'more_horiz'}
-                                   iconType={'round'}
-                                   className={cardStyles.options_btn}
-                                   onClick={openOptions}
-                                   isActive={!!anchorEl}/>
-                        <Menu anchorEl={anchorEl}
-                              open={!!anchorEl}
-                              onClose={closeOptions}>
-                            <MenuItem onClick={handlerDelete}
-                                      isDanger
-                                      iconName={'delete_forever'}
-                                      iconType={'round'}>
+                    <div onClick={(e) => e.preventDefault()} className={cardStyles.options_wrapper}>
+                        <BtnCircle
+                            iconName={'more_horiz'}
+                            iconType={'round'}
+                            className={cardStyles.options_btn}
+                            onClick={openOptions}
+                            isActive={!!anchorEl}
+                        />
+                        <Menu anchorEl={anchorEl} open={!!anchorEl} onClose={closeOptions}>
+                            <MenuItem
+                                onClick={handlerDelete}
+                                isDanger
+                                iconName={'delete_forever'}
+                                iconType={'round'}
+                            >
                                 Удалить
                             </MenuItem>
                         </Menu>
@@ -80,15 +84,19 @@ const ScenarioCard = ({data, className}: Props) => {
                         <h2 className={cardStyles.title}>{data.name}</h2>
                         <div className={cardStyles.description}>
                             <div className={cardStyles.info}>
-                                <Icon name={'calendar_today'}
-                                      type={'round'}
-                                      className={cardStyles.icon}/>
+                                <Icon
+                                    name={'calendar_today'}
+                                    type={'round'}
+                                    className={cardStyles.icon}
+                                />
                                 {formatDate(data.created)}
                             </div>
                             <div className={cardStyles.info}>
-                                <Icon name={'table_rows'}
-                                      type={'round'}
-                                      className={cardStyles.icon}/>
+                                <Icon
+                                    name={'table_rows'}
+                                    type={'round'}
+                                    className={cardStyles.icon}
+                                />
                                 {data.countSteps} ш
                             </div>
                         </div>

@@ -4,7 +4,7 @@ import Logo from './components/logo'
 import BtnToggle from 'components/ui-kit/btn-toggle'
 
 type Props = {
-    children: ReactNode,
+    children: ReactNode
 }
 
 const Bar = ({children}: Props) => {
@@ -17,17 +17,17 @@ const Bar = ({children}: Props) => {
     return (
         <div className={styles.header}>
             <div className={styles.left}>
-                <Logo/>
+                <Logo />
             </div>
-            <div className={styles.center}>
-                {children}
-            </div>
+            <div className={styles.center}>{children}</div>
             <div className={styles.right}>
-                <BtnToggle className={styles.profile}
-                           isActive={isOpen}
-                           onClick={toggleProfile}
-                           iconName={'account_circle'}
-                           iconType={'round'}/>
+                <BtnToggle
+                    className={styles.profile}
+                    isActive={isOpen}
+                    onClick={toggleProfile}
+                    iconName={'account_circle'}
+                    iconType={'round'}
+                />
             </div>
         </div>
     )

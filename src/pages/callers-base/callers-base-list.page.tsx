@@ -5,8 +5,10 @@ import MainLayout from 'modules/main-layout'
 
 const CallersBaseListPage = () => {
     return (
-        <MainLayout childrenBody={<CallersBaseListBody/>}
-                    childrenHeader={<CallersBaseListHeader/>}/>
+        <MainLayout
+            childrenBody={<CallersBaseListBody />}
+            childrenHeader={<CallersBaseListHeader />}
+        />
     )
 }
 

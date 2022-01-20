@@ -6,9 +6,11 @@ import TestRightSidebar from 'modules/test/right-sidebar'
 
 const TestPage = () => {
     return (
-        <MainLayout childrenBody={<TestBody/>}
-                    childrenHeader={<TestHeader/>}
-                    childrenRightSidebar={<TestRightSidebar/>}/>
+        <MainLayout
+            childrenBody={<TestBody />}
+            childrenHeader={<TestHeader />}
+            childrenRightSidebar={<TestRightSidebar />}
+        />
     )
 }
 
