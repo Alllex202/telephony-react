@@ -1,0 +1,61 @@
+.gitignore
+package.json
+package-lock.json
+README.md
+tsconfig.json
+*.svg
+
+# dependencies
+/node_modules
+/.pnp
+.pnp.js
+
+# IDEs and editors
+/.idea
+.project
+.classpath
+.c9/
+*.launch
+.settings/
+*.sublime-workspace
+
+# IDE - VSCode
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+.history/*
+
+# testing
+/coverage
+
+# production
+/dist
+
+# misc
+.DS_Store
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# docker
+.dockerignore
+Dockerfile
+
+
+# development env
+.env
+
+
+# stats
+stats.json
+
+# prettier
+.prettierrc.json
+.prettierignore
