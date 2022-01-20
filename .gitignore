@@ -50,3 +50,7 @@ Dockerfile
 
 # stats
 stats.json
+
+# prettier
+.prettierrc.json
+.prettierrc
