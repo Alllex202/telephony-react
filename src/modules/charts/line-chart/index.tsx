@@ -16,7 +16,7 @@ const LineChart = ({nameTooltip, data}: Props) => {
         <ResponsiveContainer width={'100%'} height={250}>
             <_LineChart data={data}>
                 <XAxis dataKey='time' />
-                <YAxis />
+                <YAxis allowDecimals={false} />
                 <Tooltip formatter={tooltipFormatter} />
                 <Line
                     type={'monotone'}
