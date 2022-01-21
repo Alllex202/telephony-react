@@ -1,9 +1,13 @@
 import {DirectionSort, SortType} from 'shared/data/sort-items'
-import {CallingStatuses} from 'core/api/models/calling'
+import {CallingStatusTypes} from 'core/api/models/calling'
 
 export interface ParamsPaginatorModel {
     page: number
     size: number
+}
+
+export interface ParamsPaginatorWithInvalidModel extends ParamsPaginatorModel {
+    onlyInvalid: boolean
 }
 
 export interface ParamsPaginatorWithFilterModel<SortType, DirectionSort>
@@ -15,5 +19,5 @@ export interface ParamsPaginatorWithFilterModel<SortType, DirectionSort>
 
 export interface ParamsPaginatorWithFilterAndStatusModel
     extends ParamsPaginatorWithFilterModel<SortType, DirectionSort> {
-    status: CallingStatuses
+    status: CallingStatusTypes
 }
