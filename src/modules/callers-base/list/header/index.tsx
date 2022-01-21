@@ -14,7 +14,7 @@ import {resetCallersBasesStates} from 'store/features/callers-bases/list'
 import {classNames} from 'shared/utils'
 import {DirectionSort, sortItems, SortType} from 'shared/data/sort-items'
 
-function CallersBaseListHeader() {
+const CallersBaseListHeader = () => {
     const {statuses} = useSelector((state: RootState) => state.callersBaseList)
     const {direction, sortBy, text} = useSelector((state: RootState) => state.filter)
     const dispatch = useDispatch()
@@ -30,19 +30,23 @@ function CallersBaseListHeader() {
         // eslint-disable-next-line
     }, [])
 
-    function handlerAdd() {
+    const handlerAdd = () => {
         history.push(routes.callersBase.add())
     }
 
-    function handlerOpenSort(e: any) {
+    const handlerOpenSort = (e: any) => {
         setAnchorEl(e.currentTarget)
     }
 
-    function handlerCloseSort() {
+    const handlerCloseSort = () => {
         setAnchorEl(null)
     }
 
-    function handlerSortItem(options: {sortBy: SortType; direction: DirectionSort; text: string}) {
+    const handlerSortItem = (options: {
+        sortBy: SortType
+        direction: DirectionSort
+        text: string
+    }) => {
         handlerCloseSort()
         if (statuses.isLoading || (options.sortBy === sortBy && options.direction === direction))
             return
@@ -58,7 +62,7 @@ function CallersBaseListHeader() {
         )
     }
 
-    function handlerSearch(event: React.KeyboardEvent) {
+    const handlerSearch = (event: React.KeyboardEvent) => {
         if (event.key === 'Enter') {
             if (statuses.isLoading || input === lastInput) return
 

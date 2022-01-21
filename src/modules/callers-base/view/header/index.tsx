@@ -11,7 +11,7 @@ import {deleteCallersBase} from 'core/api/requests'
 import {enqueueSnackbar} from 'store/features/notifications'
 import {handlerError} from 'shared/middleware'
 
-function CallersBaseViewHeader() {
+const CallersBaseViewHeader = () => {
     const dispatch = useDispatch()
     const {header, statusesHeader} = useSelector((state: RootState) => state.callersBaseView)
     const history = useHistory()
@@ -23,7 +23,7 @@ function CallersBaseViewHeader() {
         }
     }, [header?.id])
 
-    function handlerBack() {
+    const handlerBack = () => {
         if (created && header?.id) {
             deleteCallersBase(header.id)
                 .then(() => {
@@ -36,12 +36,12 @@ function CallersBaseViewHeader() {
         }
     }
 
-    function handlerCalling() {
+    const handlerCalling = () => {
         // TODO Создать обзвон с текущей базой
         history.push(routes.calling.create())
     }
 
-    function handlerSave() {
+    const handlerSave = () => {
         if (created && header?.id) {
             setCreated(false)
             history.replace(routes.callersBase.view(header.id))

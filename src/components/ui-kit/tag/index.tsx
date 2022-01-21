@@ -7,7 +7,7 @@ type Props = {
     className?: string
 }
 
-function Tag({className, text}: Props) {
+const Tag = ({className, text}: Props) => {
     return <div className={classNames(className, styles.tag)}>{text}</div>
 }
 

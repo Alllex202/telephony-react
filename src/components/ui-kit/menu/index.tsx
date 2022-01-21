@@ -9,7 +9,7 @@ type Props = {
     children?: React.ReactNode
 }
 
-function Menu({anchorEl, open, onClose, children}: Props) {
+const Menu = ({anchorEl, open, onClose, children}: Props) => {
     return (
         <MuiMenu
             open={open}

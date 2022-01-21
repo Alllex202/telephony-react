@@ -43,7 +43,7 @@ const CallersBaseViewTable = React.memo(() => {
         // eslint-disable-next-line
     }, [header, onlyInvalid])
 
-    function handlerScroll(e: React.UIEvent<HTMLDivElement>) {
+    const handlerScroll = (e: React.UIEvent<HTMLDivElement>) => {
         if (statusesData.isLoading || statusesHeader.isLoading) return
         if (
             e.currentTarget.scrollTop + e.currentTarget.clientHeight + 500 <
@@ -56,18 +56,18 @@ const CallersBaseViewTable = React.memo(() => {
         dispatch(getCallersBaseDataByPage(header.id, {page: page + 1, size, onlyInvalid}))
     }
 
-    function handlerShowMenuType(anchor: Element, variable: CallersBaseHeaderColumnModel) {
+    const handlerShowMenuType = (anchor: Element, variable: CallersBaseHeaderColumnModel) => {
         if (statusesData.isLoading || statusesHeader.isLoading) return
         setAnchorEl(anchor)
         selectVariable(variable)
     }
 
-    function handlerHideMenuType() {
+    const handlerHideMenuType = () => {
         setAnchorEl(null)
         selectVariable(null)
     }
 
-    function handlerChangeVariableType(newType: VariableTypeModel) {
+    const handlerChangeVariableType = (newType: VariableTypeModel) => {
         if (statusesData.isLoading || statusesHeader.isLoading) return
         if (!header) return
         if (newType.name === selectedVariable?.type) {
@@ -86,7 +86,7 @@ const CallersBaseViewTable = React.memo(() => {
         handlerHideMenuType()
     }
 
-    function conditionSaveVariablesName() {
+    const conditionSaveVariablesName = () => {
         return !(statusesHeader.isLoading || statusesData.isLoading)
     }
 

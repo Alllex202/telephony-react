@@ -12,7 +12,7 @@ type Props = {
     activeStyle?: string
 }
 
-function BtnCircle({className, iconName, iconType, onClick, isActive, activeStyle}: Props) {
+const BtnCircle = ({className, iconName, iconType, onClick, isActive, activeStyle}: Props) => {
     return (
         <BtnCircleDefault
             iconName={iconName}

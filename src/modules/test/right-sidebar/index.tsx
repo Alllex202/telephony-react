@@ -1,7 +1,7 @@
 import React from 'react'
 import RightSidebar from 'components/right-sidebar'
 
-function TestRightSidebar() {
+const TestRightSidebar = () => {
     return <RightSidebar>Это опциональная менюшка с правой стороны</RightSidebar>
 }
 

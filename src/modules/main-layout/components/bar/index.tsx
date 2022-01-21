@@ -10,7 +10,7 @@ type Props = {
 const Bar = ({children}: Props) => {
     const [isOpen, setOpen] = useState<boolean>(false)
 
-    function toggleProfile() {
+    const toggleProfile = () => {
         setOpen(!isOpen)
     }
 

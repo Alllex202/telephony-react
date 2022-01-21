@@ -8,7 +8,7 @@ import {formatDate} from 'shared/utils/format-date'
 import Info from './components/info'
 import {routes} from 'routing/routes'
 
-function CallersBaseViewRightSidebar() {
+const CallersBaseViewRightSidebar = () => {
     const {header, callings} = useSelector((state: RootState) => state.callersBaseView)
 
     return (

@@ -6,7 +6,7 @@ type Props = {
     className?: string
 }
 
-function Icon({type, name, className}: Props) {
+const Icon = ({type, name, className}: Props) => {
     return (
         <span
             className={`material-icons material-icons${type ? `-${type}` : ''} ${className ?? ''}`}

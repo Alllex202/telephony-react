@@ -30,19 +30,23 @@ const CallingListHeader = () => {
         // eslint-disable-next-line
     }, [])
 
-    function handlerAdd() {
+    const handlerAdd = () => {
         history.push(routes.calling.create())
     }
 
-    function handlerOpenSort(e: any) {
+    const handlerOpenSort = (e: any) => {
         setAnchorEl(e.currentTarget)
     }
 
-    function handlerCloseSort() {
+    const handlerCloseSort = () => {
         setAnchorEl(null)
     }
 
-    function handlerSortItem(options: {sortBy: SortType; direction: DirectionSort; text: string}) {
+    const handlerSortItem = (options: {
+        sortBy: SortType
+        direction: DirectionSort
+        text: string
+    }) => {
         handlerCloseSort()
         if (
             store['RUN'].statuses.isLoading ||
@@ -63,7 +67,7 @@ const CallingListHeader = () => {
         )
     }
 
-    function handlerSearch(event: React.KeyboardEvent) {
+    const handlerSearch = (event: React.KeyboardEvent) => {
         if (event.key === 'Enter') {
             if (
                 store['RUN'].statuses.isLoading ||

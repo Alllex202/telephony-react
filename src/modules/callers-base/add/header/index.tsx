@@ -3,10 +3,10 @@ import styles from './styles.module.scss'
 import BtnSecond from 'components/ui-kit/btn-second'
 import {useHistory} from 'react-router-dom'
 
-function CallersBaseAddHeader() {
+const CallersBaseAddHeader = () => {
     const history = useHistory()
 
-    function handlerBack() {
+    const handlerBack = () => {
         history.goBack()
     }
 

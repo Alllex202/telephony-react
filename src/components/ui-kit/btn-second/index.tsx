@@ -14,7 +14,7 @@ type Props = {
     disabled?: boolean
 }
 
-function BtnSecond({
+const BtnSecond = ({
     text,
     iconName,
     iconType,
@@ -23,7 +23,7 @@ function BtnSecond({
     onClick,
     isActive,
     disabled
-}: Props) {
+}: Props) => {
     return (
         <BtnDefault
             className={classNames(styles.btn, isActive ? styles.active : '', className ?? '')}

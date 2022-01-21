@@ -18,7 +18,7 @@
 //     onLoadedHandler?: () => void
 // };
 //
-// export function useFetch<D>(options?: Props<D>) {
+// export const useFetch<D> = (options?: Props<D>) => {
 //     const [state, setState] = useState<State<D>>({isError: false, isLoading: false, isSuccess: false});
 //
 //     const fetch = useCallback(() => {
@@ -52,7 +52,7 @@
 //     return {fetch, state};
 // }
 
-// export function _useFetch<D, E>(response: (...params: any[]) => BaseResponse<D>, initData?: D) {
+// export const _useFetch<D, E> = (response: (...params: any[]) => BaseResponse<D>, initData?: D) => {
 //     const [isLoading, setLoading] = useState<boolean>(false);
 //     const [isError, setIsError] = useState<boolean>(false);
 //     const [isSuccess, setSuccess] = useState<boolean>(false);

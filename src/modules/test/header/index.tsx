@@ -4,7 +4,7 @@ import Btn from 'components/ui-kit/btn'
 import BtnSecond from 'components/ui-kit/btn-second'
 import Input from 'components/ui-kit/input'
 
-function TestHeader() {
+const TestHeader = () => {
     return (
         <div className={styles.header}>
             <Btn

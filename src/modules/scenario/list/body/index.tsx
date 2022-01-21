@@ -20,7 +20,7 @@ const ScenarioListBody = () => {
         getData(page + 1)
     }
 
-    function getData(page: number) {
+    const getData = (page: number) => {
         dispatch(
             getScenariosByPage({
                 page,

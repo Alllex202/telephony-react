@@ -36,7 +36,7 @@ const ScenarioListHeader = () => {
         // eslint-disable-next-line
     }, [])
 
-    function handlerAdd() {
+    const handlerAdd = () => {
         if (creating.isLoading) return
 
         setCreating({isLoading: true})
@@ -55,15 +55,19 @@ const ScenarioListHeader = () => {
             )
     }
 
-    function handlerOpenSort(e: any) {
+    const handlerOpenSort = (e: any) => {
         setAnchorEl(e.currentTarget)
     }
 
-    function handlerCloseSort() {
+    const handlerCloseSort = () => {
         setAnchorEl(null)
     }
 
-    function handlerSortItem(options: {sortBy: SortType; direction: DirectionSort; text: string}) {
+    const handlerSortItem = (options: {
+        sortBy: SortType
+        direction: DirectionSort
+        text: string
+    }) => {
         handlerCloseSort()
         if (statuses.isLoading || (options.sortBy === sortBy && options.direction === direction))
             return
@@ -79,7 +83,7 @@ const ScenarioListHeader = () => {
         )
     }
 
-    function handlerSearch(event: React.KeyboardEvent) {
+    const handlerSearch = (event: React.KeyboardEvent) => {
         if (event.key === 'Enter') {
             if (statuses.isLoading || input === lastInput) return
 

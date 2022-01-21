@@ -13,7 +13,7 @@ import {enqueueSnackbar} from 'store/features/notifications'
 
 const fileType = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
 
-function CallersBaseAddBody() {
+const CallersBaseAddBody = () => {
     const [name, setName] = useState<string>('Новая база данных')
     const [lastName, setLastName] = useState<string>(name)
     const [file, setFile] = useState<File | null>(null)
@@ -23,31 +23,31 @@ function CallersBaseAddBody() {
     const inputFile = useRef<HTMLInputElement | null>(null)
     const dispatch = useDispatch()
 
-    function onDrop(e: React.DragEvent) {
+    const onDrop = (e: React.DragEvent) => {
         e.preventDefault()
         setDrag(false)
         tryUploadFile(e.dataTransfer.files)
     }
 
-    function onDragStart(e: React.DragEvent) {
+    const onDragStart = (e: React.DragEvent) => {
         e.preventDefault()
         setDrag(true)
     }
 
-    function onDragLeave(e: React.DragEvent) {
+    const onDragLeave = (e: React.DragEvent) => {
         e.preventDefault()
         setDrag(false)
     }
 
-    function handlerOpenFileExplorer() {
+    const handlerOpenFileExplorer = () => {
         inputFile.current?.click()
     }
 
-    function handlerChangeInputFile(e: React.ChangeEvent<HTMLInputElement>) {
+    const handlerChangeInputFile = (e: React.ChangeEvent<HTMLInputElement>) => {
         tryUploadFile(e.currentTarget.files)
     }
 
-    function tryUploadFile(files: FileList | null) {
+    const tryUploadFile = (files: FileList | null) => {
         if (!files) return
         if (!name) {
             setError('Необходимо ввести название')

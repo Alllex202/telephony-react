@@ -12,7 +12,7 @@ type Props = {
     activeStyle?: string
 }
 
-function BtnToggle({iconName, className, onClick, iconType, isActive, activeStyle}: Props) {
+const BtnToggle = ({iconName, className, onClick, iconType, isActive, activeStyle}: Props) => {
     return (
         <BtnCircleDefault
             iconName={iconName}

@@ -15,7 +15,7 @@ const month: {[key: number]: string} = {
     11: 'Декабрь'
 }
 
-export function formatDate(ms: number, shortMonth?: boolean, isTime?: boolean): string {
+export const formatDate = (ms: number, shortMonth?: boolean, isTime?: boolean): string => {
     const date = new Date(ms)
     let _month = month[date.getMonth()]
     let time: string = ''
@@ -33,5 +33,3 @@ export function formatDate(ms: number, shortMonth?: boolean, isTime?: boolean): 
 
     return `${date.getDate()} ${_month} ${date.getFullYear()}${time}`
 }
-
-

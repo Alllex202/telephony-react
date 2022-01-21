@@ -11,7 +11,7 @@ type Props = {
     onBlur?: React.FocusEventHandler<HTMLDivElement>
 }
 
-function Card({children, className, isActive, disableHover, onFocus, onBlur}: Props) {
+const Card = ({children, className, isActive, disableHover, onFocus, onBlur}: Props) => {
     return (
         <div
             className={classNames(

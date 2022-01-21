@@ -28,7 +28,7 @@ const CallingViewTable = React.memo(({callingId}: Props) => {
         }
     }, [])
 
-    function handlerScroll(e: React.UIEvent<HTMLDivElement>) {
+    const handlerScroll = (e: React.UIEvent<HTMLDivElement>) => {
         if (tableBody.status.isLoading || tableHeader.status.isLoading) return
         if (
             e.currentTarget.scrollTop + e.currentTarget.clientHeight + 500 <

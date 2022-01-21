@@ -14,7 +14,7 @@ type Props = {
     disabled?: boolean
 }
 
-function Btn({
+const Btn = ({
     text,
     iconName,
     iconType,
@@ -23,7 +23,7 @@ function Btn({
     onClick,
     isActive,
     disabled
-}: Props) {
+}: Props) => {
     return (
         <BtnDefault
             text={text}

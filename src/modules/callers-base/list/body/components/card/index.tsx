@@ -24,7 +24,7 @@ type Props = {
     className?: string
 }
 
-function CallersBaseCard({data, className}: Props) {
+const CallersBaseCard = ({data, className}: Props) => {
     const [anchorEl, setAnchorEl] = useState<Element | null>(null)
     const [statuses, setStatuses] = useState<FetchStatuses>({
         isLoading: false,
@@ -33,15 +33,15 @@ function CallersBaseCard({data, className}: Props) {
     })
     const dispatch = useDispatch()
 
-    function openOptions(e: any) {
+    const openOptions = (e: any) => {
         setAnchorEl(e.currentTarget)
     }
 
-    function closeOptions() {
+    const closeOptions = () => {
         setAnchorEl(null)
     }
 
-    async function handlerDelete() {
+    const handlerDelete = () => {
         closeOptions()
         setStatuses({isLoading: true, isSuccess: false, isError: false})
         deleteCallersBase(data.id)

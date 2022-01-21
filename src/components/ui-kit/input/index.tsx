@@ -16,7 +16,7 @@ type Props = {
     onBlur?: React.FocusEventHandler<HTMLInputElement>
 }
 
-function Input({
+const Input = ({
     value,
     onChange,
     placeholder,
@@ -29,7 +29,7 @@ function Input({
     max,
     min,
     onBlur
-}: Props) {
+}: Props) => {
     return (
         <input
             className={[styles.input, className].join(' ')}

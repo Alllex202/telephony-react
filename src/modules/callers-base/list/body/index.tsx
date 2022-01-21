@@ -9,7 +9,7 @@ import {
 import CallersBaseCard from './components/card'
 import BtnSecond from 'components/ui-kit/btn-second'
 
-function CallersBaseListBody() {
+const CallersBaseListBody = () => {
     const {callersBaseList, statuses, error, page, size, isLastPage} = useSelector(
         (state: RootState) => state.callersBaseList
     )
@@ -28,7 +28,7 @@ function CallersBaseListBody() {
         // eslint-disable-next-line
     }, [filter])
 
-    function getData(page: number) {
+    const getData = (page: number) => {
         dispatch(
             getCallersBasesByPage({
                 page,
@@ -84,4 +84,3 @@ function CallersBaseListBody() {
 }
 
 export default CallersBaseListBody
-

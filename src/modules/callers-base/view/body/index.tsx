@@ -14,7 +14,7 @@ import {RootState} from 'store'
 import CallersBaseViewTable from './components/table'
 import Switch from 'components/ui-kit/switch'
 
-function CallersBaseViewBody() {
+const CallersBaseViewBody = () => {
     const {statusesHeader, header, statusesData, onlyInvalid} = useSelector(
         (state: RootState) => state.callersBaseView
     )
@@ -36,13 +36,13 @@ function CallersBaseViewBody() {
         setLastName(header?.name || '')
     }, [header?.name])
 
-    function onSave(currentValue: string) {
+    const onSave = (currentValue: string) => {
         if (header) {
             saveName(currentValue)
         }
     }
 
-    function saveName(newName: string) {
+    const saveName = (newName: string) => {
         if (statusesHeader.isLoading || statusesData.isLoading || name === '') {
             setName(lastName)
             return
@@ -52,7 +52,7 @@ function CallersBaseViewBody() {
         dispatch(changeCallersBaseHeaderById({...header, name: newName}))
     }
 
-    function onChangeFilter() {
+    const onChangeFilter = () => {
         if (statusesHeader.isLoading || statusesData.isLoading) return
         if (!header) return
 

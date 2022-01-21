@@ -12,12 +12,12 @@ type Props = {
     el: CallersBaseHeaderColumnModel
 }
 
-function InputVariableName({conditionSave, initState, data, el}: Props) {
+const InputVariableName = ({conditionSave, initState, data, el}: Props) => {
     const [name, setName] = useState<string>(initState)
     const [lastName, setLastName] = useState<string>(name)
     const dispatch = useDispatch()
 
-    function save(currentValue: string) {
+    const save = (currentValue: string) => {
         if (currentValue === lastName || !data) return
         if (currentValue === '' || !conditionSave()) {
             setName(lastName)

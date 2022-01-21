@@ -30,15 +30,15 @@ const ScenarioCard = ({data, className}: Props) => {
     const [statuses, setStatuses] = useState<FetchStatuses>({})
     const dispatch = useDispatch()
 
-    function openOptions(e: any) {
+    const openOptions = (e: any) => {
         setAnchorEl(e.currentTarget)
     }
 
-    function closeOptions() {
+    const closeOptions = () => {
         setAnchorEl(null)
     }
 
-    async function handlerDelete() {
+    const handlerDelete = () => {
         closeOptions()
         setStatuses({isLoading: true, isSuccess: false, isError: false})
         deleteScenario(data.id)

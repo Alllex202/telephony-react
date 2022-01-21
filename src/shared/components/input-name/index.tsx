@@ -16,7 +16,7 @@ type Props = {
     className?: string
 }
 
-function InputName({
+const InputName = ({
     text,
     setText,
     setLastText,
@@ -26,7 +26,7 @@ function InputName({
     classNameInput,
     classNameText,
     className
-}: Props) {
+}: Props) => {
     return (
         <div className={classNames(styles.name, className)}>
             <HiddenInput
@@ -45,4 +45,3 @@ function InputName({
 }
 
 export default InputName
-

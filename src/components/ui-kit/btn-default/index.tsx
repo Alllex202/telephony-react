@@ -13,7 +13,15 @@ type Props = {
     disabled?: boolean
 }
 
-function BtnDefault({text, iconName, iconType, iconPosition, className, onClick, disabled}: Props) {
+const BtnDefault = ({
+    text,
+    iconName,
+    iconType,
+    iconPosition,
+    className,
+    onClick,
+    disabled
+}: Props) => {
     return (
         <button
             className={classNames(

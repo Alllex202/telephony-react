@@ -6,7 +6,7 @@ type Props = {
     className?: string
 }
 
-function RightSidebar({children, className}: Props) {
+const RightSidebar = ({children, className}: Props) => {
     return (
         <>
             <div className={[styles.sidebar, className ?? ''].join(' ')}>{children}</div>

@@ -13,8 +13,8 @@ type Props = {
     iconPosition?: 'start' | 'end'
 }
 
-function MenuItem({onClick, children, isDanger, iconName, iconPosition, iconType}: Props) {
-    function handleClick() {
+const MenuItem = ({onClick, children, isDanger, iconName, iconPosition, iconType}: Props) => {
+    const handleClick = () => {
         onClick && onClick()
     }
 
