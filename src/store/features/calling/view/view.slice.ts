@@ -2,8 +2,8 @@ import {createSlice, Dispatch, PayloadAction} from '@reduxjs/toolkit'
 import {
     CallingResultCommonModel,
     CallingResultPieChartModel,
-    CallingResultTableBody,
-    CallingResultTableHeader,
+    CallingResultTableBodyModel,
+    CallingResultTableHeaderModel,
     DataChartModel,
     ParamsPaginatorModel,
     PieChartPartModel,
@@ -52,11 +52,11 @@ interface ViewState {
         status: FetchStatuses
     }
     tableHeader: {
-        result: CallingResultTableHeader | null
+        result: CallingResultTableHeaderModel | null
         status: FetchStatuses
     }
     tableBody: {
-        result: CallingResultTableBody[]
+        result: CallingResultTableBodyModel[]
         status: FetchStatuses
         page: number
         size: number
@@ -114,10 +114,10 @@ const callingViewSlice = createSlice({
         setCommonResult: (state, action: PayloadAction<CallingResultCommonModel>) => {
             state.common.result = action.payload
         },
-        setTableHeaderResult: (state, action: PayloadAction<CallingResultTableHeader>) => {
+        setTableHeaderResult: (state, action: PayloadAction<CallingResultTableHeaderModel>) => {
             state.tableHeader.result = action.payload
         },
-        setTableBodyResult: (state, action: PayloadAction<CallingResultTableBody[]>) => {
+        setTableBodyResult: (state, action: PayloadAction<CallingResultTableBodyModel[]>) => {
             state.tableBody.result = [...state.tableBody.result, ...action.payload]
         },
         setVariables: (state, action: PayloadAction<VariableTypeModel[]>) => {

@@ -8,7 +8,7 @@ import {ParamsPaginatorWithFilterModel} from 'core/api/models'
 import {getScenariosByPage as getScenarios} from 'core/api/requests'
 import {handlerError} from 'shared/middleware'
 
-export interface ScenariosState {
+interface ScenariosState {
     scenarioList: ScenarioInfoModel[]
     error: string
     statuses: FetchStatuses

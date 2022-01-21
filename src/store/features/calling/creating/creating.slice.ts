@@ -5,10 +5,10 @@ import {createCalling, getCallingById, updateCalling} from 'core/api/requests/ca
 import {DefaultAxiosError} from 'shared/types/base-response-error'
 import {enqueueSnackbar} from 'store/features/notifications'
 import {handlerError} from 'shared/middleware'
-import {CallingModel} from 'core/api'
+import {CallingModel, CallingRequestModel} from 'core/api'
 import {goBack} from 'connected-react-router'
 
-export interface CreatingState {
+interface CreatingState {
     callersBaseId?: number | string | null
     id?: number | string | null
     name: string
@@ -77,7 +77,7 @@ export const saveCalling = () => (dispatch: Dispatch, getState: () => RootState)
     if (state.statuses.isLoading || !state.name || !state.callersBaseId || !state.scenarioId) return
 
     dispatch(setLoading())
-    const data: CallingModel = {
+    const data: CallingRequestModel = {
         id: state.id ?? null,
         name: state.name,
         callersBase: {id: state.callersBaseId},

@@ -3,6 +3,7 @@ import {
     CallersBaseDataModel,
     CallersBaseHeaderModel,
     CallingModel,
+    ParamsPaginatorWithInvalidModel,
     VariableTypeModel
 } from 'core/api'
 import {FetchStatuses} from 'shared/types/fetch-statuses'
@@ -11,7 +12,6 @@ import {
     getCallersBaseHeaderById,
     getCallingsByCallersBaseId as _getCallingsByCallersBaseId,
     getVariablesTypes,
-    ParamsPaginatorDataModel,
     putCallersBaseHeaderById
 } from 'core/api/requests'
 import {DefaultAxiosError} from 'shared/types/base-response-error'
@@ -19,7 +19,7 @@ import {RootState} from 'store'
 import {handlerError} from 'shared/middleware'
 import {enqueueSnackbar} from 'store/features/notifications'
 
-export interface ViewState {
+interface ViewState {
     header: CallersBaseHeaderModel | null
     data: CallersBaseDataModel[] | null
     callings: CallingModel[] | null
@@ -163,7 +163,7 @@ export const getCallersBaseById = (id: number | string) => (dispatch: Dispatch) 
 }
 
 export const getCallersBaseDataByPage =
-    (id: number | string, params: ParamsPaginatorDataModel) => (dispatch: Dispatch) => {
+    (id: number | string, params: ParamsPaginatorWithInvalidModel) => (dispatch: Dispatch) => {
         dispatch(setDataLoading())
         getCallersBaseDataById(id, params)
             .then((res) => {
@@ -184,7 +184,7 @@ export const getCallersBaseDataByPage =
     }
 
 export const updateCallersBaseDataByPage =
-    (id: number | string, params: ParamsPaginatorDataModel) => (dispatch: Dispatch) => {
+    (id: number | string, params: ParamsPaginatorWithInvalidModel) => (dispatch: Dispatch) => {
         dispatch(setDataLoading())
         getCallersBaseDataById(id, params)
             .then((res) => {

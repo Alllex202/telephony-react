@@ -5,7 +5,7 @@ import {
     EdgeModel,
     NodeDataModel,
     NodeModel,
-    NodeType,
+    NodeTypes,
     ScenarioModel
 } from 'core/api'
 import {FetchStatuses} from 'shared/types/fetch-statuses'
@@ -26,9 +26,9 @@ import {getUniqueId} from 'shared/utils'
 import {handlerError} from 'shared/middleware'
 import {enqueueSnackbar} from 'store/features/notifications'
 
-export type ElementType = Node<NodeDataModel> | Edge
+type ElementType = Node<NodeDataModel> | Edge
 
-export interface ScenarioState {
+interface ScenarioState {
     data: ScenarioModel | null
     elements: ElementType[]
     statuses: FetchStatuses
@@ -259,7 +259,7 @@ export const scenarioSlice = createSlice({
         },
         addNode: (
             state: ScenarioState,
-            action: PayloadAction<{nodeType: NodeType; position: XYPosition}>
+            action: PayloadAction<{nodeType: NodeTypes; position: XYPosition}>
         ) => {
             if (
                 (action.payload.nodeType === 'START' && state.startId) ||

@@ -8,7 +8,7 @@ import {ParamsPaginatorWithFilterModel} from 'core/api/models'
 import {getCallersBasesHeader} from 'core/api/requests'
 import {handlerError} from 'shared/middleware'
 
-export interface CallersBaseState {
+interface CallersBaseState {
     callersBaseList: CallersBaseHeaderModel[]
     error: string
     statuses: FetchStatuses

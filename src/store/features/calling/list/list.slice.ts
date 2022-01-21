@@ -1,4 +1,4 @@
-import {CallingModel, CallingStatuses, ParamsPaginatorWithFilterAndStatusModel} from 'core/api'
+import {CallingModel, CallingStatusTypes, ParamsPaginatorWithFilterAndStatusModel} from 'core/api'
 import {FetchStatuses} from 'shared/types/fetch-statuses'
 import {createSlice, Dispatch, PayloadAction} from '@reduxjs/toolkit'
 import {AxiosRequestConfig} from 'axios'
@@ -6,7 +6,7 @@ import {getCallings} from 'core/api/requests/calling'
 import {DefaultAxiosError} from 'shared/types/base-response-error'
 import {handlerError} from 'shared/middleware'
 
-export interface CallingListState {
+interface CallingListState {
     callingList: CallingModel[]
     statuses: FetchStatuses
     page: number
@@ -15,7 +15,7 @@ export interface CallingListState {
     totalElements: number
 }
 
-const initialState: Record<CallingStatuses, CallingListState> = {
+const initialState: Record<CallingStatusTypes, CallingListState> = {
     RUN: {
         callingList: [],
         statuses: {},
@@ -46,15 +46,15 @@ export const callingListSlice = createSlice({
     name: 'callingList',
     initialState,
     reducers: {
-        setLoading: (state, action: PayloadAction<CallingStatuses>) => {
+        setLoading: (state, action: PayloadAction<CallingStatusTypes>) => {
             state[action.payload].statuses = {isLoading: true}
         },
-        setSuccess: (state, action: PayloadAction<CallingStatuses>) => {
+        setSuccess: (state, action: PayloadAction<CallingStatusTypes>) => {
             state[action.payload].statuses = {isSuccess: true}
         },
         setError: (
             state,
-            action: PayloadAction<{error: string; callingStatus: CallingStatuses}>
+            action: PayloadAction<{error: string; callingStatus: CallingStatusTypes}>
         ) => {
             state[action.payload.callingStatus].statuses = {
                 isError: true,
@@ -63,7 +63,7 @@ export const callingListSlice = createSlice({
         },
         addCallings: (
             state,
-            action: PayloadAction<{data: CallingModel[]; callingStatus: CallingStatuses}>
+            action: PayloadAction<{data: CallingModel[]; callingStatus: CallingStatusTypes}>
         ) => {
             state[action.payload.callingStatus].callingList = [
                 ...state[action.payload.callingStatus].callingList,
@@ -83,24 +83,27 @@ export const callingListSlice = createSlice({
         },
         deleteCallingById: (
             state,
-            action: PayloadAction<{id: number | string; callingStatus: CallingStatuses}>
+            action: PayloadAction<{id: number | string; callingStatus: CallingStatusTypes}>
         ) => {
             state[action.payload.callingStatus].callingList = state[
                 action.payload.callingStatus
             ].callingList.filter((el) => el.id !== action.payload.id)
         },
-        setPage: (state, action: PayloadAction<{page: number; callingStatus: CallingStatuses}>) => {
+        setPage: (
+            state,
+            action: PayloadAction<{page: number; callingStatus: CallingStatusTypes}>
+        ) => {
             state[action.payload.callingStatus].page = action.payload.page
         },
         setLastPage: (
             state,
-            action: PayloadAction<{isLast: boolean; callingStatus: CallingStatuses}>
+            action: PayloadAction<{isLast: boolean; callingStatus: CallingStatusTypes}>
         ) => {
             state[action.payload.callingStatus].isLastPage = action.payload.isLast
         },
         setTotalElements: (
             state,
-            action: PayloadAction<{totalElements: number; callingStatus: CallingStatuses}>
+            action: PayloadAction<{totalElements: number; callingStatus: CallingStatusTypes}>
         ) => {
             state[action.payload.callingStatus].totalElements = action.payload.totalElements
         },
@@ -131,7 +134,7 @@ export const callingListSlice = createSlice({
 
 export const getCallingsByPage =
     (
-        callingStatus: CallingStatuses,
+        callingStatus: CallingStatusTypes,
         params: ParamsPaginatorWithFilterAndStatusModel,
         otherConfig?: AxiosRequestConfig
     ) =>

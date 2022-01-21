@@ -5,7 +5,7 @@ import 'shared/styles/table/styles.scss'
 import {useDispatch, useSelector} from 'react-redux'
 import {RootState} from 'store'
 import {Table, TableBody, TableCell, TableHead, TableRow as MuiTableRow} from '@mui/material'
-import {CallingResultTableBody} from 'core/api'
+import {CallingResultTableBodyModel} from 'core/api'
 import {
     getCallingResultTableBodyById,
     getCallingResultTableHeaderById,
@@ -90,7 +90,7 @@ const CallingViewTable = React.memo(({callingId}: Props) => {
 
 type PropsRow = {
     ind: number
-    el: CallingResultTableBody
+    el: CallingResultTableBodyModel
 }
 
 const TableRow = React.memo(({el, ind}: PropsRow) => {

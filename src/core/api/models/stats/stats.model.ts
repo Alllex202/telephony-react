@@ -1,4 +1,4 @@
-import {CallingResultPieChartModel} from 'core/api/models/calling'
+import {PieChartModel} from 'core/api'
 
 export interface TimeModel {
     hours: number
@@ -13,5 +13,6 @@ export interface StatsCommonModel {
     averageCallDuration: TimeModel
 }
 
-export interface StatsPieChartModel
-    extends Omit<CallingResultPieChartModel, 'countCallers' | 'countSuccess'> {}
+export interface StatsPieChartModel extends PieChartModel {
+    percentSuccess: number
+}

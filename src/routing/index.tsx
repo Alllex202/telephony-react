@@ -4,7 +4,7 @@ import {routes} from 'routing/routes'
 import {privateSiteRoutes, publicSiteRoutes} from 'routing/site-routing'
 import PrivateRoute from 'routing/private-route'
 import {ConnectedRouter} from 'connected-react-router'
-import {history} from 'store/features/router'
+import {history} from 'routing/browser-history'
 
 const Routing = () => {
     return (

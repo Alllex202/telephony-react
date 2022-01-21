@@ -10,7 +10,7 @@ import callingView from './features/calling/view'
 import notifications from './features/notifications'
 import stats from './features/stats'
 import {connectRouter, routerMiddleware} from 'connected-react-router'
-import {history} from 'store/features/router'
+import {history} from 'routing/browser-history'
 
 export const store = configureStore({
     reducer: {

@@ -3,17 +3,13 @@ import {
     CallersBaseDataModel,
     CallersBaseHeaderModel,
     PaginatorModel,
-    ParamsPaginatorModel,
     ParamsPaginatorWithFilterModel,
+    ParamsPaginatorWithInvalidModel,
     VariableTypeModel
 } from '../models'
 import {BaseResponse} from 'shared/types/base-response'
 import {apiRoutes} from '../routes'
 import {DirectionSort, SortType} from 'shared/data/sort-items'
-
-export interface ParamsPaginatorDataModel extends ParamsPaginatorModel {
-    onlyInvalid: boolean
-}
 
 export const deleteCallersBase = (
     id: number | string,
@@ -24,7 +20,7 @@ export const deleteCallersBase = (
 
 export const getCallersBaseDataById = (
     id: number | string,
-    params: ParamsPaginatorDataModel,
+    params: ParamsPaginatorWithInvalidModel,
     config?: AxiosRequestConfig
 ): BaseResponse<PaginatorModel<CallersBaseDataModel>> => {
     return axios.get<PaginatorModel<CallersBaseDataModel>>(apiRoutes.callersBase.data.byId(id), {

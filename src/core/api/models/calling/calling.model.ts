@@ -1,40 +1,40 @@
+import {PieChartModel} from 'core/api'
+
 export interface CallingModel {
     callersBase: {
         id: number | string
-        name?: string
+        name: string
     }
-    created?: number
-    id?: number | string | null
+    created: number
+    id: number | string
     name: string
-    percentEnd?: number
+    percentEnd: number
     scenario: {
         id: number | string
-        name?: string
+        name: string
+    }
+    startDate: number
+    status: CallingStatusTypes
+}
+
+export interface CallingRequestModel {
+    callersBase: {
+        id: number | string
+    }
+    id: number | string | null
+    name: string
+    scenario: {
+        id: number | string
     }
     startDate?: number | null
-    status: CallingStatuses
+    status: CallingStatusTypes
 }
 
-export type CallingStatuses = 'RUN' | 'SCHEDULED' | 'DONE'
+export type CallingStatusTypes = 'RUN' | 'SCHEDULED' | 'DONE'
 
 export interface CallingStatusModel {
-    name: CallingStatuses
+    name: CallingStatusTypes
     message: string
-}
-
-export const callingStatuses: Record<CallingStatuses, CallingStatusModel> = {
-    RUN: {
-        name: 'RUN',
-        message: 'Текущие'
-    },
-    SCHEDULED: {
-        name: 'SCHEDULED',
-        message: 'Запланированные'
-    },
-    DONE: {
-        name: 'DONE',
-        message: 'Завершенные'
-    }
 }
 
 export interface CallingResultCommonModel {
@@ -51,7 +51,7 @@ export interface CallingResultCommonModel {
         name: string
         countCallers: number
     }
-    status: CallingStatuses
+    status: CallingStatusTypes
     name: string
     progress: {
         countCallers: number
@@ -62,28 +62,13 @@ export interface CallingResultCommonModel {
     endDialing: number
 }
 
-export type PieChartTypes = 'CORRECT' | 'HAVEN_NOT_REACHED' | 'SCENARIO_NOT_END' | 'IN_PROGRESS'
-
-export interface PieChartPartModel {
-    name: string
-    value: number
-    key: PieChartTypes
-}
-
-export interface CallingResultPieChartModel {
-    parts: PieChartPartModel[]
+export interface CallingResultPieChartModel extends PieChartModel {
     percentSuccess: number
     countSuccess: number
     countCallers: number
 }
 
-export interface DataChartModel {
-    date: number
-    successCalls: number
-    time: string
-}
-
-export interface CallingResultTableHeaderData {
+export interface CallingResultTableHeaderDataModel {
     id: number | string
     created: number
     nameInTable: string
@@ -91,7 +76,7 @@ export interface CallingResultTableHeaderData {
     type: string
 }
 
-export interface CallingResultTableBodyData {
+export interface CallingResultTableBodyDataModel {
     id: number | string
     created: number
     phoneColumn: boolean
@@ -99,13 +84,13 @@ export interface CallingResultTableBodyData {
     value: string
 }
 
-export interface CallingResultTableHeader {
-    original: CallingResultTableHeaderData[]
-    extra: CallingResultTableHeaderData[]
+export interface CallingResultTableHeaderModel {
+    original: CallingResultTableHeaderDataModel[]
+    extra: CallingResultTableHeaderDataModel[]
 }
 
-export interface CallingResultTableBody {
-    original: CallingResultTableBodyData[]
-    extra: CallingResultTableBodyData[]
+export interface CallingResultTableBodyModel {
+    original: CallingResultTableBodyDataModel[]
+    extra: CallingResultTableBodyDataModel[]
     number: number
 }

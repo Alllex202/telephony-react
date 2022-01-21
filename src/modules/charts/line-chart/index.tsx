@@ -1,8 +1,9 @@
 import React from 'react'
 import {Line, LineChart as _LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis} from 'recharts'
+import {DataChartModel} from 'core/api'
 
 type Props = {
-    data: any[]
+    data: DataChartModel[]
     nameTooltip: string
 }
 

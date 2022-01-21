@@ -9,7 +9,7 @@ export interface Action {
     callback: () => void
 }
 
-export interface Notification {
+interface Notification {
     message: SnackbarMessage
     key?: string
     dismissed?: boolean
@@ -17,7 +17,7 @@ export interface Notification {
     action?: Action
 }
 
-export interface NotificationsState {
+interface NotificationsState {
     notifications: Notification[]
     max: number
 }

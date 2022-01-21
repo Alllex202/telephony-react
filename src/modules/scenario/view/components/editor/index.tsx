@@ -13,7 +13,7 @@ import ReactFlow, {
 import {useDispatch, useSelector} from 'react-redux'
 import {RootState} from 'store'
 import {addEdge, addNode, removeElements} from 'store/features/scenario/view'
-import {NodeType} from 'core/api'
+import {NodeTypes} from 'core/api'
 import StartElement from '../elements/start-element'
 import FinishElement from '../elements/finish-element'
 import ReplicaElement from '../elements/replica-element'
@@ -58,7 +58,7 @@ const ScenarioEditor = React.memo(() => {
         if (!(reactFlowWrapper && reactFlowWrapper.current && reactFlowInstance)) return
 
         const reactFlowBounds = reactFlowWrapper.current.getBoundingClientRect()
-        const nodeType = e.dataTransfer.getData('application/reactflow') as NodeType
+        const nodeType = e.dataTransfer.getData('application/reactflow') as NodeTypes
         const position = reactFlowInstance.project({
             x: e.clientX - reactFlowBounds.left,
             y: e.clientY - reactFlowBounds.top

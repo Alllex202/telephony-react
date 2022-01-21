@@ -15,10 +15,10 @@ export interface EdgeModel {
     sourceHandle?: string
 }
 
-export type NodeType = 'START' | 'FINISH' | 'REPLICA'
+export type NodeTypes = 'START' | 'FINISH' | 'REPLICA'
 
 export interface NodeModel {
-    type: NodeType
+    type: NodeTypes
     data: NodeDataModel
     position: {
         x: number

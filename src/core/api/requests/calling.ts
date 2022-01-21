@@ -3,10 +3,11 @@ import {BaseResponse} from 'shared/types/base-response'
 import {apiRoutes} from 'core/api/routes'
 import {
     CallingModel,
+    CallingRequestModel,
     CallingResultCommonModel,
     CallingResultPieChartModel,
-    CallingResultTableBody,
-    CallingResultTableHeader,
+    CallingResultTableBodyModel,
+    CallingResultTableHeaderModel,
     DataChartModel,
     PaginatorModel,
     ParamsPaginatorModel,
@@ -28,7 +29,7 @@ export const getCallings = (
 }
 
 export const createCalling = (
-    data: CallingModel,
+    data: CallingRequestModel,
     config?: AxiosRequestConfig
 ): BaseResponse<CallingModel> => {
     return axios.post<CallingModel>(apiRoutes.calling.calling(), data, config)
@@ -50,7 +51,7 @@ export const getCallingById = (
 
 export const updateCalling = (
     id: string | number,
-    data: CallingModel,
+    data: CallingRequestModel,
     config?: AxiosRequestConfig
 ): BaseResponse<CallingModel> => {
     return axios.put<CallingModel>(apiRoutes.calling.byId(id), data, config)
@@ -87,16 +88,19 @@ export const getCallingResultChart = (
 export const getCallingResultTableHeader = (
     id: string | number,
     config?: AxiosRequestConfig
-): BaseResponse<CallingResultTableHeader> => {
-    return axios.get<CallingResultTableHeader>(apiRoutes.calling.result.table.header(id), config)
+): BaseResponse<CallingResultTableHeaderModel> => {
+    return axios.get<CallingResultTableHeaderModel>(
+        apiRoutes.calling.result.table.header(id),
+        config
+    )
 }
 
 export const getCallingResultTableBody = (
     id: string | number,
     params: ParamsPaginatorModel,
     config?: AxiosRequestConfig
-): BaseResponse<PaginatorModel<CallingResultTableBody>> => {
-    return axios.get<PaginatorModel<CallingResultTableBody>>(
+): BaseResponse<PaginatorModel<CallingResultTableBodyModel>> => {
+    return axios.get<PaginatorModel<CallingResultTableBodyModel>>(
         apiRoutes.calling.result.table.data(id),
         {
             ...config,

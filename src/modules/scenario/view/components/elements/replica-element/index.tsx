@@ -23,7 +23,7 @@ import {
 } from 'store/features/scenario/view'
 import ReplicaInput from 'modules/scenario/view/components/elements/replica-element/components/replica-input'
 
-export interface Button {
+interface Button {
     name: string
     isUsed: boolean
 }
