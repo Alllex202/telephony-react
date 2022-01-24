@@ -2,12 +2,13 @@ import React, {MouseEventHandler} from 'react'
 import styles from './styles.module.scss'
 import BtnDefault from '../btn-default'
 import {classNames} from 'shared/utils'
+import {IconPositions, IconTypes} from 'components/ui-kit/icon'
 
 type Props = {
     text: string
     iconName?: string
-    iconType?: 'outlined' | 'round' | 'sharp' | 'two-tone'
-    iconPosition?: 'start' | 'end'
+    iconType?: IconTypes
+    iconPosition?: IconPositions
     className?: string
     onClick?: MouseEventHandler
     isActive?: boolean

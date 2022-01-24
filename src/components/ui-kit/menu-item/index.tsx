@@ -2,15 +2,15 @@ import React from 'react'
 import {MenuItem as MuiMenuItem} from '@mui/material'
 import './custom-styles.scss'
 import {classNames} from 'shared/utils'
-import Icon from '../icon'
+import Icon, {IconPositions, IconTypes} from '../icon'
 
 type Props = {
     onClick?: Function
     children?: React.ReactNode
     isDanger?: boolean
     iconName?: string
-    iconType?: 'outlined' | 'round' | 'sharp' | 'two-tone'
-    iconPosition?: 'start' | 'end'
+    iconType?: IconTypes
+    iconPosition?: IconPositions
 }
 
 const MenuItem = ({onClick, children, isDanger, iconName, iconPosition, iconType}: Props) => {

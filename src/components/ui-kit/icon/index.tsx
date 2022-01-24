@@ -1,7 +1,10 @@
 import React from 'react'
 
+export type IconTypes = 'outlined' | 'round' | 'sharp' | 'two-tone'
+export type IconPositions = 'start' | 'end'
+
 type Props = {
-    type?: 'outlined' | 'round' | 'sharp' | 'two-tone'
+    type?: IconTypes
     name: string
     className?: string
 }

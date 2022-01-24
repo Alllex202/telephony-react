@@ -2,12 +2,13 @@ import React, {MouseEventHandler} from 'react'
 import styles from './styles.module.scss'
 import BtnCircleDefault from '../btn-circle-default'
 import {classNames} from 'shared/utils'
+import {IconTypes} from 'components/ui-kit/icon'
 
 type Props = {
     iconName: string
     className?: string
     onClick?: MouseEventHandler
-    iconType?: 'outlined' | 'round' | 'sharp' | 'two-tone'
+    iconType?: IconTypes
     isActive?: boolean
     activeStyle?: string
 }

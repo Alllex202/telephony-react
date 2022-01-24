@@ -1,13 +1,13 @@
 import React from 'react'
 import styles from './styles.module.scss'
-import Icon from '../icon'
+import Icon, {IconTypes} from '../icon'
 import {classNames} from 'shared/utils'
 
 type Props = {
     iconName: string
     className?: string
     onClick?: React.MouseEventHandler
-    iconType?: 'outlined' | 'round' | 'sharp' | 'two-tone'
+    iconType?: IconTypes
     isActive?: boolean
     activeStyle?: string
 }
