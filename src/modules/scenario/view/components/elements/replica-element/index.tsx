@@ -20,7 +20,7 @@ import {
     changeReplica,
     changeWaitingTime,
     removeAnswer
-} from 'store/features/scenario/view'
+} from 'store/scenario/view'
 import ReplicaInput from 'modules/scenario/view/components/elements/replica-element/components/replica-input'
 
 interface Button {
@@ -60,14 +60,12 @@ const ReplicaElement = React.memo(
             )
             const isShow = buttons.some((btn) => !btn.isUsed)
             setMenu({buttons, isShow})
-            // eslint-disable-next-line
         }, [data.answers])
 
         useEffect(() => {
             if (isDragging === false && xPos && yPos) {
                 dispatch(changePosition({elementId: id, x: xPos, y: yPos}))
             }
-            // eslint-disable-next-line
         }, [isDragging])
 
         const onFocus = () => {

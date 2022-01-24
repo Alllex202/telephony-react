@@ -12,7 +12,7 @@ import ReactFlow, {
 } from 'react-flow-renderer'
 import {useDispatch, useSelector} from 'react-redux'
 import {RootState} from 'store'
-import {addEdge, addNode, removeElements} from 'store/features/scenario/view'
+import {addEdge, addNode, removeElements} from 'store/scenario/view'
 import {NodeTypes} from 'core/api'
 import StartElement from '../elements/start-element'
 import FinishElement from '../elements/finish-element'
@@ -35,12 +35,10 @@ const ScenarioEditor = React.memo(() => {
         if (isLoaded) {
             fitView({duration: 500, padding: 0.35}, 500)
         }
-        // eslint-disable-next-line
     }, [isLoaded])
 
     const onConnect = useCallback((params: Edge | Connection) => {
         dispatch(addEdge(params))
-        // eslint-disable-next-line
     }, [])
 
     const onLoad = (_reactFlowInstance: OnLoadParams) => {

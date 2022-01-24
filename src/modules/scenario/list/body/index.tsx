@@ -2,7 +2,7 @@ import React, {useEffect} from 'react'
 import bodyStyles from 'shared/styles/body-list/styles.module.scss'
 import {useDispatch, useSelector} from 'react-redux'
 import {RootState} from 'store'
-import {getScenariosByPage, resetScenariosStates as clearData} from 'store/features/scenario/list'
+import {getScenariosByPage, resetScenariosStates as clearData} from 'store/scenario/list'
 import BtnSecond from 'components/ui-kit/btn-second'
 import ScenarioCard from 'modules/scenario/list/body/components/card'
 
@@ -36,12 +36,10 @@ const ScenarioListBody = () => {
         return () => {
             dispatch(clearData())
         }
-        // eslint-disable-next-line
     }, [])
 
     useEffect(() => {
         getData(page)
-        // eslint-disable-next-line
     }, [filter])
 
     if (scenarioList.length < 1 && statuses.isLoading) {

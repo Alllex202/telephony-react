@@ -14,10 +14,10 @@ import MenuItem from 'components/ui-kit/menu-item'
 import Icon from 'components/ui-kit/icon'
 import {CallingModel, CallingStatusTypes} from 'core/api'
 import {deleteCalling, startScheduledCalling} from 'core/api/requests/calling'
-import {callingByIdMoveFromScheduledToRun, deleteCallingById} from 'store/features/calling/list'
+import {callingByIdMoveFromScheduledToRun, deleteCallingById} from 'store/calling/list'
 import {LinearProgress} from '@mui/material'
 import BtnSecond from 'components/ui-kit/btn-second'
-import {enqueueSnackbar} from 'store/features/notifications'
+import {enqueueSnackbar} from 'features/notifications/store'
 import {handlerError} from 'shared/middleware'
 
 type Props = {

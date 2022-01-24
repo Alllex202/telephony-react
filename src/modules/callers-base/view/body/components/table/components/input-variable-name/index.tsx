@@ -1,9 +1,10 @@
-import React, {useState} from 'react'
+import React from 'react'
 import styles from './styles.module.scss'
 import HiddenInput from 'components/hidden-input'
 import {useDispatch} from 'react-redux'
-import {changeCallersBaseHeaderById} from 'store/features/callers-bases/view'
+import {changeCallersBaseHeaderById} from 'store/callers-bases/view'
 import {CallersBaseHeaderColumnModel, CallersBaseHeaderModel} from 'core/api'
+import {useHiddenInput} from 'shared/hoocks'
 
 type Props = {
     conditionSave: () => boolean
@@ -13,8 +14,12 @@ type Props = {
 }
 
 const InputVariableName = ({conditionSave, initState, data, el}: Props) => {
-    const [name, setName] = useState<string>(initState)
-    const [lastName, setLastName] = useState<string>(name)
+    const {
+        text: name,
+        lastText: lastName,
+        setText: setName,
+        setLastText: setLastName
+    } = useHiddenInput(initState)
     const dispatch = useDispatch()
 
     const save = (currentValue: string) => {

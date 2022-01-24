@@ -1,7 +1,7 @@
 import React, {useEffect} from 'react'
 import styles from './styles.module.scss'
 import {useDispatch, useSelector} from 'react-redux'
-import {getScenario, resetAll} from 'store/features/scenario/view'
+import {getScenario, resetAll} from 'store/scenario/view'
 import {useParams} from 'react-router-dom'
 import {RootState} from 'store'
 import ScenarioViewHeader from './components/header'
@@ -23,7 +23,6 @@ const ScenarioView = () => {
             // document.body.removeAttribute('overflow');
             dispatch(resetAll())
         }
-        // eslint-disable-next-line
     }, [])
 
     return (

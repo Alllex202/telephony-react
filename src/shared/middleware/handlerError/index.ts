@@ -1,6 +1,6 @@
 import {DefaultAxiosError} from 'shared/types/base-response-error'
 import {Dispatch} from '@reduxjs/toolkit'
-import {enqueueSnackbar} from 'store/features/notifications'
+import {enqueueSnackbar} from 'features/notifications/store'
 
 type handlersKeys =
     | 'Network Error'

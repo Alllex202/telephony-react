@@ -15,8 +15,8 @@ import {FetchStatuses} from 'shared/types/fetch-statuses'
 import {routes} from 'routing/routes'
 import {Link} from 'react-router-dom'
 import {useDispatch} from 'react-redux'
-import {deleteCallersBaseById} from 'store/features/callers-bases/list'
-import {enqueueSnackbar} from 'store/features/notifications'
+import {deleteCallersBaseById} from 'store/callers-bases/list'
+import {enqueueSnackbar} from 'features/notifications/store'
 import {handlerError} from 'shared/middleware'
 
 type Props = {

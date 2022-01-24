@@ -1,6 +1,6 @@
-import React, {useEffect, useState} from 'react'
+import React, {useEffect, useRef, useState} from 'react'
 import styles from './styles.module.scss'
-import InputName from 'shared/components/input-name'
+import HiddenInputWithIcon from 'components/hidden-input-with-icon'
 import {useParams} from 'react-router-dom'
 import {useDispatch, useSelector} from 'react-redux'
 import {
@@ -9,17 +9,22 @@ import {
     getCallingsByCallersBaseId,
     resetAll,
     setType
-} from 'store/features/callers-bases/view'
+} from 'store/callers-bases/view'
 import {RootState} from 'store'
 import CallersBaseViewTable from './components/table'
 import Switch from 'components/ui-kit/switch'
+import {useHiddenInput} from 'shared/hoocks'
 
 const CallersBaseViewBody = () => {
     const {statusesHeader, header, statusesData, onlyInvalid} = useSelector(
         (state: RootState) => state.callersBaseView
     )
-    const [name, setName] = useState<string>(header?.name || '')
-    const [lastName, setLastName] = useState<string>(name)
+    const {
+        text: name,
+        lastText: lastName,
+        setText: setName,
+        setLastText: setLastName
+    } = useHiddenInput(header?.name || '')
     const {callersBaseId} = useParams<{callersBaseId: string}>()
     const dispatch = useDispatch()
 
@@ -72,7 +77,7 @@ const CallersBaseViewBody = () => {
             {header && (
                 <>
                     <div className={styles.head}>
-                        <InputName
+                        <HiddenInputWithIcon
                             text={name}
                             lastText={lastName}
                             setText={setName}

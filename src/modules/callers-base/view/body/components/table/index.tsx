@@ -8,7 +8,7 @@ import {
     getCallersBaseDataByPage,
     loadVariablesTypes,
     updateCallersBaseDataByPage
-} from 'store/features/callers-bases/view'
+} from 'store/callers-bases/view'
 import {Table, TableBody, TableCell, TableHead, TableRow as MuiTableRow} from '@mui/material'
 import BtnCircle from 'components/ui-kit/btn-circle'
 import Menu from 'components/ui-kit/menu'
@@ -40,7 +40,6 @@ const CallersBaseViewTable = React.memo(() => {
         if (header) {
             dispatch(updateCallersBaseDataByPage(header.id, {size, page: 0, onlyInvalid}))
         }
-        // eslint-disable-next-line
     }, [header, onlyInvalid])
 
     const handlerScroll = (e: React.UIEvent<HTMLDivElement>) => {

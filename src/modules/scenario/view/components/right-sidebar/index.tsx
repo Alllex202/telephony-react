@@ -11,7 +11,7 @@ import {CallersBaseHeaderModel} from 'core/api'
 import {getCallersBasesHeader} from 'core/api/requests'
 import Menu from 'components/ui-kit/menu'
 import MenuItem from 'components/ui-kit/menu-item'
-import {getCallersBaseHeader, setConnectionId} from 'store/features/scenario/view'
+import {getCallersBaseHeader, setConnectionId} from 'store/scenario/view'
 import Tag from 'components/ui-kit/tag'
 import cardStyles from 'shared/styles/card/styles.module.scss'
 import {handlerError} from 'shared/middleware'
@@ -37,12 +37,10 @@ const ScenarioRightSidebar = () => {
                 setCallersBasesHeader(res.data.content)
             })
             .catch(handlerError(dispatch))
-        // eslint-disable-next-line
     }, [])
 
     useEffect(() => {
         dispatch(getCallersBaseHeader())
-        // eslint-disable-next-line
     }, [data?.connectedCallerBaseId])
 
     const onZoomIn = () => {

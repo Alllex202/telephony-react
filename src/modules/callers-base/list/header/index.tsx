@@ -9,8 +9,8 @@ import Menu from 'components/ui-kit/menu'
 import MenuItem from 'components/ui-kit/menu-item'
 import {useHistory} from 'react-router-dom'
 import {routes} from 'routing/routes'
-import {changeFilter, resetFilter} from 'store/features/filter'
-import {resetCallersBasesStates} from 'store/features/callers-bases/list'
+import {changeFilter, resetFilter} from 'store/filter'
+import {resetCallersBasesStates} from 'store/callers-bases/list'
 import {classNames} from 'shared/utils'
 import {DirectionSort, sortItems, SortType} from 'shared/data/sort-items'
 
@@ -27,7 +27,6 @@ const CallersBaseListHeader = () => {
         return () => {
             dispatch(resetFilter())
         }
-        // eslint-disable-next-line
     }, [])
 
     const handlerAdd = () => {

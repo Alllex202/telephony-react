@@ -1,6 +1,6 @@
 import React, {useEffect} from 'react'
 import {useDispatch} from 'react-redux'
-import {resetCallingStates} from 'store/features/calling/list'
+import {resetCallingStates} from 'store/calling/list'
 import CallingSection from 'modules/calling/list/body/components/section'
 
 const CallingListBody = () => {
@@ -10,7 +10,6 @@ const CallingListBody = () => {
         return () => {
             dispatch(resetCallingStates())
         }
-        // eslint-disable-next-line
     }, [])
 
     return (

@@ -1,7 +1,7 @@
 import React from 'react'
 import styles from './styles.module.scss'
 import {Cell, Pie, PieChart as _PieChart, PieLabelRenderProps, Tooltip} from 'recharts'
-import {ExtraPieChartPartModel} from 'store/features/calling/view'
+import {ExtraPieChartPartModel} from 'store/calling/view'
 
 type Props = {
     data: ExtraPieChartPartModel[]

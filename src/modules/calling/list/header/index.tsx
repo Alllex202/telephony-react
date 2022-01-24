@@ -3,10 +3,10 @@ import headStyles from 'shared/styles/header-list/styes.module.scss'
 import {useDispatch, useSelector} from 'react-redux'
 import {RootState} from 'store'
 import {useHistory} from 'react-router-dom'
-import {changeFilter, resetFilter} from 'store/features/filter'
+import {changeFilter, resetFilter} from 'store/filter'
 import {routes} from 'routing/routes'
 import {DirectionSort, sortItems, SortType} from 'shared/data/sort-items'
-import {resetCallingStates} from 'store/features/calling/list'
+import {resetCallingStates} from 'store/calling/list'
 import Btn from 'components/ui-kit/btn'
 import Input from 'components/ui-kit/input'
 import BtnSecond from 'components/ui-kit/btn-second'
@@ -27,7 +27,6 @@ const CallingListHeader = () => {
         return () => {
             dispatch(resetFilter())
         }
-        // eslint-disable-next-line
     }, [])
 
     const handlerAdd = () => {

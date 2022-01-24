@@ -8,7 +8,7 @@ import CallingCard from 'modules/calling/list/body/components/card'
 import {useDispatch, useSelector} from 'react-redux'
 import {RootState} from 'store'
 import {CallingStatusTypes} from 'core/api'
-import {getCallingsByPage} from 'store/features/calling/list'
+import {getCallingsByPage} from 'store/calling/list'
 import BtnSecond from 'components/ui-kit/btn-second'
 import {callingStatuses} from 'shared/data/calling-statuses'
 
@@ -24,7 +24,6 @@ const CallingSection = ({callingStatus}: Props) => {
 
     useEffect(() => {
         getData(store[callingStatus].page, callingStatus)
-        // eslint-disable-next-line
     }, [filter])
 
     const loadNextPage = () => {

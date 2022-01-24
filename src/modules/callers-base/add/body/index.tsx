@@ -6,19 +6,25 @@ import {uploadCallersBaseExcel} from 'core/api/requests'
 import {DefaultAxiosError} from 'shared/types/base-response-error'
 import {useHistory} from 'react-router-dom'
 import {routes} from 'routing/routes'
-import InputName from 'shared/components/input-name'
+import HiddenInputWithIcon from 'components/hidden-input-with-icon'
 import {handlerError} from 'shared/middleware'
 import {useDispatch} from 'react-redux'
-import {enqueueSnackbar} from 'store/features/notifications'
+import {enqueueSnackbar} from 'features/notifications/store'
+import {FetchStatuses} from 'shared/types/fetch-statuses'
+import {useHiddenInput} from 'shared/hoocks'
 
 const fileType = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
 
 const CallersBaseAddBody = () => {
-    const [name, setName] = useState<string>('Новая база данных')
-    const [lastName, setLastName] = useState<string>(name)
+    const {
+        text: name,
+        lastText: lastName,
+        setText: setName,
+        setLastText: setLastName
+    } = useHiddenInput('Новая база данных')
     const [file, setFile] = useState<File | null>(null)
     const [isDrag, setDrag] = useState<boolean>(false)
-    const [error, setError] = useState<string>('')
+    const [statuses, setStatuses] = useState<FetchStatuses>({})
     const history = useHistory()
     const inputFile = useRef<HTMLInputElement | null>(null)
     const dispatch = useDispatch()
@@ -49,35 +55,41 @@ const CallersBaseAddBody = () => {
 
     const tryUploadFile = (files: FileList | null) => {
         if (!files) return
+
+        let error: string | null = null
+
         if (!name) {
-            setError('Необходимо ввести название')
-            setFile(null)
-            return
+            error = 'Необходимо ввести название'
         }
         if (files.length !== 1) {
-            setError('Можно загрузить только 1 файл')
-            setFile(null)
-            return
+            error = 'Можно загрузить только 1 файл'
         }
         if (files[0].type !== fileType) {
-            setError('Неподдерживаемый формат файла')
+            error = 'Неподдерживаемый формат файла'
+        }
+        if (error) {
+            setStatuses({error: error, isError: true})
             setFile(null)
             return
         }
 
-        setError('')
+        setStatuses({isLoading: true})
         setFile(files[0])
         const formData = new FormData()
         formData.append('file', files[0])
         formData.append('name', name)
         uploadCallersBaseExcel(formData)
             .then((res) => {
+                setStatuses({isLoading: true})
                 dispatch(enqueueSnackbar({message: 'База успешно загружена', type: 'SUCCESS'}))
                 history.replace(`${routes.callersBase.view(res.data.id)}?created=true`)
             })
             .catch(
                 handlerError(dispatch, (err: DefaultAxiosError) => {
-                    setError(err.response?.data.message || 'Ошибка при отправке')
+                    setStatuses({
+                        error: err.response?.data.message || 'tryUploadFile',
+                        isError: true
+                    })
                     setFile(null)
                 })
             )
@@ -85,7 +97,7 @@ const CallersBaseAddBody = () => {
 
     return (
         <>
-            <InputName
+            <HiddenInputWithIcon
                 text={name}
                 lastText={lastName}
                 setText={setName}
@@ -127,7 +139,7 @@ const CallersBaseAddBody = () => {
                     </span>
                 )}
             </div>
-            <div className={styles.error}>{error}</div>
+            <div className={styles.error}>{statuses.error}</div>
         </>
     )
 }

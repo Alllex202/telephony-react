@@ -12,8 +12,8 @@ import {
     setName,
     setScenarioId,
     setStartDate
-} from 'store/features/calling/creating'
-import InputName from 'shared/components/input-name'
+} from 'store/calling/creating'
+import HiddenInputWithIcon from 'components/hidden-input-with-icon'
 import {
     FormControl,
     FormControlLabel,
@@ -33,6 +33,7 @@ import {DesktopDatePicker, DesktopTimePicker, LocalizationProvider} from '@mui/l
 import Checkbox from 'components/ui-kit/checkbox'
 import {classNames} from 'shared/utils'
 import {useParams} from 'react-router-dom'
+import {useHiddenInput} from 'shared/hoocks'
 
 const CallingCreatingBody = () => {
     const {statuses, name, isNow, startDate, scenarioId, callersBaseId, id} = useSelector(
@@ -41,8 +42,12 @@ const CallingCreatingBody = () => {
     const {callingId} = useParams<{callingId: string}>()
     const [bases, setBases] = useState<CallersBaseHeaderModel[] | null>(null)
     const [scenarios, setScenarios] = useState<ScenarioInfoModel[] | null>(null)
-    const [_name, _setName] = useState<string>(callingId ? '' : name)
-    const [lastName, setLastName] = useState<string>(callingId ? '' : name)
+    const {
+        text: _name,
+        lastText: lastName,
+        setText: _setName,
+        setLastText: setLastName
+    } = useHiddenInput(callingId ? '' : name)
     const dispatch = useDispatch()
 
     useEffect(() => {
@@ -106,7 +111,7 @@ const CallingCreatingBody = () => {
     return (
         <div className={styles.wrapper}>
             <div className={styles.header}>
-                <InputName
+                <HiddenInputWithIcon
                     text={_name}
                     lastText={lastName}
                     setText={_setName}
@@ -239,4 +244,3 @@ const CallingCreatingBody = () => {
 }
 
 export default CallingCreatingBody
-

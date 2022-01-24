@@ -8,7 +8,7 @@ import {useDispatch, useSelector} from 'react-redux'
 import {RootState} from 'store'
 import {useQuery} from 'shared/hoocks/use-query'
 import {deleteCallersBase} from 'core/api/requests'
-import {enqueueSnackbar} from 'store/features/notifications'
+import {enqueueSnackbar} from 'features/notifications/store'
 import {handlerError} from 'shared/middleware'
 
 const CallersBaseViewHeader = () => {

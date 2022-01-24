@@ -10,13 +10,13 @@ import MenuItem from 'components/ui-kit/menu-item'
 import {useDispatch, useSelector} from 'react-redux'
 import {RootState} from 'store'
 import {useHistory} from 'react-router-dom'
-import {changeFilter, resetFilter} from 'store/features/filter'
+import {changeFilter, resetFilter} from 'store/filter'
 import {routes} from 'routing/routes'
-import {resetScenariosStates} from 'store/features/scenario/list'
+import {resetScenariosStates} from 'store/scenario/list'
 import {createScenario} from 'core/api/requests'
 import {DefaultAxiosError} from 'shared/types/base-response-error'
 import {FetchStatuses} from 'shared/types/fetch-statuses'
-import {enqueueSnackbar} from 'store/features/notifications'
+import {enqueueSnackbar} from 'features/notifications/store'
 import {handlerError} from 'shared/middleware'
 
 const ScenarioListHeader = () => {
@@ -33,7 +33,6 @@ const ScenarioListHeader = () => {
         return () => {
             dispatch(resetFilter())
         }
-        // eslint-disable-next-line
     }, [])
 
     const handlerAdd = () => {

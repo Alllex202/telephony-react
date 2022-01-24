@@ -9,7 +9,7 @@ import {
     getCallingResultCommonById,
     getCallingResultPieChartById,
     resetState
-} from 'store/features/calling/view'
+} from 'store/calling/view'
 import {Link, useParams} from 'react-router-dom'
 import {classNames, formatDate} from 'shared/utils'
 import {LinearProgress} from '@mui/material'

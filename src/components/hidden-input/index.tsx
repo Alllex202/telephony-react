@@ -36,13 +36,11 @@ const HiddenInput = ({
             changeWidthInput()
             changeWidthDiv()
         }
-        // eslint-disable-next-line
     }, [isView])
 
     useEffect(() => {
         changeWidthInput()
         changeWidthDiv()
-        // eslint-disable-next-line
     }, [text])
 
     const changeWidthInput = () => {

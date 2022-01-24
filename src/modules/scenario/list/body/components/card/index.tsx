@@ -4,7 +4,7 @@ import styles from './styles.module.scss'
 import {FetchStatuses} from 'shared/types/fetch-statuses'
 import {useDispatch} from 'react-redux'
 import {deleteScenario} from 'core/api/requests'
-import {deleteScenarioById} from 'store/features/scenario/list'
+import {deleteScenarioById} from 'store/scenario/list'
 import {DefaultAxiosError} from 'shared/types/base-response-error'
 import {Link} from 'react-router-dom'
 import {routes} from 'routing/routes'
@@ -17,7 +17,7 @@ import Icon from 'components/ui-kit/icon'
 import {formatDate} from 'shared/utils/format-date'
 // import Tag from 'components/ui-kit/tag';
 import {ScenarioInfoModel} from 'core/api'
-import {enqueueSnackbar} from 'store/features/notifications'
+import {enqueueSnackbar} from 'features/notifications/store'
 import {handlerError} from 'shared/middleware'
 
 type Props = {

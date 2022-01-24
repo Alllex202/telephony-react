@@ -10,7 +10,7 @@ import {
     getCallingResultTableBodyById,
     getCallingResultTableHeaderById,
     getVariables
-} from 'store/features/calling/view'
+} from 'store/calling/view'
 
 type Props = {
     callingId: string

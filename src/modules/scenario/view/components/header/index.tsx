@@ -5,15 +5,20 @@ import {useHistory} from 'react-router-dom'
 import Btn from 'components/ui-kit/btn'
 import {useDispatch, useSelector} from 'react-redux'
 import {RootState} from 'store'
-import {changeName, saveScenario} from 'store/features/scenario/view'
-import InputName from 'shared/components/input-name'
+import {changeName, saveScenario} from 'store/scenario/view'
+import HiddenInputWithIcon from 'components/hidden-input-with-icon'
+import {useHiddenInput} from 'shared/hoocks'
 
 const ScenarioViewHeader = () => {
     const dispatch = useDispatch()
     const {statuses, data} = useSelector((state: RootState) => state.scenarioView)
     const history = useHistory()
-    const [name, setName] = useState<string>(data?.name || '')
-    const [lastName, setLastName] = useState<string>(name)
+    const {
+        text: name,
+        lastText: lastName,
+        setText: setName,
+        setLastText: setLastName
+    } = useHiddenInput(data?.name || '')
 
     useEffect(() => {
         setName(data?.name || '')
@@ -46,10 +51,10 @@ const ScenarioViewHeader = () => {
             {statuses.isLoading ? (
                 <div className={styles.loading}>Загрузка...</div>
             ) : (
-                <InputName
+                <HiddenInputWithIcon
                     text={name}
-                    lastText={lastName}
                     setText={setName}
+                    lastText={lastName}
                     setLastText={setLastName}
                     classNameWrapper={styles.name}
                     classNameInput={styles.nameInput}

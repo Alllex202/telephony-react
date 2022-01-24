@@ -2,10 +2,7 @@ import React, {useEffect} from 'react'
 import bodyStyles from 'shared/styles/body-list/styles.module.scss'
 import {useDispatch, useSelector} from 'react-redux'
 import {RootState} from 'store'
-import {
-    getCallersBasesByPage,
-    resetCallersBasesStates as clearData
-} from 'store/features/callers-bases/list'
+import {getCallersBasesByPage, resetCallersBasesStates as clearData} from 'store/callers-bases/list'
 import CallersBaseCard from './components/card'
 import BtnSecond from 'components/ui-kit/btn-second'
 
@@ -25,7 +22,6 @@ const CallersBaseListBody = () => {
 
     useEffect(() => {
         getData(page)
-        // eslint-disable-next-line
     }, [filter])
 
     const getData = (page: number) => {
@@ -44,7 +40,6 @@ const CallersBaseListBody = () => {
         return () => {
             dispatch(clearData())
         }
-        // eslint-disable-next-line
     }, [])
 
     if (callersBaseList.length < 1 && statuses.isLoading) {
