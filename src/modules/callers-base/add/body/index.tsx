@@ -11,7 +11,7 @@ import {handlerError} from 'shared/middleware'
 import {useDispatch} from 'react-redux'
 import {enqueueSnackbar} from 'features/notifications/store'
 import {FetchStatuses} from 'shared/types/fetch-statuses'
-import {useHiddenInput} from 'shared/hoocks'
+import {useDoubleInput} from 'shared/hoocks'
 
 const fileType = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
 
@@ -21,7 +21,7 @@ const CallersBaseAddBody = () => {
         lastText: lastName,
         setText: setName,
         setLastText: setLastName
-    } = useHiddenInput('Новая база данных')
+    } = useDoubleInput('Новая база данных')
     const [file, setFile] = useState<File | null>(null)
     const [isDrag, setDrag] = useState<boolean>(false)
     const [statuses, setStatuses] = useState<FetchStatuses>({})

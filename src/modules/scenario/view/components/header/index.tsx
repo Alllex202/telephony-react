@@ -6,7 +6,7 @@ import Btn from 'components/ui-kit/btn'
 import {useDispatch} from 'react-redux'
 import {changeName, saveScenario} from 'store/scenario/view'
 import HiddenInputWithIcon from 'components/hidden-input-with-icon'
-import {useHiddenInput, useSelectorApp} from 'shared/hoocks'
+import {useDoubleInput, useSelectorApp} from 'shared/hoocks'
 
 const ScenarioViewHeader = () => {
     const dispatch = useDispatch()
@@ -19,7 +19,7 @@ const ScenarioViewHeader = () => {
         lastText: lastName,
         setText: setName,
         setLastText: setLastName
-    } = useHiddenInput(data?.name || '')
+    } = useDoubleInput(data?.name || '')
 
     useEffect(() => {
         setName(data?.name || '')

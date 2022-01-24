@@ -1,137 +1,50 @@
-import React, {useEffect, useState} from 'react'
-import headStyles from 'shared/styles/header-list/styes.module.scss'
+import React from 'react'
 import {useDispatch} from 'react-redux'
 import {useHistory} from 'react-router-dom'
-import {changeFilter, resetFilter} from 'store/filter'
 import {routes} from 'routing/routes'
-import {DirectionSort, sortItems, SortType} from 'shared/data/sort-items'
-import {resetCallingStates} from 'store/calling/list'
-import Btn from 'components/ui-kit/btn'
-import Input from 'components/ui-kit/input'
-import BtnSecond from 'components/ui-kit/btn-second'
-import {classNames} from 'shared/utils'
-import Menu from 'components/ui-kit/menu'
-import MenuItem from 'components/ui-kit/menu-item'
 import {useSelectorApp} from 'shared/hoocks'
+import SearchHeader from 'components/search-header'
+import {resetCallingStates} from 'store/calling/list'
 
 const CallingListHeader = () => {
-    const {
-        callingList: store,
-        filter: {direction, sortBy, text}
-    } = useSelectorApp()
+    const {callingList} = useSelectorApp()
     const dispatch = useDispatch()
     const history = useHistory()
-    const [anchorEl, setAnchorEl] = useState<Element | null>(null)
-    const [input, setInput] = useState<string>('')
-    const [lastInput, setLastInput] = useState<string>('')
 
-    useEffect(() => {
-        return () => {
-            dispatch(resetFilter())
-        }
-    }, [])
-
-    const handlerAdd = () => {
+    const handlerCreate = () => {
         history.push(routes.calling.create())
     }
 
-    const handlerOpenSort = (e: any) => {
-        setAnchorEl(e.currentTarget)
-    }
-
-    const handlerCloseSort = () => {
-        setAnchorEl(null)
-    }
-
-    const handlerSortItem = (options: {
-        sortBy: SortType
-        direction: DirectionSort
-        text: string
-    }) => {
-        handlerCloseSort()
+    const handlerSortItem = () => {
         if (
-            store['RUN'].statuses.isLoading ||
-            store['SCHEDULED'].statuses.isLoading ||
-            store['DONE'].statuses.isLoading ||
-            (options.sortBy === sortBy && options.direction === direction)
+            callingList['RUN'].statuses.isLoading ||
+            callingList['SCHEDULED'].statuses.isLoading ||
+            callingList['DONE'].statuses.isLoading
         )
             return
 
         dispatch(resetCallingStates())
-        dispatch(
-            changeFilter({
-                sortBy: options.sortBy,
-                name: input,
-                direction: options.direction,
-                text: options.text
-            })
-        )
     }
 
-    const handlerSearch = (event: React.KeyboardEvent) => {
-        if (event.key === 'Enter') {
-            if (
-                store['RUN'].statuses.isLoading ||
-                store['SCHEDULED'].statuses.isLoading ||
-                store['DONE'].statuses.isLoading ||
-                input === lastInput
-            )
-                return
+    const handlerSearch = () => {
+        if (
+            callingList['RUN'].statuses.isLoading ||
+            callingList['SCHEDULED'].statuses.isLoading ||
+            callingList['DONE'].statuses.isLoading
+        )
+            return
 
-            setLastInput(input)
-            dispatch(resetCallingStates())
-            dispatch(changeFilter({sortBy, name: input, direction, text}))
-        }
+        dispatch(resetCallingStates())
     }
 
     return (
-        <div className={headStyles.header}>
-            <Btn
-                text={'Обзванивание'}
-                iconName={'add_ic_call'}
-                iconType={'round'}
-                className={headStyles.add}
-                onClick={handlerAdd}
-                iconPosition={'end'}
-            />
-            <Input
-                value={input}
-                onChange={(e) => setInput(e.target.value)}
-                className={headStyles.search}
-                type={'text'}
-                placeholder={'Поиск'}
-                autoCompleteOff
-                onKeyPress={handlerSearch}
-            />
-            <BtnSecond
-                text={text}
-                iconName={'sort'}
-                iconType={'round'}
-                onClick={handlerOpenSort}
-                className={classNames(
-                    headStyles.sort,
-                    direction === 'ASC' ? headStyles.revert : ''
-                )}
-                isActive={!!anchorEl}
-                iconPosition={'end'}
-            />
-            <Menu anchorEl={anchorEl} open={!!anchorEl} onClose={handlerCloseSort}>
-                {sortItems.map((el, index) => (
-                    <MenuItem
-                        key={index}
-                        onClick={() =>
-                            handlerSortItem({
-                                sortBy: el.sortBy,
-                                direction: el.direction,
-                                text: el.text
-                            })
-                        }
-                    >
-                        {el.text}
-                    </MenuItem>
-                ))}
-            </Menu>
-        </div>
+        <SearchHeader
+            onSortItem={handlerSortItem}
+            onSearch={handlerSearch}
+            textLeftBtn={'Обзванивание'}
+            onLeftBtn={handlerCreate}
+            iconLeftBtn={'add_ic_call'}
+        />
     )
 }
 

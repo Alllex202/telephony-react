@@ -12,7 +12,7 @@ import {
 } from 'store/callers-bases/view'
 import CallersBaseViewTable from './components/table'
 import Switch from 'components/ui-kit/switch'
-import {useHiddenInput, useSelectorApp} from 'shared/hoocks'
+import {useDoubleInput, useSelectorApp} from 'shared/hoocks'
 
 const CallersBaseViewBody = () => {
     const {
@@ -23,7 +23,7 @@ const CallersBaseViewBody = () => {
         lastText: lastName,
         setText: setName,
         setLastText: setLastName
-    } = useHiddenInput(header?.name || '')
+    } = useDoubleInput(header?.name || '')
     const {callersBaseId} = useParams<{callersBaseId: string}>()
     const dispatch = useDispatch()
 

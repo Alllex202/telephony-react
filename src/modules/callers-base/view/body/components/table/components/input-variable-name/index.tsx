@@ -4,7 +4,7 @@ import HiddenInput from 'components/hidden-input'
 import {useDispatch} from 'react-redux'
 import {changeCallersBaseHeaderById} from 'store/callers-bases/view'
 import {CallersBaseHeaderColumnModel, CallersBaseHeaderModel} from 'core/api'
-import {useHiddenInput} from 'shared/hoocks'
+import {useDoubleInput} from 'shared/hoocks'
 
 type Props = {
     conditionSave: () => boolean
@@ -19,7 +19,7 @@ const InputVariableName = ({conditionSave, initState, data, el}: Props) => {
         lastText: lastName,
         setText: setName,
         setLastText: setLastName
-    } = useHiddenInput(initState)
+    } = useDoubleInput(initState)
     const dispatch = useDispatch()
 
     const save = (currentValue: string) => {

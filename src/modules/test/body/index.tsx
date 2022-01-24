@@ -16,11 +16,11 @@ import InputTransparent from 'components/ui-kit/input-transparent'
 import {useDispatch} from 'react-redux'
 import {enqueueSnackbar} from 'features/notifications/store'
 import HiddenInputWithIcon from 'components/hidden-input-with-icon'
-import {useHiddenInput} from 'shared/hoocks'
+import {useDoubleInput} from 'shared/hoocks'
 
 const TestBody = () => {
     const [modal, setModal] = useState<boolean>(false)
-    const {text, lastText, setText, setLastText} = useHiddenInput('Скрытый ввод')
+    const {text, lastText, setText, setLastText} = useDoubleInput('Скрытый ввод')
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null)
     const dispatch = useDispatch()
 

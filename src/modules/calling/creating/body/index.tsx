@@ -32,7 +32,7 @@ import {DesktopDatePicker, DesktopTimePicker, LocalizationProvider} from '@mui/l
 import Checkbox from 'components/ui-kit/checkbox'
 import {classNames} from 'shared/utils'
 import {useParams} from 'react-router-dom'
-import {useHiddenInput, useSelectorApp} from 'shared/hoocks'
+import {useDoubleInput, useSelectorApp} from 'shared/hoocks'
 
 const CallingCreatingBody = () => {
     const {
@@ -46,7 +46,7 @@ const CallingCreatingBody = () => {
         lastText: lastName,
         setText: _setName,
         setLastText: setLastName
-    } = useHiddenInput(callingId ? '' : name)
+    } = useDoubleInput(callingId ? '' : name)
     const dispatch = useDispatch()
 
     useEffect(() => {
