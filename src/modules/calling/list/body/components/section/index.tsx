@@ -5,20 +5,19 @@ import './styles.scss'
 import {Accordion, AccordionDetails, AccordionSummary} from '@mui/material'
 import Icon from 'components/ui-kit/icon'
 import CallingCard from 'modules/calling/list/body/components/card'
-import {useDispatch, useSelector} from 'react-redux'
-import {RootState} from 'store'
+import {useDispatch} from 'react-redux'
 import {CallingStatusTypes} from 'core/api'
 import {getCallingsByPage} from 'store/calling/list'
 import BtnSecond from 'components/ui-kit/btn-second'
 import {callingStatuses} from 'shared/data/calling-statuses'
+import {useSelectorApp} from 'shared/hoocks'
 
 type Props = {
     callingStatus: CallingStatusTypes
 }
 
 const CallingSection = ({callingStatus}: Props) => {
-    const store = useSelector((state: RootState) => state.callingList)
-    const filter = useSelector((state: RootState) => state.filter)
+    const {callingList: store, filter} = useSelectorApp()
     const dispatch = useDispatch()
     const [isOpened, setOpen] = useState<boolean>(false)
 

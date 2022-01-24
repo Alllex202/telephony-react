@@ -4,16 +4,18 @@ import BtnSecond from 'components/ui-kit/btn-second'
 import Btn from 'components/ui-kit/btn'
 import {useHistory} from 'react-router-dom'
 import {routes} from 'routing/routes'
-import {useDispatch, useSelector} from 'react-redux'
-import {RootState} from 'store'
+import {useDispatch} from 'react-redux'
 import {useQuery} from 'shared/hoocks/use-query'
 import {deleteCallersBase} from 'core/api/requests'
 import {enqueueSnackbar} from 'features/notifications/store'
 import {handlerError} from 'shared/middleware'
+import {useSelectorApp} from 'shared/hoocks'
 
 const CallersBaseViewHeader = () => {
     const dispatch = useDispatch()
-    const {header, statusesHeader} = useSelector((state: RootState) => state.callersBaseView)
+    const {
+        callersBaseView: {header, statusesHeader}
+    } = useSelectorApp()
     const history = useHistory()
     const [created, setCreated] = useState<boolean>(!!useQuery('created').values.created[0])
 

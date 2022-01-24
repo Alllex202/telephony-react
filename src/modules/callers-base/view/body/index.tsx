@@ -1,8 +1,8 @@
-import React, {useEffect, useRef, useState} from 'react'
+import React, {useEffect} from 'react'
 import styles from './styles.module.scss'
 import HiddenInputWithIcon from 'components/hidden-input-with-icon'
 import {useParams} from 'react-router-dom'
-import {useDispatch, useSelector} from 'react-redux'
+import {useDispatch} from 'react-redux'
 import {
     changeCallersBaseHeaderById,
     getCallersBaseById,
@@ -10,15 +10,14 @@ import {
     resetAll,
     setType
 } from 'store/callers-bases/view'
-import {RootState} from 'store'
 import CallersBaseViewTable from './components/table'
 import Switch from 'components/ui-kit/switch'
-import {useHiddenInput} from 'shared/hoocks'
+import {useHiddenInput, useSelectorApp} from 'shared/hoocks'
 
 const CallersBaseViewBody = () => {
-    const {statusesHeader, header, statusesData, onlyInvalid} = useSelector(
-        (state: RootState) => state.callersBaseView
-    )
+    const {
+        callersBaseView: {statusesHeader, header, statusesData, onlyInvalid}
+    } = useSelectorApp()
     const {
         text: name,
         lastText: lastName,

@@ -1,8 +1,7 @@
 import React, {useEffect} from 'react'
 import styles from './styles.module.scss'
 import stylesCard from 'shared/styles/cards-substrate/styles.module.scss'
-import {useDispatch, useSelector} from 'react-redux'
-import {RootState} from 'store'
+import {useDispatch} from 'react-redux'
 import Substrate from 'components/ui-kit/substrate'
 import {
     getCallingResultChartById,
@@ -17,9 +16,12 @@ import {routes} from 'routing/routes'
 import CallingViewTable from 'modules/calling/view/body/components/table'
 import LineChart from 'modules/charts/line-chart'
 import PieChart from 'modules/charts/pie-chart'
+import {useSelectorApp} from 'shared/hoocks'
 
 const CallingViewBody = () => {
-    const {common, pieChart, chart} = useSelector((state: RootState) => state.callingView)
+    const {
+        callingView: {common, pieChart, chart}
+    } = useSelectorApp()
     const dispatch = useDispatch()
     const {callingId} = useParams<{callingId: string}>()
 

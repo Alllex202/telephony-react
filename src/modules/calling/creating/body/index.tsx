@@ -1,8 +1,7 @@
 import React, {useEffect, useState} from 'react'
 import styles from './styles.module.scss'
 import './styles.scss'
-import {useDispatch, useSelector} from 'react-redux'
-import {RootState} from 'store'
+import {useDispatch} from 'react-redux'
 import {
     getCalling,
     resetState,
@@ -33,12 +32,12 @@ import {DesktopDatePicker, DesktopTimePicker, LocalizationProvider} from '@mui/l
 import Checkbox from 'components/ui-kit/checkbox'
 import {classNames} from 'shared/utils'
 import {useParams} from 'react-router-dom'
-import {useHiddenInput} from 'shared/hoocks'
+import {useHiddenInput, useSelectorApp} from 'shared/hoocks'
 
 const CallingCreatingBody = () => {
-    const {statuses, name, isNow, startDate, scenarioId, callersBaseId, id} = useSelector(
-        (state: RootState) => state.callingCreating
-    )
+    const {
+        callingCreating: {statuses, name, isNow, startDate, scenarioId, callersBaseId, id}
+    } = useSelectorApp()
     const {callingId} = useParams<{callingId: string}>()
     const [bases, setBases] = useState<CallersBaseHeaderModel[] | null>(null)
     const [scenarios, setScenarios] = useState<ScenarioInfoModel[] | null>(null)

@@ -15,15 +15,16 @@ import {getCallersBaseHeader, setConnectionId} from 'store/scenario/view'
 import Tag from 'components/ui-kit/tag'
 import cardStyles from 'shared/styles/card/styles.module.scss'
 import {handlerError} from 'shared/middleware'
+import {useSelectorApp} from 'shared/hoocks'
 
 const maxShowVariables = 10
 
 const ScenarioRightSidebar = () => {
     const {zoomIn, zoomOut, fitView} = useZoomPanHelper()
     const {transform} = useStoreState((state) => state)
-    const {data, statuses, callersBaseHeader} = useSelector(
-        (state: RootState) => state.scenarioView
-    )
+    const {
+        scenarioView: {data, statuses, callersBaseHeader}
+    } = useSelectorApp()
     const currentZoom = transform[2]
     const [anchorEl, setAnchorEl] = useState<Element | null>(null)
     const dispatch = useDispatch()

@@ -2,9 +2,8 @@ import React from 'react'
 import TextareaAutocomplete from '@webscopeio/react-textarea-autocomplete'
 import '@webscopeio/react-textarea-autocomplete/style.css'
 import styles from './styles.module.scss'
-import {useSelector} from 'react-redux'
-import {RootState} from 'store'
 import {CallersBaseHeaderColumnModel} from 'core/api'
+import {useSelectorApp} from 'shared/hoocks'
 
 type Props = {
     value: string
@@ -12,7 +11,9 @@ type Props = {
 }
 
 const ReplicaInput = React.memo(({value, onChange}: Props) => {
-    const {callersBaseHeader} = useSelector((state: RootState) => state.scenarioView)
+    const {
+        scenarioView: {callersBaseHeader}
+    } = useSelectorApp()
     const variables = callersBaseHeader?.columns ?? []
 
     const onKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {

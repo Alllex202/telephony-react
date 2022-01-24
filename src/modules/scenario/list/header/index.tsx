@@ -7,8 +7,7 @@ import {classNames} from 'shared/utils'
 import Menu from 'components/ui-kit/menu'
 import {DirectionSort, sortItems, SortType} from 'shared/data/sort-items'
 import MenuItem from 'components/ui-kit/menu-item'
-import {useDispatch, useSelector} from 'react-redux'
-import {RootState} from 'store'
+import {useDispatch} from 'react-redux'
 import {useHistory} from 'react-router-dom'
 import {changeFilter, resetFilter} from 'store/filter'
 import {routes} from 'routing/routes'
@@ -18,12 +17,15 @@ import {DefaultAxiosError} from 'shared/types/base-response-error'
 import {FetchStatuses} from 'shared/types/fetch-statuses'
 import {enqueueSnackbar} from 'features/notifications/store'
 import {handlerError} from 'shared/middleware'
+import {useSelectorApp} from 'shared/hoocks'
 
 const ScenarioListHeader = () => {
     const [input, setInput] = useState<string>('')
     const [lastInput, setLastInput] = useState<string>('')
-    const {statuses} = useSelector((state: RootState) => state.scenarioList)
-    const {direction, sortBy, text} = useSelector((state: RootState) => state.filter)
+    const {
+        filter: {direction, sortBy, text},
+        scenarioList: {statuses}
+    } = useSelectorApp()
     const [creating, setCreating] = useState<FetchStatuses>({})
     const dispatch = useDispatch()
     const history = useHistory()

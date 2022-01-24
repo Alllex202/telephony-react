@@ -1,8 +1,7 @@
 import React, {useEffect, useState} from 'react'
 import styles from 'shared/styles/table/styles.module.scss'
 import 'shared/styles/table/styles.scss'
-import {useDispatch, useSelector} from 'react-redux'
-import {RootState} from 'store'
+import {useDispatch} from 'react-redux'
 import {
     changeCallersBaseHeaderById,
     getCallersBaseDataByPage,
@@ -15,21 +14,24 @@ import Menu from 'components/ui-kit/menu'
 import MenuItem from 'components/ui-kit/menu-item'
 import {CallersBaseDataModel, CallersBaseHeaderColumnModel, VariableTypeModel} from 'core/api'
 import InputVariableName from './components/input-variable-name'
+import {useSelectorApp} from 'shared/hoocks'
 
 const CallersBaseViewTable = React.memo(() => {
     const dispatch = useDispatch()
     const {
-        header,
-        statusesData,
-        statusesVariables,
-        page,
-        size,
-        isLastPage,
-        data,
-        variablesTypes,
-        statusesHeader,
-        onlyInvalid
-    } = useSelector((state: RootState) => state.callersBaseView)
+        callersBaseView: {
+            header,
+            statusesData,
+            statusesVariables,
+            page,
+            size,
+            isLastPage,
+            data,
+            variablesTypes,
+            statusesHeader,
+            onlyInvalid
+        }
+    } = useSelectorApp()
     const [anchorEl, setAnchorEl] = useState<Element | null>(null)
     const [selectedVariable, selectVariable] = useState<CallersBaseHeaderColumnModel | null>(null)
 

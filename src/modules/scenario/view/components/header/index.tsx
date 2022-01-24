@@ -1,17 +1,18 @@
-import React, {useEffect, useState} from 'react'
+import React, {useEffect} from 'react'
 import styles from './styles.module.scss'
 import BtnSecond from 'components/ui-kit/btn-second'
 import {useHistory} from 'react-router-dom'
 import Btn from 'components/ui-kit/btn'
-import {useDispatch, useSelector} from 'react-redux'
-import {RootState} from 'store'
+import {useDispatch} from 'react-redux'
 import {changeName, saveScenario} from 'store/scenario/view'
 import HiddenInputWithIcon from 'components/hidden-input-with-icon'
-import {useHiddenInput} from 'shared/hoocks'
+import {useHiddenInput, useSelectorApp} from 'shared/hoocks'
 
 const ScenarioViewHeader = () => {
     const dispatch = useDispatch()
-    const {statuses, data} = useSelector((state: RootState) => state.scenarioView)
+    const {
+        scenarioView: {statuses, data}
+    } = useSelectorApp()
     const history = useHistory()
     const {
         text: name,

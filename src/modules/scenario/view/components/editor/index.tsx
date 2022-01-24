@@ -10,13 +10,13 @@ import ReactFlow, {
     OnLoadParams,
     useZoomPanHelper
 } from 'react-flow-renderer'
-import {useDispatch, useSelector} from 'react-redux'
-import {RootState} from 'store'
+import {useDispatch} from 'react-redux'
 import {addEdge, addNode, removeElements} from 'store/scenario/view'
 import {NodeTypes} from 'core/api'
 import StartElement from '../elements/start-element'
 import FinishElement from '../elements/finish-element'
 import ReplicaElement from '../elements/replica-element'
+import {useSelectorApp} from 'shared/hoocks'
 
 const typesElements: NodeTypesType = {
     START: StartElement,
@@ -25,7 +25,9 @@ const typesElements: NodeTypesType = {
 }
 
 const ScenarioEditor = React.memo(() => {
-    const {elements, isLoaded} = useSelector((state: RootState) => state.scenarioView)
+    const {
+        scenarioView: {elements, isLoaded}
+    } = useSelectorApp()
     const {fitView} = useZoomPanHelper()
     const dispatch = useDispatch()
     const reactFlowWrapper = useRef<HTMLDivElement | null>(null)

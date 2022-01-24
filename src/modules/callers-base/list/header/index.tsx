@@ -2,8 +2,7 @@ import React, {useEffect, useState} from 'react'
 import styles from 'shared/styles/header-list/styes.module.scss'
 import Btn from 'components/ui-kit/btn'
 import Input from 'components/ui-kit/input'
-import {useDispatch, useSelector} from 'react-redux'
-import {RootState} from 'store'
+import {useDispatch} from 'react-redux'
 import BtnSecond from 'components/ui-kit/btn-second'
 import Menu from 'components/ui-kit/menu'
 import MenuItem from 'components/ui-kit/menu-item'
@@ -13,10 +12,13 @@ import {changeFilter, resetFilter} from 'store/filter'
 import {resetCallersBasesStates} from 'store/callers-bases/list'
 import {classNames} from 'shared/utils'
 import {DirectionSort, sortItems, SortType} from 'shared/data/sort-items'
+import {useSelectorApp} from 'shared/hoocks'
 
 const CallersBaseListHeader = () => {
-    const {statuses} = useSelector((state: RootState) => state.callersBaseList)
-    const {direction, sortBy, text} = useSelector((state: RootState) => state.filter)
+    const {
+        callersBaseList: {statuses},
+        filter: {direction, sortBy, text}
+    } = useSelectorApp()
     const dispatch = useDispatch()
     const history = useHistory()
     const [anchorEl, setAnchorEl] = useState<Element | null>(null)

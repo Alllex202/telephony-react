@@ -1,16 +1,16 @@
 import React, {useEffect} from 'react'
 import bodyStyles from 'shared/styles/body-list/styles.module.scss'
-import {useDispatch, useSelector} from 'react-redux'
-import {RootState} from 'store'
+import {useDispatch} from 'react-redux'
 import {getCallersBasesByPage, resetCallersBasesStates as clearData} from 'store/callers-bases/list'
 import CallersBaseCard from './components/card'
 import BtnSecond from 'components/ui-kit/btn-second'
+import {useSelectorApp} from 'shared/hoocks'
 
 const CallersBaseListBody = () => {
-    const {callersBaseList, statuses, error, page, size, isLastPage} = useSelector(
-        (state: RootState) => state.callersBaseList
-    )
-    const filter = useSelector((state: RootState) => state.filter)
+    const {
+        callersBaseList: {callersBaseList, statuses, error, page, size, isLastPage},
+        filter
+    } = useSelectorApp()
 
     const dispatch = useDispatch()
 

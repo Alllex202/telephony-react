@@ -5,14 +5,16 @@ import {classNames} from 'shared/utils'
 import Substrate from 'components/ui-kit/substrate'
 import PieChart from 'modules/charts/pie-chart'
 import LineChart from 'modules/charts/line-chart'
-import {useDispatch, useSelector} from 'react-redux'
-import {RootState} from 'store'
+import {useDispatch} from 'react-redux'
 import {getStatsChart, getStatsCommon, getStatsPieChart, resetState} from 'store/stats'
 import {formatTimeObject} from 'shared/utils/format-time-object'
+import {useSelectorApp} from 'shared/hoocks'
 
 const StatsBody = () => {
     const dispatch = useDispatch()
-    const {common, pieChart, chart} = useSelector((state: RootState) => state.stats)
+    const {
+        stats: {common, pieChart, chart}
+    } = useSelectorApp()
 
     useEffect(() => {
         dispatch(getStatsChart())

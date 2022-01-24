@@ -2,12 +2,13 @@ import React from 'react'
 import styles from './styles.module.scss'
 import BtnSecond from 'components/ui-kit/btn-second'
 import {useHistory} from 'react-router-dom'
-import {useSelector} from 'react-redux'
-import {RootState} from 'store'
+import {useSelectorApp} from 'shared/hoocks'
 
 const CallingCreatingHeader = () => {
     const history = useHistory()
-    const {statuses} = useSelector((state: RootState) => state.callingCreating)
+    const {
+        callingCreating: {statuses}
+    } = useSelectorApp()
 
     const onCancel = () => {
         if (statuses.isLoading) return

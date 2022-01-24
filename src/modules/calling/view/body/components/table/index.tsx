@@ -2,8 +2,7 @@ import React, {useEffect} from 'react'
 import styles from './styles.module.scss'
 import stylesTable from 'shared/styles/table/styles.module.scss'
 import 'shared/styles/table/styles.scss'
-import {useDispatch, useSelector} from 'react-redux'
-import {RootState} from 'store'
+import {useDispatch} from 'react-redux'
 import {Table, TableBody, TableCell, TableHead, TableRow as MuiTableRow} from '@mui/material'
 import {CallingResultTableBodyModel} from 'core/api'
 import {
@@ -11,6 +10,7 @@ import {
     getCallingResultTableHeaderById,
     getVariables
 } from 'store/calling/view'
+import {useSelectorApp} from 'shared/hoocks'
 
 type Props = {
     callingId: string
@@ -18,7 +18,9 @@ type Props = {
 
 const CallingViewTable = React.memo(({callingId}: Props) => {
     const dispatch = useDispatch()
-    const {tableHeader, tableBody, variables} = useSelector((state: RootState) => state.callingView)
+    const {
+        callingView: {tableHeader, tableBody, variables}
+    } = useSelectorApp()
 
     useEffect(() => {
         dispatch(getCallingResultTableHeaderById(callingId))

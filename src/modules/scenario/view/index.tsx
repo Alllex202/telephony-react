@@ -9,9 +9,12 @@ import ScenarioLeftSidebar from './components/left-sidebar'
 import ScenarioEditor from './components/editor'
 import ScenarioRightSidebar from 'modules/scenario/view/components/right-sidebar'
 import {ReactFlowProvider} from 'react-flow-renderer'
+import {useSelectorApp} from 'shared/hoocks'
 
 const ScenarioView = () => {
-    const {isLoaded} = useSelector((state: RootState) => state.scenarioView)
+    const {
+        scenarioView: {isLoaded}
+    } = useSelectorApp()
     const dispatch = useDispatch()
     const {scenarioId} = useParams<{scenarioId: string}>()
 

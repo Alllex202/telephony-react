@@ -1,15 +1,16 @@
 import React from 'react'
 import styles from './styles.module.scss'
 import RightSidebar from 'components/right-sidebar'
-import {useSelector} from 'react-redux'
-import {RootState} from 'store'
 import {Link} from 'react-router-dom'
 import {formatDate} from 'shared/utils/format-date'
 import Info from './components/info'
 import {routes} from 'routing/routes'
+import {useSelectorApp} from 'shared/hoocks'
 
 const CallersBaseViewRightSidebar = () => {
-    const {header, callings} = useSelector((state: RootState) => state.callersBaseView)
+    const {
+        callersBaseView: {header, callings}
+    } = useSelectorApp()
 
     return (
         <RightSidebar>
