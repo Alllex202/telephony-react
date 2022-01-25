@@ -7,48 +7,45 @@ import Icon from 'components/ui-kit/icon'
 import CallingCard from 'modules/calling/list/body/components/card'
 import {useDispatch} from 'react-redux'
 import {CallingStatusTypes} from 'core/api'
-import {getCallingsByPage} from 'store/calling/list'
 import BtnSecond from 'components/ui-kit/btn-second'
-import {callingStatuses} from 'shared/data/calling-statuses'
+import {callingStatuses} from 'shared/data'
 import {useSelectorApp} from 'shared/hoocks'
+import {getCallingsPage, resetCallingStates as clearData} from 'store/calling/list'
+import {RequestPageTypes} from 'shared/types'
 
 type Props = {
     callingStatus: CallingStatusTypes
 }
 
 const CallingSection = ({callingStatus}: Props) => {
-    const {callingList: store, filter} = useSelectorApp()
     const dispatch = useDispatch()
+    const {callingList: store} = useSelectorApp()
+    const {
+        callingList,
+        statuses,
+        pageSettings: {page, size, isLastPage, totalElements}
+    } = store[callingStatus]
     const [isOpened, setOpen] = useState<boolean>(false)
 
-    useEffect(() => {
-        getData(store[callingStatus].page, callingStatus)
-    }, [filter])
-
     const loadNextPage = () => {
-        if (store[callingStatus].isLastPage || store[callingStatus].statuses.isLoading) return
+        if (isLastPage || statuses.isLoading) return
 
-        getData(store[callingStatus].page + 1, callingStatus)
-    }
-
-    const getData = (page: number, callingStatus: CallingStatusTypes) => {
-        dispatch(
-            getCallingsByPage(callingStatus, {
-                page,
-                size: store[callingStatus].size,
-                direction: filter.direction,
-                name: filter.name,
-                sortBy: filter.sortBy,
-                status: callingStatus
-            })
-        )
+        dispatch(getCallingsPage(callingStatus, RequestPageTypes.Next))
     }
 
     const onOpen = (event: React.SyntheticEvent, expanded: boolean) => {
-        if (!store[callingStatus].statuses.isSuccess) return
+        if (!statuses.isSuccess) return
 
         setOpen(expanded)
     }
+
+    useEffect(() => {
+        dispatch(getCallingsPage(callingStatus, RequestPageTypes.First))
+
+        return () => {
+            dispatch(clearData(callingStatus))
+        }
+    }, [])
 
     return (
         <>
@@ -56,8 +53,7 @@ const CallingSection = ({callingStatus}: Props) => {
                 square={true}
                 className={'calling-section'}
                 expanded={
-                    store[callingStatus].statuses.isSuccess &&
-                    store[callingStatus].callingList.length > 0
+                    statuses.isSuccess && callingList.length > 0
                         ? callingStatus === 'DONE'
                             ? true
                             : isOpened
@@ -67,8 +63,7 @@ const CallingSection = ({callingStatus}: Props) => {
             >
                 <AccordionSummary
                     expandIcon={
-                        callingStatus === 'DONE' ||
-                        store[callingStatus].callingList.length < 1 ? null : (
+                        callingStatus === 'DONE' || callingList.length < 1 ? null : (
                             <Icon
                                 name={'expand_more'}
                                 type={'round'}
@@ -77,22 +72,21 @@ const CallingSection = ({callingStatus}: Props) => {
                         )
                     }
                 >
-                    {callingStatuses[callingStatus].message} ({store[callingStatus].totalElements})
+                    {callingStatuses[callingStatus].message} ({totalElements})
                 </AccordionSummary>
                 <AccordionDetails>
                     <div className={listStyles.list}>
-                        {store[callingStatus].callingList.map((el) => (
+                        {callingList.map((el) => (
                             <CallingCard key={el.id} data={el} callingStatus={callingStatus} />
                         ))}
                     </div>
-                    {!store[callingStatus].isLastPage &&
-                        !store[callingStatus].statuses.isLoading && (
-                            <BtnSecond
-                                className={styles.more}
-                                onClick={loadNextPage}
-                                text={'Показать больше'}
-                            />
-                        )}
+                    {!isLastPage && !statuses.isLoading && (
+                        <BtnSecond
+                            className={styles.more}
+                            onClick={loadNextPage}
+                            text={'Показать больше'}
+                        />
+                    )}
                 </AccordionDetails>
             </Accordion>
         </>

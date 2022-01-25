@@ -21,7 +21,7 @@ import {
 import {handlerError} from 'shared/middleware'
 import {compare, getColor, getNumber} from 'shared/utils'
 import {fakeChart} from 'shared/data/fake/fake-data-line-chart'
-import {fakePieChart} from 'shared/data/fake/fake-pie-chart-calling-view'
+import {fakePieChartCallingView} from 'shared/data/fake/fake-pie-chart-calling-view'
 
 type CallingResultTypes =
     | 'common'
@@ -275,7 +275,7 @@ export const getCallingResultPieChartById = (id: number | string) => (dispatch: 
         .then((res) => {
             // todo фейковые данные убрать
             // dispatch(setPieChartResult(res.data))
-            dispatch(setPieChartResult(fakePieChart))
+            dispatch(setPieChartResult(fakePieChartCallingView))
             dispatch(setSuccess({type: 'pieChart'}))
         })
         .catch(

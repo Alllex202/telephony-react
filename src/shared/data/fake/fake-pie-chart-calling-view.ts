@@ -1,6 +1,6 @@
 import {CallingResultPieChartModel} from 'core/api'
 
-export const fakePieChart: CallingResultPieChartModel = {
+export const fakePieChartCallingView: CallingResultPieChartModel = {
     countSuccess: 70,
     countCallers: 100,
     percentSuccess: 70,

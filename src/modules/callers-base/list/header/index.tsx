@@ -1,10 +1,11 @@
 import React from 'react'
-import {resetCallersBasesStates} from 'store/callers-bases/list'
+import {getCallersBases} from 'store/callers-bases/list'
 import SearchHeader from 'components/search-header'
 import {useHistory} from 'react-router-dom'
 import {useSelectorApp} from 'shared/hoocks'
 import {useDispatch} from 'react-redux'
 import {routes} from 'routing/routes'
+import {RequestPageTypes} from 'shared/types'
 
 const CallersBaseListHeader = () => {
     const {
@@ -18,15 +19,11 @@ const CallersBaseListHeader = () => {
     }
 
     const handlerSortItem = () => {
-        if (statuses.isLoading) return
-
-        dispatch(resetCallersBasesStates())
+        dispatch(getCallersBases(RequestPageTypes.First))
     }
 
     const handlerSearch = () => {
-        if (statuses.isLoading) return
-
-        dispatch(resetCallersBasesStates())
+        dispatch(getCallersBases(RequestPageTypes.First))
     }
 
     return (
@@ -36,6 +33,7 @@ const CallersBaseListHeader = () => {
             onLeftBtn={handlerCreate}
             textLeftBtn={'Добавить базу'}
             iconLeftBtn={'upload'}
+            isLoading={statuses.isLoading ?? false}
         />
     )
 }

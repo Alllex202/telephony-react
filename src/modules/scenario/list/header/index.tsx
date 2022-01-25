@@ -2,10 +2,9 @@ import React, {useState} from 'react'
 import {useDispatch} from 'react-redux'
 import {useHistory} from 'react-router-dom'
 import {routes} from 'routing/routes'
-import {resetScenariosStates} from 'store/scenario/list'
-import {createScenario} from 'core/api/requests'
-import {DefaultAxiosError} from 'shared/types/base-response-error'
-import {FetchStatuses} from 'shared/types/fetch-statuses'
+import {getScenariosPage} from 'store/scenario/list'
+import {createScenario} from 'core/api'
+import {DefaultAxiosError, FetchStatuses, RequestPageTypes} from 'shared/types'
 import {enqueueSnackbar} from 'features/notifications/store'
 import {handlerError} from 'shared/middleware'
 import {useSelectorApp} from 'shared/hoocks'
@@ -32,22 +31,18 @@ const ScenarioListHeader = () => {
                 handlerError(dispatch, (err: DefaultAxiosError) => {
                     setCreating({
                         isError: true,
-                        error: err.response?.data.message || 'Ошибка при создании'
+                        error: err.response?.data.message || 'handlerCreate'
                     })
                 })
             )
     }
 
     const handlerSortItem = () => {
-        if (statuses.isLoading) return
-
-        dispatch(resetScenariosStates())
+        dispatch(getScenariosPage(RequestPageTypes.First))
     }
 
     const handlerSearch = () => {
-        if (statuses.isLoading) return
-
-        dispatch(resetScenariosStates())
+        dispatch(getScenariosPage(RequestPageTypes.First))
     }
 
     return (
@@ -57,6 +52,7 @@ const ScenarioListHeader = () => {
             textLeftBtn={'Создать сценарий'}
             onLeftBtn={handlerCreate}
             iconLeftBtn={'format_list_numbered'}
+            isLoading={statuses.isLoading ?? false}
         />
     )
 }

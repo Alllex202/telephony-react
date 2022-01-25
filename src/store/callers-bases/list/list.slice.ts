@@ -1,53 +1,38 @@
 import {createSlice, Dispatch, PayloadAction} from '@reduxjs/toolkit'
-import {CallersBaseHeaderModel} from 'core/api'
-import {FetchStatuses} from 'shared/types/fetch-statuses'
-import {AxiosRequestConfig} from 'axios'
-import {DefaultAxiosError} from 'shared/types/base-response-error'
-import {DirectionSort, SortType} from 'shared/data/sort-items'
-import {ParamsPaginatorWithFilterModel} from 'core/api/models'
-import {getCallersBasesHeader} from 'core/api/requests'
+import {
+    CallersBaseHeaderModel,
+    getCallersBasesHeader,
+    ParamsPaginatorWithFilterModel
+} from 'core/api'
+import {DirectionSort, SortType} from 'shared/data'
 import {handlerError} from 'shared/middleware'
+import {DefaultAxiosError, FetchStatuses, PageSettings, RequestPageTypes} from 'shared/types'
+import {RootState} from 'store/index'
 
 interface CallersBaseState {
     callersBaseList: CallersBaseHeaderModel[]
-    error: string
     statuses: FetchStatuses
-    page: number
-    size: number
-    isLastPage: boolean
+    pageSettings: PageSettings
 }
 
 const initialState: CallersBaseState = {
     callersBaseList: [],
-    error: '',
-    statuses: {isLoading: false, isError: false, isSuccess: false},
-    page: 0,
-    size: 10,
-    isLastPage: false
+    statuses: {},
+    pageSettings: {page: 0, isLastPage: false, size: 10}
 }
 
 export const callersBaseListSlice = createSlice({
     name: 'callersBases',
     initialState,
     reducers: {
-        addCallersBases: (state, action: PayloadAction<CallersBaseHeaderModel[]>) => {
-            state.callersBaseList = [...state.callersBaseList, ...action.payload]
-        },
-        setPage: (state, action: PayloadAction<number>) => {
-            state.page = action.payload
-        },
-        resetCallersBases: (state) => {
-            state.callersBaseList = []
-        },
-        deleteCallersBaseById: (state, action: PayloadAction<number | string>) => {
-            state.callersBaseList = state.callersBaseList.filter((el) => el.id !== action.payload)
+        updatePageSettings: (
+            state,
+            action: PayloadAction<Partial<Pick<PageSettings, 'isLastPage' | 'page'>>>
+        ) => {
+            state.pageSettings = {...state.pageSettings, ...action.payload}
         },
         setError: (state, action: PayloadAction<string>) => {
-            state.error = action.payload
-            state.statuses = {isError: true}
-        },
-        resetError: (state) => {
-            state.error = ''
+            state.statuses = {isError: true, error: action.payload}
         },
         setLoading: (state) => {
             state.statuses = {isLoading: true}
@@ -55,58 +40,69 @@ export const callersBaseListSlice = createSlice({
         setSuccess: (state) => {
             state.statuses = {isSuccess: true}
         },
-        resetStatuses: (state) => {
-            state.statuses = {isLoading: false, isError: false, isSuccess: false}
+        addCallersBases: (state, action: PayloadAction<CallersBaseHeaderModel[]>) => {
+            state.callersBaseList = [...state.callersBaseList, ...action.payload]
+        },
+        deleteCallersBaseById: (state, action: PayloadAction<number | string>) => {
+            state.callersBaseList = state.callersBaseList.filter((el) => el.id !== action.payload)
         },
         resetCallersBasesStates: (state) => {
-            state.statuses = {isLoading: false, isError: false, isSuccess: false}
-            state.error = ''
+            state.statuses = {}
             state.callersBaseList = []
-            state.page = 0
-            state.size = initialState.size
-            state.isLastPage = false
-        },
-        setLastPage: (state, action: PayloadAction<boolean>) => {
-            state.isLastPage = action.payload
+            state.pageSettings = {page: 0, isLastPage: false, size: state.pageSettings.size}
         }
     }
 })
 
-export const getCallersBasesByPage =
-    (
-        params: ParamsPaginatorWithFilterModel<SortType, DirectionSort>,
-        otherConfig?: AxiosRequestConfig
-    ) =>
-    (dispatch: Dispatch) => {
+export const getCallersBases =
+    (type: RequestPageTypes) => (dispatch: Dispatch, getState: () => RootState) => {
+        const {
+            callersBaseList: {
+                pageSettings: {page, size}
+            },
+            filter: {name, sortBy, direction}
+        } = getState()
+
+        const params: ParamsPaginatorWithFilterModel<SortType, DirectionSort> = {
+            page: page + 1,
+            size,
+            name,
+            sortBy,
+            direction
+        }
+
+        if (type === RequestPageTypes.First) {
+            params.page = 0
+            dispatch(resetCallersBasesStates())
+        }
+
         dispatch(setLoading())
-        getCallersBasesHeader(params, otherConfig)
+        getCallersBasesHeader(params)
             .then((res) => {
                 dispatch(addCallersBases(res.data.content))
-                if (res.data.last) {
-                    dispatch(setLastPage(res.data.last))
-                }
-                dispatch(setPage(res.data.pageable.pageNumber))
+                dispatch(
+                    updatePageSettings({
+                        isLastPage: res.data.last,
+                        page: res.data.pageable.pageNumber
+                    })
+                )
                 dispatch(setSuccess())
             })
             .catch(
                 handlerError(dispatch, (err: DefaultAxiosError) => {
-                    dispatch(setError(err.response?.data.error || 'Необработанная ошибка'))
+                    dispatch(setError(err.response?.data.error || 'getCallersBasesPage'))
                 })
             )
     }
 
 export const {
     addCallersBases,
-    // resetCallersBases,
-    // resetStatuses,
-    // resetError,
     setError,
     deleteCallersBaseById,
     setSuccess,
     resetCallersBasesStates,
     setLoading,
-    setLastPage,
-    setPage
+    updatePageSettings
 } = callersBaseListSlice.actions
 
 export const callersBaseListReducers = callersBaseListSlice.reducer

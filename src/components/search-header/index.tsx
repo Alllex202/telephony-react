@@ -17,9 +17,17 @@ type Props = {
     iconLeftBtn?: string
     onSortItem: () => void
     onSearch: () => void
+    isLoading: boolean
 }
 
-const SearchHeader = ({onLeftBtn, textLeftBtn, iconLeftBtn, onSearch, onSortItem}: Props) => {
+const SearchHeader = ({
+    onLeftBtn,
+    textLeftBtn,
+    iconLeftBtn,
+    onSearch,
+    onSortItem,
+    isLoading
+}: Props) => {
     const {
         filter: {direction, sortBy, text}
     } = useSelectorApp()
@@ -54,9 +62,7 @@ const SearchHeader = ({onLeftBtn, textLeftBtn, iconLeftBtn, onSearch, onSortItem
         text: string
     }) => {
         handlerCloseSort()
-        if (options.sortBy === sortBy && options.direction === direction) return
-
-        onSortItem()
+        if ((options.sortBy === sortBy && options.direction === direction) || isLoading) return
 
         dispatch(
             changeFilter({
@@ -66,16 +72,16 @@ const SearchHeader = ({onLeftBtn, textLeftBtn, iconLeftBtn, onSearch, onSortItem
                 text: options.text
             })
         )
+        onSortItem()
     }
 
     const handlerSearch = (event: React.KeyboardEvent) => {
+        if (input === lastInput || isLoading) return
+
         if (event.key === 'Enter') {
-            if (input === lastInput) return
-
-            onSearch()
-
             setLastInput(input)
             dispatch(changeFilter({sortBy, name: input, direction, text}))
+            onSearch()
         }
     }
 

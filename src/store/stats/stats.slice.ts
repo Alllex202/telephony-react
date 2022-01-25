@@ -11,7 +11,7 @@ import {FetchStatuses} from 'shared/types/fetch-statuses'
 import {ExtraPieChartPartModel} from 'store/calling/view'
 import {compare, getColor, getNumber} from 'shared/utils'
 import {handlerError} from 'shared/middleware'
-import {fakePieChart} from 'shared/data/fake/fake-pie-chart-stats'
+import {fakePieChartStats} from 'shared/data/fake/fake-pie-chart-stats'
 import {fakeChart} from 'shared/data/fake/fake-data-line-chart'
 
 type StatsResultTypes = 'common' | 'pieChart' | 'chart'
@@ -119,7 +119,7 @@ export const getStatsCommon = () => (dispatch: Dispatch) => {
 
 export const getStatsPieChart = () => (dispatch: Dispatch) => {
     // todo remove fake data
-    dispatch(setPieChartResult(fakePieChart))
+    dispatch(setPieChartResult(fakePieChartStats))
     dispatch(setLoading({type: 'pieChart'}))
     _getStatsPieChart()
         .then((res) => {

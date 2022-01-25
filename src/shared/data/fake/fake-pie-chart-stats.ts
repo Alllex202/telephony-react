@@ -1,6 +1,6 @@
 import {StatsPieChartModel} from 'core/api'
 
-export const fakePieChart: StatsPieChartModel = {
+export const fakePieChartStats: StatsPieChartModel = {
     percentSuccess: 70,
     parts: [
         {

@@ -4,7 +4,8 @@ import {useHistory} from 'react-router-dom'
 import {routes} from 'routing/routes'
 import {useSelectorApp} from 'shared/hoocks'
 import SearchHeader from 'components/search-header'
-import {resetCallingStates} from 'store/calling/list'
+import {getCallingsPage} from 'store/calling/list'
+import {RequestPageTypes} from 'shared/types'
 
 const CallingListHeader = () => {
     const {callingList} = useSelectorApp()
@@ -16,25 +17,15 @@ const CallingListHeader = () => {
     }
 
     const handlerSortItem = () => {
-        if (
-            callingList['RUN'].statuses.isLoading ||
-            callingList['SCHEDULED'].statuses.isLoading ||
-            callingList['DONE'].statuses.isLoading
-        )
-            return
-
-        dispatch(resetCallingStates())
+        dispatch(getCallingsPage('RUN', RequestPageTypes.First))
+        dispatch(getCallingsPage('SCHEDULED', RequestPageTypes.First))
+        dispatch(getCallingsPage('DONE', RequestPageTypes.First))
     }
 
     const handlerSearch = () => {
-        if (
-            callingList['RUN'].statuses.isLoading ||
-            callingList['SCHEDULED'].statuses.isLoading ||
-            callingList['DONE'].statuses.isLoading
-        )
-            return
-
-        dispatch(resetCallingStates())
+        dispatch(getCallingsPage('RUN', RequestPageTypes.First))
+        dispatch(getCallingsPage('SCHEDULED', RequestPageTypes.First))
+        dispatch(getCallingsPage('DONE', RequestPageTypes.First))
     }
 
     return (
@@ -44,6 +35,11 @@ const CallingListHeader = () => {
             textLeftBtn={'Обзванивание'}
             onLeftBtn={handlerCreate}
             iconLeftBtn={'add_ic_call'}
+            isLoading={
+                (callingList['RUN'].statuses.isLoading ?? false) ||
+                (callingList['SCHEDULED'].statuses.isLoading ?? false) ||
+                (callingList['DONE'].statuses.isLoading ?? false)
+            }
         />
     )
 }

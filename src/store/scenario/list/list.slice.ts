@@ -1,53 +1,34 @@
 import {createSlice, Dispatch, PayloadAction} from '@reduxjs/toolkit'
-import {ScenarioInfoModel} from 'core/api'
-import {FetchStatuses} from 'shared/types/fetch-statuses'
-import {AxiosRequestConfig} from 'axios'
-import {DefaultAxiosError} from 'shared/types/base-response-error'
-import {DirectionSort, SortType} from 'shared/data/sort-items'
-import {ParamsPaginatorWithFilterModel} from 'core/api/models'
-import {getScenariosByPage as getScenarios} from 'core/api/requests'
+import {getScenariosByPage, ParamsPaginatorWithFilterModel, ScenarioInfoModel} from 'core/api'
+import {DefaultAxiosError, FetchStatuses, PageSettings, RequestPageTypes} from 'shared/types'
+import {RootState} from 'store/index'
+import {DirectionSort, SortType} from 'shared/data'
 import {handlerError} from 'shared/middleware'
 
 interface ScenariosState {
     scenarioList: ScenarioInfoModel[]
-    error: string
     statuses: FetchStatuses
-    page: number
-    size: number
-    isLastPage: boolean
+    pageSettings: PageSettings
 }
 
 const initialState: ScenariosState = {
     scenarioList: [],
-    error: '',
-    statuses: {isLoading: false, isError: false, isSuccess: false},
-    page: 0,
-    size: 10,
-    isLastPage: false
+    statuses: {},
+    pageSettings: {page: 0, isLastPage: false, size: 10}
 }
 
 export const scenarioListSlice = createSlice({
     name: 'scenarios',
     initialState,
     reducers: {
-        addScenarios: (state, action: PayloadAction<ScenarioInfoModel[]>) => {
-            state.scenarioList = [...state.scenarioList, ...action.payload]
-        },
-        setPage: (state, action: PayloadAction<number>) => {
-            state.page = action.payload
-        },
-        resetScenarios: (state) => {
-            state.scenarioList = []
-        },
-        deleteScenarioById: (state, action: PayloadAction<number | string>) => {
-            state.scenarioList = state.scenarioList.filter((el) => el.id !== action.payload)
+        updatePageSettings: (
+            state,
+            action: PayloadAction<Partial<Pick<PageSettings, 'isLastPage' | 'page'>>>
+        ) => {
+            state.pageSettings = {...state.pageSettings, ...action.payload}
         },
         setError: (state, action: PayloadAction<string>) => {
-            state.error = action.payload
-            state.statuses = {isError: true}
-        },
-        resetError: (state) => {
-            state.error = ''
+            state.statuses = {isError: true, error: action.payload}
         },
         setLoading: (state) => {
             state.statuses = {isLoading: true}
@@ -55,58 +36,69 @@ export const scenarioListSlice = createSlice({
         setSuccess: (state) => {
             state.statuses = {isSuccess: true}
         },
-        resetStatuses: (state) => {
-            state.statuses = {isLoading: false, isError: false, isSuccess: false}
+        addScenarios: (state, action: PayloadAction<ScenarioInfoModel[]>) => {
+            state.scenarioList = [...state.scenarioList, ...action.payload]
+        },
+        deleteScenarioById: (state, action: PayloadAction<number | string>) => {
+            state.scenarioList = state.scenarioList.filter((el) => el.id !== action.payload)
         },
         resetScenariosStates: (state) => {
-            state.statuses = {isLoading: false, isError: false, isSuccess: false}
-            state.error = ''
+            state.statuses = {}
             state.scenarioList = []
-            state.page = 0
-            state.size = initialState.size
-            state.isLastPage = false
-        },
-        setLastPage: (state, action: PayloadAction<boolean>) => {
-            state.isLastPage = action.payload
+            state.pageSettings = {page: 0, isLastPage: false, size: state.pageSettings.size}
         }
     }
 })
 
-export const getScenariosByPage =
-    (
-        params: ParamsPaginatorWithFilterModel<SortType, DirectionSort>,
-        otherConfig?: AxiosRequestConfig
-    ) =>
-    (dispatch: Dispatch) => {
+export const getScenariosPage =
+    (type: RequestPageTypes) => (dispatch: Dispatch, getState: () => RootState) => {
+        const {
+            scenarioList: {
+                pageSettings: {page, size}
+            },
+            filter: {name, sortBy, direction}
+        } = getState()
+
+        const params: ParamsPaginatorWithFilterModel<SortType, DirectionSort> = {
+            page: page + 1,
+            size,
+            name,
+            sortBy,
+            direction
+        }
+
+        if (type === RequestPageTypes.First) {
+            params.page = 0
+            dispatch(resetScenariosStates())
+        }
+
         dispatch(setLoading())
-        getScenarios(params, otherConfig)
+        getScenariosByPage(params)
             .then((res) => {
                 dispatch(addScenarios(res.data.content))
-                if (res.data.last) {
-                    dispatch(setLastPage(res.data.last))
-                }
-                dispatch(setPage(res.data.pageable.pageNumber))
+                dispatch(
+                    updatePageSettings({
+                        isLastPage: res.data.last,
+                        page: res.data.pageable.pageNumber
+                    })
+                )
                 dispatch(setSuccess())
             })
             .catch(
                 handlerError(dispatch, (err: DefaultAxiosError) => {
-                    dispatch(setError(err.response?.data.error || 'Необработанная ошибка'))
+                    dispatch(setError(err.response?.data.error || 'getScenariosPage'))
                 })
             )
     }
 
 export const {
     addScenarios,
-    // resetScenarios,
-    // resetStatuses,
-    // resetError,
     setError,
     deleteScenarioById,
     setSuccess,
     resetScenariosStates,
     setLoading,
-    setLastPage,
-    setPage
+    updatePageSettings
 } = scenarioListSlice.actions
 
 export const scenarioListReducers = scenarioListSlice.reducer
