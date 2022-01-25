@@ -4,6 +4,7 @@ import {DefaultAxiosError, FetchStatuses, PageSettings, RequestPageTypes} from '
 import {RootState} from 'store/index'
 import {DirectionSort, SortType} from 'shared/data'
 import {handlerError} from 'shared/middleware'
+import {IdKey} from 'shared/types/id-key'
 
 interface ScenariosState {
     scenarioList: ScenarioInfoModel[]
@@ -39,7 +40,7 @@ export const scenarioListSlice = createSlice({
         addScenarios: (state, action: PayloadAction<ScenarioInfoModel[]>) => {
             state.scenarioList = [...state.scenarioList, ...action.payload]
         },
-        deleteScenarioById: (state, action: PayloadAction<number | string>) => {
+        deleteScenarioById: (state, action: PayloadAction<IdKey>) => {
             state.scenarioList = state.scenarioList.filter((el) => el.id !== action.payload)
         },
         resetScenariosStates: (state) => {

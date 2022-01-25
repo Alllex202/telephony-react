@@ -1,5 +1,7 @@
+import {IdKey} from 'shared/types/id-key'
+
 export interface CallersBaseDataModel {
-    id: number | string
+    id: IdKey
     created: number
     variables: Array<CallersBaseDataColumnModel>
 }

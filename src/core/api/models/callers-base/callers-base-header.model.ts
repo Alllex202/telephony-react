@@ -1,5 +1,7 @@
+import {IdKey} from 'shared/types/id-key'
+
 export interface CallersBaseHeaderModel {
-    id: number | string
+    id: IdKey
     created: number
     countCallers: number
     countInvalidCallers: number

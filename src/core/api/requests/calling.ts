@@ -13,11 +13,9 @@ import {
     ParamsPaginatorModel,
     ParamsPaginatorWithFilterAndStatusModel
 } from 'core/api/models'
+import {IdKey} from 'shared/types/id-key'
 
-export const deleteCalling = (
-    id: number | string,
-    config?: AxiosRequestConfig
-): BaseResponse<null> => {
+export const deleteCalling = (id: IdKey, config?: AxiosRequestConfig): BaseResponse<null> => {
     return axios.delete<null>(apiRoutes.calling.byId(id), config)
 }
 
@@ -36,21 +34,21 @@ export const createCalling = (
 }
 
 export const getCallingsByCallersBaseId = (
-    id: number | string,
+    id: IdKey,
     config?: AxiosRequestConfig
 ): BaseResponse<CallingModel[]> => {
     return axios.get<CallingModel[]>(apiRoutes.calling.byCallersBaseId(id), config)
 }
 
 export const getCallingById = (
-    id: string | number,
+    id: IdKey,
     config?: AxiosRequestConfig
 ): BaseResponse<CallingModel> => {
     return axios.get<CallingModel>(apiRoutes.calling.byId(id), config)
 }
 
 export const updateCalling = (
-    id: string | number,
+    id: IdKey,
     data: CallingRequestModel,
     config?: AxiosRequestConfig
 ): BaseResponse<CallingModel> => {
@@ -58,35 +56,35 @@ export const updateCalling = (
 }
 
 export const startScheduledCalling = (
-    id: string | number,
+    id: IdKey,
     config?: AxiosRequestConfig
 ): BaseResponse<null> => {
     return axios.post<null>(apiRoutes.calling.scheduledByIdStart(id), config)
 }
 
 export const getCallingResultCommon = (
-    id: string | number,
+    id: IdKey,
     config?: AxiosRequestConfig
 ): BaseResponse<CallingResultCommonModel> => {
     return axios.get<CallingResultCommonModel>(apiRoutes.calling.result.common(id), config)
 }
 
 export const getCallingResultPieChart = (
-    id: string | number,
+    id: IdKey,
     config?: AxiosRequestConfig
 ): BaseResponse<CallingResultPieChartModel> => {
     return axios.get<CallingResultPieChartModel>(apiRoutes.calling.result.pieChart(id), config)
 }
 
 export const getCallingResultChart = (
-    id: string | number,
+    id: IdKey,
     config?: AxiosRequestConfig
 ): BaseResponse<DataChartModel[]> => {
     return axios.get<DataChartModel[]>(apiRoutes.calling.result.chart(id), config)
 }
 
 export const getCallingResultTableHeader = (
-    id: string | number,
+    id: IdKey,
     config?: AxiosRequestConfig
 ): BaseResponse<CallingResultTableHeaderModel> => {
     return axios.get<CallingResultTableHeaderModel>(
@@ -96,7 +94,7 @@ export const getCallingResultTableHeader = (
 }
 
 export const getCallingResultTableBody = (
-    id: string | number,
+    id: IdKey,
     params: ParamsPaginatorModel,
     config?: AxiosRequestConfig
 ): BaseResponse<PaginatorModel<CallingResultTableBodyModel>> => {

@@ -25,6 +25,7 @@ import {
 import {getUniqueId} from 'shared/utils'
 import {handlerError} from 'shared/middleware'
 import {enqueueSnackbar} from 'features/notifications/store'
+import {IdKey} from 'shared/types/id-key'
 
 type ElementType = Node<NodeDataModel> | Edge
 
@@ -303,7 +304,7 @@ export const scenarioSlice = createSlice({
         setFinishId: (state: ScenarioState, action: PayloadAction<string>) => {
             state.finishId = action.payload
         },
-        setConnectionId: (state: ScenarioState, action: PayloadAction<null | number | string>) => {
+        setConnectionId: (state: ScenarioState, action: PayloadAction<null | IdKey>) => {
             if (!state.data) {
                 return
             }
@@ -318,54 +319,51 @@ export const scenarioSlice = createSlice({
     }
 })
 
-export const getScenario =
-    (id: string | number) => (dispatch: Dispatch, getState: () => RootState) => {
-        const state = getState()
-        if (state.scenarioView.statuses.isLoading) return
+export const getScenario = (id: IdKey) => (dispatch: Dispatch, getState: () => RootState) => {
+    const state = getState()
+    if (state.scenarioView.statuses.isLoading) return
 
-        dispatch(setLoading())
-        getScenarioById(id)
-            .then((res) => {
-                const elements: ElementType[] = []
-                res.data.nodes.forEach((value) => {
-                    if (value.type === 'START') {
-                        dispatch(setStartId(value.id))
-                    }
-                    if (value.type === 'FINISH') {
-                        dispatch(setFinishId(value.id))
-                    }
-                    elements.push({
-                        id: value.id,
-                        position: value.position,
-                        data: value.data,
-                        type: value.type,
-                        selectable: true,
-                        dragHandle: '.draggable-handle'
-                    })
+    dispatch(setLoading())
+    getScenarioById(id)
+        .then((res) => {
+            const elements: ElementType[] = []
+            res.data.nodes.forEach((value) => {
+                if (value.type === 'START') {
+                    dispatch(setStartId(value.id))
+                }
+                if (value.type === 'FINISH') {
+                    dispatch(setFinishId(value.id))
+                }
+                elements.push({
+                    id: value.id,
+                    position: value.position,
+                    data: value.data,
+                    type: value.type,
+                    selectable: true,
+                    dragHandle: '.draggable-handle'
                 })
-                res.data.edges.forEach((value) => {
-                    elements.push({
-                        id: value.id,
-                        source: value.source,
-                        target: value.target,
-                        sourceHandle: value.sourceHandle,
-                        arrowHeadType: ArrowHeadType.Arrow,
-                        type: 'smoothstep'
-                    })
-                })
-                dispatch(setData(res.data))
-                dispatch(setElements(elements))
-                dispatch(setSuccess())
-                dispatch(setLoaded())
             })
-            .catch(
-                handlerError(dispatch, (err: DefaultAxiosError) => {
-                    dispatch(
-                        setError(err.response?.data.message || 'Ошибка при получении сценария')
-                    )
+            res.data.edges.forEach((value) => {
+                elements.push({
+                    id: value.id,
+                    source: value.source,
+                    target: value.target,
+                    sourceHandle: value.sourceHandle,
+                    arrowHeadType: ArrowHeadType.Arrow,
+                    type: 'smoothstep'
                 })
-            )
-    }
+            })
+            dispatch(setData(res.data))
+            dispatch(setElements(elements))
+            dispatch(setSuccess())
+            dispatch(setLoaded())
+        })
+        .catch(
+            handlerError(dispatch, (err: DefaultAxiosError) => {
+                dispatch(setError(err.response?.data.message || 'Ошибка при получении сценария'))
+            })
+        )
+}
 
 export const getCallersBaseHeader = () => (dispatch: Dispatch, getState: () => RootState) => {
     const state = getState()
@@ -386,7 +384,7 @@ export const saveScenario = () => (dispatch: Dispatch, getState: () => RootState
 
     let nodes: NodeModel[] = []
     let edges: EdgeModel[] = []
-    let rootId: string | number | null = null
+    let rootId: IdKey | null = null
     // TODO **Проверка интерфейсов
     for (let el of state.scenarioView.elements) {
         if (!!(el as Node).data) {

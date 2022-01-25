@@ -1,3 +1,5 @@
+import {IdKey} from 'shared/types/id-key'
+
 const callersBase = 'callers-base'
 const calling = 'calling'
 const scenario = 'scenario'
@@ -6,16 +8,16 @@ export const routes = {
     callersBase: {
         add: (): string => `/${callersBase}/add`,
         list: (): string => `/${callersBase}/list`,
-        view: (id: string | number): string => `/${callersBase}/view/id${id}`
+        view: (id: IdKey): string => `/${callersBase}/view/id${id}`
     },
     calling: {
         list: (): string => `/${calling}/list`,
-        create: (id?: number | string): string => `/${calling}/create${id ? `/id${id}` : ''}`,
-        view: (id: string | number): string => `/${calling}/view/id${id}`
+        create: (id?: IdKey): string => `/${calling}/create${id ? `/id${id}` : ''}`,
+        view: (id: IdKey): string => `/${calling}/view/id${id}`
     },
     scenario: {
         list: (): string => `/${scenario}/list`,
-        view: (id: string | number) => `/${scenario}/view/id${id}`
+        view: (id: IdKey) => `/${scenario}/view/id${id}`
     },
     settings: (): string => '/settings',
     stats: (): string => '/stats',

@@ -8,6 +8,7 @@ import {
 import axios, {AxiosRequestConfig} from 'axios'
 import {DirectionSort, SortType} from 'shared/data/sort-items'
 import {apiRoutes} from 'core/api/routes'
+import {IdKey} from 'shared/types/id-key'
 
 export const getScenariosByPage = (
     params: ParamsPaginatorWithFilterModel<SortType, DirectionSort>,
@@ -30,7 +31,7 @@ export const createScenario = (
 }
 
 export const getScenarioById = (
-    id: number | string,
+    id: IdKey,
     config?: AxiosRequestConfig
 ): BaseResponse<ScenarioModel> => {
     return axios.get<ScenarioModel>(apiRoutes.scenario.byId(id), config)
@@ -43,9 +44,6 @@ export const putScenarioById = (
     return axios.put<ScenarioModel>(apiRoutes.scenario.byId(data.id), data, config)
 }
 
-export const deleteScenario = (
-    id: number | string,
-    config?: AxiosRequestConfig
-): BaseResponse<null> => {
+export const deleteScenario = (id: IdKey, config?: AxiosRequestConfig): BaseResponse<null> => {
     return axios.delete<null>(apiRoutes.scenario.byId(id), config)
 }

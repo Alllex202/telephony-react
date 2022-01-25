@@ -101,7 +101,7 @@ const CallersBaseViewTable = React.memo(() => {
                 <Table stickyHeader className={'data-view'}>
                     <TableHead>
                         <MuiTableRow>
-                            <TableCell></TableCell>
+                            <TableCell />
                             {header?.columns.map((el, ind) => (
                                 <TableCell key={el.id}>
                                     <div className={styles.variable}>

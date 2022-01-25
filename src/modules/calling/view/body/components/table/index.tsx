@@ -52,7 +52,7 @@ const CallingViewTable = React.memo(({callingId}: Props) => {
                     <Table stickyHeader className={'data-view'}>
                         <TableHead>
                             <MuiTableRow>
-                                <TableCell></TableCell>
+                                <TableCell />
                                 {tableHeader.result?.extra?.map((el, ind) => (
                                     <TableCell key={`extra-${el.id}`}>
                                         <div className={stylesTable.variable}>

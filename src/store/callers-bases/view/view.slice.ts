@@ -18,6 +18,7 @@ import {DefaultAxiosError} from 'shared/types/base-response-error'
 import {RootState} from 'store/index'
 import {handlerError} from 'shared/middleware'
 import {enqueueSnackbar} from 'features/notifications/store'
+import {IdKey} from 'shared/types/id-key'
 
 interface ViewState {
     header: CallersBaseHeaderModel | null
@@ -134,7 +135,7 @@ export const callersBaseViewSlice = createSlice({
     }
 })
 
-export const getCallingsByCallersBaseId = (id: number | string) => (dispatch: Dispatch) => {
+export const getCallingsByCallersBaseId = (id: IdKey) => (dispatch: Dispatch) => {
     _getCallingsByCallersBaseId(id)
         .then((res) => {
             dispatch(setCallings(res.data))
@@ -146,7 +147,7 @@ export const getCallingsByCallersBaseId = (id: number | string) => (dispatch: Di
         )
 }
 
-export const getCallersBaseById = (id: number | string) => (dispatch: Dispatch) => {
+export const getCallersBaseById = (id: IdKey) => (dispatch: Dispatch) => {
     dispatch(setHeaderLoading())
     getCallersBaseHeaderById(id)
         .then((res) => {
@@ -163,7 +164,7 @@ export const getCallersBaseById = (id: number | string) => (dispatch: Dispatch) 
 }
 
 export const getCallersBaseDataByPage =
-    (id: number | string, params: ParamsPaginatorWithInvalidModel) => (dispatch: Dispatch) => {
+    (id: IdKey, params: ParamsPaginatorWithInvalidModel) => (dispatch: Dispatch) => {
         dispatch(setDataLoading())
         getCallersBaseDataById(id, params)
             .then((res) => {
@@ -184,7 +185,7 @@ export const getCallersBaseDataByPage =
     }
 
 export const updateCallersBaseDataByPage =
-    (id: number | string, params: ParamsPaginatorWithInvalidModel) => (dispatch: Dispatch) => {
+    (id: IdKey, params: ParamsPaginatorWithInvalidModel) => (dispatch: Dispatch) => {
         dispatch(setDataLoading())
         getCallersBaseDataById(id, params)
             .then((res) => {

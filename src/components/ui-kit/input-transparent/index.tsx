@@ -1,8 +1,9 @@
 import React, {ForwardedRef} from 'react'
 import styles from './styles.module.scss'
+import {IdKey} from 'shared/types/id-key'
 
 type Props = {
-    value?: string | number
+    value?: IdKey
     onChange?: React.ChangeEventHandler<HTMLInputElement>
     placeholder?: string
     className?: string

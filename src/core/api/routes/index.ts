@@ -1,4 +1,5 @@
 import {serverApi} from 'config'
+import {IdKey} from 'shared/types/id-key'
 
 const callersBase = 'callers-base'
 const scenario = 'scenario'
@@ -8,35 +9,33 @@ const _export = 'export'
 
 export const apiRoutes = {
     callersBase: {
-        byId: (id: string | number) => `${serverApi}/${callersBase}/${id}`,
+        byId: (id: IdKey) => `${serverApi}/${callersBase}/${id}`,
         data: {
-            byId: (id: string | number) => `${serverApi}/${callersBase}/data/${id}`
+            byId: (id: IdKey) => `${serverApi}/${callersBase}/data/${id}`
         },
         header: {
             list: () => `${serverApi}/${callersBase}/header`,
-            byId: (id: string | number) => `${serverApi}/${callersBase}/header/${id}`
+            byId: (id: IdKey) => `${serverApi}/${callersBase}/header/${id}`
         },
         uploadExcel: () => `${serverApi}/${callersBase}/upload/exel`,
         variablesTypes: () => `${serverApi}/${callersBase}/variables/types`
     },
     scenario: {
         scenario: () => `${serverApi}/${scenario}`,
-        byId: (id: string | number) => `${serverApi}/${scenario}/${id}`
+        byId: (id: IdKey) => `${serverApi}/${scenario}/${id}`
     },
     calling: {
         calling: () => `${serverApi}/${calling}`,
-        byId: (id: string | number) => `${serverApi}/${calling}/${id}`,
-        byCallersBaseId: (id: string | number) => `${serverApi}/${calling}/${callersBase}/${id}`,
-        scheduledByIdStart: (id: string | number) =>
-            `${serverApi}/${calling}/scheduled/${id}/start`,
+        byId: (id: IdKey) => `${serverApi}/${calling}/${id}`,
+        byCallersBaseId: (id: IdKey) => `${serverApi}/${calling}/${callersBase}/${id}`,
+        scheduledByIdStart: (id: IdKey) => `${serverApi}/${calling}/scheduled/${id}/start`,
         result: {
-            common: (id: number | string) => `${serverApi}/${calling}/${id}/result/common`,
-            pieChart: (id: number | string) => `${serverApi}/${calling}/${id}/result/pie-chart`,
-            chart: (id: number | string) =>
-                `${serverApi}/${calling}/${id}/result/success-calls-chart`,
+            common: (id: IdKey) => `${serverApi}/${calling}/${id}/result/common`,
+            pieChart: (id: IdKey) => `${serverApi}/${calling}/${id}/result/pie-chart`,
+            chart: (id: IdKey) => `${serverApi}/${calling}/${id}/result/success-calls-chart`,
             table: {
-                data: (id: number | string) => `${serverApi}/${calling}/${id}/result/table/data`,
-                header: (id: number | string) => `${serverApi}/${calling}/${id}/result/table/header`
+                data: (id: IdKey) => `${serverApi}/${calling}/${id}/result/table/data`,
+                header: (id: IdKey) => `${serverApi}/${calling}/${id}/result/table/header`
             }
         }
     },
@@ -46,6 +45,6 @@ export const apiRoutes = {
         chart: () => `${serverApi}/${stats}/success-calls-chart`
     },
     export: {
-        calling: (id: string | number) => `${serverApi}/${_export}/results/${id}`
+        calling: (id: IdKey) => `${serverApi}/${_export}/results/${id}`
     }
 }

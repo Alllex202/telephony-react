@@ -120,7 +120,7 @@ const CallingCreatingBody = () => {
             </div>
             <div className={styles.form}>
                 <div className={styles.block}>
-                    <div className={styles.subtitle}></div>
+                    <div className={styles.subtitle} />
                     <div className={styles.content}>
                         <div className={'custom-input'}>
                             <FormControl fullWidth>
@@ -156,7 +156,7 @@ const CallingCreatingBody = () => {
                 </div>
 
                 <div className={styles.block}>
-                    <div className={styles.subtitle}></div>
+                    <div className={styles.subtitle} />
                     <div className={styles.content}>
                         <div className={'custom-input'}>
                             <FormControl fullWidth>

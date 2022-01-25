@@ -1,5 +1,7 @@
+import {IdKey} from 'shared/types/id-key'
+
 export interface ScenarioInfoModel {
-    id: number | string
+    id: IdKey
     name: string
     created: number
     countSteps: number

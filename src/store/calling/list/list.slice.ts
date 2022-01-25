@@ -8,6 +8,7 @@ import {DefaultAxiosError, FetchStatuses, PageSettings, RequestPageTypes} from '
 import {createSlice, Dispatch, PayloadAction} from '@reduxjs/toolkit'
 import {handlerError} from 'shared/middleware'
 import {RootState} from 'store/index'
+import {IdKey} from 'shared/types/id-key'
 
 interface CallingListState {
     callingList: CallingModel[]
@@ -73,7 +74,7 @@ export const callingListSlice = createSlice({
                 ...action.payload.data
             ]
         },
-        callingByIdMoveFromScheduledToRun: (state, action: PayloadAction<string | number>) => {
+        callingByIdMoveFromScheduledToRun: (state, action: PayloadAction<IdKey>) => {
             state.RUN.callingList = [
                 ...state.SCHEDULED.callingList.filter((e) => e.id === action.payload),
                 ...state.RUN.callingList
@@ -86,7 +87,7 @@ export const callingListSlice = createSlice({
         },
         deleteCallingById: (
             state,
-            action: PayloadAction<{id: number | string; callingStatus: CallingStatusTypes}>
+            action: PayloadAction<{id: IdKey; callingStatus: CallingStatusTypes}>
         ) => {
             state[action.payload.callingStatus].callingList = state[
                 action.payload.callingStatus

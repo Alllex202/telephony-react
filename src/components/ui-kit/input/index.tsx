@@ -1,8 +1,9 @@
 import React from 'react'
 import styles from './styles.module.scss'
+import {IdKey} from 'shared/types/id-key'
 
 type Props = {
-    value?: string | number
+    value?: IdKey
     onChange?: React.ChangeEventHandler<HTMLInputElement>
     placeholder?: string
     className?: string
@@ -11,8 +12,8 @@ type Props = {
     id?: string
     autoCompleteOff?: boolean
     onKeyPress?: React.KeyboardEventHandler<HTMLInputElement>
-    max?: number | string
-    min?: number | string
+    max?: IdKey
+    min?: IdKey
     onBlur?: React.FocusEventHandler<HTMLInputElement>
 }
 

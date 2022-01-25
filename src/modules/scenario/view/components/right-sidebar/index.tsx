@@ -15,6 +15,7 @@ import Tag from 'components/ui-kit/tag'
 import cardStyles from 'shared/styles/card/styles.module.scss'
 import {handlerError} from 'shared/middleware'
 import {useSelectorApp} from 'shared/hoocks'
+import {IdKey} from 'shared/types/id-key'
 
 const maxShowVariables = 10
 
@@ -67,7 +68,7 @@ const ScenarioRightSidebar = () => {
         setAnchorEl(null)
     }
 
-    const onConnect = (id: number | string) => {
+    const onConnect = (id: IdKey) => {
         if (statuses.isLoading) {
             return
         }

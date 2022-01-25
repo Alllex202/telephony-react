@@ -38,7 +38,7 @@ const StatsBody = () => {
                                 {common.result?.totalDialings}
                             </div>
                         </div>
-                        <div className={stylesCard.body}></div>
+                        <div className={stylesCard.body} />
                     </Substrate>
                     <Substrate className={classNames(stylesCard.card, stylesCard.callersBase)}>
                         <div className={stylesCard.head}>
@@ -49,7 +49,7 @@ const StatsBody = () => {
                                 {formatTimeObject(common.result?.averageDialingDuration)}
                             </div>
                         </div>
-                        <div className={stylesCard.body}></div>
+                        <div className={stylesCard.body} />
                     </Substrate>
                 </div>
                 <div className={stylesCard.rowCards}>
@@ -62,7 +62,7 @@ const StatsBody = () => {
                                 {common.result?.averageNumberOfCallsPerDialing}
                             </div>
                         </div>
-                        <div className={stylesCard.body}></div>
+                        <div className={stylesCard.body} />
                     </Substrate>
                     <Substrate className={classNames(stylesCard.card, stylesCard.scenario)}>
                         <div className={stylesCard.head}>
@@ -73,7 +73,7 @@ const StatsBody = () => {
                                 {formatTimeObject(common.result?.averageCallDuration)}
                             </div>
                         </div>
-                        <div className={stylesCard.body}></div>
+                        <div className={stylesCard.body} />
                     </Substrate>
                 </div>
                 <div className={stylesCard.rowCards}>

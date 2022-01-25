@@ -1,11 +1,13 @@
+import {IdKey} from 'shared/types/id-key'
+
 export interface ScenarioModel {
-    connectedCallerBaseId: number | string | null
+    connectedCallerBaseId: IdKey | null
     created: number
     edges: EdgeModel[]
     id: string
     name: string
     nodes: NodeModel[]
-    rootId: string | number
+    rootId: IdKey
 }
 
 export interface EdgeModel {

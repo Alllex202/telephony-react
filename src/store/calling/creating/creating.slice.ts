@@ -7,12 +7,13 @@ import {enqueueSnackbar} from 'features/notifications/store'
 import {handlerError} from 'shared/middleware'
 import {CallingModel, CallingRequestModel} from 'core/api'
 import {goBack} from 'connected-react-router'
+import {IdKey} from 'shared/types/id-key'
 
 interface CreatingState {
-    callersBaseId?: number | string | null
-    id?: number | string | null
+    callersBaseId?: IdKey | null
+    id?: IdKey | null
     name: string
-    scenarioId?: number | string | null
+    scenarioId?: IdKey | null
     startDate?: number | null
     isNow: boolean
     statuses: FetchStatuses
@@ -43,10 +44,10 @@ const callingCreatingSlice = createSlice({
         setName: (state, action: PayloadAction<string>) => {
             state.name = action.payload
         },
-        setScenarioId: (state, action: PayloadAction<number | string | null>) => {
+        setScenarioId: (state, action: PayloadAction<IdKey | null>) => {
             state.scenarioId = action.payload
         },
-        setCallersBaseId: (state, action: PayloadAction<number | string | null>) => {
+        setCallersBaseId: (state, action: PayloadAction<IdKey | null>) => {
             state.callersBaseId = action.payload
         },
         setStartDate: (state, action: PayloadAction<number | null | undefined>) => {
@@ -117,7 +118,7 @@ export const saveCalling = () => (dispatch: Dispatch, getState: () => RootState)
     }
 }
 
-export const getCalling = (id: number | string) => (dispatch: Dispatch) => {
+export const getCalling = (id: IdKey) => (dispatch: Dispatch) => {
     getCallingById(id)
         .then((res) => {
             dispatch(setCalling(res.data))

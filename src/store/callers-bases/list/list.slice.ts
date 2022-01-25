@@ -8,6 +8,7 @@ import {DirectionSort, SortType} from 'shared/data'
 import {handlerError} from 'shared/middleware'
 import {DefaultAxiosError, FetchStatuses, PageSettings, RequestPageTypes} from 'shared/types'
 import {RootState} from 'store/index'
+import {IdKey} from 'shared/types/id-key'
 
 interface CallersBaseState {
     callersBaseList: CallersBaseHeaderModel[]
@@ -43,7 +44,7 @@ export const callersBaseListSlice = createSlice({
         addCallersBases: (state, action: PayloadAction<CallersBaseHeaderModel[]>) => {
             state.callersBaseList = [...state.callersBaseList, ...action.payload]
         },
-        deleteCallersBaseById: (state, action: PayloadAction<number | string>) => {
+        deleteCallersBaseById: (state, action: PayloadAction<IdKey>) => {
             state.callersBaseList = state.callersBaseList.filter((el) => el.id !== action.payload)
         },
         resetCallersBasesStates: (state) => {

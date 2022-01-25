@@ -22,6 +22,7 @@ import {handlerError} from 'shared/middleware'
 import {compare, getColor, getNumber} from 'shared/utils'
 import {fakeChart} from 'shared/data/fake/fake-data-line-chart'
 import {fakePieChartCallingView} from 'shared/data/fake/fake-pie-chart-calling-view'
+import {IdKey} from 'shared/types/id-key'
 
 type CallingResultTypes =
     | 'common'
@@ -188,7 +189,7 @@ export const getVariables = () => (dispatch: Dispatch) => {
         )
 }
 
-export const getCallingResultTableHeaderById = (id: number | string) => (dispatch: Dispatch) => {
+export const getCallingResultTableHeaderById = (id: IdKey) => (dispatch: Dispatch) => {
     dispatch(setLoading({type: 'tableHeader'}))
     getCallingResultTableHeader(id)
         .then((res) => {
@@ -208,7 +209,7 @@ export const getCallingResultTableHeaderById = (id: number | string) => (dispatc
 }
 
 export const getCallingResultTableBodyById =
-    (id: number | string, params: ParamsPaginatorModel) => (dispatch: Dispatch) => {
+    (id: IdKey, params: ParamsPaginatorModel) => (dispatch: Dispatch) => {
         dispatch(setLoading({type: 'tableBody'}))
         getCallingResultTableBody(id, params)
             .then((res) => {
@@ -229,7 +230,7 @@ export const getCallingResultTableBodyById =
             )
     }
 
-export const getCallingResultCommonById = (id: number | string) => (dispatch: Dispatch) => {
+export const getCallingResultCommonById = (id: IdKey) => (dispatch: Dispatch) => {
     dispatch(setLoading({type: 'common'}))
     getCallingResultCommon(id)
         .then((res) => {
@@ -248,7 +249,7 @@ export const getCallingResultCommonById = (id: number | string) => (dispatch: Di
         )
 }
 
-export const getCallingResultChartById = (id: number | string) => (dispatch: Dispatch) => {
+export const getCallingResultChartById = (id: IdKey) => (dispatch: Dispatch) => {
     dispatch(setLoading({type: 'chart'}))
     getCallingResultChart(id)
         .then((res) => {
@@ -269,7 +270,7 @@ export const getCallingResultChartById = (id: number | string) => (dispatch: Dis
         )
 }
 
-export const getCallingResultPieChartById = (id: number | string) => (dispatch: Dispatch) => {
+export const getCallingResultPieChartById = (id: IdKey) => (dispatch: Dispatch) => {
     dispatch(setLoading({type: 'pieChart'}))
     getCallingResultPieChart(id)
         .then((res) => {

@@ -106,7 +106,7 @@ const CallingViewBody = () => {
                                 </div>
                             )}
                         </div>
-                        <div className={stylesCard.body}></div>
+                        <div className={stylesCard.body} />
                     </Substrate>
                     <Substrate className={classNames(stylesCard.card, stylesCard.scenario)}>
                         <div className={stylesCard.head}>

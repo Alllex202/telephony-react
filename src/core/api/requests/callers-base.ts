@@ -10,16 +10,14 @@ import {
 import {BaseResponse} from 'shared/types/base-response'
 import {apiRoutes} from '../routes'
 import {DirectionSort, SortType} from 'shared/data/sort-items'
+import {IdKey} from 'shared/types/id-key'
 
-export const deleteCallersBase = (
-    id: number | string,
-    config?: AxiosRequestConfig
-): BaseResponse<null> => {
+export const deleteCallersBase = (id: IdKey, config?: AxiosRequestConfig): BaseResponse<null> => {
     return axios.delete<null>(apiRoutes.callersBase.byId(id), config)
 }
 
 export const getCallersBaseDataById = (
-    id: number | string,
+    id: IdKey,
     params: ParamsPaginatorWithInvalidModel,
     config?: AxiosRequestConfig
 ): BaseResponse<PaginatorModel<CallersBaseDataModel>> => {
@@ -40,14 +38,14 @@ export const getCallersBasesHeader = (
 }
 
 export const getCallersBaseHeaderById = (
-    id: number | string,
+    id: IdKey,
     config?: AxiosRequestConfig
 ): BaseResponse<CallersBaseHeaderModel> => {
     return axios.get<CallersBaseHeaderModel>(apiRoutes.callersBase.header.byId(id), config)
 }
 
 export const putCallersBaseHeaderById = (
-    id: number | string,
+    id: IdKey,
     data: CallersBaseHeaderModel,
     config?: AxiosRequestConfig
 ): BaseResponse<CallersBaseHeaderModel> => {

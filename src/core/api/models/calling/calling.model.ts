@@ -1,16 +1,17 @@
 import {PieChartModel} from 'core/api'
+import {IdKey} from 'shared/types/id-key'
 
 export interface CallingModel {
     callersBase: {
-        id: number | string
+        id: IdKey
         name: string
     }
     created: number
-    id: number | string
+    id: IdKey
     name: string
     percentEnd: number
     scenario: {
-        id: number | string
+        id: IdKey
         name: string
     }
     startDate: number
@@ -19,12 +20,12 @@ export interface CallingModel {
 
 export interface CallingRequestModel {
     callersBase: {
-        id: number | string
+        id: IdKey
     }
-    id: number | string | null
+    id: IdKey | null
     name: string
     scenario: {
-        id: number | string
+        id: IdKey
     }
     startDate?: number | null
     status: CallingStatusTypes
@@ -38,7 +39,7 @@ export interface CallingStatusModel {
 }
 
 export interface CallingResultCommonModel {
-    id: number | string
+    id: IdKey
     created: number
     startDate: number
     scenario: {
@@ -69,7 +70,7 @@ export interface CallingResultPieChartModel extends PieChartModel {
 }
 
 export interface CallingResultTableHeaderDataModel {
-    id: number | string
+    id: IdKey
     created: number
     nameInTable: string
     currentName: string
@@ -77,7 +78,7 @@ export interface CallingResultTableHeaderDataModel {
 }
 
 export interface CallingResultTableBodyDataModel {
-    id: number | string
+    id: IdKey
     created: number
     phoneColumn: boolean
     valid: boolean
