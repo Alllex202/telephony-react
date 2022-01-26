@@ -8,10 +8,11 @@ type Props = {
     lastText: string
     setText: React.Dispatch<React.SetStateAction<string>>
     setLastText: React.Dispatch<React.SetStateAction<string>>
-    callback?: Function
+    callback?: (currentValue: string) => void
     classText?: string
     classInput?: string
     classWrapper?: string
+    disabled?: boolean
 }
 
 const HiddenInput = ({
@@ -22,7 +23,8 @@ const HiddenInput = ({
     callback,
     classText,
     classInput,
-    classWrapper
+    classWrapper,
+    disabled
 }: Props) => {
     const [isView, setView] = useState<boolean>(true)
     const inputRef = React.createRef<HTMLInputElement>()
@@ -81,6 +83,8 @@ const HiddenInput = ({
     }
 
     const changeView = () => {
+        if (disabled) return
+
         const trim = valueRef.current.trim()
         if (trim === '') {
             valueRef.current = lastText

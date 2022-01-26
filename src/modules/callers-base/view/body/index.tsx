@@ -4,11 +4,10 @@ import HiddenInputWithIcon from 'components/hidden-input-with-icon'
 import {useParams} from 'react-router-dom'
 import {useDispatch} from 'react-redux'
 import {
-    changeCallersBaseHeaderById,
-    getCallersBaseById,
-    getCallingsByCallersBaseId,
-    resetAll,
-    setType
+    changeCallersBaseCommon,
+    getCallersBaseCommonById,
+    resetCallersBaseViewState,
+    updateTablePageSettings
 } from 'store/callers-bases/view'
 import CallersBaseViewTable from './components/table'
 import Switch from 'components/ui-kit/switch'
@@ -16,64 +15,57 @@ import {useDoubleInput, useSelectorApp} from 'shared/hoocks'
 
 const CallersBaseViewBody = () => {
     const {
-        callersBaseView: {statusesHeader, header, statusesData, onlyInvalid}
+        callersBaseView: {
+            common: {data, statuses},
+            table: {
+                statuses: tablesStatuses,
+                pageSettings: {onlyInvalid}
+            }
+        }
     } = useSelectorApp()
     const {
         text: name,
         lastText: lastName,
         setText: setName,
         setLastText: setLastName
-    } = useDoubleInput(header?.name || '')
+    } = useDoubleInput(data?.name || '')
     const {callersBaseId} = useParams<{callersBaseId: string}>()
     const dispatch = useDispatch()
 
+    const handlerSaveName = (currentValue: string) => {
+        if (statuses.isLoading || name === '') {
+            setName(lastName)
+            return
+        }
+        if (!data || lastName === currentValue) return
+
+        dispatch(changeCallersBaseCommon({...data, name: currentValue}))
+    }
+
+    const onChangeFilter = () => {
+        if (!data || tablesStatuses.isLoading) return
+
+        dispatch(updateTablePageSettings({onlyInvalid: !onlyInvalid}))
+    }
+
     useEffect(() => {
-        dispatch(getCallersBaseById(callersBaseId))
-        dispatch(getCallingsByCallersBaseId(callersBaseId))
+        dispatch(getCallersBaseCommonById(callersBaseId))
+
         return () => {
-            dispatch(resetAll())
+            dispatch(resetCallersBaseViewState())
         }
     }, [])
 
     useEffect(() => {
-        setName(header?.name || '')
-        setLastName(header?.name || '')
-    }, [header?.name])
-
-    const onSave = (currentValue: string) => {
-        if (header) {
-            saveName(currentValue)
+        if (data) {
+            setName(data.name)
+            setLastName(data.name)
         }
-    }
-
-    const saveName = (newName: string) => {
-        if (statusesHeader.isLoading || statusesData.isLoading || name === '') {
-            setName(lastName)
-            return
-        }
-        if (lastName === newName || !header) return
-
-        dispatch(changeCallersBaseHeaderById({...header, name: newName}))
-    }
-
-    const onChangeFilter = () => {
-        if (statusesHeader.isLoading || statusesData.isLoading) return
-        if (!header) return
-
-        dispatch(setType(!onlyInvalid))
-    }
-
-    if (header === null && statusesHeader.isError) {
-        return <h1>{statusesHeader.error}</h1>
-    }
-
-    if (header === null && statusesHeader.isLoading) {
-        return <h1>Загрузка...</h1>
-    }
+    }, [data?.name])
 
     return (
         <>
-            {header && (
+            {data && (
                 <>
                     <div className={styles.head}>
                         <HiddenInputWithIcon
@@ -81,10 +73,11 @@ const CallersBaseViewBody = () => {
                             lastText={lastName}
                             setText={setName}
                             setLastText={setLastName}
-                            callback={onSave}
+                            callback={handlerSaveName}
                             classNameWrapper={styles.name}
                             classNameInput={styles.nameInput}
                             classNameText={styles.nameText}
+                            disabled={statuses.isLoading}
                         />
                         <div className={styles.toggleBlock}>
                             <Switch checked={onlyInvalid} onChange={onChangeFilter} />

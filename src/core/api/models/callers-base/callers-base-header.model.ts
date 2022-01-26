@@ -7,7 +7,6 @@ export interface CallersBaseHeaderModel {
     countInvalidCallers: number
     columns: Array<CallersBaseHeaderColumnModel>
     name: string
-    confirmed: boolean
     updated: number
 }
 

@@ -2,32 +2,28 @@ import React, {useEffect, useState} from 'react'
 import styles from './styles.module.scss'
 import BtnSecond from 'components/ui-kit/btn-second'
 import Btn from 'components/ui-kit/btn'
-import {useHistory} from 'react-router-dom'
+import {useHistory, useParams} from 'react-router-dom'
 import {routes} from 'routing/routes'
 import {useDispatch} from 'react-redux'
-import {useQuery} from 'shared/hoocks/use-query'
-import {deleteCallersBase} from 'core/api/requests'
+import {useQuery, useSelectorApp} from 'shared/hoocks'
+import {deleteCallersBase} from 'core/api'
 import {enqueueSnackbar} from 'features/notifications/store'
 import {handlerError} from 'shared/middleware'
-import {useSelectorApp} from 'shared/hoocks'
 
 const CallersBaseViewHeader = () => {
     const dispatch = useDispatch()
     const {
-        callersBaseView: {header, statusesHeader}
+        callersBaseView: {
+            common: {data, statuses}
+        }
     } = useSelectorApp()
     const history = useHistory()
+    const {callersBaseId} = useParams<{callersBaseId: string}>()
     const [created, setCreated] = useState<boolean>(!!useQuery('created').values.created[0])
 
-    useEffect(() => {
-        if (created && header?.id) {
-            history.replace(routes.callersBase.view(header.id))
-        }
-    }, [header?.id])
-
     const handlerBack = () => {
-        if (created && header?.id) {
-            deleteCallersBase(header.id)
+        if (created) {
+            deleteCallersBase(callersBaseId)
                 .then(() => {
                     dispatch(enqueueSnackbar({type: 'INFO', message: 'База клиентов удалена'}))
                     history.goBack()
@@ -44,11 +40,17 @@ const CallersBaseViewHeader = () => {
     }
 
     const handlerSave = () => {
-        if (created && header?.id) {
-            setCreated(false)
-            history.replace(routes.callersBase.view(header.id))
-        }
+        if (!created) return
+
+        setCreated(false)
+        history.replace(routes.callersBase.view(callersBaseId))
     }
+
+    useEffect(() => {
+        if (created) {
+            history.replace(routes.callersBase.view(callersBaseId))
+        }
+    }, [callersBaseId])
 
     return (
         <div className={styles.header}>
@@ -59,7 +61,7 @@ const CallersBaseViewHeader = () => {
                 iconName={'arrow_back'}
                 onClick={handlerBack}
             />
-            {header && (
+            {data && (
                 <BtnSecond
                     className={styles.calling}
                     text={'Обзванивание'}
@@ -67,7 +69,7 @@ const CallersBaseViewHeader = () => {
                     iconName={'add_ic_call'}
                     iconPosition={'end'}
                     onClick={handlerCalling}
-                    disabled={statusesHeader.isLoading}
+                    disabled={statuses.isLoading}
                 />
             )}
             {created && (
@@ -75,7 +77,7 @@ const CallersBaseViewHeader = () => {
                     className={styles.save}
                     text={'Сохранить'}
                     onClick={handlerSave}
-                    disabled={statusesHeader.isLoading}
+                    disabled={statuses.isLoading}
                 />
             )}
         </div>

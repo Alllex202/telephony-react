@@ -9,11 +9,12 @@ type Props = {
     lastText: string
     setText: React.Dispatch<React.SetStateAction<string>>
     setLastText: React.Dispatch<React.SetStateAction<string>>
-    callback?: Function
+    callback?: (currentValue: string) => void
     classNameWrapper?: string
     classNameInput?: string
     classNameText?: string
     className?: string
+    disabled?: boolean
 }
 
 const HiddenInputWithIcon = ({
@@ -25,7 +26,8 @@ const HiddenInputWithIcon = ({
     classNameWrapper,
     classNameInput,
     classNameText,
-    className
+    className,
+    disabled
 }: Props) => {
     return (
         <div className={classNames(styles.wrapper, className)}>
@@ -38,6 +40,7 @@ const HiddenInputWithIcon = ({
                 classInput={classNames(styles.input, classNameInput)}
                 classText={classNames(styles.view, classNameText)}
                 classWrapper={classNameWrapper}
+                disabled={disabled}
             />
             <Icon name={'edit'} type={'round'} className={styles.icon} />
         </div>

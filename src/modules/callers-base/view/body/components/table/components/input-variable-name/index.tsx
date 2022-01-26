@@ -2,18 +2,19 @@ import React from 'react'
 import styles from './styles.module.scss'
 import HiddenInput from 'components/hidden-input'
 import {useDispatch} from 'react-redux'
-import {changeCallersBaseHeaderById} from 'store/callers-bases/view'
+import {changeCallersBaseCommon} from 'store/callers-bases/view'
 import {CallersBaseHeaderColumnModel, CallersBaseHeaderModel} from 'core/api'
 import {useDoubleInput} from 'shared/hoocks'
 
 type Props = {
-    conditionSave: () => boolean
+    conditionSave: boolean
     initState: string
     data: CallersBaseHeaderModel | null
     el: CallersBaseHeaderColumnModel
+    disabled?: boolean
 }
 
-const InputVariableName = ({conditionSave, initState, data, el}: Props) => {
+const InputVariableName = ({conditionSave, initState, data, el, disabled}: Props) => {
     const {
         text: name,
         lastText: lastName,
@@ -24,13 +25,13 @@ const InputVariableName = ({conditionSave, initState, data, el}: Props) => {
 
     const save = (currentValue: string) => {
         if (currentValue === lastName || !data) return
-        if (currentValue === '' || !conditionSave()) {
+        if (currentValue === '' || !conditionSave) {
             setName(lastName)
             return
         }
 
         dispatch(
-            changeCallersBaseHeaderById({
+            changeCallersBaseCommon({
                 ...data,
                 columns: data.columns.map((elem) =>
                     elem.id === el.id ? {...elem, currentName: currentValue} : elem
@@ -48,6 +49,7 @@ const InputVariableName = ({conditionSave, initState, data, el}: Props) => {
             callback={save}
             classText={styles.text}
             classInput={styles.input}
+            disabled={disabled}
         />
     )
 }
