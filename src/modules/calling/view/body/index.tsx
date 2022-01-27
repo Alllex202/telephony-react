@@ -7,7 +7,7 @@ import {
     getCallingResultChartById,
     getCallingResultCommonById,
     getCallingResultPieChartById,
-    resetState
+    resetCallingViewState
 } from 'store/calling/view'
 import {Link, useParams} from 'react-router-dom'
 import {classNames, formatDate} from 'shared/utils'
@@ -19,10 +19,10 @@ import PieChart from 'modules/charts/pie-chart'
 import {useSelectorApp} from 'shared/hoocks'
 
 const CallingViewBody = () => {
+    const dispatch = useDispatch()
     const {
         callingView: {common, pieChart, chart}
     } = useSelectorApp()
-    const dispatch = useDispatch()
     const {callingId} = useParams<{callingId: string}>()
 
     useEffect(() => {
@@ -31,34 +31,36 @@ const CallingViewBody = () => {
         dispatch(getCallingResultChartById(callingId))
 
         return () => {
-            dispatch(resetState())
+            dispatch(resetCallingViewState({type: 'common'}))
+            dispatch(resetCallingViewState({type: 'chart'}))
+            dispatch(resetCallingViewState({type: 'pieChart'}))
         }
-    }, [])
+    }, [callingId])
 
     return (
         <div className={styles.wrapper}>
-            <div className={styles.name}>{common.result?.name || ''}</div>
+            <div className={styles.name}>{common.data?.name || ''}</div>
             <div className={stylesCard.cards}>
                 <div className={stylesCard.rowCards}>
                     <Substrate className={classNames(stylesCard.card, stylesCard.progress)}>
                         <div className={stylesCard.head}>
                             <div className={stylesCard.smallLightFont}>Прогресс</div>
                             <div className={stylesCard.bigBlackFont}>
-                                {common.result?.progress.percentEnd}%
+                                {common.data?.progress.percentEnd}%
                             </div>
                             <div className={stylesCard.smallBlackFont}>
-                                {common.result?.progress.countEnd} из{' '}
-                                {common.result?.progress.countCallers}
-                                {common.result?.endDialing ? ' (в процессе)' : ' (завершен)'}
+                                {common.data?.progress.countEnd} из{' '}
+                                {common.data?.progress.countCallers}
+                                {common.data?.endDialing ? ' (в процессе)' : ' (завершен)'}
                             </div>
                         </div>
                         <div className={stylesCard.body}>
                             <LinearProgress
-                                value={common.result?.progress.percentEnd ?? 0}
+                                value={common.data?.progress.percentEnd ?? 0}
                                 variant={'determinate'}
                                 className={classNames(
                                     stylesCard.progressBar,
-                                    common.result?.status === 'RUN' ? stylesCard.running : ''
+                                    common.data?.status === 'RUN' ? stylesCard.running : ''
                                 )}
                             />
                         </div>
@@ -67,16 +69,16 @@ const CallingViewBody = () => {
                         <div className={stylesCard.head}>
                             <div className={stylesCard.smallLightFont}>База данных</div>
                             <div className={stylesCard.bigBlackFont}>
-                                {common.result?.callersBase.name}
+                                {common.data?.callersBase.name}
                             </div>
                             <div className={stylesCard.smallBlackFont}>
-                                {common.result?.callersBase.countCallers} эл
+                                {common.data?.callersBase.countCallers} эл
                             </div>
                         </div>
                         <div className={stylesCard.body}>
-                            {common.result && (
+                            {common.data && (
                                 <Link
-                                    to={routes.callersBase.view(common.result.callersBase.id)}
+                                    to={routes.callersBase.view(common.data.callersBase.id)}
                                     className={stylesCard.link}
                                 >
                                     Перейти к базе
@@ -92,16 +94,16 @@ const CallingViewBody = () => {
                             <div>
                                 <span className={stylesCard.bigLightFont}>начало</span>
                                 <span className={stylesCard.bigBlackFont}>
-                                    {common.result &&
-                                        ` ${formatDate(common.result?.startDialing, true, true)}`}
+                                    {common.data &&
+                                        ` ${formatDate(common.data?.startDialing, true, true)}`}
                                 </span>
                             </div>
 
-                            {common.result?.endDialing && (
+                            {common.data?.endDialing && (
                                 <div>
                                     <span className={stylesCard.bigLightFont}>конец</span>
                                     <span className={stylesCard.bigBlackFont}>
-                                        {` ${formatDate(common.result?.endDialing, true, true)}`}
+                                        {` ${formatDate(common.data?.endDialing, true, true)}`}
                                     </span>
                                 </div>
                             )}
@@ -112,16 +114,16 @@ const CallingViewBody = () => {
                         <div className={stylesCard.head}>
                             <div className={stylesCard.smallLightFont}>Сценарий</div>
                             <div className={stylesCard.bigBlackFont}>
-                                {common.result?.scenario.name}
+                                {common.data?.scenario.name}
                             </div>
                             <div className={stylesCard.smallBlackFont}>
-                                {common.result?.scenario.countSteps} шагов
+                                {common.data?.scenario.countSteps} шагов
                             </div>
                         </div>
                         <div className={stylesCard.body}>
-                            {common.result && (
+                            {common.data && (
                                 <Link
-                                    to={routes.scenario.view(common.result.scenario.scenarioId)}
+                                    to={routes.scenario.view(common.data.scenario.scenarioId)}
                                     className={stylesCard.link}
                                 >
                                     Перейти к сценарию
@@ -135,14 +137,14 @@ const CallingViewBody = () => {
                         <div className={stylesCard.head}>
                             <div className={stylesCard.smallLightFont}>Статус звонков</div>
                             <div className={stylesCard.bigBlackFont}>
-                                {pieChart.result?.percentSuccess}% успешных
+                                {pieChart.data?.percentSuccess}% успешных
                             </div>
                             <div className={stylesCard.smallBlackFont}>
-                                {pieChart.result?.countSuccess} из {pieChart.result?.countCallers}
+                                {pieChart.data?.countSuccess} из {pieChart.data?.countCallers}
                             </div>
                         </div>
                         <div className={stylesCard.body}>
-                            <PieChart data={pieChart.result?.parts ?? []} />
+                            <PieChart data={pieChart.data?.parts ?? []} />
                         </div>
                     </Substrate>
                     <Substrate className={classNames(stylesCard.card, stylesCard.chart)}>
@@ -152,13 +154,13 @@ const CallingViewBody = () => {
                             </div>
                         </div>
                         <div className={stylesCard.body}>
-                            <LineChart data={chart.result ?? []} nameTooltip={'Успешные звонки'} />
+                            <LineChart data={chart.data ?? []} nameTooltip={'Успешные звонки'} />
                         </div>
                     </Substrate>
                 </div>
             </div>
             <div className={styles.table}>
-                <CallingViewTable callingId={callingId} />
+                <CallingViewTable />
             </div>
         </div>
     )

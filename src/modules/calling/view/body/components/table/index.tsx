@@ -4,56 +4,58 @@ import stylesTable from 'shared/styles/table/styles.module.scss'
 import 'shared/styles/table/styles.scss'
 import {useDispatch} from 'react-redux'
 import {Table, TableBody, TableCell, TableHead, TableRow as MuiTableRow} from '@mui/material'
-import {CallingResultTableBodyModel} from 'core/api'
 import {
     getCallingResultTableBodyById,
     getCallingResultTableHeaderById,
-    getVariables
+    getVariables,
+    resetCallingViewState
 } from 'store/calling/view'
 import {useSelectorApp} from 'shared/hoocks'
+import TableRow from 'modules/calling/view/body/components/table/components/table-row'
+import {useParams} from 'react-router-dom'
+import {RequestPageTypes} from 'shared/types'
 
-type Props = {
-    callingId: string
-}
-
-const CallingViewTable = React.memo(({callingId}: Props) => {
+const CallingViewTable = React.memo(() => {
     const dispatch = useDispatch()
     const {
         callingView: {tableHeader, tableBody, variables}
     } = useSelectorApp()
-
-    useEffect(() => {
-        dispatch(getCallingResultTableHeaderById(callingId))
-        dispatch(getCallingResultTableBodyById(callingId, {page: 0, size: tableBody.size}))
-        if (!variables.result) {
-            dispatch(getVariables())
-        }
-    }, [])
+    const {callingId} = useParams<{callingId: string}>()
 
     const handlerScroll = (e: React.UIEvent<HTMLDivElement>) => {
-        if (tableBody.status.isLoading || tableHeader.status.isLoading) return
         if (
+            tableBody.status.isLoading ||
+            tableBody.pageSettings.isLastPage ||
             e.currentTarget.scrollTop + e.currentTarget.clientHeight + 500 <
-            e.currentTarget.scrollHeight
+                e.currentTarget.scrollHeight
         )
             return
-        if (tableBody.isLastPage) return
-        if (!tableHeader.result) return
 
-        dispatch(
-            getCallingResultTableBodyById(callingId, {page: tableBody.page, size: tableBody.size})
-        )
+        dispatch(getCallingResultTableBodyById(callingId, RequestPageTypes.Next))
     }
+
+    useEffect(() => {
+        if (!variables.status.isSuccess) {
+            dispatch(getVariables())
+        }
+        dispatch(getCallingResultTableHeaderById(callingId))
+        dispatch(getCallingResultTableBodyById(callingId, RequestPageTypes.First))
+
+        return () => {
+            dispatch(resetCallingViewState({type: 'tableBody'}))
+            dispatch(resetCallingViewState({type: 'tableHeader'}))
+        }
+    }, [callingId])
 
     return (
         <>
-            {tableHeader.result && variables.result && (
+            {variables.status.isSuccess && tableHeader.status.isSuccess && (
                 <div className={stylesTable.wrapper} onScroll={handlerScroll}>
                     <Table stickyHeader className={'data-view'}>
                         <TableHead>
                             <MuiTableRow>
                                 <TableCell />
-                                {tableHeader.result?.extra?.map((el, ind) => (
+                                {tableHeader.data?.extra?.map((el) => (
                                     <TableCell key={`extra-${el.id}`}>
                                         <div className={stylesTable.variable}>
                                             <div className={stylesTable.type}>&nbsp;</div>
@@ -61,15 +63,16 @@ const CallingViewTable = React.memo(({callingId}: Props) => {
                                         </div>
                                     </TableCell>
                                 ))}
-                                {tableHeader.result?.original?.map((el, ind) => (
+                                {tableHeader.data?.original?.map((el) => (
                                     <TableCell key={`original-${el.id}`}>
                                         <div className={stylesTable.variable}>
                                             <div className={stylesTable.type}>
                                                 <span className={stylesTable.text}>
-                                                    {variables.result &&
-                                                        variables.result.find(
+                                                    {
+                                                        variables.data.find(
                                                             (e) => e.name === el.type
-                                                        )?.description}
+                                                        )?.description
+                                                    }
                                                 </span>
                                             </div>
                                             <div className={styles.name}>{el.currentName}</div>
@@ -79,43 +82,14 @@ const CallingViewTable = React.memo(({callingId}: Props) => {
                             </MuiTableRow>
                         </TableHead>
                         <TableBody>
-                            {tableBody.result?.map((el, ind) => (
-                                <TableRow key={el.number} el={el} ind={ind} />
+                            {tableBody.data?.map((el) => (
+                                <TableRow key={el.number} el={el} />
                             ))}
                         </TableBody>
                     </Table>
                 </div>
             )}
         </>
-    )
-})
-
-type PropsRow = {
-    ind: number
-    el: CallingResultTableBodyModel
-}
-
-const TableRow = React.memo(({el, ind}: PropsRow) => {
-    return (
-        <MuiTableRow key={el.number}>
-            <TableCell>{el.number}</TableCell>
-            {el.extra.map((el) => (
-                <TableCell
-                    key={`extra-${el.id}`}
-                    className={!el.valid ? stylesTable.invalidCell : ''}
-                >
-                    {el.value}
-                </TableCell>
-            ))}
-            {el.original.map((el) => (
-                <TableCell
-                    key={`original-${el.id}`}
-                    className={!el.valid ? stylesTable.invalidCell : ''}
-                >
-                    {el.value}
-                </TableCell>
-            ))}
-        </MuiTableRow>
     )
 })
 
