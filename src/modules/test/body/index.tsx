@@ -150,7 +150,7 @@ const TestBody = () => {
                 <BtnCircle iconName={'upload'} iconType={'round'} />
                 <BtnCircle iconName={'upload'} iconType={'round'} isActive={true} />
 
-                <Input placeholder={'Пароль'} type={'password'} autoCompleteOff />
+                <Input placeholder={'Пароль'} type={'password'} autoComplete={'new-password'} />
                 <Input placeholder={'Строка ввода'} type={'text'} />
                 <Input placeholder={'Коротка строка'} className={styles.input_short} />
 

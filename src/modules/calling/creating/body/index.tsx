@@ -35,6 +35,7 @@ import {useParams} from 'react-router-dom'
 import {useDoubleInput, useSelectorApp} from 'shared/hoocks'
 
 const CallingCreatingBody = () => {
+    const dispatch = useDispatch()
     const {
         callingCreating: {statuses, name, isNow, startDate, scenarioId, callersBaseId, id}
     } = useSelectorApp()
@@ -47,7 +48,35 @@ const CallingCreatingBody = () => {
         setText: _setName,
         setLastText: setLastName
     } = useDoubleInput(callingId ? '' : name)
-    const dispatch = useDispatch()
+
+    const onSelectBase = (e: SelectChangeEvent) => {
+        dispatch(setCallersBaseId(e.target.value))
+    }
+
+    const onSelectScenario = (e: SelectChangeEvent) => {
+        dispatch(setScenarioId(e.target.value))
+    }
+
+    const onChangeName = (value: string) => {
+        dispatch(setName(value))
+    }
+
+    const onChangeDateTime = (_date: number | null | undefined) => {
+        if (_date) {
+            const date = new Date(_date)
+            dispatch(setStartDate(date.getTime()))
+        }
+    }
+
+    const onChangeIsNow = () => {
+        dispatch(setIsNow(!isNow))
+    }
+
+    const onSave = () => {
+        if (statuses.isLoading || !name || !callersBaseId || !scenarioId) return
+
+        dispatch(saveCalling())
+    }
 
     useEffect(() => {
         if (callingId) {
@@ -78,35 +107,6 @@ const CallingCreatingBody = () => {
         }
     }, [id])
 
-    const onSelectBase = (e: SelectChangeEvent) => {
-        dispatch(setCallersBaseId(e.target.value))
-    }
-
-    const onSelectScenario = (e: SelectChangeEvent) => {
-        dispatch(setScenarioId(e.target.value))
-    }
-
-    const onChangeName = (value: string) => {
-        dispatch(setName(value))
-    }
-
-    const onChangeDateTime = (_date: number | null | undefined) => {
-        if (_date) {
-            const date = new Date(_date)
-            dispatch(setStartDate(date.getTime()))
-        }
-    }
-
-    const onChangeIsNow = () => {
-        dispatch(setIsNow(!isNow))
-    }
-
-    const onSave = () => {
-        if (statuses.isLoading) return
-
-        dispatch(saveCalling())
-    }
-
     return (
         <div className={styles.wrapper}>
             <div className={styles.header}>
@@ -135,6 +135,7 @@ const CallingCreatingBody = () => {
                                             ? (callersBaseId as string) ?? ''
                                             : (callersBaseId as string) ?? ''
                                     }
+                                    MenuProps={{PaperProps: {sx: {maxHeight: 300}}}}
                                 >
                                     {bases?.map((el) => (
                                         <MenuItem key={el.id} value={el.id}>
@@ -171,6 +172,7 @@ const CallingCreatingBody = () => {
                                             ? (scenarioId as string) ?? ''
                                             : (scenarioId as string) ?? ''
                                     }
+                                    MenuProps={{PaperProps: {sx: {maxHeight: 300}}}}
                                 >
                                     {scenarios?.map((el) => (
                                         <MenuItem key={el.id} value={el.id}>

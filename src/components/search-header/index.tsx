@@ -105,7 +105,7 @@ const SearchHeader = ({
                 className={styles.search}
                 type={'text'}
                 placeholder={'Поиск'}
-                autoCompleteOff
+                autoComplete={'new-password'}
                 onKeyPress={handlerSearch}
             />
             <BtnSecond

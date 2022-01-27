@@ -25,7 +25,7 @@ const initialState: CreatingState = {
     statuses: {}
 }
 
-const callingCreatingSlice = createSlice({
+export const callingCreatingSlice = createSlice({
     name: 'callingCreating',
     initialState,
     reducers: {
@@ -35,11 +35,11 @@ const callingCreatingSlice = createSlice({
         setSuccess: (state) => {
             state.statuses = {isSuccess: true}
         },
-        setIsNow: (state, action: PayloadAction<boolean>) => {
-            state.isNow = action.payload
-        },
         setError: (state, action: PayloadAction<string>) => {
             state.statuses = {isError: true, error: action.payload}
+        },
+        setIsNow: (state, action: PayloadAction<boolean>) => {
+            state.isNow = action.payload
         },
         setName: (state, action: PayloadAction<string>) => {
             state.name = action.payload
@@ -75,7 +75,7 @@ const callingCreatingSlice = createSlice({
 
 export const saveCalling = () => (dispatch: Dispatch, getState: () => RootState) => {
     const state = getState().callingCreating
-    if (state.statuses.isLoading || !state.name || !state.callersBaseId || !state.scenarioId) return
+    if (!state.name || !state.callersBaseId || !state.scenarioId) return
 
     dispatch(setLoading())
     const data: CallingRequestModel = {

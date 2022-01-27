@@ -1,7 +1,7 @@
 import React from 'react'
 import styles from './styles.module.scss'
 import BtnSecond from 'components/ui-kit/btn-second'
-import {useHistory} from 'react-router-dom'
+import {useHistory, useParams} from 'react-router-dom'
 import {useSelectorApp} from 'shared/hoocks'
 
 const CallingCreatingHeader = () => {
@@ -9,6 +9,7 @@ const CallingCreatingHeader = () => {
     const {
         callingCreating: {statuses}
     } = useSelectorApp()
+    const {callingId} = useParams<{callingId: string | undefined}>()
 
     const onCancel = () => {
         if (statuses.isLoading) return
@@ -19,7 +20,7 @@ const CallingCreatingHeader = () => {
     return (
         <div className={styles.header}>
             <BtnSecond
-                text={'Отменить'}
+                text={callingId ? 'Назад' : 'Отменить'}
                 className={styles.cancel}
                 onClick={onCancel}
                 iconName={'arrow_back'}
