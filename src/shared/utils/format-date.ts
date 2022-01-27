@@ -1,4 +1,4 @@
-import {pad} from 'shared/utils/pad'
+import {pad} from 'shared/utils'
 
 const month: {[key: number]: string} = {
     0: 'Январь',
