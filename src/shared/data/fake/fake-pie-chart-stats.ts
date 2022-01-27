@@ -5,7 +5,7 @@ export const fakePieChartStats: StatsPieChartModel = {
     parts: [
         {
             name: 'Успешно завершенные',
-            value: 70,
+            value: 100,
             key: 'CORRECT'
         },
         {

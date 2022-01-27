@@ -17,6 +17,7 @@ import {useDispatch} from 'react-redux'
 import {enqueueSnackbar} from 'features/notifications/store'
 import HiddenInputWithIcon from 'components/hidden-input-with-icon'
 import {useDoubleInput} from 'shared/hoocks'
+import {Cell, Pie, PieChart} from 'recharts'
 
 const TestBody = () => {
     const [modal, setModal] = useState<boolean>(false)
@@ -178,6 +179,25 @@ const TestBody = () => {
                 <Btn text={'Показать уведомление об ошибке'} onClick={notifyError} />
                 <Btn text={'Показать уведомление об успехе'} onClick={notifySuccess} />
                 <Btn text={'Показать длинную информацию'} onClick={notifyAlertLong} />
+
+                <div>
+                    <PieChart width={400} height={190}>
+                        <Pie
+                            data={data}
+                            cx={100}
+                            cy={100}
+                            labelLine={false}
+                            label={renderCustomizedLabel}
+                            outerRadius={80}
+                            fill='#8884d8'
+                            dataKey='value'
+                        >
+                            {data.map((entry, index) => (
+                                <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                            ))}
+                        </Pie>
+                    </PieChart>
+                </div>
             </div>
             {modal && (
                 <Modal isOpened={modal} setOpen={setModal}>
@@ -206,3 +226,39 @@ const TestBody = () => {
 }
 
 export default TestBody
+
+const data = [
+    {name: 'Group A', value: 400},
+    {name: 'Group B', value: 300},
+    {name: 'Group C', value: 100},
+    {name: 'Group D', value: 500}
+]
+
+const COLORS = ['#0088fe', '#00c49f', '#ffbb28', '#ff8042']
+
+const RADIAN = Math.PI / 180
+const renderCustomizedLabel = ({
+    cx,
+    cy,
+    midAngle,
+    innerRadius,
+    outerRadius,
+    percent,
+    index
+}: any) => {
+    const radius = innerRadius + (outerRadius - innerRadius) * 0.5
+    const x = cx + radius * Math.cos(-midAngle * RADIAN)
+    const y = cy + radius * Math.sin(-midAngle * RADIAN)
+
+    return (
+        <text
+            x={x}
+            y={y}
+            fill='white'
+            textAnchor={x > cx ? 'start' : 'end'}
+            dominantBaseline='central'
+        >
+            {`${(percent * 100).toFixed(0)}%`}
+        </text>
+    )
+}
