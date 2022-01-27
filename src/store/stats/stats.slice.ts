@@ -7,14 +7,11 @@ import {
     StatsCommonModel,
     StatsPieChartModel
 } from 'core/api'
-import {FetchStatuses} from 'shared/types/fetch-statuses'
+import {FetchStatuses} from 'shared/types'
 import {ExtraPieChartPartModel} from 'store/calling/view'
 import {compare, getColor, getNumber} from 'shared/utils'
 import {handlerError} from 'shared/middleware'
-import {fakePieChartStats} from 'shared/data/fake/fake-pie-chart-stats'
-import {fakeChart} from 'shared/data/fake/fake-data-line-chart'
-
-type StatsResultTypes = 'common' | 'pieChart' | 'chart'
+import {fakeChart, fakePieChartStats} from 'shared/data'
 
 interface ExtraStatsPieChartModel extends StatsPieChartModel {
     parts: ExtraPieChartPartModel[]
@@ -22,30 +19,32 @@ interface ExtraStatsPieChartModel extends StatsPieChartModel {
 
 interface StatsState {
     common: {
-        result: StatsCommonModel | null
+        data: StatsCommonModel | null
         status: FetchStatuses
     }
     pieChart: {
-        result: ExtraStatsPieChartModel | null
+        data: ExtraStatsPieChartModel | null
         status: FetchStatuses
     }
     chart: {
-        result: DataChartModel[] | null
+        data: DataChartModel[]
         status: FetchStatuses
     }
 }
 
+type StatsResultTypes = keyof StatsState
+
 const initialState: StatsState = {
     common: {
-        result: null,
+        data: null,
         status: {}
     },
     chart: {
-        result: null,
+        data: [],
         status: {}
     },
     pieChart: {
-        result: null,
+        data: null,
         status: {}
     }
 }
@@ -63,14 +62,14 @@ const statsSlice = createSlice({
         setError: (state, action: PayloadAction<{error: string; type: StatsResultTypes}>) => {
             state[action.payload.type].status = {isError: true, error: action.payload.error}
         },
-        setCommonResult: (state, action: PayloadAction<StatsCommonModel>) => {
-            state.common.result = action.payload
+        setCommon: (state, action: PayloadAction<StatsCommonModel>) => {
+            state.common.data = action.payload
         },
-        setChartResult: (state, action: PayloadAction<DataChartModel[]>) => {
-            state.chart.result = action.payload
+        setChart: (state, action: PayloadAction<DataChartModel[]>) => {
+            state.chart.data = action.payload
         },
-        setPieChartResult: (state, action: PayloadAction<StatsPieChartModel>) => {
-            state.pieChart.result = {
+        setPieChart: (state, action: PayloadAction<StatsPieChartModel>) => {
+            state.pieChart.data = {
                 ...action.payload,
                 parts: action.payload.parts
                     .map((el) => {
@@ -83,12 +82,12 @@ const statsSlice = createSlice({
                     .sort(compare)
             }
         },
-        resetState: (state) => {
+        resetStatsState: (state) => {
             state.common.status = {}
-            state.common.result = null
-            state.chart.result = null
+            state.common.data = null
+            state.chart.data = []
             state.chart.status = {}
-            state.pieChart.result = null
+            state.pieChart.data = null
             state.pieChart.status = {}
         }
     }
@@ -98,15 +97,11 @@ export const getStatsCommon = () => (dispatch: Dispatch) => {
     dispatch(setLoading({type: 'common'}))
     _getStatsCommon()
         .then((res) => {
-            dispatch(setCommonResult(res.data))
+            dispatch(setCommon(res.data))
             dispatch(setSuccess({type: 'common'}))
         })
         .catch(
             handlerError(dispatch, (err) => {
-                console.log({
-                    type: 'ERROR',
-                    message: err.response?.data.message ?? 'getStatsCommon'
-                })
                 dispatch(
                     setError({
                         type: 'common',
@@ -118,20 +113,16 @@ export const getStatsCommon = () => (dispatch: Dispatch) => {
 }
 
 export const getStatsPieChart = () => (dispatch: Dispatch) => {
-    // todo remove fake data
-    dispatch(setPieChartResult(fakePieChartStats))
     dispatch(setLoading({type: 'pieChart'}))
     _getStatsPieChart()
         .then((res) => {
+            // todo remove fake data
             // dispatch(setPieChartResult(res.data))
+            dispatch(setPieChart(fakePieChartStats))
             dispatch(setSuccess({type: 'pieChart'}))
         })
         .catch(
             handlerError(dispatch, (err) => {
-                console.log({
-                    type: 'ERROR',
-                    message: err.response?.data.message ?? 'getStatsPieChart'
-                })
                 dispatch(
                     setError({
                         type: 'pieChart',
@@ -143,17 +134,16 @@ export const getStatsPieChart = () => (dispatch: Dispatch) => {
 }
 
 export const getStatsChart = () => (dispatch: Dispatch) => {
-    // todo remove fake data
-    dispatch(setChartResult(fakeChart))
     dispatch(setLoading({type: 'chart'}))
     _getStatsChart()
         .then((res) => {
+            // todo remove fake data
             // dispatch(setChartResult(res.data))
+            dispatch(setChart(fakeChart))
             dispatch(setSuccess({type: 'chart'}))
         })
         .catch(
             handlerError(dispatch, (err) => {
-                console.log({type: 'ERROR', message: err.response?.data.message ?? 'getStatsChart'})
                 dispatch(
                     setError({type: 'chart', error: err.response?.data.message ?? 'getStatsCommon'})
                 )
@@ -161,14 +151,7 @@ export const getStatsChart = () => (dispatch: Dispatch) => {
         )
 }
 
-export const {
-    setError,
-    setLoading,
-    setSuccess,
-    setPieChartResult,
-    setCommonResult,
-    setChartResult,
-    resetState
-} = statsSlice.actions
+export const {setError, setLoading, setSuccess, resetStatsState, setPieChart, setCommon, setChart} =
+    statsSlice.actions
 
 export const statsReducers = statsSlice.reducer

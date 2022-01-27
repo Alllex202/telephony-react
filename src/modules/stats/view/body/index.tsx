@@ -1,13 +1,12 @@
 import React, {useEffect} from 'react'
 import styles from './styles.module.scss'
 import stylesCard from 'shared/styles/cards-substrate/styles.module.scss'
-import {classNames} from 'shared/utils'
+import {classNames, formatTimeObject} from 'shared/utils'
 import Substrate from 'components/ui-kit/substrate'
 import PieChart from 'modules/charts/pie-chart'
 import LineChart from 'modules/charts/line-chart'
 import {useDispatch} from 'react-redux'
-import {getStatsChart, getStatsCommon, getStatsPieChart, resetState} from 'store/stats'
-import {formatTimeObject} from 'shared/utils/format-time-object'
+import {getStatsChart, getStatsCommon, getStatsPieChart, resetStatsState} from 'store/stats'
 import {useSelectorApp} from 'shared/hoocks'
 
 const StatsBody = () => {
@@ -22,7 +21,7 @@ const StatsBody = () => {
         dispatch(getStatsPieChart())
 
         return () => {
-            dispatch(resetState())
+            dispatch(resetStatsState())
         }
     }, [])
 
@@ -35,7 +34,7 @@ const StatsBody = () => {
                         <div className={stylesCard.head}>
                             <div className={stylesCard.smallLightFont}>Обзваниваний запущено</div>
                             <div className={stylesCard.bigBlackFont}>
-                                {common.result?.totalDialings}
+                                {common.data?.totalDialings}
                             </div>
                         </div>
                         <div className={stylesCard.body} />
@@ -46,7 +45,7 @@ const StatsBody = () => {
                                 Средняя продолжительность обзванивания
                             </div>
                             <div className={stylesCard.bigBlackFont}>
-                                {formatTimeObject(common.result?.averageDialingDuration)}
+                                {formatTimeObject(common.data?.averageDialingDuration)}
                             </div>
                         </div>
                         <div className={stylesCard.body} />
@@ -59,7 +58,7 @@ const StatsBody = () => {
                                 Среднее кол-во звонков за обзванивание
                             </div>
                             <div className={stylesCard.bigBlackFont}>
-                                {common.result?.averageNumberOfCallsPerDialing}
+                                {common.data?.averageNumberOfCallsPerDialing}
                             </div>
                         </div>
                         <div className={stylesCard.body} />
@@ -70,7 +69,7 @@ const StatsBody = () => {
                                 Средняя продолжительность звонка
                             </div>
                             <div className={stylesCard.bigBlackFont}>
-                                {formatTimeObject(common.result?.averageCallDuration)}
+                                {formatTimeObject(common.data?.averageCallDuration)}
                             </div>
                         </div>
                         <div className={stylesCard.body} />
@@ -81,11 +80,11 @@ const StatsBody = () => {
                         <div className={stylesCard.head}>
                             <div className={stylesCard.smallLightFont}>Статус звонков</div>
                             <div className={stylesCard.bigBlackFont}>
-                                {pieChart.result?.percentSuccess}% успешных
+                                {pieChart.data?.percentSuccess}% успешных
                             </div>
                         </div>
                         <div className={stylesCard.body}>
-                            <PieChart data={pieChart.result?.parts ?? []} />
+                            <PieChart data={pieChart.data?.parts ?? []} />
                         </div>
                     </Substrate>
                     <Substrate className={classNames(stylesCard.card, stylesCard.chart)}>
@@ -95,7 +94,7 @@ const StatsBody = () => {
                             </div>
                         </div>
                         <div className={stylesCard.body}>
-                            <LineChart data={chart.result ?? []} nameTooltip={'Успешные звонки'} />
+                            <LineChart data={chart.data} nameTooltip={'Успешные звонки'} />
                         </div>
                     </Substrate>
                 </div>
