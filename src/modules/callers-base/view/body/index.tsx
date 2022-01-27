@@ -66,7 +66,7 @@ const CallersBaseViewBody = () => {
     return (
         <>
             {data && (
-                <>
+                <div className={styles.wrapper}>
                     <div className={styles.head}>
                         <HiddenInputWithIcon
                             text={name}
@@ -88,7 +88,7 @@ const CallersBaseViewBody = () => {
                     <div className={styles.table}>
                         <CallersBaseViewTable />
                     </div>
-                </>
+                </div>
             )}
         </>
     )

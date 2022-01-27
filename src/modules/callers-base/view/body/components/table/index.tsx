@@ -87,56 +87,59 @@ const CallersBaseViewTable = React.memo(() => {
 
     return (
         <>
-            <div className={styles.wrapper} onScroll={handlerScroll}>
-                <Table stickyHeader className={'data-view'}>
-                    <TableHead>
-                        <MuiTableRow>
-                            <TableCell />
-                            {common.data?.columns.map((el) => (
-                                <TableCell key={el.id}>
-                                    <div className={styles.variable}>
-                                        <div className={styles.type}>
-                                            <span className={styles.text}>
-                                                {variablesTypes.data?.find(
-                                                    (e) => e.name === el.type
-                                                )?.description ?? ''}
-                                            </span>
-                                            <BtnCircle
-                                                iconName={'arrow_drop_down'}
-                                                className={styles.btn}
-                                                iconType={'round'}
-                                                onClick={handlerShowMenuType(el)}
-                                                isActive={
-                                                    !!anchorEl && selectedVariable?.id === el.id
-                                                }
-                                                activeStyle={styles.active}
-                                            />
+            {variablesTypes.statuses.isSuccess && (
+                <div className={styles.wrapper} onScroll={handlerScroll}>
+                    <Table stickyHeader className={'data-view'}>
+                        <TableHead>
+                            <MuiTableRow>
+                                <TableCell />
+                                {common.data?.columns.map((el) => (
+                                    <TableCell key={el.id}>
+                                        <div className={styles.variable}>
+                                            <div className={styles.type}>
+                                                <span className={styles.text}>
+                                                    {variablesTypes.data.find(
+                                                        (e) => e.name === el.type
+                                                    )?.description ?? ''}
+                                                </span>
+                                                <BtnCircle
+                                                    iconName={'arrow_drop_down'}
+                                                    className={styles.btn}
+                                                    iconType={'round'}
+                                                    onClick={handlerShowMenuType(el)}
+                                                    isActive={
+                                                        !!anchorEl && selectedVariable?.id === el.id
+                                                    }
+                                                    activeStyle={styles.active}
+                                                />
+                                            </div>
+                                            <div className={styles.name}>
+                                                <InputVariableName
+                                                    initState={el.currentName}
+                                                    el={el}
+                                                    conditionSave={!common.statuses.isLoading}
+                                                    data={common.data}
+                                                    disabled={common.statuses.isLoading}
+                                                />
+                                            </div>
                                         </div>
-                                        <div className={styles.name}>
-                                            <InputVariableName
-                                                initState={el.currentName}
-                                                el={el}
-                                                conditionSave={!common.statuses.isLoading}
-                                                data={common.data}
-                                                disabled={common.statuses.isLoading}
-                                            />
-                                        </div>
-                                    </div>
-                                </TableCell>
+                                    </TableCell>
+                                ))}
+                            </MuiTableRow>
+                        </TableHead>
+                        <TableBody>
+                            {data?.map((el, ind) => (
+                                <TableRow key={el.id} el={el} ind={ind} />
                             ))}
-                        </MuiTableRow>
-                    </TableHead>
-                    <TableBody>
-                        {data?.map((el, ind) => (
-                            <TableRow key={el.id} el={el} ind={ind} />
-                        ))}
-                    </TableBody>
-                </Table>
-            </div>
-            {variablesTypes.data && (
+                        </TableBody>
+                    </Table>
+                </div>
+            )}
+
+            {variablesTypes.statuses.isSuccess && (
                 <Menu anchorEl={anchorEl} open={!!anchorEl} onClose={handlerHideMenuType}>
                     <div className={styles.menuWrapper}>
-                        {variablesTypes.data?.map((el) => (
+                        {variablesTypes.data.map((el) => (
                             <MenuItem key={el.name} onClick={handlerChangeVariableType(el)}>
                                 {el.description}
                             </MenuItem>
