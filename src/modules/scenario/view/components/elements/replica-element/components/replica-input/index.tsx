@@ -12,9 +12,11 @@ type Props = {
 
 const ReplicaInput = React.memo(({value, onChange}: Props) => {
     const {
-        scenarioView: {callersBaseHeader}
+        scenarioView: {
+            callersBaseSelected: {data, status}
+        }
     } = useSelectorApp()
-    const variables = callersBaseHeader?.columns ?? []
+    const variables = data?.columns ?? []
 
     const onKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
         if (e.key === 'Enter') {

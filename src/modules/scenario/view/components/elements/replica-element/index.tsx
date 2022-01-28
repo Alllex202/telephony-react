@@ -15,13 +15,13 @@ import {useDispatch} from 'react-redux'
 import {
     addAnswer,
     changeAnswer,
-    changeNeedAnswer,
-    changePosition,
-    changeReplica,
-    changeWaitingTime,
-    removeAnswer
+    changePositionElement,
+    removeAnswer,
+    setNeedAnswer,
+    setReplica,
+    setWaitingTime
 } from 'store/scenario/view'
-import ReplicaInput from 'modules/scenario/view/components/elements/replica-element/components/replica-input'
+import ReplicaInput from './components/replica-input'
 
 interface Button {
     name: string
@@ -52,6 +52,61 @@ const ReplicaElement = React.memo(
         const [anchorEl, setAnchorEl] = useState<Element | null>(null)
         const [oldButton, setOldButton] = useState<string | null>(null)
 
+        const onFocus = () => {
+            setFocus(true)
+        }
+
+        const onBlur = () => {
+            setFocus(false)
+        }
+
+        const onOpenMenu = (oldButton: string) => (e: React.MouseEvent) => {
+            setAnchorEl(e.currentTarget)
+            setOldButton(oldButton)
+        }
+
+        const onCloseMenu = () => {
+            setAnchorEl(null)
+        }
+
+        const onSelectNumberKey = (newButton: string) => () => {
+            onCloseMenu()
+            if (oldButton === null) return
+
+            dispatch(changeAnswer({elementId: id, newButton, oldButton}))
+        }
+
+        const onChangeNeedAnswer = (e: React.ChangeEvent<HTMLInputElement>) => {
+            dispatch(setNeedAnswer({elementId: id, isNeed: !data.needAnswer}))
+        }
+
+        const onChangeReplica = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+            dispatch(setReplica({elementId: id, replica: e.target.value}))
+        }
+
+        const onChangeWaitingTime = (e: React.ChangeEvent<HTMLInputElement>) => {
+            const {value} = e.target
+            dispatch(setWaitingTime({elementId: id, time: Number(value) * 1000}))
+        }
+
+        const onBlurWaitingTime = (e: React.ChangeEvent<HTMLInputElement>) => {
+            const {value, min, max} = e.target
+            const time = Math.max(Number(min), Math.min(Number(max), Number(value)))
+            dispatch(setWaitingTime({elementId: id, time: time * 1000}))
+        }
+
+        const onAddAnswer = () => {
+            if (!menu.isShow) return
+            const unusedBtn = menu.buttons.find((btn) => !btn.isUsed)
+            if (!unusedBtn) return
+
+            dispatch(addAnswer({elementId: id, button: unusedBtn.name}))
+        }
+
+        const onRemoveAnswer = (answerId: string) => () => {
+            dispatch(removeAnswer({elementId: id, answerId}))
+        }
+
         useEffect(() => {
             const buttons = menu.buttons.map((btn) =>
                 data.answers?.some((ans) => ans.button === btn.name)
@@ -64,64 +119,9 @@ const ReplicaElement = React.memo(
 
         useEffect(() => {
             if (isDragging === false && xPos && yPos) {
-                dispatch(changePosition({elementId: id, x: xPos, y: yPos}))
+                dispatch(changePositionElement({elementId: id, x: xPos, y: yPos}))
             }
         }, [isDragging])
-
-        const onFocus = () => {
-            setFocus(true)
-        }
-
-        const onBlur = () => {
-            setFocus(false)
-        }
-
-        const onOpenMenu = (e: React.MouseEvent, oldButton: string) => {
-            setAnchorEl(e.currentTarget)
-            setOldButton(oldButton)
-        }
-
-        const onCloseMenu = () => {
-            setAnchorEl(null)
-        }
-
-        const onSelectNumberKey = (newButton: string) => {
-            onCloseMenu()
-            if (oldButton === null) return
-
-            dispatch(changeAnswer({elementId: id, newButton, oldButton}))
-        }
-
-        const onChangeNeedAnswer = (e: React.ChangeEvent<HTMLInputElement>) => {
-            dispatch(changeNeedAnswer({elementId: id, isNeed: !data.needAnswer}))
-        }
-
-        const onChangeReplica = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-            dispatch(changeReplica({elementId: id, replica: e.target.value}))
-        }
-
-        const onChangeWaitingTime = (e: React.ChangeEvent<HTMLInputElement>) => {
-            const {value} = e.target
-            dispatch(changeWaitingTime({elementId: id, time: Number(value) * 1000}))
-        }
-
-        const onBlurWaitingTime = (e: React.ChangeEvent<HTMLInputElement>) => {
-            const {value, min, max} = e.target
-            const time = Math.max(Number(min), Math.min(Number(max), Number(value)))
-            dispatch(changeWaitingTime({elementId: id, time: time * 1000}))
-        }
-
-        const onAddAnswer = () => {
-            if (!menu.isShow) return
-            const unusedBtn = menu.buttons.find((btn) => !btn.isUsed)
-            if (!unusedBtn) return
-
-            dispatch(addAnswer({elementId: id, button: unusedBtn.name}))
-        }
-
-        const onRemoveAnswer = (answerId: string) => {
-            dispatch(removeAnswer({elementId: id, answerId}))
-        }
 
         return (
             <Card
@@ -173,7 +173,7 @@ const ReplicaElement = React.memo(
                                         {data.answers && data.answers.length > 1 ? (
                                             <button
                                                 className={styles.circle}
-                                                onClick={() => onRemoveAnswer(ans.id)}
+                                                onClick={onRemoveAnswer(ans.id)}
                                             >
                                                 <div
                                                     className={classNames(
@@ -214,7 +214,7 @@ const ReplicaElement = React.memo(
                                                     iconName={'arrow_drop_down'}
                                                     iconType={'round'}
                                                     className={styles.dropDown}
-                                                    onClick={(e) => onOpenMenu(e, ans.button)}
+                                                    onClick={onOpenMenu(ans.button)}
                                                 />
                                             </>
                                         )}
@@ -233,7 +233,7 @@ const ReplicaElement = React.memo(
                                         !btn.isUsed && (
                                             <MenuItem
                                                 key={btn.name}
-                                                onClick={() => onSelectNumberKey(btn.name)}
+                                                onClick={onSelectNumberKey(btn.name)}
                                             >
                                                 Кнопка {btn.name}
                                             </MenuItem>

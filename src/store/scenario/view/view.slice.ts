@@ -3,14 +3,16 @@ import {
     AnswerModel,
     CallersBaseHeaderModel,
     EdgeModel,
+    getCallersBaseHeaderById,
+    getCallersBasesHeader,
+    getScenarioById,
     NodeDataModel,
     NodeModel,
     NodeTypes,
+    putScenarioById,
     ScenarioModel
 } from 'core/api'
-import {FetchStatuses} from 'shared/types/fetch-statuses'
-import {getCallersBaseHeaderById, getScenarioById, putScenarioById} from 'core/api/requests'
-import {DefaultAxiosError} from 'shared/types/base-response-error'
+import {DefaultAxiosError, FetchStatuses, IdKey} from 'shared/types'
 import {RootState} from 'store/index'
 import {
     addEdge as _addEdge,
@@ -18,72 +20,222 @@ import {
     Connection,
     Edge,
     Elements,
+    isEdge,
+    isNode,
     Node,
     removeElements as _removeElements,
     XYPosition
 } from 'react-flow-renderer'
-import {getUniqueId} from 'shared/utils'
+import {copy, getUniqueId} from 'shared/utils'
 import {handlerError} from 'shared/middleware'
 import {enqueueSnackbar} from 'features/notifications/store'
-import {IdKey} from 'shared/types/id-key'
 
 type ElementType = Node<NodeDataModel> | Edge
 
-interface ScenarioState {
-    data: ScenarioModel | null
-    elements: ElementType[]
-    statuses: FetchStatuses
-    isLoaded: boolean
+type ExtraScenarioModel = Pick<ScenarioModel, 'id' | 'name' | 'created'> & {
     startId: string | null
     finishId: string | null
-    callersBaseHeader: CallersBaseHeaderModel | null
+    elements: ElementType[]
+}
+
+interface ScenarioState {
+    callersBases: {
+        data: CallersBaseHeaderModel[]
+        status: FetchStatuses
+    }
+    callersBaseSelected: {
+        data: CallersBaseHeaderModel | null
+        status: FetchStatuses
+    }
+    scenario: {
+        data: {
+            remote: ScenarioModel | null
+            actual: ExtraScenarioModel | null
+        }
+        status: FetchStatuses
+    }
 }
 
 const initialState: ScenarioState = {
-    data: null,
-    elements: [],
-    statuses: {},
-    isLoaded: false,
-    startId: null,
-    finishId: null,
-    callersBaseHeader: null
+    callersBases: {
+        data: [],
+        status: {}
+    },
+    callersBaseSelected: {
+        data: null,
+        status: {}
+    },
+    scenario: {
+        data: {
+            remote: null,
+            actual: null
+        },
+        status: {}
+    }
 }
+
+type ScenarioResultTypes = keyof ScenarioState
+
+const arrowHeadType = ArrowHeadType.Arrow
+
+const edgeType = 'smoothstep'
+
+const dragHandle = '.draggable-handle'
 
 export const scenarioSlice = createSlice({
     name: 'scenarioView',
     initialState,
     reducers: {
-        setLoading: (state: ScenarioState) => {
-            state.statuses = {isLoading: true}
+        setLoading: (state, action: PayloadAction<{type: ScenarioResultTypes}>) => {
+            state[action.payload.type].status = {isLoading: true}
         },
-        setSuccess: (state: ScenarioState) => {
-            state.statuses = {isSuccess: true}
+        setSuccess: (state, action: PayloadAction<{type: ScenarioResultTypes}>) => {
+            state[action.payload.type].status = {isSuccess: true}
         },
-        setError: (state: ScenarioState, action: PayloadAction<string>) => {
-            state.statuses = {isError: true, error: action.payload}
+        setError: (state, action: PayloadAction<{type: ScenarioResultTypes; error: string}>) => {
+            state[action.payload.type].status = {isError: true, error: action.payload.error}
         },
-        setLoaded: (state: ScenarioState) => {
-            state.isLoaded = true
+        setScenario: (state, action: PayloadAction<ScenarioModel>) => {
+            const elements: ElementType[] = []
+            let startId: string | null = null
+            let finishId: string | null = null
+
+            action.payload.nodes.forEach((_node) => {
+                if (_node.type === 'START') {
+                    startId = _node.id
+                }
+                if (_node.type === 'FINISH') {
+                    finishId = _node.id
+                }
+                const node = {
+                    ..._node,
+                    selectable: true,
+                    dragHandle: dragHandle
+                }
+                elements.push(node)
+            })
+            action.payload.edges.forEach((_edge) => {
+                const edge: Edge = {
+                    ..._edge,
+                    arrowHeadType: arrowHeadType,
+                    type: edgeType
+                }
+                elements.push(edge)
+            })
+
+            state.scenario.data.remote = action.payload
+            state.scenario.data.actual = {
+                id: action.payload.id,
+                name: action.payload.name,
+                created: action.payload.created,
+                elements,
+                startId,
+                finishId
+            }
         },
-        setData: (state: ScenarioState, action: PayloadAction<ScenarioModel>) => {
-            state.data = action.payload
+        setCallersBases: (state, action: PayloadAction<CallersBaseHeaderModel[]>) => {
+            state.callersBases.data = action.payload
         },
-        setElements: (state: ScenarioState, action: PayloadAction<ElementType[]>) => {
-            state.elements = action.payload
+        setCallersBaseSelected: (state, action: PayloadAction<CallersBaseHeaderModel | null>) => {
+            state.callersBaseSelected.data = action.payload
         },
-        resetAll: (state: ScenarioState) => {
-            state.data = null
-            state.statuses = {}
-            state.elements = []
-            state.startId = null
-            state.finishId = null
-            state.isLoaded = false
+        changeName: (state, action: PayloadAction<string>) => {
+            if (state.scenario.data.actual) {
+                state.scenario.data.actual.name = action.payload
+            }
         },
-        changeReplica: (
-            state: ScenarioState,
-            action: PayloadAction<{elementId: string; replica: string}>
+        resetScenarioView: (state, action: PayloadAction<{type: ScenarioResultTypes}>) => {
+            state[action.payload.type] = copy(initialState[action.payload.type])
+        },
+        addNode: (state, action: PayloadAction<{nodeType: NodeTypes; position: XYPosition}>) => {
+            if (
+                !state.scenario.data.actual ||
+                (state.scenario.data.actual.startId && action.payload.nodeType === 'START') ||
+                (state.scenario.data.actual.finishId && action.payload.nodeType === 'FINISH')
+            ) {
+                return
+            }
+
+            const newNode: Node<NodeDataModel> = {
+                id: getUniqueId(),
+                type: action.payload.nodeType,
+                position: action.payload.position,
+                data: {
+                    needAnswer: false,
+                    answers: null,
+                    waitingTime: 0,
+                    replica: ''
+                },
+                selectable: true,
+                dragHandle: dragHandle
+            }
+            if (action.payload.nodeType === 'START') {
+                state.scenario.data.actual.startId = newNode.id
+            }
+            if (action.payload.nodeType === 'FINISH') {
+                state.scenario.data.actual.finishId = newNode.id
+            }
+            state.scenario.data.actual.elements = [...state.scenario.data.actual.elements, newNode]
+        },
+        addEdge: (state, action: PayloadAction<Edge | Connection>) => {
+            if (
+                !state.scenario.data.actual ||
+                state.scenario.data.actual.elements.some(
+                    (el) =>
+                        ((el as Edge).source === action.payload.target &&
+                            (el as Edge).target === action.payload.source) ||
+                        ((el as Edge).source === action.payload.source &&
+                            (el as Edge).source === state.scenario.data.actual?.startId) ||
+                        ((el as Edge).source === action.payload.source &&
+                            (el as Edge).sourceHandle === action.payload.sourceHandle)
+                )
+            ) {
+                return
+            }
+
+            state.scenario.data.actual.elements = _addEdge(
+                {
+                    ...action.payload,
+                    id: getUniqueId(),
+                    arrowHeadType: arrowHeadType,
+                    type: edgeType
+                },
+                state.scenario.data.actual.elements
+            )
+        },
+        removeElements: (state, action: PayloadAction<Elements>) => {
+            if (!state.scenario.data.actual) return
+
+            if (action.payload.some((el) => (el as NodeModel).type === 'START')) {
+                state.scenario.data.actual.startId = null
+            }
+            if (action.payload.some((el) => (el as NodeModel).type === 'FINISH')) {
+                state.scenario.data.actual.finishId = null
+            }
+            state.scenario.data.actual.elements = _removeElements(
+                action.payload,
+                state.scenario.data.actual.elements
+            )
+        },
+        changePositionElement: (
+            state,
+            action: PayloadAction<{elementId: string; x: number; y: number}>
         ) => {
-            state.elements = state.elements.map((el) =>
+            if (!state.scenario.data.actual) return
+
+            state.scenario.data.actual.elements = state.scenario.data.actual.elements.map((el) =>
+                el.id === action.payload.elementId
+                    ? {
+                          ...el,
+                          position: {x: action.payload.x, y: action.payload.y}
+                      }
+                    : el
+            )
+        },
+        setReplica: (state, action: PayloadAction<{elementId: string; replica: string}>) => {
+            if (!state.scenario.data.actual) return
+
+            state.scenario.data.actual.elements = state.scenario.data.actual.elements.map((el) =>
                 el.id === action.payload.elementId
                     ? {
                           ...el,
@@ -92,18 +244,17 @@ export const scenarioSlice = createSlice({
                     : el
             )
         },
-        changeNeedAnswer: (
-            state: ScenarioState,
-            action: PayloadAction<{elementId: string; isNeed: boolean}>
-        ) => {
+        setNeedAnswer: (state, action: PayloadAction<{elementId: string; isNeed: boolean}>) => {
+            if (!state.scenario.data.actual) return
+
             const target = (
-                state.elements.find(
+                state.scenario.data.actual.elements.find(
                     (el) => (el as Edge).source === action.payload.elementId
                 ) as Edge
             )?.target
             const answerId = getUniqueId()
 
-            state.elements = state.elements
+            state.scenario.data.actual.elements = state.scenario.data.actual.elements
                 .filter((el) => (el as Edge).source !== action.payload.elementId)
                 .map((el) =>
                     (el as Node).id === action.payload.elementId
@@ -122,25 +273,24 @@ export const scenarioSlice = createSlice({
                 )
 
             if (target) {
-                state.elements = _addEdge(
+                state.scenario.data.actual.elements = _addEdge(
                     {
                         source: action.payload.elementId,
                         sourceHandle: action.payload.isNeed ? answerId : null,
                         target,
                         targetHandle: null,
                         id: getUniqueId(),
-                        arrowHeadType: ArrowHeadType.Arrow,
-                        type: 'smoothstep'
+                        arrowHeadType: arrowHeadType,
+                        type: edgeType
                     },
-                    state.elements
+                    state.scenario.data.actual.elements
                 )
             }
         },
-        changeWaitingTime: (
-            state: ScenarioState,
-            action: PayloadAction<{elementId: string; time: number}>
-        ) => {
-            state.elements = state.elements.map((el) =>
+        setWaitingTime: (state, action: PayloadAction<{elementId: string; time: number}>) => {
+            if (!state.scenario.data.actual) return
+
+            state.scenario.data.actual.elements = state.scenario.data.actual.elements.map((el) =>
                 el.id === action.payload.elementId
                     ? {
                           ...el,
@@ -149,11 +299,10 @@ export const scenarioSlice = createSlice({
                     : el
             )
         },
-        addAnswer: (
-            state: ScenarioState,
-            action: PayloadAction<{elementId: string; button: string}>
-        ) => {
-            state.elements = state.elements.map((el) =>
+        addAnswer: (state, action: PayloadAction<{elementId: string; button: string}>) => {
+            if (!state.scenario.data.actual) return
+
+            state.scenario.data.actual.elements = state.scenario.data.actual.elements.map((el) =>
                 el.id === action.payload.elementId
                     ? {
                           ...el,
@@ -168,32 +317,10 @@ export const scenarioSlice = createSlice({
                     : el
             )
         },
-        changeAnswer: (
-            state: ScenarioState,
-            action: PayloadAction<{elementId: string; newButton: string; oldButton: string}>
-        ) => {
-            state.elements = state.elements.map((el) =>
-                el.id === action.payload.elementId
-                    ? {
-                          ...el,
-                          data: {
-                              ...el.data,
-                              answers: el.data.answers.map(
-                                  (ans: AnswerModel): AnswerModel =>
-                                      ans.button === action.payload.oldButton
-                                          ? {...ans, button: action.payload.newButton}
-                                          : ans
-                              )
-                          }
-                      }
-                    : el
-            )
-        },
-        removeAnswer: (
-            state: ScenarioState,
-            action: PayloadAction<{elementId: string; answerId: string}>
-        ) => {
-            state.elements = state.elements
+        removeAnswer: (state, action: PayloadAction<{elementId: string; answerId: string}>) => {
+            if (!state.scenario.data.actual) return
+
+            state.scenario.data.actual.elements = state.scenario.data.actual.elements
                 .filter(
                     (el) =>
                         !(
@@ -215,199 +342,145 @@ export const scenarioSlice = createSlice({
                         : el
                 )
         },
-        addEdge: (state: ScenarioState, action: PayloadAction<Edge | Connection>) => {
-            if (
-                state.elements.some(
-                    (el) =>
-                        ((el as Edge).source === action.payload.target &&
-                            (el as Edge).target === action.payload.source) ||
-                        ((el as Edge).source === action.payload.source &&
-                            (el as Edge).source === state.startId) ||
-                        ((el as Edge).source === action.payload.source &&
-                            (el as Edge).sourceHandle === action.payload.sourceHandle)
-                )
-            ) {
-                return
-            }
-
-            state.elements = _addEdge(
-                {
-                    ...action.payload,
-                    id: getUniqueId(),
-                    arrowHeadType: ArrowHeadType.Arrow,
-                    type: 'smoothstep'
-                },
-                state.elements
-            )
-        },
-        changeName: (state: ScenarioState, action: PayloadAction<string>) => {
-            if (state.data) {
-                state.data.name = action.payload
-            }
-        },
-        changePosition: (
-            state: ScenarioState,
-            action: PayloadAction<{elementId: string; x: number; y: number}>
+        changeAnswer: (
+            state,
+            action: PayloadAction<{elementId: string; newButton: string; oldButton: string}>
         ) => {
-            state.elements = state.elements.map((el) =>
+            if (!state.scenario.data.actual) return
+
+            state.scenario.data.actual.elements = state.scenario.data.actual.elements.map((el) =>
                 el.id === action.payload.elementId
                     ? {
                           ...el,
-                          position: {x: action.payload.x, y: action.payload.y}
+                          data: {
+                              ...el.data,
+                              answers: el.data.answers.map(
+                                  (ans: AnswerModel): AnswerModel =>
+                                      ans.button === action.payload.oldButton
+                                          ? {...ans, button: action.payload.newButton}
+                                          : ans
+                              )
+                          }
                       }
                     : el
             )
-        },
-        addNode: (
-            state: ScenarioState,
-            action: PayloadAction<{nodeType: NodeTypes; position: XYPosition}>
-        ) => {
-            if (
-                (action.payload.nodeType === 'START' && state.startId) ||
-                (action.payload.nodeType === 'FINISH' && state.finishId)
-            ) {
-                return
-            }
-
-            const newNode: Node<NodeDataModel> = {
-                id: getUniqueId(),
-                type: action.payload.nodeType,
-                position: action.payload.position,
-                data: {
-                    needAnswer: false,
-                    waitingTime: 0,
-                    replica: ''
-                },
-                selectable: true,
-                dragHandle: '.draggable-handle'
-            }
-            if (action.payload.nodeType === 'START') {
-                state.startId = newNode.id
-            }
-            if (action.payload.nodeType === 'FINISH') {
-                state.finishId = newNode.id
-            }
-            state.elements = [...state.elements, newNode]
-        },
-        removeElements: (state: ScenarioState, action: PayloadAction<Elements>) => {
-            if (action.payload.some((el) => (el as NodeModel).type === 'START')) {
-                state.startId = null
-            }
-            if (action.payload.some((el) => (el as NodeModel).type === 'FINISH')) {
-                state.finishId = null
-            }
-            state.elements = _removeElements(action.payload, state.elements)
-        },
-        setStartId: (state: ScenarioState, action: PayloadAction<string>) => {
-            state.startId = action.payload
-        },
-        setFinishId: (state: ScenarioState, action: PayloadAction<string>) => {
-            state.finishId = action.payload
-        },
-        setConnectionId: (state: ScenarioState, action: PayloadAction<null | IdKey>) => {
-            if (!state.data) {
-                return
-            }
-            state.data.connectedCallerBaseId = action.payload
-        },
-        setCallerBaseHeader: (
-            state: ScenarioState,
-            action: PayloadAction<CallersBaseHeaderModel | null>
-        ) => {
-            state.callersBaseHeader = action.payload
         }
     }
 })
 
-export const getScenario = (id: IdKey) => (dispatch: Dispatch, getState: () => RootState) => {
-    const state = getState()
-    if (state.scenarioView.statuses.isLoading) return
-
-    dispatch(setLoading())
+export const getScenario = (id: IdKey) => (dispatch: Dispatch) => {
+    dispatch(setLoading({type: 'scenario'}))
     getScenarioById(id)
         .then((res) => {
-            const elements: ElementType[] = []
-            res.data.nodes.forEach((value) => {
-                if (value.type === 'START') {
-                    dispatch(setStartId(value.id))
-                }
-                if (value.type === 'FINISH') {
-                    dispatch(setFinishId(value.id))
-                }
-                elements.push({
-                    id: value.id,
-                    position: value.position,
-                    data: value.data,
-                    type: value.type,
-                    selectable: true,
-                    dragHandle: '.draggable-handle'
-                })
-            })
-            res.data.edges.forEach((value) => {
-                elements.push({
-                    id: value.id,
-                    source: value.source,
-                    target: value.target,
-                    sourceHandle: value.sourceHandle,
-                    arrowHeadType: ArrowHeadType.Arrow,
-                    type: 'smoothstep'
-                })
-            })
-            dispatch(setData(res.data))
-            dispatch(setElements(elements))
-            dispatch(setSuccess())
-            dispatch(setLoaded())
+            dispatch(setScenario(res.data))
+            dispatch(setSuccess({type: 'scenario'}))
         })
         .catch(
             handlerError(dispatch, (err: DefaultAxiosError) => {
-                dispatch(setError(err.response?.data.message || 'Ошибка при получении сценария'))
+                dispatch(
+                    setError({type: 'scenario', error: err.response?.data.message || 'getScenario'})
+                )
             })
         )
 }
 
-export const getCallersBaseHeader = () => (dispatch: Dispatch, getState: () => RootState) => {
-    const state = getState()
-    if (state.scenarioView.data?.connectedCallerBaseId) {
-        getCallersBaseHeaderById(state.scenarioView.data.connectedCallerBaseId)
-            .then((res) => {
-                dispatch(setCallerBaseHeader(res.data))
+export const getCallersBases = () => (dispatch: Dispatch) => {
+    dispatch(setLoading({type: 'callersBases'}))
+    getCallersBasesHeader({page: 0, size: 100})
+        .then((res) => {
+            dispatch(setCallersBases(res.data.content))
+            dispatch(setSuccess({type: 'callersBases'}))
+        })
+        .catch(
+            handlerError(dispatch, (err: DefaultAxiosError) => {
+                dispatch(
+                    setError({
+                        type: 'callersBases',
+                        error: err.response?.data.message || 'getCallersBases'
+                    })
+                )
             })
-            .catch(handlerError(dispatch))
+        )
+}
+
+export const getCallersBaseSelected = () => (dispatch: Dispatch, getState: () => RootState) => {
+    const {
+        scenarioView: {
+            scenario: {
+                data: {remote}
+            }
+        }
+    } = getState()
+    const selectedId = remote?.connectedCallerBaseId
+    if (selectedId) {
+        dispatch(setLoading({type: 'callersBaseSelected'}))
+        getCallersBaseHeaderById(selectedId)
+            .then((res) => {
+                dispatch(setCallersBaseSelected(res.data))
+                dispatch(setSuccess({type: 'callersBaseSelected'}))
+            })
+            .catch(
+                handlerError(dispatch, (err: DefaultAxiosError) => {
+                    dispatch(
+                        setError({
+                            type: 'callersBaseSelected',
+                            error: err.response?.data.message || 'getCallersBaseSelected'
+                        })
+                    )
+                })
+            )
     } else {
-        dispatch(setCallerBaseHeader(null))
+        dispatch(setCallersBaseSelected(null))
+        dispatch(setSuccess({type: 'callersBaseSelected'}))
     }
 }
 
 export const saveScenario = () => (dispatch: Dispatch, getState: () => RootState) => {
-    const state = getState()
-    if (state.scenarioView.statuses.isLoading || !state.scenarioView.data) return
-
+    const {
+        scenarioView: {
+            scenario: {
+                data: {actual}
+            },
+            callersBaseSelected
+        }
+    } = getState()
     let nodes: NodeModel[] = []
     let edges: EdgeModel[] = []
-    let rootId: IdKey | null = null
-    // TODO **Проверка интерфейсов
-    for (let el of state.scenarioView.elements) {
-        if (!!(el as Node).data) {
+    if (!actual?.startId) return
+
+    dispatch(setLoading({type: 'scenario'}))
+
+    for (let el of actual.elements) {
+        if (isNode(el)) {
             nodes.push(el as NodeModel)
-            if ((el as Node).type === 'START') {
-                rootId = (el as Node).id
-            }
         }
-        if (!(el as Edge).data) {
+        if (isEdge(el)) {
             edges.push(el as EdgeModel)
         }
     }
-    if (!rootId || nodes.length < 1 || edges.length < 1) return
 
-    dispatch(setLoading())
-    putScenarioById({...state.scenarioView.data, edges, nodes, rootId})
+    putScenarioById({
+        id: actual.id,
+        name: actual.name,
+        created: actual.created,
+        connectedCallerBaseId: callersBaseSelected.data?.id ?? null,
+        rootId: actual.startId,
+        edges,
+        nodes
+    })
         .then((res) => {
-            dispatch(setSuccess())
+            dispatch(setScenario(res.data))
+            dispatch(setSuccess({type: 'scenario'}))
             dispatch(enqueueSnackbar({message: 'Сценарий сохранен', type: 'SUCCESS'}))
         })
         .catch(
             handlerError(dispatch, (err: DefaultAxiosError) => {
-                dispatch(setError(err.response?.data.message || 'Ошибка при сохранении сценария'))
+                dispatch(
+                    setError({
+                        type: 'scenario',
+                        error: err.response?.data.message || 'saveScenario'
+                    })
+                )
             })
         )
 }
@@ -416,25 +489,21 @@ export const {
     setLoading,
     setSuccess,
     setError,
-    setData,
-    resetAll,
-    setElements,
-    changeReplica,
-    changeWaitingTime,
-    changeNeedAnswer,
     removeAnswer,
     addAnswer,
     changeAnswer,
     addEdge,
     changeName,
-    changePosition,
     addNode,
     removeElements,
-    setFinishId,
-    setStartId,
-    setLoaded,
-    setConnectionId,
-    setCallerBaseHeader
+    changePositionElement,
+    resetScenarioView,
+    setNeedAnswer,
+    setReplica,
+    setWaitingTime,
+    setCallersBaseSelected,
+    setScenario,
+    setCallersBases
 } = scenarioSlice.actions
 
 export const scenarioReducers = scenarioSlice.reducer

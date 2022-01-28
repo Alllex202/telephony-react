@@ -3,46 +3,34 @@ import styles from './styles.module.scss'
 import BtnCircle from 'components/ui-kit/btn-circle'
 import {Controls, useStoreState, useZoomPanHelper} from 'react-flow-renderer'
 import BtnSecond from 'components/ui-kit/btn-second'
-import {Link} from 'react-router-dom'
+import {Link, useParams} from 'react-router-dom'
 import {routes} from 'routing/routes'
 import {useDispatch} from 'react-redux'
-import {CallersBaseHeaderModel} from 'core/api'
-import {getCallersBasesHeader} from 'core/api/requests'
 import Menu from 'components/ui-kit/menu'
 import MenuItem from 'components/ui-kit/menu-item'
-import {getCallersBaseHeader, setConnectionId} from 'store/scenario/view'
+import {
+    getCallersBases,
+    getCallersBaseSelected,
+    resetScenarioView,
+    setCallersBaseSelected
+} from 'store/scenario/view'
 import Tag from 'components/ui-kit/tag'
 import cardStyles from 'shared/styles/card/styles.module.scss'
-import {handlerError} from 'shared/middleware'
 import {useSelectorApp} from 'shared/hoocks'
-import {IdKey} from 'shared/types/id-key'
+import {CallersBaseHeaderModel} from 'core/api'
 
 const maxShowVariables = 10
 
 const ScenarioRightSidebar = () => {
+    const dispatch = useDispatch()
+    const {
+        scenarioView: {scenario, callersBaseSelected, callersBases}
+    } = useSelectorApp()
+    const {scenarioId} = useParams<{scenarioId: string}>()
     const {zoomIn, zoomOut, fitView} = useZoomPanHelper()
     const {transform} = useStoreState((state) => state)
-    const {
-        scenarioView: {data, statuses, callersBaseHeader}
-    } = useSelectorApp()
     const currentZoom = transform[2]
     const [anchorEl, setAnchorEl] = useState<Element | null>(null)
-    const dispatch = useDispatch()
-    const [callersBasesHeader, setCallersBasesHeader] = useState<CallersBaseHeaderModel[] | null>(
-        null
-    )
-
-    useEffect(() => {
-        getCallersBasesHeader({page: 0, size: 100})
-            .then((res) => {
-                setCallersBasesHeader(res.data.content)
-            })
-            .catch(handlerError(dispatch))
-    }, [])
-
-    useEffect(() => {
-        dispatch(getCallersBaseHeader())
-    }, [data?.connectedCallerBaseId])
 
     const onZoomIn = () => {
         zoomIn(200)
@@ -57,9 +45,12 @@ const ScenarioRightSidebar = () => {
     }
 
     const onOpenMenu = (e: React.MouseEvent<HTMLButtonElement>) => {
-        if (statuses.isLoading) {
+        if (
+            !callersBases.status.isSuccess ||
+            callersBaseSelected.status.isLoading ||
+            callersBases.data.length === 0
+        )
             return
-        }
 
         setAnchorEl(e.currentTarget)
     }
@@ -68,22 +59,40 @@ const ScenarioRightSidebar = () => {
         setAnchorEl(null)
     }
 
-    const onConnect = (id: IdKey) => {
-        if (statuses.isLoading) {
+    const onConnect = (callersBase: CallersBaseHeaderModel) => () => {
+        if (callersBaseSelected.status.isLoading) {
             return
         }
 
         onCloseMenu()
-        dispatch(setConnectionId(id))
+        dispatch(setCallersBaseSelected(callersBase))
     }
 
     const onDisconnect = () => {
-        if (statuses.isLoading) {
+        if (callersBaseSelected.status.isLoading) {
             return
         }
 
-        dispatch(setConnectionId(null))
+        dispatch(setCallersBaseSelected(null))
     }
+
+    useEffect(() => {
+        dispatch(getCallersBases())
+
+        return () => {
+            dispatch(resetScenarioView({type: 'callersBases'}))
+            dispatch(resetScenarioView({type: 'callersBaseSelected'}))
+        }
+    }, [scenarioId])
+
+    useEffect(() => {
+        if (
+            scenario.status.isSuccess === true &&
+            scenario.data.remote?.connectedCallerBaseId !== callersBaseSelected.data?.id
+        ) {
+            dispatch(getCallersBaseSelected())
+        }
+    }, [scenario.status.isSuccess])
 
     return (
         <div className={styles.rightSidebar}>
@@ -125,68 +134,73 @@ const ScenarioRightSidebar = () => {
                 iconType={'round'}
                 iconPosition={'end'}
             />
-            {callersBasesHeader !== null && (
-                <div className={styles.infoConnection}>
+
+            <div className={styles.infoConnection}>
+                <div className={styles.part}>
+                    <div className={styles.subtitle}>Прикрепленная база</div>
+                    {callersBaseSelected.status.isSuccess && callersBaseSelected.data && (
+                        <Link
+                            className={styles.link}
+                            to={routes.callersBase.view(callersBaseSelected.data.id)}
+                        >
+                            {callersBaseSelected.data.name}
+                        </Link>
+                    )}
+                </div>
+                {callersBaseSelected.status.isSuccess && callersBaseSelected.data && (
                     <div className={styles.part}>
-                        <div className={styles.subtitle}>Прикрепленная база</div>
-                        {callersBaseHeader && (
-                            <Link
-                                className={styles.link}
-                                to={routes.callersBase.view(callersBaseHeader.id)}
-                            >
-                                {callersBaseHeader.name}
-                            </Link>
-                        )}
-                    </div>
-                    {callersBaseHeader && (
-                        <div className={styles.part}>
-                            <div className={styles.subtitle}>Переменные</div>
-                            <div className={styles.tags}>
-                                {callersBaseHeader.columns.slice(0, maxShowVariables).map((el) => (
+                        <div className={styles.subtitle}>Переменные</div>
+                        <div className={styles.tags}>
+                            {callersBaseSelected.data.columns
+                                .slice(0, maxShowVariables)
+                                .map((el) => (
                                     <Tag text={`#${el.currentName}`} key={el.id} />
                                 ))}
-                                {callersBaseHeader.columns.length - maxShowVariables > 0 && (
-                                    <Tag
-                                        text={`+${
-                                            callersBaseHeader.columns.length - maxShowVariables
-                                        }`}
-                                        className={cardStyles.tag}
-                                    />
-                                )}
-                            </div>
+                            {callersBaseSelected.data.columns.length - maxShowVariables > 0 && (
+                                <Tag
+                                    text={`+${
+                                        callersBaseSelected.data.columns.length - maxShowVariables
+                                    }`}
+                                    className={cardStyles.tag}
+                                />
+                            )}
                         </div>
-                    )}
-                    {data?.connectedCallerBaseId ? (
-                        <BtnSecond
-                            className={styles.btnDisconnect}
-                            text={'Разорвать'}
-                            iconName={'link_off'}
-                            iconType={'round'}
-                            iconPosition={'end'}
-                            onClick={onDisconnect}
-                        />
-                    ) : (
-                        <BtnSecond
-                            className={styles.btnConnect}
-                            text={'Прикрепить'}
-                            iconName={'link'}
-                            iconType={'round'}
-                            iconPosition={'end'}
-                            onClick={onOpenMenu}
-                            disabled={
-                                callersBasesHeader === null || callersBasesHeader.length === 0
-                            }
-                        />
-                    )}
+                    </div>
+                )}
+                {callersBaseSelected.data !== null ? (
+                    <BtnSecond
+                        className={styles.btnDisconnect}
+                        text={'Разорвать'}
+                        iconName={'link_off'}
+                        iconType={'round'}
+                        iconPosition={'end'}
+                        onClick={onDisconnect}
+                    />
+                ) : (
+                    <BtnSecond
+                        className={styles.btnConnect}
+                        text={'Прикрепить'}
+                        iconName={'link'}
+                        iconType={'round'}
+                        iconPosition={'end'}
+                        onClick={onOpenMenu}
+                        disabled={
+                            !callersBases.status.isSuccess ||
+                            callersBaseSelected.status.isLoading ||
+                            callersBases.data.length === 0
+                        }
+                    />
+                )}
+                {callersBases.data.length > 0 && (
                     <Menu anchorEl={anchorEl} open={!!anchorEl} onClose={onCloseMenu}>
-                        {callersBasesHeader?.map((el) => (
-                            <MenuItem key={el.id} onClick={() => onConnect(el.id)}>
+                        {callersBases.data.map((el) => (
+                            <MenuItem key={el.id} onClick={onConnect(el)}>
                                 {el.name}
                             </MenuItem>
                         ))}
                     </Menu>
-                </div>
-            )}
+                )}
+            </div>
         </div>
     )
 }

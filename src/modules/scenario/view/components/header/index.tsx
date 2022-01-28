@@ -11,7 +11,12 @@ import {useDoubleInput, useSelectorApp} from 'shared/hoocks'
 const ScenarioViewHeader = () => {
     const dispatch = useDispatch()
     const {
-        scenarioView: {statuses, data}
+        scenarioView: {
+            scenario: {
+                status,
+                data: {actual}
+            }
+        }
     } = useSelectorApp()
     const history = useHistory()
     const {
@@ -19,19 +24,19 @@ const ScenarioViewHeader = () => {
         lastText: lastName,
         setText: setName,
         setLastText: setLastName
-    } = useDoubleInput(data?.name || '')
+    } = useDoubleInput(actual?.name || '')
 
     useEffect(() => {
-        setName(data?.name || '')
-        setLastName(data?.name || '')
-    }, [data?.name])
+        setName(actual?.name || '')
+        setLastName(actual?.name || '')
+    }, [actual?.name])
 
     const handlerBack = () => {
         history.goBack()
     }
 
     const handlerSave = () => {
-        if (statuses.isLoading) return
+        if (status.isLoading) return
 
         dispatch(saveScenario())
     }
@@ -49,8 +54,11 @@ const ScenarioViewHeader = () => {
                 iconType={'round'}
                 iconName={'arrow_back'}
             />
-            {statuses.isLoading ? (
-                <div className={styles.loading}>Загрузка...</div>
+            {status.isLoading ? (
+                <div className={styles.loading}>
+                    {name.substring(0, 10)}
+                    {name.length < 11 ? '' : '...'} (Загрузка...)
+                </div>
             ) : (
                 <HiddenInputWithIcon
                     text={name}
@@ -69,7 +77,7 @@ const ScenarioViewHeader = () => {
                 text={'Сохранить'}
                 className={styles.save}
                 onClick={handlerSave}
-                disabled={statuses.isLoading}
+                disabled={status.isLoading}
             />
         </div>
     )
