@@ -3,7 +3,7 @@ import styles from './styles.module.scss'
 import {Handle, NodeProps, Position} from 'react-flow-renderer'
 import {classNames} from 'shared/utils'
 import {useDispatch} from 'react-redux'
-import {changePosition} from 'store/scenario/view'
+import {changePositionElement} from 'store/scenario/view'
 import {NodeDataModel} from 'core/api'
 import Card from 'components/ui-kit/card'
 
@@ -13,7 +13,7 @@ const FinishElement = React.memo(
 
         useEffect(() => {
             if (isDragging === false && xPos && yPos) {
-                dispatch(changePosition({elementId: id, x: xPos, y: yPos}))
+                dispatch(changePositionElement({elementId: id, x: xPos, y: yPos}))
             }
         }, [isDragging])
 

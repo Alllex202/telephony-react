@@ -25,23 +25,18 @@ const typesElements: NodeTypesType = {
 }
 
 const ScenarioEditor = React.memo(() => {
+    const dispatch = useDispatch()
     const {
-        scenarioView: {elements, isLoaded}
+        scenarioView: {
+            scenario: {
+                status,
+                data: {actual}
+            }
+        }
     } = useSelectorApp()
     const {fitView} = useZoomPanHelper()
-    const dispatch = useDispatch()
     const reactFlowWrapper = useRef<HTMLDivElement | null>(null)
     const [reactFlowInstance, setReactFlowInstance] = useState<OnLoadParams | null>(null)
-
-    useEffect(() => {
-        if (isLoaded) {
-            fitView({duration: 500, padding: 0.35}, 500)
-        }
-    }, [isLoaded])
-
-    const onConnect = useCallback((params: Edge | Connection) => {
-        dispatch(addEdge(params))
-    }, [])
 
     const onLoad = (_reactFlowInstance: OnLoadParams) => {
         setReactFlowInstance(_reactFlowInstance)
@@ -71,10 +66,20 @@ const ScenarioEditor = React.memo(() => {
         dispatch(removeElements(elements))
     }
 
+    const onConnect = useCallback((params: Edge | Connection) => {
+        dispatch(addEdge(params))
+    }, [])
+
+    useEffect(() => {
+        if (!!actual) {
+            fitView({duration: 500, padding: 0.35}, 500)
+        }
+    }, [!!actual])
+
     return (
         <div className={styles.wrapper} ref={reactFlowWrapper}>
             <ReactFlow
-                elements={elements}
+                elements={actual?.elements ?? []}
                 nodeTypes={typesElements}
                 onConnect={onConnect}
                 maxZoom={10}

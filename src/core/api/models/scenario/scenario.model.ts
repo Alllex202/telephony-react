@@ -30,11 +30,9 @@ export interface NodeModel {
 }
 
 export interface NodeDataModel {
-    id?: string
-    created?: number
     replica: string
     waitingTime: number
-    answers?: AnswerModel[]
+    answers: AnswerModel[] | null
     needAnswer: boolean
 }
 

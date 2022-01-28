@@ -3,9 +3,26 @@ import styles from './styles.module.scss'
 import Icon from 'components/ui-kit/icon'
 import {NodeTypes} from 'core/api'
 import {classNames} from 'shared/utils'
+import {useSelectorApp} from 'shared/hoocks'
 
 const ScenarioLeftSidebar = () => {
-    const onDragStart = (e: React.DragEvent<HTMLDivElement>, nodeType: NodeTypes) => {
+    const {
+        scenarioView: {
+            scenario: {
+                data: {actual}
+            }
+        }
+    } = useSelectorApp()
+
+    const onDragStart = (nodeType: NodeTypes) => (e: React.DragEvent<HTMLDivElement>) => {
+        if (
+            (nodeType === 'START' && actual?.startId) ||
+            (nodeType === 'FINISH' && actual?.finishId)
+        ) {
+            e.preventDefault()
+            return
+        }
+
         e.dataTransfer.setData('application/reactflow', nodeType)
         e.dataTransfer.effectAllowed = 'move'
     }
@@ -18,23 +35,27 @@ const ScenarioLeftSidebar = () => {
             </div>
             <div className={styles.elements}>
                 <div
-                    className={classNames(styles.element, styles.start)}
+                    className={classNames(
+                        styles.element,
+                        styles.start,
+                        actual?.startId ? styles.disabled : ''
+                    )}
                     draggable
-                    onDragStart={(e) => onDragStart(e, 'START')}
+                    onDragStart={onDragStart('START')}
                 >
                     Старт
                 </div>
-                <div
-                    className={styles.element}
-                    draggable
-                    onDragStart={(e) => onDragStart(e, 'REPLICA')}
-                >
+                <div className={styles.element} draggable onDragStart={onDragStart('REPLICA')}>
                     Реплика
                 </div>
                 <div
-                    className={classNames(styles.element, styles.finish)}
+                    className={classNames(
+                        styles.element,
+                        styles.finish,
+                        actual?.finishId ? styles.disabled : ''
+                    )}
                     draggable
-                    onDragStart={(e) => onDragStart(e, 'FINISH')}
+                    onDragStart={onDragStart('FINISH')}
                 >
                     Финиш
                 </div>

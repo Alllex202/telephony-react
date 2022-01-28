@@ -53,6 +53,10 @@
       border-radius: 2px;
       cursor: grab;
 
+      &.disabled {
+        cursor: not-allowed;
+      }
+
       &.start {
         border-top-left-radius: 25px;
         border-top-right-radius: 25px;
