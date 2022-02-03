@@ -42,7 +42,7 @@ const HiddenInputWithIcon = ({
                 classWrapper={classNameWrapper}
                 disabled={disabled}
             />
-            <Icon name={'edit'} type={'round'} className={styles.icon} />
+            <Icon iconName={'edit'} iconType={'round'} className={styles.icon} />
         </div>
     )
 }

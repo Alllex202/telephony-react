@@ -104,7 +104,7 @@ const CallersBaseAddBody = () => {
                 setLastText={setLastName}
             />
             <div className={styles.info}>
-                <Icon className={styles.icon} name={'info'} type={'round'} />
+                <Icon className={styles.icon} iconName={'info'} iconType={'round'} />
                 <div className={styles.text}>
                     Здесь описание необходимого формата таблицы, строк и прочее
                 </div>

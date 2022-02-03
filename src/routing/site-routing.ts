@@ -10,6 +10,7 @@ import CallingCreatingPage from 'pages/calling/calling-creating.page'
 import CallingViewPage from 'pages/calling/calling-view.page'
 import StatsViewPage from 'pages/stats/stats-view.page'
 import TestPage from 'pages/test/test.page'
+import TestComponentsPage from 'pages/test/test-components.page'
 
 export interface ProtectedRouteProps extends RouteProps {
     isAuth?: boolean
@@ -31,10 +32,10 @@ export const privateSiteRoutes: ProtectedRouteProps[] = [
     },
     {path: routes.calling.view(':callingId'), exact: true, component: CallingViewPage},
     {path: routes.stats(), exact: true, component: StatsViewPage},
-    {path: routes.test(), exact: true, component: TestPage},
+    {path: routes.test(1), exact: true, component: TestPage},
+    {path: routes.test(2), exact: true, component: TestComponentsPage},
     {path: routes.scenario.view(':scenarioId'), exact: true, component: ScenarioEditorPage},
     {path: routes.scenario.view(':scenarioId'), exact: true, component: ScenarioEditorPage},
     {path: routes.scenario.view(':scenarioId'), exact: true, component: ScenarioEditorPage},
     {path: routes.scenario.view(':scenarioId'), exact: true, component: ScenarioEditorPage}
 ]
-

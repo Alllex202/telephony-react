@@ -65,8 +65,8 @@ const CallingSection = ({callingStatus}: Props) => {
                     expandIcon={
                         callingStatus === 'DONE' || callingList.length < 1 ? null : (
                             <Icon
-                                name={'expand_more'}
-                                type={'round'}
+                                iconName={'expand_more'}
+                                iconType={'round'}
                                 className={styles.expandIcon}
                             />
                         )

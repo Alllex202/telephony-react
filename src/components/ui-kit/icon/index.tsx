@@ -1,20 +1,21 @@
-import React from 'react'
+import React, {HTMLProps} from 'react'
+import {classNames} from 'shared/utils'
 
 export type IconTypes = 'outlined' | 'round' | 'sharp' | 'two-tone'
 export type IconPositions = 'start' | 'end'
 
-type Props = {
-    type?: IconTypes
-    name: string
-    className?: string
+type Props = HTMLProps<HTMLSpanElement> & {
+    iconType?: IconTypes
+    iconName: string
 }
 
-const Icon = ({type, name, className}: Props) => {
+const Icon = ({iconType, iconName, className, ...otherProps}: Props) => {
     return (
         <span
-            className={`material-icons material-icons${type ? `-${type}` : ''} ${className ?? ''}`}
+            {...otherProps}
+            className={classNames('material-icons', iconType ? `-${iconType}` : '', className)}
         >
-            {name}
+            {iconName}
         </span>
     )
 }

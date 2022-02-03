@@ -6,7 +6,9 @@
   --btn: var(--orange-600);
   --btn-hover: var(--grey-900);
   --btn-active: var(--grey-900);
+  --btn-disabled: var(--grey-100);
   --btn-text: var(--white);
+  --btn-disabled-text: var(--grey-300);
 
   --btn-toggle: var(--trasparent);
   --btn-toggle-icon: var(--grey-900);
@@ -23,7 +25,9 @@
   --btn-second: var(--orange-50);
   --btn-second-hover: var(--orange-100);
   --btn-second-active: var(--orange-100);
+  --btn-second-disabled: var(--grey-50);
   --btn-second-text: var(--orange-600);
+  --btn-second-disabled-text: var(--grey-300);
 
   --card-fill: var(--white);
   --card-border: var(--grey-100);

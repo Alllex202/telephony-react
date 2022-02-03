@@ -34,8 +34,8 @@ const BtnDefault = ({
         >
             {iconName && (
                 <Icon
-                    name={iconName}
-                    type={iconType}
+                    iconName={iconName}
+                    iconType={iconType}
                     className={classNames(styles.icon, styles.icon_custom, 'icon')}
                 />
             )}

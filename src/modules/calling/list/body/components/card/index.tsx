@@ -144,20 +144,24 @@ const CallingCard = ({data, callingStatus, className}: Props) => {
                         <div className={classNames(cardStyles.description, styles.description)}>
                             <div className={cardStyles.info}>
                                 <Icon
-                                    name={'calendar_today'}
-                                    type={'round'}
+                                    iconName={'calendar_today'}
+                                    iconType={'round'}
                                     className={cardStyles.icon}
                                 />
                                 {formatDate(data.startDate)}
                             </div>
                             <div className={cardStyles.info}>
-                                <Icon name={'forum'} type={'round'} className={cardStyles.icon} />
+                                <Icon
+                                    iconName={'forum'}
+                                    iconType={'round'}
+                                    className={cardStyles.icon}
+                                />
                                 {data.scenario.name}
                             </div>
                             <div className={cardStyles.info}>
                                 <Icon
-                                    name={'people_alt'}
-                                    type={'round'}
+                                    iconName={'people_alt'}
+                                    iconType={'round'}
                                     className={cardStyles.icon}
                                 />
                                 {data.callersBase.name}

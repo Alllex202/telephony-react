@@ -30,7 +30,7 @@ const ScenarioLeftSidebar = () => {
     return (
         <div className={styles.leftSidebar}>
             <div className={styles.infoBlock}>
-                <Icon name={'redo'} type={'round'} className={styles.infoIcon} />
+                <Icon iconName={'redo'} iconType={'round'} className={styles.infoIcon} />
                 <div className={styles.infoText}>Перетащите компоненты на поле</div>
             </div>
             <div className={styles.elements}>

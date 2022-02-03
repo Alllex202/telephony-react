@@ -21,5 +21,5 @@ export const routes = {
     },
     settings: (): string => '/settings',
     stats: (): string => '/stats',
-    test: (): string => '/test'
+    test: (version: number): string => `/test/v${version}`
 }

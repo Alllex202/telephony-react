@@ -41,7 +41,7 @@ const Notification = ({key, message, type = 'INFO', action}: Props) => {
 
     return (
         <div key={key} className={classNames(styles.notification, getClassByType())}>
-            <Icon name={getIconNameByType()} type={'round'} className={styles.icon} />
+            <Icon iconName={getIconNameByType()} iconType={'round'} className={styles.icon} />
             <span className={styles.text}>{message}</span>
             {action && (
                 <button className={styles.action} onClick={action.callback}>

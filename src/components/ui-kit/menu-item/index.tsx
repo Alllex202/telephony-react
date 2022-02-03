@@ -28,7 +28,7 @@ const MenuItem = ({onClick, children, isDanger, iconName, iconPosition, iconType
                 iconPosition === 'end' ? 'reverse' : ''
             )}
         >
-            {iconName && <Icon name={iconName} type={iconType} />}
+            {iconName && <Icon iconName={iconName} iconType={iconType} />}
             {children}
         </MuiMenuItem>
     )

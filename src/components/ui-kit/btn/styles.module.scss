@@ -3,6 +3,16 @@
   background-color: var(--btn);
   border-radius: 12px;
 
+  &:disabled {
+    background-color: var(--btn-disabled);
+    cursor: default;
+    pointer-events: none;
+
+    * {
+      color: var(--btn-disabled-text);
+    }
+  }
+
   &::before {
     content: '';
     width: 100%;
@@ -27,5 +37,6 @@
 
   & > * {
     color: var(--btn-text);
+    transition: .2s color;
   }
 }

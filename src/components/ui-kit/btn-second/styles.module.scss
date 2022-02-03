@@ -3,6 +3,16 @@
   border-radius: 4px;
   transition: .2s background-color;
 
+  &:disabled {
+    background-color: var(--btn-second-disabled);
+    cursor: none;
+    pointer-events: none;
+
+    * {
+      color: var(--btn-second-disabled-text);
+    }
+  }
+
   &:hover, &:active, &.active {
     &:not(:disabled) {
       background-color: var(--btn-second-hover);
@@ -11,5 +21,6 @@
 
   & > * {
     color: var(--btn-second-text);
+    transition: .2s color;
   }
 }

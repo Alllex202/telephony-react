@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {HTMLProps} from 'react'
 import styles from './styles.module.scss'
 import Icon, {IconTypes} from '../icon'
 import {classNames} from 'shared/utils'
@@ -30,7 +30,7 @@ const BtnCircleDefault = ({
             )}
             onClick={onClick}
         >
-            <Icon name={iconName} type={iconType} />
+            <Icon iconName={iconName} iconType={iconType} />
         </button>
     )
 }

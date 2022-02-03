@@ -192,8 +192,8 @@ const ReplicaElement = React.memo(
                                                     )}
                                                 >
                                                     <Icon
-                                                        name={'remove'}
-                                                        type={'round'}
+                                                        iconName={'remove'}
+                                                        iconType={'round'}
                                                         className={styles.icon}
                                                     />
                                                 </div>
@@ -222,7 +222,11 @@ const ReplicaElement = React.memo(
                                 ))}
                                 {menu.isShow && (
                                     <button className={styles.circle} onClick={onAddAnswer}>
-                                        <Icon name={'add'} type={'round'} className={styles.icon} />
+                                        <Icon
+                                            iconName={'add'}
+                                            iconType={'round'}
+                                            className={styles.icon}
+                                        />
                                     </button>
                                 )}
                             </div>

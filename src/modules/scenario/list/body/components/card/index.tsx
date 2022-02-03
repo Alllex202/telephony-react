@@ -85,16 +85,16 @@ const ScenarioCard = ({data, className}: Props) => {
                         <div className={cardStyles.description}>
                             <div className={cardStyles.info}>
                                 <Icon
-                                    name={'calendar_today'}
-                                    type={'round'}
+                                    iconName={'calendar_today'}
+                                    iconType={'round'}
                                     className={cardStyles.icon}
                                 />
                                 {formatDate(data.created)}
                             </div>
                             <div className={cardStyles.info}>
                                 <Icon
-                                    name={'table_rows'}
-                                    type={'round'}
+                                    iconName={'table_rows'}
+                                    iconType={'round'}
                                     className={cardStyles.icon}
                                 />
                                 {data.countSteps} ш
