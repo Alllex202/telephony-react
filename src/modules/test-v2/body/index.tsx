@@ -1,8 +1,19 @@
 import React, {useState} from 'react'
-import {IconButton, ThemeProvider, Menu as MenuV2} from '@mui/material'
+import {
+    FilledInput,
+    FormControl,
+    FormHelperText,
+    IconButton,
+    InputAdornment,
+    InputLabel,
+    Menu as MenuV2,
+    OutlinedInput,
+    TextField,
+    ThemeProvider
+} from '@mui/material'
 import {theme} from 'app/theme'
 import BtnPrimary from 'components/ui-kit-v2/btn-primary'
-import {ChildCareRounded, Save} from '@mui/icons-material'
+import {ChildCareRounded, Clear, Save, Visibility} from '@mui/icons-material'
 import Btn from 'components/ui-kit/btn'
 import BtnSecondary from 'components/ui-kit-v2/btn-secondary'
 import BtnSecond from 'components/ui-kit/btn-second'
@@ -10,6 +21,8 @@ import BtnCircle from 'components/ui-kit/btn-circle'
 import MenuItemV2 from 'components/ui-kit-v2/menu-item'
 import Menu from 'components/ui-kit/menu'
 import MenuItem from 'components/ui-kit/menu-item'
+import InputV1 from 'components/ui-kit/input'
+import InputV2 from 'components/ui-kit-v2/input'
 
 const menuItems = [
     'Первый пункт',
@@ -324,6 +337,117 @@ const TestComponentsBody = () => {
                                 ))}
                             </Menu>
                         </div>
+                    </div>
+
+                    <div>
+                        <h1 style={{marginBottom: 15}}>Поле ввода</h1>
+                        <div
+                            style={{
+                                display: 'flex',
+                                gap: 20,
+                                alignItems: 'center',
+                                flexWrap: 'wrap'
+                            }}
+                        >
+                            <InputV1 placeholder={'Старое поле ввода'} disabled={disabled} />
+
+                            <FormControl
+                                variant={'filled'}
+                                size={'mediumSlim'}
+                                color={'orange'}
+                                disabled={disabled}
+                            >
+                                <InputLabel shrink>Новое поле</InputLabel>
+                                <FilledInput
+                                    type={'search'}
+                                    endAdornment={
+                                        <InputAdornment position={'end'}>
+                                            <IconButton disabled={disabled}>
+                                                <Clear />
+                                            </IconButton>
+                                        </InputAdornment>
+                                    }
+                                    placeholder={'Новые поля'}
+                                />
+                                <FormHelperText>Помощь</FormHelperText>
+                            </FormControl>
+                            <FormControl
+                                variant={'filled'}
+                                size={'mediumSlim'}
+                                color={'orange'}
+                                disabled={disabled}
+                            >
+                                {/*<InputLabel>Новое поле</InputLabel>*/}
+                                <FilledInput
+                                    type={'search'}
+                                    endAdornment={
+                                        <InputAdornment position={'end'}>
+                                            <IconButton disabled={disabled}>
+                                                <Clear />
+                                            </IconButton>
+                                        </InputAdornment>
+                                    }
+                                    placeholder={'placeholder'}
+                                />
+                                <FormHelperText>Помощь</FormHelperText>
+                            </FormControl>
+                            <FormControl
+                                variant={'filled'}
+                                size={'mediumBold'}
+                                color={'orange'}
+                                disabled={disabled}
+                            >
+                                {/*<InputLabel>Новое поле</InputLabel>*/}
+                                <FilledInput
+                                    type={'search'}
+                                    endAdornment={
+                                        <InputAdornment position={'end'}>
+                                            <IconButton disabled={disabled}>
+                                                <Clear />
+                                            </IconButton>
+                                        </InputAdornment>
+                                    }
+                                    placeholder={'placeholder'}
+                                />
+                                {/*<FormHelperText>Помощь</FormHelperText>*/}
+                            </FormControl>
+                            <TextField
+                                variant={'filled'}
+                                size={'mediumBold'}
+                                color={'orange'}
+                                placeholder={'Либо placeholder'}
+                                disabled={disabled}
+                            />
+
+                            <TextField
+                                variant={'filled'}
+                                size={'mediumSlim'}
+                                color={'orange'}
+                                label={'либо надпись'}
+                                disabled={disabled}
+                            />
+
+                            <TextField
+                                variant={'filled'}
+                                size={'mediumSlim'}
+                                color={'orange'}
+                                label={'С надписью'}
+                                helperText={'Последние три поля - другие элементы'}
+                                disabled={disabled}
+                            />
+                        </div>
+                    </div>
+
+                    <div>
+                        <h1 style={{marginBottom: 15}}>Календарь / дата / время</h1>
+                        <div
+                            style={{
+                                display: 'flex',
+                                gap: 20,
+                                alignItems: 'center',
+                                flexWrap: 'wrap'
+                            }}
+                        ></div>
                     </div>
                 </div>
             </div>

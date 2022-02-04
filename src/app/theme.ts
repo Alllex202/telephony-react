@@ -4,6 +4,7 @@ import {green} from 'global/colors/green'
 import {grey} from 'global/colors/grey'
 import {blue} from 'global/colors/blue'
 import {red} from 'global/colors/red'
+import {transparent} from 'global/colors/transparent'
 
 declare module '@mui/material/IconButton' {
     interface IconButtonPropsColorOverrides {
@@ -12,6 +13,37 @@ declare module '@mui/material/IconButton' {
         green: true
         orange: true
         red: true
+    }
+}
+
+declare module '@mui/material/TextField' {
+    interface TextFieldPropsColorOverrides {
+        black: true
+        blue: true
+        green: true
+        orange: true
+        red: true
+    }
+}
+
+declare module '@mui/material/FormControl' {
+    interface FormControlPropsColorOverrides {
+        black: true
+        blue: true
+        green: true
+        orange: true
+        red: true
+    }
+    interface FormControlPropsSizeOverrides {
+        mediumBold: true
+        mediumSlim: true
+    }
+}
+
+declare module '@mui/material/TextField' {
+    interface TextFieldPropsSizeOverrides {
+        mediumBold: true
+        mediumSlim: true
     }
 }
 
@@ -94,6 +126,90 @@ export const theme = createTheme({
                         // '& .MuiTouchRipple-child': {
                         //     backgroundColor: red[200]
                         // }
+                    }
+                }
+            ]
+        },
+        MuiFormControl: {
+            variants: [
+                {
+                    props: {size: 'mediumBold', variant: 'filled'},
+                    style: {
+                        '& .MuiFilledInput-root': {
+                            border: `4px solid ${transparent}`,
+                            borderColor: transparent,
+                            backgroundColor: grey[50],
+                            transition: '.25s border-color, .25s background-color',
+                            '&:before, &:after': {
+                                content: 'none'
+                            },
+                            '&:hover:not(.Mui-disabled)': {
+                                backgroundColor: grey[100]
+                            },
+                            '&.Mui-focused': {
+                                backgroundColor: grey[50],
+                                borderColor: orange[600]
+                            },
+                            '&.Mui-disabled': {
+                                backgroundColor: grey[50]
+                            }
+                        },
+                        '.MuiFilledInput-input': {
+                            font: `bold 16px 'Montserrat'`,
+                            padding: '0 16px',
+                            height: 48
+                        },
+                        '.MuiInputLabel-root': {
+                            position: 'relative',
+                            font: `normal 12px 'Montserrat'`,
+                            transform: 'none',
+                            top: -10,
+                            marginTop: 10,
+                            color: grey[600],
+                            '&.Mui-focused': {
+                                color: grey[600]
+                            }
+                        }
+                    }
+                },
+                {
+                    props: {size: 'mediumSlim', variant: 'filled'},
+                    style: {
+                        '& .MuiFilledInput-root': {
+                            border: `4px solid ${transparent}`,
+                            borderColor: transparent,
+                            backgroundColor: grey[50],
+                            transition: '.25s border-color, .25s background-color',
+                            '&:before, &:after': {
+                                content: 'none'
+                            },
+                            '&:hover:not(.Mui-disabled)': {
+                                backgroundColor: grey[100]
+                            },
+                            '&.Mui-focused': {
+                                backgroundColor: grey[50],
+                                borderColor: orange[600]
+                            },
+                            '&.Mui-disabled': {
+                                backgroundColor: grey[50]
+                            }
+                        },
+                        '.MuiFilledInput-input': {
+                            font: `normal 16px 'Montserrat'`,
+                            padding: '0 16px',
+                            height: 48
+                        },
+                        '.MuiInputLabel-root': {
+                            position: 'relative',
+                            font: `normal 12px 'Montserrat'`,
+                            transform: 'none',
+                            top: -10,
+                            marginTop: 10,
+                            color: grey[600],
+                            '&.Mui-focused': {
+                                color: grey[600]
+                            }
+                        }
                     }
                 }
             ]
