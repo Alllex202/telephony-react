@@ -1,3 +1,4 @@
+import type {} from '@mui/lab/themeAugmentation'
 import {createTheme} from '@mui/material'
 import {orange} from 'global/colors/orange'
 import {green} from 'global/colors/green'
@@ -5,9 +6,20 @@ import {grey} from 'global/colors/grey'
 import {blue} from 'global/colors/blue'
 import {red} from 'global/colors/red'
 import {transparent} from 'global/colors/transparent'
+import {white} from 'global/colors/white'
 
 declare module '@mui/material/IconButton' {
     interface IconButtonPropsColorOverrides {
+        black: true
+        blue: true
+        green: true
+        orange: true
+        red: true
+    }
+}
+
+declare module '@mui/material/Checkbox' {
+    interface CheckboxPropsColorOverrides {
         black: true
         blue: true
         green: true
@@ -26,6 +38,26 @@ declare module '@mui/material/TextField' {
     }
 }
 
+declare module '@mui/material/Switch' {
+    interface SwitchPropsColorOverrides {
+        black: true
+        blue: true
+        green: true
+        orange: true
+        red: true
+    }
+}
+
+declare module '@mui/material/Slider' {
+    interface SliderPropsColorOverrides {
+        black: true
+        blue: true
+        green: true
+        orange: true
+        red: true
+    }
+}
+
 declare module '@mui/material/FormControl' {
     interface FormControlPropsColorOverrides {
         black: true
@@ -34,6 +66,7 @@ declare module '@mui/material/FormControl' {
         orange: true
         red: true
     }
+
     interface FormControlPropsSizeOverrides {
         mediumBold: true
         mediumSlim: true
@@ -71,18 +104,23 @@ export const theme = createTheme({
         blue: blue,
         green: green,
         orange: orange,
-        red: red
+        red: red,
+        primary: {
+            ...orange,
+            contrastText: white
+        }
     },
     components: {
+        MuiPaper: {
+            styleOverrides: {
+                root: {
+                    boxShadow: '0 2px 8px rgba(33, 35, 36, 0.2)',
+                    borderRadius: 4
+                }
+            }
+        },
         MuiMenu: {
             styleOverrides: {
-                paper: {
-                    '&.MuiMenu-paper': {
-                        boxShadow: '0 2px 8px rgba(33, 35, 36, 0.2)',
-                        borderRadius: 4,
-                        marginTop: 10
-                    }
-                },
                 list: {
                     padding: 0,
                     maxHeight: 480
@@ -103,15 +141,21 @@ export const theme = createTheme({
                     paddingLeft: 16,
                     paddingRight: 16,
                     color: grey.main,
+                    transition: '.25s color, .25s background-color',
                     '&:hover': {
                         backgroundColor: grey[50]
                     },
                     '& .MuiSvgIcon-root': {
                         marginRight: 12
+                    },
+                    '&.Mui-selected': {
+                        color: orange[700],
+                        backgroundColor: orange[50],
+                        '&.Mui-focusVisible, &:hover': {
+                            color: orange[700],
+                            backgroundColor: orange[100]
+                        }
                     }
-                    // '& .MuiTouchRipple-child': {
-                    //     backgroundColor: grey[300]
-                    // }
                 }
             },
             defaultProps: {disableGutters: true},
@@ -122,10 +166,10 @@ export const theme = createTheme({
                         color: red.main,
                         '&:hover': {
                             backgroundColor: red[50]
+                        },
+                        '&.Mui-focusVisible': {
+                            backgroundColor: red[50]
                         }
-                        // '& .MuiTouchRipple-child': {
-                        //     backgroundColor: red[200]
-                        // }
                     }
                 }
             ]
@@ -152,6 +196,11 @@ export const theme = createTheme({
                             },
                             '&.Mui-disabled': {
                                 backgroundColor: grey[50]
+                            },
+                            '.MuiSelect-select': {
+                                display: 'flex',
+                                alignItems: 'center',
+                                height: 48
                             }
                         },
                         '.MuiFilledInput-input': {
@@ -192,6 +241,11 @@ export const theme = createTheme({
                             },
                             '&.Mui-disabled': {
                                 backgroundColor: grey[50]
+                            },
+                            '.MuiSelect-select': {
+                                display: 'flex',
+                                alignItems: 'center',
+                                height: 48
                             }
                         },
                         '.MuiFilledInput-input': {
@@ -213,6 +267,18 @@ export const theme = createTheme({
                     }
                 }
             ]
+        },
+        MuiSwitch: {
+            styleOverrides: {
+                root: {
+                    '.MuiSwitch-track': {
+                        backgroundColor: grey[700]
+                    },
+                    '.MuiSwitch-switchBase:not(.Mui-checked) .MuiSwitch-thumb': {
+                        backgroundColor: grey[500]
+                    }
+                }
+            }
         }
     }
 })

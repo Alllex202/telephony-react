@@ -1,5 +1,6 @@
 import React, {useState} from 'react'
 import {
+    Checkbox,
     FilledInput,
     FormControl,
     FormHelperText,
@@ -7,22 +8,38 @@ import {
     InputAdornment,
     InputLabel,
     Menu as MenuV2,
-    OutlinedInput,
+    MenuItem as MuiMenuItem,
+    Slider,
+    Switch,
     TextField,
     ThemeProvider
 } from '@mui/material'
 import {theme} from 'app/theme'
 import BtnPrimary from 'components/ui-kit-v2/btn-primary'
-import {ChildCareRounded, Clear, Save, Visibility} from '@mui/icons-material'
+import {
+    BookmarkBorderRounded,
+    BookmarkRounded,
+    ChildCareRounded,
+    Clear,
+    FavoriteBorderRounded,
+    FavoriteRounded,
+    Save,
+    StarBorderRounded,
+    StarRounded
+} from '@mui/icons-material'
 import Btn from 'components/ui-kit/btn'
 import BtnSecondary from 'components/ui-kit-v2/btn-secondary'
 import BtnSecond from 'components/ui-kit/btn-second'
 import BtnCircle from 'components/ui-kit/btn-circle'
-import MenuItemV2 from 'components/ui-kit-v2/menu-item'
 import Menu from 'components/ui-kit/menu'
 import MenuItem from 'components/ui-kit/menu-item'
 import InputV1 from 'components/ui-kit/input'
-import InputV2 from 'components/ui-kit-v2/input'
+import DateAdapter from '@mui/lab/AdapterDateFns'
+import styles from 'modules/calling/creating/body/styles.module.scss'
+import {classNames} from 'shared/utils'
+import {DatePicker, LocalizationProvider, TimePicker} from '@mui/lab'
+import ruLocale from 'date-fns/locale/ru'
+import SwitchV1 from 'components/ui-kit/switch'
 
 const menuItems = [
     'Первый пункт',
@@ -67,11 +84,19 @@ const menuItems = [
 const TestComponentsBody = () => {
     const [disabled, setDisabled] = useState<boolean>(false)
     const [loading, setLoading] = useState<boolean>(false)
+    const [startDate, setStartDate] = useState<number | null>(0)
     const [anchor, setAnchor] = useState<{
         1: Element | null
         2: Element | null
         3: Element | null
     }>({1: null, 2: null, 3: null})
+
+    const onChangeDateTime = (_date: number | null | undefined) => {
+        if (_date) {
+            const date = new Date(_date)
+            setStartDate(date.getTime())
+        }
+    }
 
     const toggleDisabled = () => {
         setDisabled(!disabled)
@@ -97,19 +122,31 @@ const TestComponentsBody = () => {
 
     return (
         <ThemeProvider theme={theme}>
-            <div style={{marginBottom: 200}}>
-                <p>
-                    <label>
-                        <input type={'checkbox'} onClick={toggleDisabled} />
-                        disabled
-                    </label>
-                </p>
-                <p>
-                    <label>
-                        <input type={'checkbox'} onClick={toggleLoading} />
-                        loading
-                    </label>
-                </p>
+            <div style={{marginBottom: 1000}}>
+                <div
+                    style={{
+                        position: 'fixed',
+                        top: 10,
+                        left: '50%',
+                        border: '4px solid red',
+                        padding: 10,
+                        zIndex: 9999
+                    }}
+                >
+                    <p>
+                        <label>
+                            <input type={'checkbox'} onClick={toggleDisabled} />
+                            disabled
+                        </label>
+                    </p>
+                    <p>
+                        <label>
+                            <input type={'checkbox'} onClick={toggleLoading} />
+                            loading
+                        </label>
+                    </p>
+                </div>
+
                 <div style={{display: 'flex', flexDirection: 'column', gap: 20}}>
                     <div>
                         <h1 style={{marginBottom: 15}}>Кнопки Primary</h1>
@@ -299,20 +336,20 @@ const TestComponentsBody = () => {
                                 anchorEl={anchor['1']}
                             >
                                 {menuItems.slice(0, 1).map((el) => (
-                                    <MenuItemV2
+                                    <MuiMenuItem
                                         color={'red'}
                                         key={`${el}-v2-red`}
                                         onClick={closeMenu(1)}
                                     >
                                         <ChildCareRounded />
                                         {el}
-                                    </MenuItemV2>
+                                    </MuiMenuItem>
                                 ))}
                                 {menuItems.map((el) => (
-                                    <MenuItemV2 key={`${el}-v2`} onClick={closeMenu(1)}>
+                                    <MuiMenuItem key={`${el}-v2`} onClick={closeMenu(1)}>
                                         <ChildCareRounded />
                                         {el}
-                                    </MenuItemV2>
+                                    </MuiMenuItem>
                                 ))}
                             </MenuV2>
 
@@ -447,7 +484,205 @@ const TestComponentsBody = () => {
                                 alignItems: 'center',
                                 flexWrap: 'wrap'
                             }}
-                        ></div>
+                        >
+                            <LocalizationProvider dateAdapter={DateAdapter} locale={ruLocale}>
+                                <div className={styles.doubleInput}>
+                                    <div className={classNames(styles.dateTime, 'custom-input')}>
+                                        <DatePicker
+                                            mask={'__.__.____'}
+                                            disabled={disabled}
+                                            value={startDate}
+                                            minDate={Date.now()}
+                                            onChange={onChangeDateTime}
+                                            renderInput={(params) => (
+                                                <TextField
+                                                    {...params}
+                                                    variant={'filled'}
+                                                    size={'mediumSlim'}
+                                                    color={'orange'}
+                                                />
+                                            )}
+                                        />
+                                    </div>
+                                    <div className={classNames(styles.dateTime, 'custom-input')}>
+                                        <TimePicker
+                                            disabled={disabled}
+                                            value={startDate}
+                                            onChange={onChangeDateTime}
+                                            renderInput={(params) => (
+                                                <TextField
+                                                    {...params}
+                                                    variant={'filled'}
+                                                    size={'mediumSlim'}
+                                                    color={'orange'}
+                                                />
+                                            )}
+                                        />
+                                    </div>
+                                </div>
+                            </LocalizationProvider>
+                        </div>
+                    </div>
+
+                    <div>
+                        <h1 style={{marginBottom: 15}}>Select</h1>
+                        <div
+                            style={{
+                                display: 'flex',
+                                gap: 20,
+                                alignItems: 'center',
+                                flexWrap: 'wrap'
+                            }}
+                        >
+                            <TextField
+                                variant={'filled'}
+                                size={'mediumSlim'}
+                                color={'orange'}
+                                disabled={disabled}
+                                select
+                                value={1}
+                                autoFocus={false}
+                            >
+                                <MuiMenuItem value={1}>Первый пункт</MuiMenuItem>
+                                <MuiMenuItem value={2}>Второй пункт</MuiMenuItem>
+                                <MuiMenuItem value={3}>Третий пункт</MuiMenuItem>
+                                <MuiMenuItem value={4}>Четвертый пункт</MuiMenuItem>
+                                <MuiMenuItem value={5} color={'red'}>
+                                    Пятый пункт
+                                </MuiMenuItem>
+                            </TextField>
+                            <TextField
+                                variant={'filled'}
+                                size={'mediumSlim'}
+                                label={'С надписью'}
+                                color={'orange'}
+                                disabled={disabled}
+                                select
+                                value={1}
+                                autoFocus={false}
+                            >
+                                <MuiMenuItem value={1}>Первый пункт</MuiMenuItem>
+                                <MuiMenuItem value={2}>Второй пункт</MuiMenuItem>
+                                <MuiMenuItem value={3}>Третий пункт</MuiMenuItem>
+                                <MuiMenuItem value={4}>Четвертый пункт</MuiMenuItem>
+                                <MuiMenuItem value={5} color={'red'}>
+                                    Пятый пункт
+                                </MuiMenuItem>
+                            </TextField>
+                            <TextField
+                                variant={'filled'}
+                                size={'mediumSlim'}
+                                color={'orange'}
+                                label={'С надписью'}
+                                helperText={'И подсказкой'}
+                                disabled={disabled}
+                                select
+                                value={1}
+                                autoFocus={false}
+                            >
+                                <MuiMenuItem value={1}>Первый пункт</MuiMenuItem>
+                                <MuiMenuItem value={2}>Второй пункт</MuiMenuItem>
+                                <MuiMenuItem value={3}>Третий пункт</MuiMenuItem>
+                                <MuiMenuItem value={4}>Четвертый пункт</MuiMenuItem>
+                                <MuiMenuItem value={5} color={'red'}>
+                                    Пятый пункт
+                                </MuiMenuItem>
+                            </TextField>
+                        </div>
+                    </div>
+
+                    <div>
+                        <h1 style={{marginBottom: 15}}>Checkbox</h1>
+                        <div
+                            style={{
+                                display: 'flex',
+                                gap: 20,
+                                alignItems: 'center',
+                                flexWrap: 'wrap'
+                            }}
+                        >
+                            <Checkbox color={'orange'} disabled={disabled} />
+                            <Checkbox color={'green'} disabled={disabled} />
+                            <Checkbox color={'black'} disabled={disabled} />
+                            <Checkbox color={'blue'} disabled={disabled} />
+                            <Checkbox color={'red'} disabled={disabled} />
+
+                            <Checkbox
+                                color={'red'}
+                                icon={<FavoriteBorderRounded />}
+                                checkedIcon={<FavoriteRounded />}
+                                disabled={disabled}
+                            />
+
+                            <Checkbox
+                                color={'blue'}
+                                icon={<StarBorderRounded />}
+                                checkedIcon={<StarRounded />}
+                                disabled={disabled}
+                            />
+
+                            <Checkbox
+                                color={'orange'}
+                                icon={<BookmarkBorderRounded />}
+                                checkedIcon={<BookmarkRounded />}
+                                disabled={disabled}
+                            />
+                        </div>
+                    </div>
+
+                    <div>
+                        <h1 style={{marginBottom: 15}}>Switch</h1>
+                        <div
+                            style={{
+                                display: 'flex',
+                                gap: 20,
+                                alignItems: 'center',
+                                flexWrap: 'wrap'
+                            }}
+                        >
+                            <label>
+                                <SwitchV1 disabled={disabled} /> Старый
+                            </label>
+                            <label>
+                                <Switch color={'black'} disabled={disabled} /> Новый Черный
+                            </label>
+                            <label>
+                                <Switch color={'green'} disabled={disabled} /> Новый Зеленый
+                            </label>
+                            <label>
+                                <Switch color={'orange'} disabled={disabled} /> Новый Оранжевый /
+                                Базовый
+                            </label>
+                            <label>
+                                <Switch color={'red'} disabled={disabled} /> Новый Красный
+                            </label>
+                            <label>
+                                <Switch color={'blue'} disabled={disabled} /> Новый Синий
+                            </label>
+                        </div>
+                    </div>
+
+                    <div>
+                        <h1 style={{marginBottom: 15}}>Slider</h1>
+                        <div
+                            style={{
+                                display: 'flex',
+                                gap: 20,
+                                alignItems: 'center',
+                                flexWrap: 'wrap'
+                            }}
+                        >
+                            <Slider color={'red'} disabled={disabled} />
+                            <Slider color={'black'} disabled={disabled} />
+                            <Slider color={'orange'} disabled={disabled} />
+                            <Slider color={'green'} disabled={disabled} />
+                            <Slider color={'blue'} disabled={disabled} />
+                            <Slider color={'red'} disabled={disabled} size={'small'} />
+                            <Slider color={'black'} disabled={disabled} size={'small'} />
+                            <Slider color={'orange'} disabled={disabled} size={'small'} />
+                            <Slider color={'green'} disabled={disabled} size={'small'} />
+                            <Slider color={'blue'} disabled={disabled} size={'small'} />
+                        </div>
                     </div>
                 </div>
             </div>
