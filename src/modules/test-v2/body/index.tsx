@@ -1,16 +1,27 @@
 import React, {useState} from 'react'
 import {
+    Accordion,
+    AccordionDetails,
+    AccordionSummary,
     Checkbox,
+    Chip,
     FilledInput,
     FormControl,
     FormHelperText,
+    Icon,
     IconButton,
     InputAdornment,
     InputLabel,
+    LinearProgress,
     Menu as MenuV2,
     MenuItem as MuiMenuItem,
     Slider,
     Switch,
+    Table,
+    TableBody,
+    TableCell,
+    TableHead,
+    TableRow,
     TextField,
     ThemeProvider
 } from '@mui/material'
@@ -21,6 +32,7 @@ import {
     BookmarkRounded,
     ChildCareRounded,
     Clear,
+    ExpandMore,
     FavoriteBorderRounded,
     FavoriteRounded,
     Save,
@@ -40,6 +52,7 @@ import {classNames} from 'shared/utils'
 import {DatePicker, LocalizationProvider, TimePicker} from '@mui/lab'
 import ruLocale from 'date-fns/locale/ru'
 import SwitchV1 from 'components/ui-kit/switch'
+import IconV1 from 'components/ui-kit/icon'
 
 const menuItems = [
     'Первый пункт',
@@ -80,6 +93,37 @@ const menuItems = [
         'Там жизнь, там люди, там моя жизнь. ' +
         'Туда мне и нужно ехать'
 ]
+
+const funnyText =
+    'заебал уже, ты в следующий раз поаккуратнее ори. ' +
+    'У меня до сих пор глаза красные от твоих воплей. ' +
+    'А что касается тебя, то ты бы лучше не на меня орал, а на свои комплексы, которые у тебя на почве моей внешности, да и вообще всего того, что я делаю, выросли. ' +
+    'На самом деле, это не так важно, как ты себе это представляешь. ' +
+    '- Хорошо, - согласился он. ' +
+    '– Я был неправ. ' +
+    'Ты мне нравишься. ' +
+    'Я люблю тебя. ' +
+    'Но я не могу ничего с этим сделать. ' +
+    'Ничего. ' +
+    'Потому что я... ' +
+    'Я... ' +
+    'Он замолчал, опустив голову.'
+
+const fuckingText =
+    'Заебись, что я до сих пор не умею обращаться с техникой.\n' +
+    'Вчера вечером поставила комп на зарядку, а утром он не включился.\n' +
+    'Отнесли в ремонт, сегодня обещали вернуть.\n' +
+    'Блин, вот как мне теперь на работе работать?\n' +
+    'А еще надо купить новый принтер.\n' +
+    'Я же не могу печатать, когда меня нет!\n' +
+    'На самом деле, мне просто страшно.\n' +
+    'Но я ничего не боюсь.\n' +
+    'И это хорошо.\n' +
+    'По крайней мере, я не чувствую себя загнанной в угол.\n' +
+    'Как только я начинаю думать, что все, конец, меня уже не спасти.'
+
+const bigArray = Array<any>(100).fill(4)
+const smallArray = Array<any>(5).fill(4)
 
 const TestComponentsBody = () => {
     const [disabled, setDisabled] = useState<boolean>(false)
@@ -682,6 +726,112 @@ const TestComponentsBody = () => {
                             <Slider color={'orange'} disabled={disabled} size={'small'} />
                             <Slider color={'green'} disabled={disabled} size={'small'} />
                             <Slider color={'blue'} disabled={disabled} size={'small'} />
+                        </div>
+                    </div>
+
+                    <div>
+                        <h1 style={{marginBottom: 15}}>Icons</h1>
+                        <div
+                            style={{
+                                display: 'flex',
+                                gap: 20,
+                                alignItems: 'center',
+                                flexWrap: 'wrap'
+                            }}
+                        >
+                            <IconV1 iconName={'favorite'} iconType={'round'} />
+                            <Icon>favorite</Icon>
+                            <Icon color={'primary'}>favorite</Icon>
+                            <FavoriteBorderRounded color={'primary'} />
+                        </div>
+                    </div>
+
+                    <div>
+                        <h1 style={{marginBottom: 15}}>Linear progress</h1>
+                        <div
+                            style={{
+                                display: 'grid',
+                                gap: 20
+                            }}
+                        >
+                            <LinearProgress value={55} variant={'determinate'} />
+                            <LinearProgress color={'red'} variant={'indeterminate'} value={55} />
+                            <LinearProgress
+                                color={'blue'}
+                                variant={'buffer'}
+                                valueBuffer={75}
+                                value={55}
+                            />
+                            <LinearProgress color={'green'} variant={'query'} value={55} />
+                        </div>
+                    </div>
+
+                    <div>
+                        <h1 style={{marginBottom: 15}}>Table</h1>
+                        <div
+                            style={{
+                                maxHeight: 400,
+                                overflow: 'auto',
+                                border: '1px solid grey',
+                                borderRadius: 4
+                            }}
+                        >
+                            <Table stickyHeader>
+                                <TableHead>
+                                    <TableRow>
+                                        <TableCell>Номер</TableCell>
+                                        <TableCell>Первая колонка</TableCell>
+                                        <TableCell>Вторая колонка</TableCell>
+                                        <TableCell>Третья колонка</TableCell>
+                                        <TableCell>Четверта колонка</TableCell>
+                                    </TableRow>
+                                </TableHead>
+                                <TableBody>
+                                    {bigArray.map((el, ind) => (
+                                        <TableRow key={ind}>
+                                            <TableCell>{ind}</TableCell>
+                                            <TableCell>Первые данные</TableCell>
+                                            <TableCell>2 данные</TableCell>
+                                            <TableCell>3и данные</TableCell>
+                                            <TableCell>Четвертые данные</TableCell>
+                                        </TableRow>
+                                    ))}
+                                </TableBody>
+                            </Table>
+                        </div>
+                    </div>
+
+                    <div>
+                        <h1 style={{marginBottom: 15}}>Chips / Tags</h1>
+                        <div
+                            style={{
+                                display: 'flex',
+                                gap: 20,
+                                alignItems: 'center',
+                                flexWrap: 'wrap'
+                            }}
+                        >
+                            <Chip label={'Пример'} variant={'filled'} />
+                            <Chip label={'Пример'} variant={'outlined'} />
+                            <Chip
+                                label={'Эта хрень ТОЛЬКО для коротких надписей'}
+                                variant={'square'}
+                            />
+                            <Chip label={funnyText} variant={'square'} />
+                        </div>
+                    </div>
+
+                    <div>
+                        <h1 style={{marginBottom: 15}}>Accordion</h1>
+                        <div style={{}}>
+                            {smallArray.map((el, ind) => (
+                                <Accordion key={ind} square={true} disabled={disabled}>
+                                    <AccordionSummary expandIcon={<ExpandMore />}>
+                                        Заголовок {ind}
+                                    </AccordionSummary>
+                                    <AccordionDetails>{fuckingText}</AccordionDetails>
+                                </Accordion>
+                            ))}
                         </div>
                     </div>
                 </div>

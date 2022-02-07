@@ -1,5 +1,5 @@
 import type {} from '@mui/lab/themeAugmentation'
-import {createTheme} from '@mui/material'
+import {createTheme, Palette, PaletteMode, PaletteOptions} from '@mui/material'
 import {orange} from 'global/colors/orange'
 import {green} from 'global/colors/green'
 import {grey} from 'global/colors/grey'
@@ -10,6 +10,30 @@ import {white} from 'global/colors/white'
 
 declare module '@mui/material/IconButton' {
     interface IconButtonPropsColorOverrides {
+        black: true
+        blue: true
+        green: true
+        orange: true
+        red: true
+    }
+}
+
+declare module '@mui/material/Chip' {
+    interface ChipPropsVariantOverrides {
+        square: true
+    }
+
+    interface ChipPropsColorOverrides {
+        black: true
+        blue: true
+        green: true
+        orange: true
+        red: true
+    }
+}
+
+declare module '@mui/material/LinearProgress' {
+    interface LinearProgressPropsColorOverrides {
         black: true
         blue: true
         green: true
@@ -97,6 +121,20 @@ declare module '@mui/material/styles' {
         red: PaletteOptions['primary']
     }
 }
+
+// todo change color theme
+export const getThemePalette = (mode: PaletteMode): PaletteOptions => ({
+    mode,
+    black: grey,
+    blue: blue,
+    green: green,
+    orange: orange,
+    red: red,
+    primary: {
+        ...orange,
+        contrastText: white
+    }
+})
 
 export const theme = createTheme({
     palette: {
@@ -276,6 +314,94 @@ export const theme = createTheme({
                     },
                     '.MuiSwitch-switchBase:not(.Mui-checked) .MuiSwitch-thumb': {
                         backgroundColor: grey[500]
+                    }
+                }
+            }
+        },
+        MuiTable: {
+            styleOverrides: {
+                root: {
+                    '.MuiTableCell-root': {
+                        padding: '14px 16px',
+                        font: `normal 16px 'Montserrat'`,
+                        borderBottom: `1px solid ${grey[100]}`,
+                        '&:not(:last-child)': {
+                            borderRight: `1px solid ${grey[100]}`
+                        }
+                    },
+                    '.MuiTableBody-root': {
+                        '.MuiTableRow-root': {
+                            height: 48,
+                            '&:nth-of-type(2n - 1)': {
+                                backgroundColor: grey[50]
+                            },
+                            '&:last-of-type': {
+                                '.MuiTableCell-root': {
+                                    borderBottom: 'none'
+                                }
+                            },
+                            '.MuiTableCell-root': {
+                                '&:first-of-type': {
+                                    font: `normal 12px 'Montserrat'`,
+                                    color: grey[600]
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        MuiChip: {
+            variants: [
+                {
+                    props: {variant: 'square'},
+                    style: {
+                        borderRadius: 4,
+                        font: `normal 12px 'Montserrat'`,
+                        backgroundColor: grey[50],
+                        padding: 4,
+                        color: grey[900],
+                        height: 'auto',
+                        whiteSpace: 'initial',
+                        '.MuiChip-label': {
+                            padding: 0,
+                            whiteSpace: 'initial'
+                        }
+                    }
+                }
+            ]
+        },
+        MuiAccordion: {
+            styleOverrides: {
+                root: {
+                    '&.MuiAccordion-root': {
+                        boxShadow: 'none',
+                        '&:not(:first-of-type)': {
+                            borderTop: `1px solid ${grey[100]}`
+                        },
+                        '&::before': {
+                            opacity: 0
+                        },
+                        '&.Mui-expanded': {
+                            margin: 0
+                        },
+                        '.MuiAccordionSummary-root': {
+                            height: 88,
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'flex-start',
+                            gap: 8,
+                            padding: 0
+                        },
+                        '.MuiAccordionSummary-content': {
+                            flexGrow: 'initial',
+                            font: `normal 20px 'Montserrat'`,
+                            color: grey[600],
+                            textTransform: 'uppercase'
+                        },
+                        '.MuiAccordionDetails-root': {
+                            padding: '0 0 40px 0'
+                        }
                     }
                 }
             }
