@@ -7,6 +7,7 @@ import {blue} from 'global/colors/blue'
 import {red} from 'global/colors/red'
 import {transparent} from 'global/colors/transparent'
 import {white} from 'global/colors/white'
+import {fonts} from 'global/fonts'
 
 declare module '@mui/material/IconButton' {
     interface IconButtonPropsColorOverrides {
@@ -146,7 +147,11 @@ export const theme = createTheme({
         primary: {
             ...orange,
             contrastText: white
-        }
+        },
+        grey: grey
+    },
+    typography: {
+        fontFamily: 'Montserrat'
     },
     components: {
         MuiPaper: {
@@ -175,7 +180,7 @@ export const theme = createTheme({
             styleOverrides: {
                 root: {
                     height: 48,
-                    font: `normal 16px 'Montserrat'`,
+                    font: fonts.bodyMedium,
                     paddingLeft: 16,
                     paddingRight: 16,
                     color: grey.main,
@@ -242,13 +247,13 @@ export const theme = createTheme({
                             }
                         },
                         '.MuiFilledInput-input': {
-                            font: `bold 16px 'Montserrat'`,
+                            font: fonts.bodyBold,
                             padding: '0 16px',
                             height: 48
                         },
                         '.MuiInputLabel-root': {
                             position: 'relative',
-                            font: `normal 12px 'Montserrat'`,
+                            font: fonts.captionMedium,
                             transform: 'none',
                             top: -10,
                             marginTop: 10,
@@ -287,13 +292,13 @@ export const theme = createTheme({
                             }
                         },
                         '.MuiFilledInput-input': {
-                            font: `normal 16px 'Montserrat'`,
+                            font: fonts.bodyBold,
                             padding: '0 16px',
                             height: 48
                         },
                         '.MuiInputLabel-root': {
                             position: 'relative',
-                            font: `normal 12px 'Montserrat'`,
+                            font: fonts.captionMedium,
                             transform: 'none',
                             top: -10,
                             marginTop: 10,
@@ -323,7 +328,7 @@ export const theme = createTheme({
                 root: {
                     '.MuiTableCell-root': {
                         padding: '14px 16px',
-                        font: `normal 16px 'Montserrat'`,
+                        font: fonts.bodyMedium,
                         borderBottom: `1px solid ${grey[100]}`,
                         '&:not(:last-child)': {
                             borderRight: `1px solid ${grey[100]}`
@@ -342,7 +347,7 @@ export const theme = createTheme({
                             },
                             '.MuiTableCell-root': {
                                 '&:first-of-type': {
-                                    font: `normal 12px 'Montserrat'`,
+                                    font: fonts.captionMedium,
                                     color: grey[600]
                                 }
                             }
@@ -357,7 +362,7 @@ export const theme = createTheme({
                     props: {variant: 'square'},
                     style: {
                         borderRadius: 4,
-                        font: `normal 12px 'Montserrat'`,
+                        font: fonts.captionMedium,
                         backgroundColor: grey[50],
                         padding: 4,
                         color: grey[900],
@@ -395,7 +400,7 @@ export const theme = createTheme({
                         },
                         '.MuiAccordionSummary-content': {
                             flexGrow: 'initial',
-                            font: `normal 20px 'Montserrat'`,
+                            font: fonts.h3Medium,
                             color: grey[600],
                             textTransform: 'uppercase'
                         },

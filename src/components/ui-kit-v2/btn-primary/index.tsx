@@ -3,13 +3,14 @@ import {styled} from '@mui/material'
 import {orange} from 'global/colors/orange'
 import {LoadingButton, LoadingButtonProps} from '@mui/lab'
 import {white} from 'global/colors/white'
+import {fonts} from 'global/fonts'
 
 const _BtnPrimary = styled(LoadingButton)(({theme}) => ({
     backgroundColor: orange[600],
     borderRadius: 12,
     boxShadow: 'none',
     color: white,
-    font: `bold 16px 'Montserrat'`,
+    font: fonts.bodyBold,
     height: 48,
     textTransform: 'none',
     '&:hover, &:active': {
