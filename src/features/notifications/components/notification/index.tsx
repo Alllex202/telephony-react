@@ -1,9 +1,9 @@
 import React from 'react'
-import styles from 'features/notifications/components/notification/styles.module.scss'
+import styles from './styles.module.scss'
 import {SnackbarKey, SnackbarMessage} from 'notistack'
 import {Action, NotificationType} from 'features/notifications/store/notification.slice'
 import {classNames} from 'shared/utils'
-import Icon from 'components/ui-kit/icon'
+import {CheckCircleRounded, ErrorRounded, InfoRounded} from '@mui/icons-material'
 
 type Props = {
     key: SnackbarKey
@@ -26,22 +26,22 @@ const Notification = ({key, message, type = 'INFO', action}: Props) => {
         }
     }
 
-    const getIconNameByType = (): string => {
+    const getIconByType = (): React.ReactElement => {
         switch (type) {
             case 'INFO':
-                return 'info'
+                return <InfoRounded className={styles.icon} />
             case 'ERROR':
-                return 'error'
+                return <ErrorRounded className={styles.icon} />
             case 'SUCCESS':
-                return 'check_circle'
+                return <CheckCircleRounded className={styles.icon} />
             default:
-                return ''
+                return <></>
         }
     }
 
     return (
         <div key={key} className={classNames(styles.notification, getClassByType())}>
-            <Icon iconName={getIconNameByType()} iconType={'round'} className={styles.icon} />
+            {getIconByType()}
             <span className={styles.text}>{message}</span>
             {action && (
                 <button className={styles.action} onClick={action.callback}>
