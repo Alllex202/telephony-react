@@ -13,12 +13,18 @@ const _BtnSecondary = styled(LoadingButton)(({theme}) => ({
     font: fonts.bodyBold,
     height: 48,
     textTransform: 'none',
+    letterSpacing: 'normal',
     '&:hover, &:active': {
         backgroundColor: orange[100],
         boxShadow: 'none'
     },
     '&.Mui-disabled': {
         backgroundColor: grey[50]
+    },
+    '.MuiButton-startIcon, .MuiButton-endIcon': {
+        '.MuiSvgIcon-root': {
+            fontSize: 24
+        }
     }
 }))
 

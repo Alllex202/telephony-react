@@ -13,9 +13,15 @@ const _BtnPrimary = styled(LoadingButton)(({theme}) => ({
     font: fonts.bodyBold,
     height: 48,
     textTransform: 'none',
+    letterSpacing: 'normal',
     '&:hover, &:active': {
         backgroundColor: orange[700],
         boxShadow: 'none'
+    },
+    '.MuiButton-startIcon, .MuiButton-endIcon': {
+        '.MuiSvgIcon-root': {
+            fontSize: 24
+        }
     }
 }))
 
