@@ -767,13 +767,17 @@ const TestComponentsBody = () => {
                     </div>
 
                     <div>
-                        <h1 style={{marginBottom: 15}}>Table</h1>
+                        <h1 style={{marginBottom: 15}}>
+                            <span style={{textDecoration: 'line-through'}}>Table</span> (DEPRECATED)
+                        </h1>
+                        <h2 style={{marginBottom: 15}}>New tables with react-virtualized</h2>
                         <div
                             style={{
                                 maxHeight: 400,
                                 overflow: 'auto',
                                 border: '1px solid grey',
-                                borderRadius: 4
+                                borderRadius: 4,
+                                opacity: 0.4
                             }}
                         >
                             <Table stickyHeader>
