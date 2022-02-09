@@ -51,6 +51,7 @@
 }
 
 .table {
+  overflow: hidden;
   border: 1px solid var(--table-border);
 
   .cell {

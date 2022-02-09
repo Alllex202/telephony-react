@@ -81,7 +81,7 @@ const initialState: ViewState = {
     tableBody: {
         data: [],
         status: {},
-        pageSettings: {page: 0, isLastPage: false, size: 50}
+        pageSettings: {page: 0, isLastPage: false, size: 30}
     },
     variables: {
         data: [],

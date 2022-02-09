@@ -1,15 +1,22 @@
 .header {
   display: flex;
   justify-content: space-between;
+  align-items: center;
   width: 100%;
 
   .cancel {
     width: 150px;
-    padding-right: 16px;
     padding-left: 8px;
+    padding-right: 16px;
+    margin-left: 0;
+    margin-right: auto;
   }
 
-  .save {
-
+  .back {
+    width: 117px;
+    padding-left: 8px;
+    padding-right: 16px;
+    margin-left: 0;
+    margin-right: auto;
   }
 }

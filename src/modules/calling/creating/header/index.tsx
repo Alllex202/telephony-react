@@ -1,8 +1,9 @@
 import React from 'react'
 import styles from './styles.module.scss'
-import BtnSecond from 'components/ui-kit/btn-second'
 import {useHistory, useParams} from 'react-router-dom'
 import {useSelectorApp} from 'shared/hoocks'
+import BtnSecondary from 'components/ui-kit-v2/btn-secondary'
+import {ArrowBackRounded} from '@mui/icons-material'
 
 const CallingCreatingHeader = () => {
     const history = useHistory()
@@ -19,14 +20,13 @@ const CallingCreatingHeader = () => {
 
     return (
         <div className={styles.header}>
-            <BtnSecond
-                text={callingId ? 'Назад' : 'Отменить'}
-                className={styles.cancel}
+            <BtnSecondary
+                className={callingId ? styles.back : styles.cancel}
                 onClick={onCancel}
-                iconName={'arrow_back'}
-                iconType={'round'}
-                iconPosition={'start'}
-            />
+                startIcon={<ArrowBackRounded />}
+            >
+                {callingId ? 'Назад' : 'Отменить'}
+            </BtnSecondary>
         </div>
     )
 }

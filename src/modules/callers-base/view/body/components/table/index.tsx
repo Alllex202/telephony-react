@@ -14,7 +14,7 @@ import {useParams} from 'react-router-dom'
 import {RequestPageTypes} from 'shared/types'
 import {ArrowDropDownRounded} from '@mui/icons-material'
 import {classNames} from 'shared/utils'
-import {AutoSizer, MultiGrid, OnScrollParams, Size, GridCellProps, Index} from 'react-virtualized'
+import {AutoSizer, GridCellProps, Index, MultiGrid, OnScrollParams, Size} from 'react-virtualized'
 
 const CallersBaseViewTable = () => {
     const dispatch = useDispatch()
@@ -34,7 +34,11 @@ const CallersBaseViewTable = () => {
     const [selectedVariable, selectVariable] = useState<CallersBaseHeaderColumnModel | null>(null)
 
     const handlerScroll = ({scrollHeight, scrollTop, clientHeight}: OnScrollParams) => {
-        if (statuses.isLoading || isLastPage || scrollTop + clientHeight + 50 * size < scrollHeight)
+        if (
+            statuses.isLoading ||
+            isLastPage ||
+            scrollTop + (48 * clientHeight) / 2 + clientHeight < scrollHeight
+        )
             return
 
         dispatch(getCallersBaseTableDataPage(callersBaseId, RequestPageTypes.Next))

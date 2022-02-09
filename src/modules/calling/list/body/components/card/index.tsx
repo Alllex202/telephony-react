@@ -1,24 +1,26 @@
 import React, {useState} from 'react'
 import cardStyles from 'shared/styles/card/styles.module.scss'
 import styles from './styles.module.scss'
-import {FetchStatuses} from 'shared/types/fetch-statuses'
+import {DefaultAxiosError, FetchStatuses} from 'shared/types'
 import {useDispatch} from 'react-redux'
-import {DefaultAxiosError} from 'shared/types/base-response-error'
 import {Link} from 'react-router-dom'
 import {routes} from 'routing/routes'
 import Card from 'components/ui-kit/card'
 import {classNames, formatDate} from 'shared/utils'
-import BtnCircle from 'components/ui-kit/btn-circle'
-import Menu from 'components/ui-kit/menu'
-import MenuItem from 'components/ui-kit/menu-item'
-import Icon from 'components/ui-kit/icon'
-import {CallingModel, CallingStatusTypes} from 'core/api'
-import {deleteCalling, startScheduledCalling} from 'core/api/requests/calling'
+import {CallingModel, CallingStatusTypes, deleteCalling, startScheduledCalling} from 'core/api'
 import {callingByIdMoveFromScheduledToRun, deleteCallingById} from 'store/calling/list'
-import {LinearProgress} from '@mui/material'
-import BtnSecond from 'components/ui-kit/btn-second'
+import {IconButton, LinearProgress, Menu, MenuItem} from '@mui/material'
 import {enqueueSnackbar} from 'features/notifications/store'
 import {handlerError} from 'shared/middleware'
+import {
+    CalendarTodayRounded,
+    DeleteForeverRounded,
+    ForumRounded,
+    MoreHorizRounded,
+    PeopleAltRounded,
+    PlayArrowRounded
+} from '@mui/icons-material'
+import BtnSecondary from 'components/ui-kit-v2/btn-secondary'
 
 type Props = {
     data: CallingModel
@@ -84,6 +86,10 @@ const CallingCard = ({data, callingStatus, className}: Props) => {
             )
     }
 
+    const preventDefault = (e: React.MouseEvent) => {
+        e.preventDefault()
+    }
+
     return (
         <Link
             to={
@@ -98,42 +104,26 @@ const CallingCard = ({data, callingStatus, className}: Props) => {
                 isActive={!!anchorEl}
             >
                 <div className={classNames(cardStyles.wrapper, styles.wrapper)}>
-                    <div onClick={(e) => e.preventDefault()} className={cardStyles.options_wrapper}>
-                        <BtnCircle
-                            iconName={'more_horiz'}
-                            iconType={'round'}
-                            className={cardStyles.options_btn}
-                            onClick={openOptions}
-                            isActive={!!anchorEl}
-                        />
+                    <div onClick={preventDefault} className={cardStyles.options_wrapper}>
+                        <IconButton onClick={openOptions} color={'black'}>
+                            <MoreHorizRounded fontSize={'large'} className={cardStyles.icon} />
+                        </IconButton>
                         <Menu anchorEl={anchorEl} open={!!anchorEl} onClose={closeOptions}>
                             {callingStatus === 'SCHEDULED' && (
-                                <MenuItem
-                                    onClick={handlerCancel}
-                                    isDanger
-                                    iconName={'delete_forever'}
-                                    iconType={'round'}
-                                >
+                                <MenuItem onClick={handlerCancel} color={'red'}>
+                                    <DeleteForeverRounded />
                                     Отменить
                                 </MenuItem>
                             )}
                             {callingStatus === 'RUN' && (
-                                <MenuItem
-                                    onClick={handlerStop}
-                                    isDanger
-                                    iconName={'delete_forever'}
-                                    iconType={'round'}
-                                >
+                                <MenuItem onClick={handlerStop} color={'red'}>
+                                    <DeleteForeverRounded />
                                     Остановить
                                 </MenuItem>
                             )}
                             {callingStatus === 'DONE' && (
-                                <MenuItem
-                                    onClick={handlerDelete}
-                                    isDanger
-                                    iconName={'delete_forever'}
-                                    iconType={'round'}
-                                >
+                                <MenuItem onClick={handlerDelete} color={'red'}>
+                                    <DeleteForeverRounded />
                                     Удалить
                                 </MenuItem>
                             )}
@@ -143,41 +133,28 @@ const CallingCard = ({data, callingStatus, className}: Props) => {
                         <h2 className={cardStyles.title}>{data.name}</h2>
                         <div className={classNames(cardStyles.description, styles.description)}>
                             <div className={cardStyles.info}>
-                                <Icon
-                                    iconName={'calendar_today'}
-                                    iconType={'round'}
-                                    className={cardStyles.icon}
-                                />
+                                <CalendarTodayRounded className={cardStyles.icon} />
                                 {formatDate(data.startDate)}
                             </div>
                             <div className={cardStyles.info}>
-                                <Icon
-                                    iconName={'forum'}
-                                    iconType={'round'}
-                                    className={cardStyles.icon}
-                                />
+                                <ForumRounded className={cardStyles.icon} />
                                 {data.scenario.name}
                             </div>
                             <div className={cardStyles.info}>
-                                <Icon
-                                    iconName={'people_alt'}
-                                    iconType={'round'}
-                                    className={cardStyles.icon}
-                                />
+                                <PeopleAltRounded className={cardStyles.icon} />
                                 {data.callersBase.name}
                             </div>
                         </div>
                     </div>
                     <div className={styles.body}>
                         {callingStatus === 'SCHEDULED' ? (
-                            <BtnSecond
-                                text={'Запустить сейчас'}
-                                iconType={'round'}
-                                iconName={'play_arrow'}
-                                iconPosition={'end'}
+                            <BtnSecondary
                                 className={styles.btnRun}
                                 onClick={handlerRun}
-                            />
+                                endIcon={<PlayArrowRounded />}
+                            >
+                                Запустить сейчас
+                            </BtnSecondary>
                         ) : (
                             <>
                                 <LinearProgress

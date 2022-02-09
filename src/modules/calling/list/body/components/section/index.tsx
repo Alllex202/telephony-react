@@ -1,17 +1,16 @@
 import React, {useEffect, useState} from 'react'
 import styles from './styles.module.scss'
 import listStyles from 'shared/styles/body-list/styles.module.scss'
-import './styles.scss'
 import {Accordion, AccordionDetails, AccordionSummary} from '@mui/material'
-import Icon from 'components/ui-kit/icon'
 import CallingCard from 'modules/calling/list/body/components/card'
 import {useDispatch} from 'react-redux'
 import {CallingStatusTypes} from 'core/api'
-import BtnSecond from 'components/ui-kit/btn-second'
 import {callingStatuses} from 'shared/data'
 import {useSelectorApp} from 'shared/hoocks'
 import {getCallingsPage, resetCallingStates as clearData} from 'store/calling/list'
 import {RequestPageTypes} from 'shared/types'
+import {ExpandMoreRounded} from '@mui/icons-material'
+import BtnSecondary from 'components/ui-kit-v2/btn-secondary'
 
 type Props = {
     callingStatus: CallingStatusTypes
@@ -49,29 +48,8 @@ const CallingSection = ({callingStatus}: Props) => {
 
     return (
         <>
-            <Accordion
-                square={true}
-                className={'calling-section'}
-                expanded={
-                    statuses.isSuccess && callingList.length > 0
-                        ? callingStatus === 'DONE'
-                            ? true
-                            : isOpened
-                        : false
-                }
-                onChange={onOpen}
-            >
-                <AccordionSummary
-                    expandIcon={
-                        callingStatus === 'DONE' || callingList.length < 1 ? null : (
-                            <Icon
-                                iconName={'expand_more'}
-                                iconType={'round'}
-                                className={styles.expandIcon}
-                            />
-                        )
-                    }
-                >
+            <Accordion square={true} expanded={isOpened} onChange={onOpen}>
+                <AccordionSummary expandIcon={<ExpandMoreRounded />}>
                     {callingStatuses[callingStatus].message} ({totalElements})
                 </AccordionSummary>
                 <AccordionDetails>
@@ -81,11 +59,9 @@ const CallingSection = ({callingStatus}: Props) => {
                         ))}
                     </div>
                     {!isLastPage && !statuses.isLoading && (
-                        <BtnSecond
-                            className={styles.more}
-                            onClick={loadNextPage}
-                            text={'Показать больше'}
-                        />
+                        <BtnSecondary className={styles.more} onClick={loadNextPage}>
+                            Показать больше
+                        </BtnSecondary>
                     )}
                 </AccordionDetails>
             </Accordion>

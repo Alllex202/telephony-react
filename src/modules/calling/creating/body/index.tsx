@@ -1,6 +1,5 @@
 import React, {useEffect, useState} from 'react'
 import styles from './styles.module.scss'
-import './styles.scss'
 import {useDispatch} from 'react-redux'
 import {
     getCalling,
@@ -13,26 +12,23 @@ import {
     setStartDate
 } from 'store/calling/creating'
 import HiddenInputWithIcon from 'components/hidden-input-with-icon'
+import {Checkbox, MenuItem, TextField} from '@mui/material'
 import {
-    FormControl,
-    FormControlLabel,
-    InputLabel,
-    MenuItem,
-    Select,
-    SelectChangeEvent,
-    TextField
-} from '@mui/material'
-import {CallersBaseHeaderModel, ScenarioInfoModel} from 'core/api'
-import {getCallersBasesHeader, getScenariosByPage} from 'core/api/requests'
+    CallersBaseHeaderModel,
+    getCallersBasesHeader,
+    getScenariosByPage,
+    ScenarioInfoModel
+} from 'core/api'
 import {handlerError} from 'shared/middleware'
-import BtnSecond from 'components/ui-kit/btn-second'
-import Btn from 'components/ui-kit/btn'
 import DateAdapter from '@mui/lab/AdapterDateFns'
-import {DesktopDatePicker, DesktopTimePicker, LocalizationProvider} from '@mui/lab'
-import Checkbox from 'components/ui-kit/checkbox'
+import {DatePicker, LocalizationProvider, TimePicker} from '@mui/lab'
 import {classNames} from 'shared/utils'
 import {useParams} from 'react-router-dom'
 import {useDoubleInput, useSelectorApp} from 'shared/hoocks'
+import BtnSecondary from 'components/ui-kit-v2/btn-secondary'
+import {ForumRounded, UploadRounded} from '@mui/icons-material'
+import ruLocale from 'date-fns/locale/ru'
+import BtnPrimary from 'components/ui-kit-v2/btn-primary'
 
 const CallingCreatingBody = () => {
     const dispatch = useDispatch()
@@ -49,11 +45,11 @@ const CallingCreatingBody = () => {
         setLastText: setLastName
     } = useDoubleInput(callingId ? '' : name)
 
-    const onSelectBase = (e: SelectChangeEvent) => {
+    const onSelectBase = (e: React.ChangeEvent<HTMLInputElement>) => {
         dispatch(setCallersBaseId(e.target.value))
     }
 
-    const onSelectScenario = (e: SelectChangeEvent) => {
+    const onSelectScenario = (e: React.ChangeEvent<HTMLInputElement>) => {
         dispatch(setScenarioId(e.target.value))
     }
 
@@ -81,6 +77,8 @@ const CallingCreatingBody = () => {
     useEffect(() => {
         if (callingId) {
             dispatch(getCalling(callingId))
+        } else {
+            dispatch(setStartDate(Date.now()))
         }
 
         getScenariosByPage({page: 0, size: 100})
@@ -123,36 +121,29 @@ const CallingCreatingBody = () => {
                     <div className={styles.subtitle} />
                     <div className={styles.content}>
                         <div className={'custom-input'}>
-                            <FormControl fullWidth>
-                                <InputLabel id={'base'}>База данных</InputLabel>
-                                <Select
-                                    readOnly={statuses.isLoading}
-                                    labelId={'base'}
-                                    label={'Выберите базу данных'}
-                                    onChange={onSelectBase}
-                                    value={
-                                        callingId && bases
-                                            ? (callersBaseId as string) ?? ''
-                                            : (callersBaseId as string) ?? ''
-                                    }
-                                    MenuProps={{PaperProps: {sx: {maxHeight: 300}}}}
-                                >
-                                    {bases?.map((el) => (
-                                        <MenuItem key={el.id} value={el.id}>
-                                            {el.name}
-                                        </MenuItem>
-                                    ))}
-                                </Select>
-                            </FormControl>
+                            <TextField
+                                variant={'filled'}
+                                size={'mediumSlim'}
+                                label={'База данных'}
+                                color={'orange'}
+                                select={!!bases}
+                                value={bases ? callersBaseId ?? '' : ''}
+                                onChange={onSelectBase}
+                                disabled={statuses.isLoading || !bases}
+                                autoFocus={false}
+                                fullWidth
+                            >
+                                {bases?.map((el) => (
+                                    <MenuItem key={el.id} value={el.id}>
+                                        {el.name}
+                                    </MenuItem>
+                                ))}
+                            </TextField>
                         </div>
 
-                        <BtnSecond
-                            text={'Загрузить базу'}
-                            iconPosition={'end'}
-                            iconName={'upload'}
-                            iconType={'round'}
-                            className={styles.btn}
-                        />
+                        <BtnSecondary className={styles.btn} endIcon={<UploadRounded />}>
+                            Загрузить базу
+                        </BtnSecondary>
                     </div>
                 </div>
 
@@ -160,85 +151,94 @@ const CallingCreatingBody = () => {
                     <div className={styles.subtitle} />
                     <div className={styles.content}>
                         <div className={'custom-input'}>
-                            <FormControl fullWidth>
-                                <InputLabel id={'scenario'}>Сценарий обзванивания</InputLabel>
-                                <Select
-                                    readOnly={statuses.isLoading}
-                                    labelId={'scenario'}
-                                    label={'Выберите сценарий'}
-                                    onChange={onSelectScenario}
-                                    value={
-                                        callingId && scenarios
-                                            ? (scenarioId as string) ?? ''
-                                            : (scenarioId as string) ?? ''
-                                    }
-                                    MenuProps={{PaperProps: {sx: {maxHeight: 300}}}}
-                                >
-                                    {scenarios?.map((el) => (
-                                        <MenuItem key={el.id} value={el.id}>
-                                            {el.name}
-                                        </MenuItem>
-                                    ))}
-                                </Select>
-                            </FormControl>
+                            <TextField
+                                variant={'filled'}
+                                size={'mediumSlim'}
+                                label={'Сценарий обзванивания'}
+                                color={'orange'}
+                                select={!!scenarios}
+                                value={scenarios ? scenarioId ?? '' : ''}
+                                onChange={onSelectScenario}
+                                disabled={statuses.isLoading || !scenarios}
+                                autoFocus={false}
+                                fullWidth
+                            >
+                                {scenarios?.map((el) => (
+                                    <MenuItem key={el.id} value={el.id}>
+                                        {el.name}
+                                    </MenuItem>
+                                ))}
+                            </TextField>
                         </div>
-                        <BtnSecond
-                            text={'Новый сценарий'}
-                            iconPosition={'end'}
-                            iconName={'forum'}
-                            iconType={'round'}
-                            className={styles.btn}
-                        />
+
+                        <BtnSecondary className={styles.btn} endIcon={<ForumRounded />}>
+                            Новый сценарий
+                        </BtnSecondary>
                     </div>
                 </div>
 
                 <div className={styles.block}>
                     <div className={styles.subtitle}>Дата и время запуска обзванивания</div>
                     <div className={styles.content}>
-                        <LocalizationProvider dateAdapter={DateAdapter}>
+                        <LocalizationProvider dateAdapter={DateAdapter} locale={ruLocale}>
                             <div className={styles.doubleInput}>
                                 <div className={classNames(styles.dateTime, 'custom-input')}>
-                                    <DesktopDatePicker
-                                        disabled={isNow}
+                                    <DatePicker
+                                        mask={'__.__.____'}
+                                        disabled={isNow || statuses.isLoading}
                                         value={startDate}
                                         minDate={Date.now()}
                                         onChange={onChangeDateTime}
-                                        renderInput={(params) => <TextField {...params} />}
+                                        renderInput={(params) => (
+                                            <TextField
+                                                {...params}
+                                                variant={'filled'}
+                                                size={'mediumSlim'}
+                                                color={'orange'}
+                                            />
+                                        )}
                                     />
                                 </div>
                                 <div className={classNames(styles.dateTime, 'custom-input')}>
-                                    <DesktopTimePicker
-                                        disabled={isNow}
+                                    <TimePicker
+                                        disabled={isNow || statuses.isLoading}
                                         value={startDate}
                                         onChange={onChangeDateTime}
-                                        renderInput={(params) => <TextField {...params} />}
+                                        renderInput={(params) => (
+                                            <TextField
+                                                {...params}
+                                                variant={'filled'}
+                                                size={'mediumSlim'}
+                                                color={'orange'}
+                                            />
+                                        )}
                                     />
                                 </div>
                             </div>
                         </LocalizationProvider>
-                        <FormControlLabel
-                            control={
-                                <Checkbox
-                                    checked={isNow}
-                                    className={styles.checkbox}
-                                    onChange={onChangeIsNow}
-                                />
-                            }
-                            label={'Запустить сейчас'}
-                        />
+                        <label className={styles.now}>
+                            <Checkbox
+                                checked={isNow}
+                                className={styles.checkbox}
+                                onChange={onChangeIsNow}
+                                disabled={statuses.isLoading}
+                            />
+                            Запустить сейчас
+                        </label>
                     </div>
                 </div>
-                <Btn
-                    text={
-                        isNow
-                            ? 'Начать обзванивание'
-                            : callingId
-                            ? 'Обнов. обзванивание'
-                            : 'Добавить в очередь'
-                    }
+                <BtnPrimary
                     className={styles.btn}
                     onClick={onSave}
-                />
+                    disabled={(!startDate && !isNow) || !scenarioId || !callersBaseId}
+                    loading={statuses.isLoading}
+                >
+                    {isNow
+                        ? 'Начать обзванивание'
+                        : callingId
+                        ? 'Обнов. обзванивание'
+                        : 'Добавить в очередь'}
+                </BtnPrimary>
             </div>
         </div>
     )
