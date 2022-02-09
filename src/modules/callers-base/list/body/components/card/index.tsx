@@ -1,23 +1,22 @@
 import React, {useState} from 'react'
 import cardStyles from 'shared/styles/card/styles.module.scss'
-// import styles from './styles.module.scss';
-import {CallersBaseHeaderModel} from 'core/api'
+import {CallersBaseHeaderModel, deleteCallersBase} from 'core/api'
 import Card from 'components/ui-kit/card'
-import Tag from 'components/ui-kit/tag'
-import Icon from 'components/ui-kit/icon'
-import {formatDate} from 'shared/utils/format-date'
-import {classNames} from 'shared/utils'
-import BtnCircle from 'components/ui-kit/btn-circle'
-import Menu from 'components/ui-kit/menu'
-import MenuItem from 'components/ui-kit/menu-item'
-import {deleteCallersBase} from 'core/api/requests'
-import {FetchStatuses} from 'shared/types/fetch-statuses'
+import {classNames, formatDate} from 'shared/utils'
+import {FetchStatuses} from 'shared/types'
 import {routes} from 'routing/routes'
 import {Link} from 'react-router-dom'
 import {useDispatch} from 'react-redux'
 import {deleteCallersBaseById} from 'store/callers-bases/list'
 import {enqueueSnackbar} from 'features/notifications/store'
 import {handlerError} from 'shared/middleware'
+import {Chip, IconButton, Menu, MenuItem} from '@mui/material'
+import {
+    CalendarTodayRounded,
+    DeleteForeverRounded,
+    MoreHorizRounded,
+    TableRowsRounded
+} from '@mui/icons-material'
 
 type Props = {
     data: CallersBaseHeaderModel
@@ -56,25 +55,21 @@ const CallersBaseCard = ({data, className}: Props) => {
             )
     }
 
+    const preventDefault = (e: React.MouseEvent) => {
+        e.preventDefault()
+    }
+
     return (
         <Link to={routes.callersBase.view(data.id)} className={statuses.isLoading ? 'd-none' : ''}>
             <Card className={classNames(className, cardStyles.card)} isActive={!!anchorEl}>
                 <div className={cardStyles.wrapper}>
-                    <div onClick={(e) => e.preventDefault()} className={cardStyles.options_wrapper}>
-                        <BtnCircle
-                            iconName={'more_horiz'}
-                            iconType={'round'}
-                            className={cardStyles.options_btn}
-                            onClick={openOptions}
-                            isActive={!!anchorEl}
-                        />
+                    <div onClick={preventDefault} className={cardStyles.options_wrapper}>
+                        <IconButton onClick={openOptions} color={'black'}>
+                            <MoreHorizRounded fontSize={'large'} className={cardStyles.icon} />
+                        </IconButton>
                         <Menu anchorEl={anchorEl} open={!!anchorEl} onClose={closeOptions}>
-                            <MenuItem
-                                onClick={handlerDelete}
-                                isDanger
-                                iconName={'delete_forever'}
-                                iconType={'round'}
-                            >
+                            <MenuItem color={'red'} onClick={handlerDelete}>
+                                <DeleteForeverRounded />
                                 Удалить
                             </MenuItem>
                         </Menu>
@@ -83,33 +78,21 @@ const CallersBaseCard = ({data, className}: Props) => {
                         <h2 className={cardStyles.title}>{data.name}</h2>
                         <div className={cardStyles.description}>
                             <div className={cardStyles.info}>
-                                <Icon
-                                    iconName={'calendar_today'}
-                                    iconType={'round'}
-                                    className={cardStyles.icon}
-                                />
+                                <CalendarTodayRounded className={cardStyles.icon} />
                                 {formatDate(data.created)}
                             </div>
                             <div className={cardStyles.info}>
-                                <Icon
-                                    iconName={'table_rows'}
-                                    iconType={'round'}
-                                    className={cardStyles.icon}
-                                />
+                                <TableRowsRounded className={cardStyles.icon} />
                                 {data.countCallers} эл
                             </div>
                         </div>
                     </div>
                     <div className={cardStyles.tags}>
                         {data.columns.slice(0, 5).map((el) => (
-                            <Tag
-                                text={`#${el.nameInTable}`}
-                                key={el.id}
-                                className={cardStyles.tag}
-                            />
+                            <Chip variant={'square'} key={el.id} label={`#${el.nameInTable}`} />
                         ))}
                         {data.columns.length - 5 > 0 && (
-                            <Tag text={`+${data.columns.length - 5}`} className={cardStyles.tag} />
+                            <Chip variant={'square'} label={`+${data.columns.length - 5}`} />
                         )}
                     </div>
                 </div>

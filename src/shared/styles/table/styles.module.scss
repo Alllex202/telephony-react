@@ -32,14 +32,86 @@
         width: fit-content;
         height: fit-content;
         padding: 0;
-        transition: .2s transform;
 
-        span {
+        .icon {
           font-size: 24px;
-        }
+          transition: .25s transform;
 
-        &.active {
-          transform: rotate(180deg);
+          &.active {
+            transform: rotate(180deg);
+          }
+        }
+      }
+    }
+
+    .name {
+
+    }
+  }
+}
+
+.table {
+  border: 1px solid var(--table-border);
+
+  .cell {
+    padding: 14px 16px;
+    font: var(--font-body-medium);
+    border-bottom: 1px solid var(--table-border);
+    border-right: 1px solid var(--table-border);
+    overflow: hidden;
+    text-overflow: ellipsis;
+
+    &.invalidCell {
+      color: var(--table-text-invalid);
+    }
+
+    &.even {
+      background-color: var(--table-row-even);
+    }
+
+    &.odd {
+      background-color: var(--table-row-odd);
+    }
+
+    &.invalidRow {
+      background-color: var(--table-row-invalid);
+    }
+
+    &.number {
+      font: var(--font-caption-medium);
+      color: var(--table-text-number);
+      text-align: center;
+    }
+  }
+
+  .variable {
+    width: max-content;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+
+    .type {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+
+      .text {
+        font: var(--font-body-bold);
+        margin-right: 8px;
+      }
+
+      .btn {
+        width: fit-content;
+        height: fit-content;
+        padding: 0;
+
+        .icon {
+          font-size: 24px;
+          transition: .25s transform;
+
+          &.active {
+            transform: rotate(180deg);
+          }
         }
       }
     }

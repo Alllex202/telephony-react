@@ -1,20 +1,18 @@
 import React, {useEffect, useState} from 'react'
 import styles from './styles.module.scss'
-import Btn from 'components/ui-kit/btn'
-import Input from 'components/ui-kit/input'
-import BtnSecond from 'components/ui-kit/btn-second'
-import {classNames} from 'shared/utils'
-import Menu from 'components/ui-kit/menu'
-import {DirectionSort, sortItems, SortType} from 'shared/data/sort-items'
-import MenuItem from 'components/ui-kit/menu-item'
+import {SortItem, sortItems} from 'shared/data'
 import {useDoubleInput, useSelectorApp} from 'shared/hoocks'
 import {useDispatch} from 'react-redux'
 import {changeFilter, resetFilter} from 'store/filter'
+import BtnPrimary from 'components/ui-kit-v2/btn-primary'
+import {Menu, MenuItem, TextField} from '@mui/material'
+import BtnSecondary from 'components/ui-kit-v2/btn-secondary'
+import {SortRounded} from '@mui/icons-material'
 
 type Props = {
     onLeftBtn?: React.MouseEventHandler
     textLeftBtn: string
-    iconLeftBtn?: string
+    iconLeftBtn?: React.ReactNode
     onSortItem: () => void
     onSearch: () => void
     isLoading: boolean
@@ -41,10 +39,8 @@ const SearchHeader = ({
     } = useDoubleInput('')
 
     useEffect(() => {
-        console.log('create header')
         return () => {
             dispatch(resetFilter())
-            console.log('destroy header')
         }
     }, [])
 
@@ -56,11 +52,7 @@ const SearchHeader = ({
         setAnchorEl(null)
     }
 
-    const handlerSortItem = (options: {
-        sortBy: SortType
-        direction: DirectionSort
-        text: string
-    }) => {
+    const handlerSortItem = (options: SortItem) => () => {
         handlerCloseSort()
         if ((options.sortBy === sortBy && options.direction === direction) || isLoading) return
 
@@ -91,44 +83,30 @@ const SearchHeader = ({
 
     return (
         <div className={styles.header}>
-            <Btn
-                text={textLeftBtn}
-                iconName={iconLeftBtn}
-                iconType={'round'}
-                className={styles.leftBtn}
-                onClick={onLeftBtn}
-                iconPosition={'end'}
-            />
-            <Input
+            <BtnPrimary className={styles.leftBtn} onClick={onLeftBtn} endIcon={iconLeftBtn}>
+                {textLeftBtn}
+            </BtnPrimary>
+            <TextField
+                variant={'filled'}
+                size={'mediumBold'}
                 value={input}
                 onChange={handlerChangeInput}
                 className={styles.search}
-                type={'text'}
+                type={'search'}
                 placeholder={'Поиск'}
-                autoComplete={'new-password'}
                 onKeyPress={handlerSearch}
+                autoComplete={'off'}
             />
-            <BtnSecond
-                text={text}
-                iconName={'sort'}
-                iconType={'round'}
+            <BtnSecondary
                 onClick={handlerOpenSort}
-                className={classNames(styles.sort, direction === 'ASC' ? styles.revert : '')}
-                isActive={!!anchorEl}
-                iconPosition={'end'}
-            />
+                className={styles.sort}
+                endIcon={<SortRounded />}
+            >
+                {text}
+            </BtnSecondary>
             <Menu anchorEl={anchorEl} open={!!anchorEl} onClose={handlerCloseSort}>
                 {sortItems.map((el, index) => (
-                    <MenuItem
-                        key={index}
-                        onClick={() =>
-                            handlerSortItem({
-                                sortBy: el.sortBy,
-                                direction: el.direction,
-                                text: el.text
-                            })
-                        }
-                    >
+                    <MenuItem key={index} onClick={handlerSortItem(el)}>
                         {el.text}
                     </MenuItem>
                 ))}

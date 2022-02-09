@@ -48,7 +48,7 @@ const initialState: ViewState = {
     table: {
         data: [],
         statuses: {},
-        pageSettings: {page: 0, isLastPage: false, size: 50, onlyInvalid: false}
+        pageSettings: {page: 0, isLastPage: false, size: 30, onlyInvalid: false}
     },
     callings: {
         data: [],

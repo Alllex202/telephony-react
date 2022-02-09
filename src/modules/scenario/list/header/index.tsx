@@ -9,6 +9,7 @@ import {enqueueSnackbar} from 'features/notifications/store'
 import {handlerError} from 'shared/middleware'
 import {useSelectorApp} from 'shared/hoocks'
 import SearchHeader from 'components/search-header'
+import {FormatListNumberedRounded} from '@mui/icons-material'
 
 const ScenarioListHeader = () => {
     const {
@@ -51,7 +52,7 @@ const ScenarioListHeader = () => {
             onSearch={handlerSearch}
             textLeftBtn={'Создать сценарий'}
             onLeftBtn={handlerCreate}
-            iconLeftBtn={'format_list_numbered'}
+            iconLeftBtn={<FormatListNumberedRounded />}
             isLoading={statuses.isLoading ?? false}
         />
     )

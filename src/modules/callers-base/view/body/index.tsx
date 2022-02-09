@@ -10,8 +10,8 @@ import {
     updateTablePageSettings
 } from 'store/callers-bases/view'
 import CallersBaseViewTable from './components/table'
-import Switch from 'components/ui-kit/switch'
 import {useDoubleInput, useSelectorApp} from 'shared/hoocks'
+import {Switch} from '@mui/material'
 
 const CallersBaseViewBody = () => {
     const {
@@ -43,7 +43,7 @@ const CallersBaseViewBody = () => {
     }
 
     const onChangeFilter = () => {
-        if (!data || tablesStatuses.isLoading) return
+        if (!data || tablesStatuses.isLoading || data.countInvalidCallers === 0) return
 
         dispatch(updateTablePageSettings({onlyInvalid: !onlyInvalid}))
     }
@@ -79,10 +79,16 @@ const CallersBaseViewBody = () => {
                             classNameText={styles.nameText}
                             disabled={statuses.isLoading}
                         />
-                        <div className={styles.toggleBlock}>
-                            <Switch checked={onlyInvalid} onChange={onChangeFilter} />
-                            <span>Невалидные</span>
-                        </div>
+                        <label className={styles.toggleBlock}>
+                            <span className={styles.label}>
+                                Невалидные ({data.countInvalidCallers})
+                            </span>
+                            <Switch
+                                checked={onlyInvalid}
+                                onChange={onChangeFilter}
+                                disabled={data.countInvalidCallers === 0}
+                            />
+                        </label>
                     </div>
 
                     <div className={styles.table}>

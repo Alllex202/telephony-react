@@ -6,6 +6,7 @@ import {useSelectorApp} from 'shared/hoocks'
 import {useDispatch} from 'react-redux'
 import {routes} from 'routing/routes'
 import {RequestPageTypes} from 'shared/types'
+import {UploadRounded} from '@mui/icons-material'
 
 const CallersBaseListHeader = () => {
     const {
@@ -32,7 +33,7 @@ const CallersBaseListHeader = () => {
             onSearch={handlerSearch}
             onLeftBtn={handlerCreate}
             textLeftBtn={'Добавить базу'}
-            iconLeftBtn={'upload'}
+            iconLeftBtn={<UploadRounded />}
             isLoading={statuses.isLoading ?? false}
         />
     )

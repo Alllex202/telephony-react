@@ -3,9 +3,9 @@ import bodyStyles from 'shared/styles/body-list/styles.module.scss'
 import {useDispatch} from 'react-redux'
 import {getCallersBases, resetCallersBasesStates as clearData} from 'store/callers-bases/list'
 import CallersBaseCard from './components/card'
-import BtnSecond from 'components/ui-kit/btn-second'
 import {useSelectorApp} from 'shared/hoocks'
 import {RequestPageTypes} from 'shared/types'
+import BtnSecondary from 'components/ui-kit-v2/btn-secondary'
 
 const CallersBaseListBody = () => {
     const dispatch = useDispatch()
@@ -41,11 +41,7 @@ const CallersBaseListBody = () => {
 
             <div className={bodyStyles.footer}>
                 {!isLastPage && (statuses.isSuccess || statuses.isError) && (
-                    <BtnSecond
-                        className={bodyStyles.more}
-                        onClick={loadNextPage}
-                        text={'Показать больше'}
-                    />
+                    <BtnSecondary onClick={loadNextPage}>Показать больше</BtnSecondary>
                 )}
             </div>
         </>

@@ -6,6 +6,7 @@ import {useSelectorApp} from 'shared/hoocks'
 import SearchHeader from 'components/search-header'
 import {getCallingsPage} from 'store/calling/list'
 import {RequestPageTypes} from 'shared/types'
+import {AddIcCallRounded} from '@mui/icons-material'
 
 const CallingListHeader = () => {
     const {callingList} = useSelectorApp()
@@ -34,7 +35,7 @@ const CallingListHeader = () => {
             onSearch={handlerSearch}
             textLeftBtn={'Обзванивание'}
             onLeftBtn={handlerCreate}
-            iconLeftBtn={'add_ic_call'}
+            iconLeftBtn={<AddIcCallRounded />}
             isLoading={
                 (callingList['RUN'].statuses.isLoading ?? false) ||
                 (callingList['SCHEDULED'].statuses.isLoading ?? false) ||

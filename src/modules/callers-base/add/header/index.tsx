@@ -1,7 +1,8 @@
 import React from 'react'
 import styles from './styles.module.scss'
-import BtnSecond from 'components/ui-kit/btn-second'
 import {useHistory} from 'react-router-dom'
+import BtnSecondary from 'components/ui-kit-v2/btn-secondary'
+import {ArrowBackRounded} from '@mui/icons-material'
 
 const CallersBaseAddHeader = () => {
     const history = useHistory()
@@ -13,14 +14,13 @@ const CallersBaseAddHeader = () => {
     return (
         <>
             <div className={styles.header}>
-                <BtnSecond
-                    text={'Отменить'}
+                <BtnSecondary
                     className={styles.cancel}
-                    iconName={'arrow_back'}
-                    iconType={'round'}
                     onClick={handlerBack}
-                    iconPosition={'start'}
-                />
+                    startIcon={<ArrowBackRounded />}
+                >
+                    Отменить
+                </BtnSecondary>
             </div>
         </>
     )

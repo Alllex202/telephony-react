@@ -1,5 +1,12 @@
 import type {} from '@mui/lab/themeAugmentation'
-import {createTheme, Palette, PaletteMode, PaletteOptions} from '@mui/material'
+import {
+    createTheme,
+    Interpolation,
+    Palette,
+    PaletteMode,
+    PaletteOptions,
+    Theme
+} from '@mui/material'
 import {orange} from 'global/colors/orange'
 import {green} from 'global/colors/green'
 import {grey} from 'global/colors/grey'
@@ -137,6 +144,51 @@ export const getThemePalette = (mode: PaletteMode): PaletteOptions => ({
     }
 })
 
+const muiFormControlStyle = (size: 'mediumBold' | 'mediumSlim'): Interpolation<{theme: Theme}> => ({
+    '& .MuiFilledInput-root': {
+        border: `4px solid ${transparent}`,
+        borderColor: transparent,
+        backgroundColor: grey[50],
+        height: 48,
+        borderRadius: 4,
+        transition: '.25s border-color, .25s background-color',
+        '&:before, &:after': {
+            content: 'none'
+        },
+        '&:hover:not(.Mui-disabled)': {
+            backgroundColor: grey[100]
+        },
+        '&.Mui-focused': {
+            backgroundColor: grey[50],
+            borderColor: orange[600]
+        },
+        '&.Mui-disabled': {
+            backgroundColor: grey[50]
+        },
+        '.MuiSelect-select': {
+            display: 'flex',
+            alignItems: 'center',
+            height: 48
+        }
+    },
+    '.MuiFilledInput-input': {
+        font: size === 'mediumBold' ? fonts.bodyBold : fonts.bodyMedium,
+        padding: '0 16px',
+        height: 48
+    },
+    '.MuiInputLabel-root': {
+        position: 'relative',
+        font: fonts.captionMedium,
+        transform: 'none',
+        top: -10,
+        marginTop: 10,
+        color: grey[600],
+        '&.Mui-focused': {
+            color: grey[600]
+        }
+    }
+})
+
 export const theme = createTheme({
     palette: {
         black: grey,
@@ -221,105 +273,23 @@ export const theme = createTheme({
             variants: [
                 {
                     props: {size: 'mediumBold', variant: 'filled'},
-                    style: {
-                        '& .MuiFilledInput-root': {
-                            border: `4px solid ${transparent}`,
-                            borderColor: transparent,
-                            backgroundColor: grey[50],
-                            transition: '.25s border-color, .25s background-color',
-                            '&:before, &:after': {
-                                content: 'none'
-                            },
-                            '&:hover:not(.Mui-disabled)': {
-                                backgroundColor: grey[100]
-                            },
-                            '&.Mui-focused': {
-                                backgroundColor: grey[50],
-                                borderColor: orange[600]
-                            },
-                            '&.Mui-disabled': {
-                                backgroundColor: grey[50]
-                            },
-                            '.MuiSelect-select': {
-                                display: 'flex',
-                                alignItems: 'center',
-                                height: 48
-                            }
-                        },
-                        '.MuiFilledInput-input': {
-                            font: fonts.bodyBold,
-                            padding: '0 16px',
-                            height: 48
-                        },
-                        '.MuiInputLabel-root': {
-                            position: 'relative',
-                            font: fonts.captionMedium,
-                            transform: 'none',
-                            top: -10,
-                            marginTop: 10,
-                            color: grey[600],
-                            '&.Mui-focused': {
-                                color: grey[600]
-                            }
-                        }
-                    }
+                    style: muiFormControlStyle('mediumBold')
                 },
                 {
                     props: {size: 'mediumSlim', variant: 'filled'},
-                    style: {
-                        '& .MuiFilledInput-root': {
-                            border: `4px solid ${transparent}`,
-                            borderColor: transparent,
-                            backgroundColor: grey[50],
-                            transition: '.25s border-color, .25s background-color',
-                            '&:before, &:after': {
-                                content: 'none'
-                            },
-                            '&:hover:not(.Mui-disabled)': {
-                                backgroundColor: grey[100]
-                            },
-                            '&.Mui-focused': {
-                                backgroundColor: grey[50],
-                                borderColor: orange[600]
-                            },
-                            '&.Mui-disabled': {
-                                backgroundColor: grey[50]
-                            },
-                            '.MuiSelect-select': {
-                                display: 'flex',
-                                alignItems: 'center',
-                                height: 48
-                            }
-                        },
-                        '.MuiFilledInput-input': {
-                            font: fonts.bodyBold,
-                            padding: '0 16px',
-                            height: 48
-                        },
-                        '.MuiInputLabel-root': {
-                            position: 'relative',
-                            font: fonts.captionMedium,
-                            transform: 'none',
-                            top: -10,
-                            marginTop: 10,
-                            color: grey[600],
-                            '&.Mui-focused': {
-                                color: grey[600]
-                            }
-                        }
-                    }
+                    style: muiFormControlStyle('mediumSlim')
                 }
             ]
         },
         MuiSwitch: {
             styleOverrides: {
                 root: {
-                    '.MuiSwitch-track': {
-                        backgroundColor: grey[700]
-                    },
-                    '.MuiSwitch-switchBase:not(.Mui-checked) .MuiSwitch-thumb': {
-                        backgroundColor: grey[500]
-                    }
+                    // '.MuiSwitch-track': {
+                    //     backgroundColor: grey[700]
+                    // },
+                    // '.MuiSwitch-switchBase:not(.Mui-checked) .MuiSwitch-thumb': {
+                    //     backgroundColor: grey[500]
+                    // }
                 }
             }
         },

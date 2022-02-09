@@ -1,17 +1,17 @@
 import React, {useRef, useState} from 'react'
 import styles from './styles.module.scss'
-import Icon from 'components/ui-kit/icon'
+// import Icon from 'components/ui-kit/icon'
 import {classNames} from 'shared/utils'
-import {uploadCallersBaseExcel} from 'core/api/requests'
-import {DefaultAxiosError} from 'shared/types/base-response-error'
+import {uploadCallersBaseExcel} from 'core/api'
+import {DefaultAxiosError, FetchStatuses} from 'shared/types'
 import {useHistory} from 'react-router-dom'
 import {routes} from 'routing/routes'
 import HiddenInputWithIcon from 'components/hidden-input-with-icon'
 import {handlerError} from 'shared/middleware'
 import {useDispatch} from 'react-redux'
 import {enqueueSnackbar} from 'features/notifications/store'
-import {FetchStatuses} from 'shared/types/fetch-statuses'
 import {useDoubleInput} from 'shared/hoocks'
+import {InfoRounded} from '@mui/icons-material'
 
 const fileType = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
 
@@ -104,13 +104,13 @@ const CallersBaseAddBody = () => {
                 setLastText={setLastName}
             />
             <div className={styles.info}>
-                <Icon className={styles.icon} iconName={'info'} iconType={'round'} />
+                <InfoRounded className={styles.icon} />
                 <div className={styles.text}>
                     Здесь описание необходимого формата таблицы, строк и прочее
                 </div>
             </div>
             <div
-                className={classNames(styles.drop, isDrag ? styles.dropped : '')}
+                className={classNames('unselectable', styles.drop, isDrag ? styles.dropped : '')}
                 onDrop={onDrop}
                 onDragStart={onDragStart}
                 onDragLeave={onDragLeave}

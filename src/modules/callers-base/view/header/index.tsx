@@ -1,7 +1,5 @@
 import React, {useEffect, useState} from 'react'
 import styles from './styles.module.scss'
-import BtnSecond from 'components/ui-kit/btn-second'
-import Btn from 'components/ui-kit/btn'
 import {useHistory, useParams} from 'react-router-dom'
 import {routes} from 'routing/routes'
 import {useDispatch} from 'react-redux'
@@ -9,6 +7,9 @@ import {useQuery, useSelectorApp} from 'shared/hoocks'
 import {deleteCallersBase} from 'core/api'
 import {enqueueSnackbar} from 'features/notifications/store'
 import {handlerError} from 'shared/middleware'
+import BtnSecondary from 'components/ui-kit-v2/btn-secondary'
+import {AddIcCallRounded, ArrowBackRounded} from '@mui/icons-material'
+import BtnPrimary from 'components/ui-kit-v2/btn-primary'
 
 const CallersBaseViewHeader = () => {
     const dispatch = useDispatch()
@@ -54,31 +55,31 @@ const CallersBaseViewHeader = () => {
 
     return (
         <div className={styles.header}>
-            <BtnSecond
-                className={styles.back}
-                text={created ? 'Отмена' : 'Назад'}
-                iconType={'round'}
-                iconName={'arrow_back'}
+            <BtnSecondary
+                className={created ? styles.cancel : styles.back}
+                startIcon={<ArrowBackRounded />}
                 onClick={handlerBack}
-            />
+            >
+                {created ? 'Отменить' : 'Назад'}
+            </BtnSecondary>
             {data && (
-                <BtnSecond
+                <BtnSecondary
                     className={styles.calling}
-                    text={'Обзванивание'}
-                    iconType={'round'}
-                    iconName={'add_ic_call'}
-                    iconPosition={'end'}
+                    endIcon={<AddIcCallRounded />}
                     onClick={handlerCalling}
                     disabled={statuses.isLoading}
-                />
+                >
+                    Обзванивание
+                </BtnSecondary>
             )}
             {created && (
-                <Btn
+                <BtnPrimary
                     className={styles.save}
-                    text={'Сохранить'}
                     onClick={handlerSave}
                     disabled={statuses.isLoading}
-                />
+                >
+                    Сохранить
+                </BtnPrimary>
             )}
         </div>
     )
