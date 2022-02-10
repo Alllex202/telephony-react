@@ -1,24 +1,23 @@
 import React, {useState} from 'react'
 import cardStyles from 'shared/styles/card/styles.module.scss'
 import styles from './styles.module.scss'
-import {FetchStatuses} from 'shared/types/fetch-statuses'
+import {DefaultAxiosError, FetchStatuses} from 'shared/types'
 import {useDispatch} from 'react-redux'
-import {deleteScenario} from 'core/api/requests'
+import {deleteScenario, ScenarioInfoModel} from 'core/api'
 import {deleteScenarioById} from 'store/scenario/list'
-import {DefaultAxiosError} from 'shared/types/base-response-error'
 import {Link} from 'react-router-dom'
 import {routes} from 'routing/routes'
 import Card from 'components/ui-kit/card'
-import {classNames} from 'shared/utils'
-import BtnCircle from 'components/ui-kit/btn-circle'
-import Menu from 'components/ui-kit/menu'
-import MenuItem from 'components/ui-kit/menu-item'
-import Icon from 'components/ui-kit/icon'
-import {formatDate} from 'shared/utils/format-date'
-// import Tag from 'components/ui-kit/tag';
-import {ScenarioInfoModel} from 'core/api'
+import {classNames, formatDate} from 'shared/utils'
 import {enqueueSnackbar} from 'features/notifications/store'
 import {handlerError} from 'shared/middleware'
+import {
+    CalendarTodayRounded,
+    DeleteForeverRounded,
+    MoreHorizRounded,
+    TableRowsRounded
+} from '@mui/icons-material'
+import {IconButton, Menu, MenuItem} from '@mui/material'
 
 type Props = {
     data: ScenarioInfoModel
@@ -45,13 +44,16 @@ const ScenarioCard = ({data, className}: Props) => {
             .then((res) => {
                 dispatch(deleteScenarioById(data.id))
                 dispatch(enqueueSnackbar({message: 'Сценарий удален', type: 'SUCCESS'}))
-                // setStatuses({isLoading: false, isSuccess: true, isError: false});
             })
             .catch(
                 handlerError(dispatch, (err: DefaultAxiosError) => {
                     setStatuses({isLoading: false, isSuccess: false, isError: true})
                 })
             )
+    }
+
+    const preventDefault = (e: React.MouseEvent) => {
+        e.preventDefault()
     }
 
     return (
@@ -61,21 +63,13 @@ const ScenarioCard = ({data, className}: Props) => {
                 isActive={!!anchorEl}
             >
                 <div className={cardStyles.wrapper}>
-                    <div onClick={(e) => e.preventDefault()} className={cardStyles.options_wrapper}>
-                        <BtnCircle
-                            iconName={'more_horiz'}
-                            iconType={'round'}
-                            className={cardStyles.options_btn}
-                            onClick={openOptions}
-                            isActive={!!anchorEl}
-                        />
+                    <div onClick={preventDefault} className={cardStyles.options_wrapper}>
+                        <IconButton onClick={openOptions} color={'black'}>
+                            <MoreHorizRounded fontSize={'large'} className={cardStyles.icon} />
+                        </IconButton>
                         <Menu anchorEl={anchorEl} open={!!anchorEl} onClose={closeOptions}>
-                            <MenuItem
-                                onClick={handlerDelete}
-                                isDanger
-                                iconName={'delete_forever'}
-                                iconType={'round'}
-                            >
+                            <MenuItem onClick={handlerDelete} color={'red'}>
+                                <DeleteForeverRounded className={cardStyles.icon} />
                                 Удалить
                             </MenuItem>
                         </Menu>
@@ -84,29 +78,16 @@ const ScenarioCard = ({data, className}: Props) => {
                         <h2 className={cardStyles.title}>{data.name}</h2>
                         <div className={cardStyles.description}>
                             <div className={cardStyles.info}>
-                                <Icon
-                                    iconName={'calendar_today'}
-                                    iconType={'round'}
-                                    className={cardStyles.icon}
-                                />
+                                <CalendarTodayRounded className={cardStyles.icon} />
                                 {formatDate(data.created)}
                             </div>
                             <div className={cardStyles.info}>
-                                <Icon
-                                    iconName={'table_rows'}
-                                    iconType={'round'}
-                                    className={cardStyles.icon}
-                                />
+                                <TableRowsRounded className={cardStyles.icon} />
                                 {data.countSteps} ш
                             </div>
                         </div>
                     </div>
-                    <div className={cardStyles.tags}>
-                        {/*{data.columns.slice(0, 5).map(el => <Tag text={`#${el.nameInTable}`} key={el.id}*/}
-                        {/*                                         className={styles.tag}/>)}*/}
-                        {/*{data.columns.length - 5 > 0 &&*/}
-                        {/*<Tag text={`+${data.columns.length - 5}`} className={styles.tag}/>}*/}
-                    </div>
+                    <div className={cardStyles.tags} />
                 </div>
             </Card>
         </Link>

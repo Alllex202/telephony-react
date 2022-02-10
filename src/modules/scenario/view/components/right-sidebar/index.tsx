@@ -1,23 +1,27 @@
 import React, {useEffect, useState} from 'react'
 import styles from './styles.module.scss'
-import BtnCircle from 'components/ui-kit/btn-circle'
 import {Controls, useStoreState, useZoomPanHelper} from 'react-flow-renderer'
-import BtnSecond from 'components/ui-kit/btn-second'
 import {Link, useParams} from 'react-router-dom'
 import {routes} from 'routing/routes'
 import {useDispatch} from 'react-redux'
-import Menu from 'components/ui-kit/menu'
-import MenuItem from 'components/ui-kit/menu-item'
 import {
     getCallersBases,
     getCallersBaseSelected,
     resetScenarioView,
     setCallersBaseSelected
 } from 'store/scenario/view'
-import Tag from 'components/ui-kit/tag'
-import cardStyles from 'shared/styles/card/styles.module.scss'
 import {useSelectorApp} from 'shared/hoocks'
 import {CallersBaseHeaderModel} from 'core/api'
+import {Chip, IconButton, Menu, MenuItem} from '@mui/material'
+import {
+    AddRounded,
+    CropFreeRounded,
+    LinkOffRounded,
+    LinkRounded,
+    PlayArrowRounded,
+    RemoveRounded
+} from '@mui/icons-material'
+import BtnSecondary from 'components/ui-kit-v2/btn-secondary'
 
 const maxShowVariables = 10
 
@@ -106,34 +110,36 @@ const ScenarioRightSidebar = () => {
                 >
                     <div className={styles.percent}>{(currentZoom * 100).toFixed(0)}%</div>
                     <div className={styles.buttons}>
-                        <BtnCircle
-                            iconName={'remove'}
-                            iconType={'round'}
+                        <IconButton
                             className={styles.btn}
+                            color={'black'}
                             onClick={onZoomOut}
-                        />
-                        <BtnCircle
-                            iconName={'add'}
-                            iconType={'round'}
+                            size={'small'}
+                        >
+                            <RemoveRounded className={styles.icon} fontSize={'small'} />
+                        </IconButton>
+                        <IconButton
                             className={styles.btn}
+                            color={'black'}
                             onClick={onZoomIn}
-                        />
-                        <BtnCircle
-                            iconName={'crop_free'}
-                            iconType={'round'}
+                            size={'small'}
+                        >
+                            <AddRounded className={styles.icon} fontSize={'small'} />
+                        </IconButton>
+                        <IconButton
                             className={styles.btn}
+                            color={'black'}
                             onClick={onFitView}
-                        />
+                            size={'small'}
+                        >
+                            <CropFreeRounded className={styles.icon} fontSize={'small'} />
+                        </IconButton>
                     </div>
                 </Controls>
             </div>
-            <BtnSecond
-                text={'Запустить'}
-                className={styles.btnRun}
-                iconName={'play_arrow'}
-                iconType={'round'}
-                iconPosition={'end'}
-            />
+            <BtnSecondary className={styles.btnRun} endIcon={<PlayArrowRounded />}>
+                Запустить
+            </BtnSecondary>
 
             <div className={styles.infoConnection}>
                 <div className={styles.part}>
@@ -154,42 +160,46 @@ const ScenarioRightSidebar = () => {
                             {callersBaseSelected.data.columns
                                 .slice(0, maxShowVariables)
                                 .map((el) => (
-                                    <Tag text={`#${el.currentName}`} key={el.id} />
+                                    <Chip
+                                        variant={'square'}
+                                        label={`#${el.currentName}`}
+                                        key={el.id}
+                                    />
                                 ))}
                             {callersBaseSelected.data.columns.length - maxShowVariables > 0 && (
-                                <Tag
-                                    text={`+${
+                                <Chip
+                                    variant={'square'}
+                                    label={`+${
                                         callersBaseSelected.data.columns.length - maxShowVariables
                                     }`}
-                                    className={cardStyles.tag}
                                 />
                             )}
                         </div>
                     </div>
                 )}
                 {callersBaseSelected.data !== null ? (
-                    <BtnSecond
+                    <BtnSecondary
                         className={styles.btnDisconnect}
-                        text={'Разорвать'}
-                        iconName={'link_off'}
-                        iconType={'round'}
-                        iconPosition={'end'}
                         onClick={onDisconnect}
-                    />
+                        endIcon={<LinkOffRounded />}
+                        disabled={scenario.status.isLoading}
+                    >
+                        Разорвать
+                    </BtnSecondary>
                 ) : (
-                    <BtnSecond
+                    <BtnSecondary
                         className={styles.btnConnect}
-                        text={'Прикрепить'}
-                        iconName={'link'}
-                        iconType={'round'}
-                        iconPosition={'end'}
                         onClick={onOpenMenu}
+                        endIcon={<LinkRounded />}
                         disabled={
                             !callersBases.status.isSuccess ||
                             callersBaseSelected.status.isLoading ||
-                            callersBases.data.length === 0
+                            callersBases.data.length === 0 ||
+                            scenario.status.isLoading
                         }
-                    />
+                    >
+                        Прикрепить
+                    </BtnSecondary>
                 )}
                 {callersBases.data.length > 0 && (
                     <Menu anchorEl={anchorEl} open={!!anchorEl} onClose={onCloseMenu}>

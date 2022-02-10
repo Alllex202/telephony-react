@@ -53,13 +53,18 @@ const ScenarioEditor = React.memo(() => {
         if (!(reactFlowWrapper && reactFlowWrapper.current && reactFlowInstance)) return
 
         const reactFlowBounds = reactFlowWrapper.current.getBoundingClientRect()
-        const nodeType = e.dataTransfer.getData('application/reactflow') as NodeTypes
+        const nodeType = e.dataTransfer.getData('application/reactflow')
+
+        if (!nodeType) return
+
         const position = reactFlowInstance.project({
             x: e.clientX - reactFlowBounds.left,
             y: e.clientY - reactFlowBounds.top
         })
 
-        dispatch(addNode({nodeType, position}))
+        console.log(e, reactFlowBounds, nodeType, position)
+
+        dispatch(addNode({nodeType: nodeType as NodeTypes, position}))
     }
 
     const onElementsRemove = (elements: Elements) => {

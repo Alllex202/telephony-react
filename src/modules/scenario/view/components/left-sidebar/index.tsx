@@ -1,9 +1,9 @@
 import React from 'react'
 import styles from './styles.module.scss'
-import Icon from 'components/ui-kit/icon'
 import {NodeTypes} from 'core/api'
 import {classNames} from 'shared/utils'
 import {useSelectorApp} from 'shared/hoocks'
+import {RedoRounded} from '@mui/icons-material'
 
 const ScenarioLeftSidebar = () => {
     const {
@@ -30,7 +30,7 @@ const ScenarioLeftSidebar = () => {
     return (
         <div className={styles.leftSidebar}>
             <div className={styles.infoBlock}>
-                <Icon iconName={'redo'} iconType={'round'} className={styles.infoIcon} />
+                <RedoRounded className={styles.infoIcon} />
                 <div className={styles.infoText}>Перетащите компоненты на поле</div>
             </div>
             <div className={styles.elements}>

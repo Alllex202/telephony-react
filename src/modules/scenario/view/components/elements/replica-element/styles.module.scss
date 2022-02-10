@@ -45,6 +45,19 @@
       .wrapper {
         display: flex;
         align-items: center;
+        justify-content: space-between;
+
+        .time {
+          font: var(--font-caption-medium);
+          white-space: nowrap;
+        }
+
+        .slider {
+          width: 156px;
+          display: flex;
+          align-items: center;
+          padding: 0 15px 0 0;
+        }
 
         .timeInput {
           width: 65px;
@@ -127,10 +140,13 @@
           }
 
           .dropDown {
-            height: fit-content;
-            width: fit-content;
+            padding: 0;
 
-            & > span {
+            &:hover {
+              background-color: var(--btn-circle-active);
+            }
+
+            .icon {
               font-size: 24px;
             }
           }

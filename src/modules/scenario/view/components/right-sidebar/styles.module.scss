@@ -45,15 +45,8 @@
         gap: 8px;
 
         .btn {
-          width: 24px;
-          height: 24px;
 
-          &:last-of-type > span {
-            font-size: 18px;
-          }
-
-          & > span {
-            font-size: 24px;
+          .icon {
           }
         }
       }

@@ -1,16 +1,10 @@
 import React, {useEffect, useState} from 'react'
 import styles from './styles.module.scss'
-import 'modules/scenario/view/components/elements/element/element-style.scss'
+import '../element/element-style.scss'
 import {Handle, NodeProps, Position} from 'react-flow-renderer'
 import {classNames} from 'shared/utils'
 import {NodeDataModel} from 'core/api'
-import Input from 'components/ui-kit/input'
 import Card from 'components/ui-kit/card'
-import Switch from 'components/ui-kit/switch'
-import BtnCircle from 'components/ui-kit/btn-circle'
-import Icon from 'components/ui-kit/icon'
-import Menu from 'components/ui-kit/menu'
-import MenuItem from 'components/ui-kit/menu-item'
 import {useDispatch} from 'react-redux'
 import {
     addAnswer,
@@ -22,6 +16,8 @@ import {
     setWaitingTime
 } from 'store/scenario/view'
 import ReplicaInput from './components/replica-input'
+import {IconButton, Menu, MenuItem, Slider, Switch} from '@mui/material'
+import {AddRounded, ArrowDropDownRounded, RemoveRounded} from '@mui/icons-material'
 
 interface Button {
     name: string
@@ -84,15 +80,15 @@ const ReplicaElement = React.memo(
             dispatch(setReplica({elementId: id, replica: e.target.value}))
         }
 
-        const onChangeWaitingTime = (e: React.ChangeEvent<HTMLInputElement>) => {
-            const {value} = e.target
-            dispatch(setWaitingTime({elementId: id, time: Number(value) * 1000}))
-        }
+        const onChangeWaitingTime = (e: Event, value: number | number[]) => {
+            if (typeof value !== 'number') return
 
-        const onBlurWaitingTime = (e: React.ChangeEvent<HTMLInputElement>) => {
-            const {value, min, max} = e.target
-            const time = Math.max(Number(min), Math.min(Number(max), Number(value)))
-            dispatch(setWaitingTime({elementId: id, time: time * 1000}))
+            dispatch(
+                setWaitingTime({
+                    elementId: id,
+                    time: Number(value) * 1000
+                })
+            )
         }
 
         const onAddAnswer = () => {
@@ -146,16 +142,16 @@ const ReplicaElement = React.memo(
                     {data.needAnswer && (
                         <div className={styles.options}>
                             <div className={styles.wrapper}>
-                                <Input
-                                    type={'number'}
-                                    className={styles.timeInput}
-                                    value={data.needAnswer ? data.waitingTime / 1000 : 5}
-                                    onChange={onChangeWaitingTime}
-                                    min={5}
-                                    max={60}
-                                    onBlur={onBlurWaitingTime}
-                                />
-                                <span className={styles.postfix}>сек</span>
+                                <div className={styles.time}>{data.waitingTime / 1000} сек</div>
+                                <div className={styles.slider}>
+                                    <Slider
+                                        size={'small'}
+                                        min={5}
+                                        max={60}
+                                        value={data.waitingTime / 1000}
+                                        onChange={onChangeWaitingTime}
+                                    />
+                                </div>
                             </div>
                             <div className={styles.answers}>
                                 {data.answers?.map((ans) => (
@@ -191,11 +187,7 @@ const ReplicaElement = React.memo(
                                                         styles.movable
                                                     )}
                                                 >
-                                                    <Icon
-                                                        iconName={'remove'}
-                                                        iconType={'round'}
-                                                        className={styles.icon}
-                                                    />
+                                                    <RemoveRounded className={styles.icon} />
                                                 </div>
                                             </button>
                                         ) : (
@@ -209,24 +201,19 @@ const ReplicaElement = React.memo(
                                         )}
                                         <span className={styles.label}>Кнопка {ans.button}</span>
                                         {menu.isShow && (
-                                            <>
-                                                <BtnCircle
-                                                    iconName={'arrow_drop_down'}
-                                                    iconType={'round'}
-                                                    className={styles.dropDown}
-                                                    onClick={onOpenMenu(ans.button)}
-                                                />
-                                            </>
+                                            <IconButton
+                                                className={styles.dropDown}
+                                                onClick={onOpenMenu(ans.button)}
+                                                disableRipple
+                                            >
+                                                <ArrowDropDownRounded className={styles.icon} />
+                                            </IconButton>
                                         )}
                                     </div>
                                 ))}
                                 {menu.isShow && (
                                     <button className={styles.circle} onClick={onAddAnswer}>
-                                        <Icon
-                                            iconName={'add'}
-                                            iconType={'round'}
-                                            className={styles.icon}
-                                        />
+                                        <AddRounded className={styles.icon} />
                                     </button>
                                 )}
                             </div>

@@ -2,10 +2,10 @@ import React, {useEffect} from 'react'
 import bodyStyles from 'shared/styles/body-list/styles.module.scss'
 import {useDispatch} from 'react-redux'
 import {getScenariosPage, resetScenariosStates as clearData} from 'store/scenario/list'
-import BtnSecond from 'components/ui-kit/btn-second'
-import ScenarioCard from 'modules/scenario/list/body/components/card'
+import ScenarioCard from './components/card'
 import {useSelectorApp} from 'shared/hoocks'
 import {RequestPageTypes} from 'shared/types'
+import BtnSecondary from 'components/ui-kit-v2/btn-secondary'
 
 const ScenarioListBody = () => {
     const dispatch = useDispatch()
@@ -41,11 +41,9 @@ const ScenarioListBody = () => {
 
             <div className={bodyStyles.footer}>
                 {!isLastPage && (statuses.isSuccess || statuses.isError) && (
-                    <BtnSecond
-                        className={bodyStyles.more}
-                        onClick={loadNextPage}
-                        text={'Показать больше'}
-                    />
+                    <BtnSecondary className={bodyStyles.more} onClick={loadNextPage}>
+                        Показать больше
+                    </BtnSecondary>
                 )}
             </div>
         </>
