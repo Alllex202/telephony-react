@@ -22,8 +22,6 @@ const CallingViewTable = React.memo(() => {
     const {callingId} = useParams<{callingId: string}>()
 
     const handlerScroll = ({scrollHeight, scrollTop, clientHeight}: OnScrollParams) => {
-        console.log(scrollTop + (48 * tableBody.pageSettings.size) / 2 + clientHeight, scrollHeight)
-        console.log({scrollHeight, scrollTop, clientHeight})
         if (
             tableBody.status.isLoading ||
             tableBody.pageSettings.isLastPage ||

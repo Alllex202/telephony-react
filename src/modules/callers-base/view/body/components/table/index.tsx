@@ -37,7 +37,7 @@ const CallersBaseViewTable = () => {
         if (
             statuses.isLoading ||
             isLastPage ||
-            scrollTop + (48 * clientHeight) / 2 + clientHeight < scrollHeight
+            scrollTop + (48 * size) / 2 + clientHeight < scrollHeight
         )
             return
 
@@ -188,7 +188,7 @@ const CallersBaseViewTable = () => {
 
     return (
         <>
-            {variablesTypes.statuses.isSuccess && data.length > 0 && (
+            {variablesTypes.statuses.isSuccess && (
                 <div className={styles.table}>
                     <AutoSizer disableHeight>{renderMultiGrid}</AutoSizer>
                 </div>
