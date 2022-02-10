@@ -36,6 +36,16 @@
 
     .profile {
       margin: 0 0 0 auto;
+      color: var(--btn-toggle-icon);
+      transition: .25s color;
+
+      &.active {
+        color: var(--btn-toggle-icon-active);
+      }
+
+      .icon {
+        font-size: 48px;
+      }
     }
   }
 }

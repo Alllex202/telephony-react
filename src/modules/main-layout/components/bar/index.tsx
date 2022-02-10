@@ -1,7 +1,9 @@
 import React, {ReactNode, useState} from 'react'
 import styles from './styles.module.scss'
 import Logo from './components/logo'
-import BtnToggle from 'components/ui-kit/btn-toggle'
+import {IconButton} from '@mui/material'
+import {AccountCircleRounded} from '@mui/icons-material'
+import {classNames} from 'shared/utils'
 
 type Props = {
     children: ReactNode
@@ -21,13 +23,13 @@ const Bar = ({children}: Props) => {
             </div>
             <div className={styles.center}>{children}</div>
             <div className={styles.right}>
-                <BtnToggle
-                    className={styles.profile}
-                    isActive={isOpen}
+                <IconButton
+                    className={classNames(styles.profile, isOpen ? styles.active : '')}
                     onClick={toggleProfile}
-                    iconName={'account_circle'}
-                    iconType={'round'}
-                />
+                    disableRipple={true}
+                >
+                    <AccountCircleRounded className={styles.icon} />
+                </IconButton>
             </div>
         </div>
     )
