@@ -1,6 +1,7 @@
 import React, {useState} from 'react'
 import styles from './styles.module.scss'
 import {Cell, Legend, Pie, PieChart as _PieChart, ResponsiveContainer, Tooltip} from 'recharts'
+import {Props as LegendProps} from 'recharts/types/component/DefaultLegendContent'
 import {ExtraPieChartPartModel} from 'store/calling/view'
 import {PieChartTypes} from 'core/api'
 
@@ -11,16 +12,36 @@ type Props = {
 const PieChart = ({data}: Props) => {
     const [focused, setFocus] = useState<PieChartTypes | null>(null)
 
-    const handlerMouseEnter = (props: any) => {
-        const {
-            payload: {key}
-        } = props
-        setFocus(key)
-    }
+    const renderLegend = React.useCallback((props: LegendProps) => {
+        const {payload} = props
 
-    const handlerMouseLeave = () => {
-        setFocus(null)
-    }
+        const handlerMouseEnter = (el: any) => () => {
+            const {
+                payload: {key}
+            } = el
+            setFocus(key)
+        }
+
+        const handlerMouseLeave = () => {
+            setFocus(null)
+        }
+
+        return (
+            <ul className={styles.legend}>
+                {payload?.map((el, ind) => (
+                    <li
+                        key={ind}
+                        className={styles.legendElement}
+                        onMouseEnter={handlerMouseEnter(el)}
+                        onMouseLeave={handlerMouseLeave}
+                    >
+                        <div style={{backgroundColor: el.color}} />
+                        {el.value}
+                    </li>
+                ))}
+            </ul>
+        )
+    }, [])
 
     return (
         <div className={styles.pieChart}>
@@ -41,7 +62,7 @@ const PieChart = ({data}: Props) => {
                             <Cell
                                 key={el.key}
                                 fill={el.color}
-                                fillOpacity={focused && focused !== el.key ? 0.1 : 1}
+                                fillOpacity={focused && focused !== el.key ? 0.2 : 1}
                             />
                         ))}
                     </Pie>
@@ -52,40 +73,10 @@ const PieChart = ({data}: Props) => {
                         layout={'vertical'}
                         content={renderLegend}
                         iconSize={12}
-                        onMouseEnter={handlerMouseEnter}
-                        onMouseLeave={handlerMouseLeave}
                     />
                 </_PieChart>
             </ResponsiveContainer>
         </div>
-    )
-}
-
-const renderLegend = (props: any) => {
-    const {payload, onMouseEnter, onMouseLeave} = props
-
-    const handlerMouseEnter = (el: any) => () => {
-        onMouseEnter(el)
-    }
-
-    const handlerMouseLeave = (el: any) => () => {
-        onMouseLeave(el)
-    }
-
-    return (
-        <ul className={styles.legend}>
-            {payload.map((el: any, ind: number) => (
-                <li
-                    key={ind}
-                    className={styles.legendElement}
-                    onMouseEnter={handlerMouseEnter(el)}
-                    onMouseLeave={handlerMouseLeave(el)}
-                >
-                    <div style={{backgroundColor: el.color}} />
-                    {el.value}
-                </li>
-            ))}
-        </ul>
     )
 }
 
