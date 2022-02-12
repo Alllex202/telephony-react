@@ -1,8 +1,9 @@
 import React, {useEffect, useState} from 'react'
 import styles from './styles.module.scss'
-import {Fade, IconButton, Popover} from '@mui/material'
+import {Fade, IconButton, Popover, PopoverOrigin} from '@mui/material'
 import {CloseRounded, DoneRounded} from '@mui/icons-material'
 import {classNames} from 'shared/utils'
+import AutosizeInput from 'react-input-autosize'
 
 type Props = {
     value: string
@@ -10,9 +11,23 @@ type Props = {
     required?: boolean
     disabled?: boolean
     prefix?: string
+    children?: React.ReactNode
+    anchorOrigin?: PopoverOrigin
+    inputClassName?: string
+    btnClassName?: string
 }
 
-const TableVariable = ({value, onChange, required, disabled, prefix}: Props) => {
+const HiddenInput = ({
+    value,
+    onChange,
+    required,
+    disabled,
+    prefix,
+    children,
+    anchorOrigin,
+    inputClassName,
+    btnClassName
+}: Props) => {
     const [newValue, setNewValue] = useState<string>(value)
     const [anchorEl, setAnchor] = useState<Element | null>(null)
     const isOpened = !!anchorEl
@@ -52,35 +67,45 @@ const TableVariable = ({value, onChange, required, disabled, prefix}: Props) => 
 
     return (
         <>
-            <div
-                className={classNames(styles.text, disabled ? styles.disabled : '')}
-                onClick={handlerOpen}
-            >
-                {prefix}
-                {value}
+            <div onClick={handlerOpen}>
+                {children ?? (
+                    <div className={styles.wrapperText}>
+                        <div className={classNames(styles.text, disabled ? styles.disabled : '')}>
+                            {prefix}
+                            {value}
+                        </div>
+                    </div>
+                )}
             </div>
             <Popover
                 open={isOpened}
                 anchorEl={anchorEl}
                 onClose={handlerClose}
-                anchorOrigin={{
-                    vertical: 'bottom',
-                    horizontal: 'left'
-                }}
+                anchorOrigin={
+                    anchorOrigin ?? {
+                        vertical: 'bottom',
+                        horizontal: 'left'
+                    }
+                }
                 TransitionComponent={Fade}
                 onKeyDown={handlerDoneWithEnter}
             >
                 <div className={styles.wrapper}>
-                    <input
-                        className={styles.input}
+                    <AutosizeInput
+                        inputClassName={classNames(styles.input, inputClassName)}
                         type='text'
                         value={newValue}
                         onChange={handlerChange}
                     />
-                    <IconButton onClick={handlerDone} color={'black'} disabled={disableDone}>
+                    <IconButton
+                        onClick={handlerDone}
+                        color={'black'}
+                        disabled={disableDone}
+                        className={btnClassName}
+                    >
                         <DoneRounded />
                     </IconButton>
-                    <IconButton onClick={handlerClose} color={'black'}>
+                    <IconButton onClick={handlerClose} color={'black'} className={btnClassName}>
                         <CloseRounded />
                     </IconButton>
                 </div>
@@ -89,4 +114,4 @@ const TableVariable = ({value, onChange, required, disabled, prefix}: Props) => 
     )
 }
 
-export default TableVariable
+export default HiddenInput

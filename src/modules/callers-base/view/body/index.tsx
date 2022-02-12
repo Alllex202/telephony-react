@@ -10,7 +10,7 @@ import {
     updateTablePageSettings
 } from 'store/callers-bases/view'
 import CallersBaseViewTable from './components/table'
-import {useDoubleInput, useSelectorApp} from 'shared/hoocks'
+import {useSelectorApp} from 'shared/hoocks'
 import {Switch} from '@mui/material'
 
 const CallersBaseViewBody = () => {
@@ -23,23 +23,13 @@ const CallersBaseViewBody = () => {
             }
         }
     } = useSelectorApp()
-    const {
-        text: name,
-        lastText: lastName,
-        setText: setName,
-        setLastText: setLastName
-    } = useDoubleInput(data?.name || '')
     const {callersBaseId} = useParams<{callersBaseId: string}>()
     const dispatch = useDispatch()
 
-    const handlerSaveName = (currentValue: string) => {
-        if (statuses.isLoading || name === '') {
-            setName(lastName)
-            return
-        }
-        if (!data || lastName === currentValue) return
+    const handlerSaveName = (value: string) => {
+        if (statuses.isLoading || !data || data.name === value) return
 
-        dispatch(changeCallersBaseCommon({...data, name: currentValue}))
+        dispatch(changeCallersBaseCommon({...data, name: value}))
     }
 
     const onChangeFilter = () => {
@@ -56,27 +46,14 @@ const CallersBaseViewBody = () => {
         }
     }, [])
 
-    useEffect(() => {
-        if (data) {
-            setName(data.name)
-            setLastName(data.name)
-        }
-    }, [data?.name])
-
     return (
         <>
             {data && (
                 <div className={styles.wrapper}>
                     <div className={styles.head}>
                         <HiddenInputWithIcon
-                            text={name}
-                            lastText={lastName}
-                            setText={setName}
-                            setLastText={setLastName}
-                            callback={handlerSaveName}
-                            classNameWrapper={styles.name}
-                            classNameInput={styles.nameInput}
-                            classNameText={styles.nameText}
+                            value={data.name}
+                            onChange={handlerSaveName}
                             disabled={statuses.isLoading}
                         />
                         <label className={styles.toggleBlock}>

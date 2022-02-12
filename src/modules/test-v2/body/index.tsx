@@ -53,7 +53,10 @@ import {DatePicker, LocalizationProvider, TimePicker} from '@mui/lab'
 import ruLocale from 'date-fns/locale/ru'
 import SwitchV1 from 'components/ui-kit/switch'
 import IconV1 from 'components/ui-kit/icon'
-import TableVariable from 'components/ui-kit-v2/table-variable'
+import HiddenInput from 'components/ui-kit-v2/hidden-input'
+import AutosizeInput from 'react-input-autosize'
+import {useDoubleInput} from 'shared/hoocks'
+import classes from './styles.module.scss'
 
 const menuItems = [
     'Первый пункт',
@@ -135,10 +138,16 @@ const TestComponentsBody = () => {
         2: Element | null
         3: Element | null
     }>({1: null, 2: null, 3: null})
-    const [variable, setVariable] = useState<string>('')
+    const [variable, setVariable] = useState<string>('zxc')
+    const [autosize, setAutosize] = useState<string>('qwe')
+    const {text, setText, lastText, setLastText} = useDoubleInput('asd')
 
     const onChangeVariable = (value: string) => {
         setVariable(value)
+    }
+
+    const onChangeAutosize = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setAutosize(e.currentTarget.value)
     }
 
     const onChangeDateTime = (_date: number | null | undefined) => {
@@ -846,12 +855,20 @@ const TestComponentsBody = () => {
                     </div>
 
                     <div>
-                        <h1 style={{marginBottom: 15}}>Input Autosize</h1>
+                        <h1 style={{marginBottom: 15}}>Table Variable</h1>
                         <div style={{width: 500, overflow: 'hidden'}}>
-                            <TableVariable value={variable} onChange={onChangeVariable} required />
+                            <HiddenInput value={variable} onChange={onChangeVariable} required />
                         </div>
-                        <div style={{width: 500, overflow: 'hidden'}}>
-                            <TableVariable value={variable} onChange={onChangeVariable} required />
+                    </div>
+
+                    <div>
+                        <h1 style={{marginBottom: 15}}>Transparent autosize input</h1>
+                        <div style={{width: 300, overflow: 'hidden'}}>
+                            <AutosizeInput
+                                value={autosize}
+                                onChange={onChangeAutosize}
+                                inputClassName={classes.autosize}
+                            />
                         </div>
                     </div>
                 </div>

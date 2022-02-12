@@ -1,28 +1,41 @@
 .wrapper {
-  width: 60%;
-  display: flex;
+  display: inline-flex;
   flex-direction: row;
   align-items: center;
+  gap: 8px;
+  cursor: pointer;
 
-  .input {
-    font: var(--font-h2-bold);
-    border-radius: 4px;
+  &:hover {
+    .text {
+      background-color: var(--hidden-input-hover);
+    }
   }
 
-  .view {
+  .text {
     font: var(--font-h2-bold);
-    background-color: var(--input-name);
-    transition: .2s;
+    padding: 5px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: 500px;
+    background-color: var(--hidden-input);
+    transition: .25s background-color;
     border-radius: 4px;
 
     &:hover {
-      background-color: var(--input-name-hover);
+      background-color: var(--hidden-input-hover);
     }
   }
 
   .icon {
     font-size: 24px;
     color: var(--text-super-light);
-    margin-left: 8px;
   }
+}
+
+.input.big {
+  font: var(--font-h2-bold);
+  padding: 4px;
+  min-width: 500px;
+  max-width: 500px;
 }

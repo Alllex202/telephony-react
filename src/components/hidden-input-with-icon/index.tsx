@@ -1,49 +1,45 @@
 import React from 'react'
 import styles from './styles.module.scss'
-import Icon from 'components/ui-kit/icon'
-import HiddenInput from 'components/hidden-input'
+import {EditRounded} from '@mui/icons-material'
+import HiddenInput from 'components/ui-kit-v2/hidden-input'
 import {classNames} from 'shared/utils'
 
 type Props = {
-    text: string
-    lastText: string
-    setText: React.Dispatch<React.SetStateAction<string>>
-    setLastText: React.Dispatch<React.SetStateAction<string>>
-    callback?: (currentValue: string) => void
-    classNameWrapper?: string
-    classNameInput?: string
-    classNameText?: string
-    className?: string
+    value: string
+    onChange?: (value: string) => void
     disabled?: boolean
+    wrapperClassName?: string
+    textClassName?: string
+    iconClassName?: string
+    inputClassName?: string
+    btnClassName?: string
 }
 
 const HiddenInputWithIcon = ({
-    text,
-    setText,
-    setLastText,
-    lastText,
-    callback,
-    classNameWrapper,
-    classNameInput,
-    classNameText,
-    className,
-    disabled
+    value,
+    onChange,
+    disabled,
+    iconClassName,
+    wrapperClassName,
+    textClassName,
+    inputClassName,
+    btnClassName
 }: Props) => {
     return (
-        <div className={classNames(styles.wrapper, className)}>
-            <HiddenInput
-                text={text}
-                lastText={lastText}
-                setLastText={setLastText}
-                setText={setText}
-                callback={callback}
-                classInput={classNames(styles.input, classNameInput)}
-                classText={classNames(styles.view, classNameText)}
-                classWrapper={classNameWrapper}
-                disabled={disabled}
-            />
-            <Icon iconName={'edit'} iconType={'round'} className={styles.icon} />
-        </div>
+        <HiddenInput
+            value={value}
+            onChange={onChange}
+            required
+            anchorOrigin={{vertical: 'top', horizontal: 'left'}}
+            disabled={disabled}
+            inputClassName={classNames(styles.big, styles.input, inputClassName)}
+            btnClassName={btnClassName}
+        >
+            <div className={classNames(styles.wrapper, wrapperClassName)}>
+                <div className={classNames(styles.text, textClassName)}>{value}</div>
+                <EditRounded className={classNames(styles.icon, iconClassName)} />
+            </div>
+        </HiddenInput>
     )
 }
 

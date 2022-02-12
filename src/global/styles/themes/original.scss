@@ -73,6 +73,11 @@
   --input-name: var(--white);
   --input-name-hover: var(--grey-100);
 
+  --hidden-input: var(--trasparent);
+  --hidden-input-hover: var(--grey-50);
+  --hidden-input-focus: var(--grey-50);
+  --hidden-input-text: var(--text);
+
   --variable-fill: var(--orange-50);
   --variable-fill-hover: var(--orange-100);
   --variable-text: var(--orange-600);

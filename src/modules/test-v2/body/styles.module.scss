@@ -1,0 +1,19 @@
+.autosize {
+  border: none;
+  font: var(--font-h2-bold);
+  padding: 5px;
+  min-width: 200px;
+  max-width: 400px;
+  background-color: var(--white);
+  transition: .25s background-color;
+  border-radius: 4px;
+  cursor: pointer;
+
+  &:hover, &:focus {
+    background-color: var(--grey-50);
+  }
+
+  &:focus {
+    cursor: text;
+  }
+}

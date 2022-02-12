@@ -12,7 +12,7 @@ import {useParams} from 'react-router-dom'
 import {RequestPageTypes} from 'shared/types'
 import {AutoSizer, GridCellProps, Index, MultiGrid, OnScrollParams, Size} from 'react-virtualized'
 import {classNames} from 'shared/utils'
-import TableVariable from 'components/ui-kit-v2/table-variable'
+import HiddenInput from 'components/ui-kit-v2/hidden-input'
 
 const CallingViewTable = () => {
     const dispatch = useDispatch()
@@ -56,7 +56,7 @@ const CallingViewTable = () => {
                         <div className={styles.variable}>
                             <div className={styles.type}>&nbsp;</div>
                             <div className={styles.name}>
-                                <TableVariable value={el.currentName} disabled />
+                                <HiddenInput value={el.currentName} disabled />
                             </div>
                         </div>
                     </div>
@@ -75,7 +75,7 @@ const CallingViewTable = () => {
                                 </span>
                             </div>
                             <div className={styles.name}>
-                                <TableVariable value={el.currentName} disabled prefix={'#'} />
+                                <HiddenInput value={el.currentName} disabled prefix={'#'} />
                             </div>
                         </div>
                     </div>

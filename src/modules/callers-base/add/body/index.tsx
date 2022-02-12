@@ -10,18 +10,12 @@ import HiddenInputWithIcon from 'components/hidden-input-with-icon'
 import {handlerError} from 'shared/middleware'
 import {useDispatch} from 'react-redux'
 import {enqueueSnackbar} from 'features/notifications/store'
-import {useDoubleInput} from 'shared/hoocks'
 import {InfoRounded} from '@mui/icons-material'
 
 const fileType = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
 
 const CallersBaseAddBody = () => {
-    const {
-        text: name,
-        lastText: lastName,
-        setText: setName,
-        setLastText: setLastName
-    } = useDoubleInput('Новая база данных')
+    const [name, setName] = useState<string>('Новая база данных')
     const [file, setFile] = useState<File | null>(null)
     const [isDrag, setDrag] = useState<boolean>(false)
     const [statuses, setStatuses] = useState<FetchStatuses>({})
@@ -33,6 +27,10 @@ const CallersBaseAddBody = () => {
         e.preventDefault()
         setDrag(false)
         tryUploadFile(e.dataTransfer.files)
+    }
+
+    const handlerChangeName = (value: string) => {
+        setName(value)
     }
 
     const onDragStart = (e: React.DragEvent) => {
@@ -97,12 +95,7 @@ const CallersBaseAddBody = () => {
 
     return (
         <>
-            <HiddenInputWithIcon
-                text={name}
-                lastText={lastName}
-                setText={setName}
-                setLastText={setLastName}
-            />
+            <HiddenInputWithIcon value={name} onChange={handlerChangeName} />
             <div className={styles.info}>
                 <InfoRounded className={styles.icon} />
                 <div className={styles.text}>

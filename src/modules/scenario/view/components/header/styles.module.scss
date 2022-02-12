@@ -32,18 +32,24 @@
   .nameWrapper {
     justify-content: center;
 
-    .name {
-      max-width: 570px;
+    .nameText {
+      max-width: 300px;
+      font: var(--font-h3-bold);
+    }
 
-      .nameInput {
-        max-width: 570px;
-        font: var(--font-h3-bold);
-      }
-
-      .nameText {
-        max-width: 570px;
-        font: var(--font-h3-bold);
-      }
+    .icon {
+      font-size: 24px;
     }
   }
+}
+
+.name.input.small {
+  min-width: 300px;
+  max-width: 300px;
+  padding: 4px;
+  font: var(--font-h3-bold);
+}
+
+.btn {
+  padding: 5px !important;
 }

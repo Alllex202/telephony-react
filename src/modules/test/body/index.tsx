@@ -7,7 +7,6 @@ import BtnToggle from 'components/ui-kit/btn-toggle'
 import BtnCircle from 'components/ui-kit/btn-circle'
 import Input from 'components/ui-kit/input'
 import BtnCircleDefault from 'components/ui-kit/btn-circle-default'
-import Modal from 'components/modal'
 import Card from 'components/ui-kit/card'
 import Tag from 'components/ui-kit/tag'
 import Menu from 'components/ui-kit/menu'
@@ -16,12 +15,11 @@ import InputTransparent from 'components/ui-kit/input-transparent'
 import {useDispatch} from 'react-redux'
 import {enqueueSnackbar} from 'features/notifications/store'
 import HiddenInputWithIcon from 'components/hidden-input-with-icon'
-import {useDoubleInput} from 'shared/hoocks'
 import {Cell, Pie, PieChart} from 'recharts'
 
 const TestBody = () => {
     const [modal, setModal] = useState<boolean>(false)
-    const {text, lastText, setText, setLastText} = useDoubleInput('Скрытый ввод')
+    const [text, setText] = useState<string>('Скрытый ввод')
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null)
     const dispatch = useDispatch()
 
@@ -167,12 +165,7 @@ const TestBody = () => {
                 <InputTransparent type={'text'} placeholder={'Прозрачная строка ввода'} />
 
                 <div style={{width: '50%', display: 'flex'}}>
-                    <HiddenInputWithIcon
-                        setText={setText}
-                        text={text}
-                        lastText={lastText}
-                        setLastText={setLastText}
-                    />
+                    <HiddenInputWithIcon value={text} onChange={(value) => setText(value)} />
                 </div>
 
                 <Btn text={'Показать информацию'} onClick={notifyAlert} />
@@ -199,12 +192,6 @@ const TestBody = () => {
                     </PieChart>
                 </div>
             </div>
-            {modal && (
-                <Modal isOpened={modal} setOpen={setModal}>
-                    Старое решение
-                    <br />А нужно ли вообще модальное окно?
-                </Modal>
-            )}
             <Menu open={!!anchorEl} onClose={handleClose} anchorEl={anchorEl}>
                 <MenuItem>Кнопка 1</MenuItem>
                 <MenuItem>Кнопка 2</MenuItem>

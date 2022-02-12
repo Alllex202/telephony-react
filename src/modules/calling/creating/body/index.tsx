@@ -24,7 +24,7 @@ import DateAdapter from '@mui/lab/AdapterDateFns'
 import {DatePicker, LocalizationProvider, TimePicker} from '@mui/lab'
 import {classNames} from 'shared/utils'
 import {useParams} from 'react-router-dom'
-import {useDoubleInput, useSelectorApp} from 'shared/hoocks'
+import {useSelectorApp} from 'shared/hoocks'
 import BtnSecondary from 'components/ui-kit-v2/btn-secondary'
 import {ForumRounded, UploadRounded} from '@mui/icons-material'
 import ruLocale from 'date-fns/locale/ru'
@@ -38,12 +38,6 @@ const CallingCreatingBody = () => {
     const {callingId} = useParams<{callingId: string}>()
     const [bases, setBases] = useState<CallersBaseHeaderModel[] | null>(null)
     const [scenarios, setScenarios] = useState<ScenarioInfoModel[] | null>(null)
-    const {
-        text: _name,
-        lastText: lastName,
-        setText: _setName,
-        setLastText: setLastName
-    } = useDoubleInput(callingId ? '' : name)
 
     const onSelectBase = (e: React.ChangeEvent<HTMLInputElement>) => {
         dispatch(setCallersBaseId(e.target.value))
@@ -98,23 +92,10 @@ const CallingCreatingBody = () => {
         }
     }, [])
 
-    useEffect(() => {
-        if (id && callingId) {
-            _setName(name)
-            setLastName(name)
-        }
-    }, [id])
-
     return (
         <div className={styles.wrapper}>
             <div className={styles.header}>
-                <HiddenInputWithIcon
-                    text={_name}
-                    lastText={lastName}
-                    setText={_setName}
-                    setLastText={setLastName}
-                    callback={onChangeName}
-                />
+                <HiddenInputWithIcon value={name} onChange={onChangeName} />
             </div>
             <div className={styles.form}>
                 <div className={styles.block}>

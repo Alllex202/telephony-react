@@ -1,13 +1,14 @@
-import React, {useEffect} from 'react'
+import React from 'react'
 import styles from './styles.module.scss'
 import {useHistory} from 'react-router-dom'
 import {useDispatch} from 'react-redux'
 import {changeName, saveScenario} from 'store/scenario/view'
 import HiddenInputWithIcon from 'components/hidden-input-with-icon'
-import {useDoubleInput, useSelectorApp} from 'shared/hoocks'
+import {useSelectorApp} from 'shared/hoocks'
 import BtnSecondary from 'components/ui-kit-v2/btn-secondary'
 import {ArrowBackRounded} from '@mui/icons-material'
 import BtnPrimary from 'components/ui-kit-v2/btn-primary'
+import {classNames} from 'shared/utils'
 
 const ScenarioViewHeader = () => {
     const dispatch = useDispatch()
@@ -20,17 +21,6 @@ const ScenarioViewHeader = () => {
         }
     } = useSelectorApp()
     const history = useHistory()
-    const {
-        text: name,
-        lastText: lastName,
-        setText: setName,
-        setLastText: setLastName
-    } = useDoubleInput(actual?.name || '')
-
-    useEffect(() => {
-        setName(actual?.name || '')
-        setLastName(actual?.name || '')
-    }, [actual?.name])
 
     const handlerBack = () => {
         history.goBack()
@@ -57,15 +47,13 @@ const ScenarioViewHeader = () => {
             </BtnSecondary>
             {actual && (
                 <HiddenInputWithIcon
-                    text={name}
-                    setText={setName}
-                    lastText={lastName}
-                    setLastText={setLastName}
-                    classNameWrapper={styles.name}
-                    classNameInput={styles.nameInput}
-                    classNameText={styles.nameText}
-                    callback={onChangeName}
-                    className={styles.nameWrapper}
+                    value={actual.name}
+                    onChange={onChangeName}
+                    inputClassName={classNames(styles.name, styles.input, styles.small)}
+                    iconClassName={styles.icon}
+                    textClassName={styles.nameText}
+                    wrapperClassName={styles.nameWrapper}
+                    btnClassName={styles.btn}
                 />
             )}
 

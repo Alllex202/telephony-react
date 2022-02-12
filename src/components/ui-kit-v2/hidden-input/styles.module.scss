@@ -3,20 +3,27 @@
   align-items: center;
   gap: 8px;
   padding: 0 8px 0 0;
+}
 
-  .input {
-    width: 400px;
-    padding: 10px;
-    font: var(--font-body-bold);
-    outline : none;
-    border: 1px solid var(--trasparent);
-    background-color: var(--trasparent);
-    transition: .25s background-color;
-    border-radius: 5px;
+.wrapperText {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
 
-    &:hover, &:focus {
-      background-color: var(--grey-50);
-    }
+.input {
+  min-width: 200px;
+  max-width: 400px;
+  padding: 10px;
+  font: var(--font-body-bold);
+  outline: none;
+  border: 1px solid var(--trasparent);
+  background-color: var(--trasparent);
+  transition: .25s background-color;
+  border-radius: 5px;
+
+  &:hover, &:focus {
+    background-color: var(--grey-50);
   }
 }
 

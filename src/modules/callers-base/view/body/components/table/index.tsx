@@ -14,7 +14,7 @@ import {RequestPageTypes} from 'shared/types'
 import {ArrowDropDownRounded} from '@mui/icons-material'
 import {classNames} from 'shared/utils'
 import {AutoSizer, GridCellProps, Index, MultiGrid, OnScrollParams, Size} from 'react-virtualized'
-import TableVariable from 'components/ui-kit-v2/table-variable'
+import HiddenInput from 'components/ui-kit-v2/hidden-input'
 
 const CallersBaseViewTable = () => {
     const dispatch = useDispatch()
@@ -125,7 +125,7 @@ const CallersBaseViewTable = () => {
                             </IconButton>
                         </div>
                         <div className={styles.name}>
-                            <TableVariable
+                            <HiddenInput
                                 value={el.currentName}
                                 onChange={handlerChangeVariable(el)}
                                 required
