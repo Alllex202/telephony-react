@@ -1,6 +1,5 @@
 import React, {useEffect} from 'react'
-import styles from './styles.module.scss'
-import stylesTable from 'shared/styles/table/styles.module.scss'
+import styles from 'shared/styles/table/styles.module.scss'
 import {useDispatch} from 'react-redux'
 import {
     getCallingResultTableBodyById,
@@ -13,8 +12,9 @@ import {useParams} from 'react-router-dom'
 import {RequestPageTypes} from 'shared/types'
 import {AutoSizer, GridCellProps, Index, MultiGrid, OnScrollParams, Size} from 'react-virtualized'
 import {classNames} from 'shared/utils'
+import TableVariable from 'components/ui-kit-v2/table-variable'
 
-const CallingViewTable = React.memo(() => {
+const CallingViewTable = () => {
     const dispatch = useDispatch()
     const {
         callingView: {tableHeader, tableBody, variables}
@@ -33,12 +33,12 @@ const CallingViewTable = React.memo(() => {
     }
 
     const cellRenderer = ({rowIndex, columnIndex, key, style}: GridCellProps) => {
-        const classNameCellList: string[] = [stylesTable.cell]
+        const classNameCellList: string[] = [styles.cell]
 
         if ((rowIndex + 1) % 2 === 0) {
-            classNameCellList.push(stylesTable.even)
+            classNameCellList.push(styles.even)
         } else {
-            classNameCellList.push(stylesTable.odd)
+            classNameCellList.push(styles.odd)
         }
 
         if (rowIndex === 0 && columnIndex === 0) {
@@ -53,9 +53,11 @@ const CallingViewTable = React.memo(() => {
 
                 return (
                     <div key={key} style={style} className={classNames(...classNameCellList)}>
-                        <div className={stylesTable.variable}>
-                            <div className={stylesTable.type}>&nbsp;</div>
-                            <div className={styles.name}>{el.currentName}</div>
+                        <div className={styles.variable}>
+                            <div className={styles.type}>&nbsp;</div>
+                            <div className={styles.name}>
+                                <TableVariable value={el.currentName} disabled />
+                            </div>
                         </div>
                     </div>
                 )
@@ -65,14 +67,16 @@ const CallingViewTable = React.memo(() => {
 
                 return (
                     <div key={key} style={style} className={classNames(...classNameCellList)}>
-                        <div className={stylesTable.variable}>
-                            <div className={stylesTable.type}>
-                                <span className={stylesTable.text}>
+                        <div className={styles.variable}>
+                            <div className={styles.type}>
+                                <span className={styles.text}>
                                     {variables.data.find((e) => e.name === el.type)?.description ??
                                         ''}
                                 </span>
                             </div>
-                            <div className={styles.name}>{el.currentName}</div>
+                            <div className={styles.name}>
+                                <TableVariable value={el.currentName} disabled prefix={'#'} />
+                            </div>
                         </div>
                     </div>
                 )
@@ -80,7 +84,7 @@ const CallingViewTable = React.memo(() => {
         }
 
         if (columnIndex === 0) {
-            classNameCellList.push(stylesTable.number)
+            classNameCellList.push(styles.number)
 
             return (
                 <div key={key} style={style} className={classNames(...classNameCellList)}>
@@ -101,7 +105,7 @@ const CallingViewTable = React.memo(() => {
             const variable = rowDate.extra[columnIndex - 1]
 
             if (!variable.valid) {
-                classNameCellList.push(stylesTable.invalidCell)
+                classNameCellList.push(styles.invalidCell)
             }
 
             return (
@@ -113,7 +117,7 @@ const CallingViewTable = React.memo(() => {
             const variable = rowDate.original[columnIndex - tableHeader.data.extra.length - 1]
 
             if (!variable.valid) {
-                classNameCellList.push(stylesTable.invalidCell)
+                classNameCellList.push(styles.invalidCell)
             }
 
             return (
@@ -167,12 +171,12 @@ const CallingViewTable = React.memo(() => {
     return (
         <>
             {variables.status.isSuccess && tableHeader.status.isSuccess && (
-                <div className={stylesTable.table}>
+                <div className={styles.table}>
                     <AutoSizer disableHeight>{renderMultiGrid}</AutoSizer>
                 </div>
             )}
         </>
     )
-})
+}
 
 export default CallingViewTable

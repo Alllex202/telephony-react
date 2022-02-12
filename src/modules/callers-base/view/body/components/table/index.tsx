@@ -8,13 +8,13 @@ import {
 } from 'store/callers-bases/view'
 import {IconButton, Menu, MenuItem} from '@mui/material'
 import {CallersBaseHeaderColumnModel, VariableTypeModel} from 'core/api'
-import InputVariableName from './components/input-variable-name'
 import {useSelectorApp} from 'shared/hoocks'
 import {useParams} from 'react-router-dom'
 import {RequestPageTypes} from 'shared/types'
 import {ArrowDropDownRounded} from '@mui/icons-material'
 import {classNames} from 'shared/utils'
 import {AutoSizer, GridCellProps, Index, MultiGrid, OnScrollParams, Size} from 'react-virtualized'
+import TableVariable from 'components/ui-kit-v2/table-variable'
 
 const CallersBaseViewTable = () => {
     const dispatch = useDispatch()
@@ -75,6 +75,20 @@ const CallersBaseViewTable = () => {
         handlerHideMenuType()
     }
 
+    const handlerChangeVariable = (el: CallersBaseHeaderColumnModel) => (newName: string) => {
+        if (el.currentName === newName || !common.data) return
+        if (newName === '' || common.statuses.isLoading) return
+
+        dispatch(
+            changeCallersBaseCommon({
+                ...common.data,
+                columns: common.data.columns.map((elem) =>
+                    elem.id === el.id ? {...elem, currentName: newName} : elem
+                )
+            })
+        )
+    }
+
     const cellRenderer = ({rowIndex, columnIndex, key, style}: GridCellProps) => {
         const classNameCellList: string[] = [styles.cell]
 
@@ -111,12 +125,12 @@ const CallersBaseViewTable = () => {
                             </IconButton>
                         </div>
                         <div className={styles.name}>
-                            <InputVariableName
-                                initState={el.currentName}
-                                el={el}
-                                conditionSave={!common.statuses.isLoading}
-                                data={common.data}
+                            <TableVariable
+                                value={el.currentName}
+                                onChange={handlerChangeVariable(el)}
+                                required
                                 disabled={common.statuses.isLoading}
+                                prefix={'#'}
                             />
                         </div>
                     </div>

@@ -1,55 +1,3 @@
-.wrapper {
-  width: 100%;
-  overflow-x: auto;
-  max-height: calc(100vh - 179px);
-  border: 1px solid var(--table-border);
-
-  .invalidRow {
-    background-color: var(--table-row-invalid) !important;
-  }
-
-  .invalidCell {
-    color: var(--table-text-invalid) !important;
-  }
-
-  .variable {
-    width: max-content;
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-
-    .type {
-      display: flex;
-      flex-direction: row;
-      align-items: center;
-
-      .text {
-        font: var(--font-body-bold);
-        margin-right: 8px;
-      }
-
-      .btn {
-        width: fit-content;
-        height: fit-content;
-        padding: 0;
-
-        .icon {
-          font-size: 24px;
-          transition: .25s transform;
-
-          &.active {
-            transform: rotate(180deg);
-          }
-        }
-      }
-    }
-
-    .name {
-
-    }
-  }
-}
-
 .table {
   overflow: hidden;
   border: 1px solid var(--table-border);
@@ -86,10 +34,6 @@
   }
 
   .variable {
-    width: max-content;
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
 
     .type {
       display: flex;
@@ -118,7 +62,7 @@
     }
 
     .name {
-
+      margin-top: 12px;
     }
   }
 }

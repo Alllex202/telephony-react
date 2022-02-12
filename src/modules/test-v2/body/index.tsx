@@ -53,6 +53,7 @@ import {DatePicker, LocalizationProvider, TimePicker} from '@mui/lab'
 import ruLocale from 'date-fns/locale/ru'
 import SwitchV1 from 'components/ui-kit/switch'
 import IconV1 from 'components/ui-kit/icon'
+import TableVariable from 'components/ui-kit-v2/table-variable'
 
 const menuItems = [
     'Первый пункт',
@@ -134,6 +135,11 @@ const TestComponentsBody = () => {
         2: Element | null
         3: Element | null
     }>({1: null, 2: null, 3: null})
+    const [variable, setVariable] = useState<string>('')
+
+    const onChangeVariable = (value: string) => {
+        setVariable(value)
+    }
 
     const onChangeDateTime = (_date: number | null | undefined) => {
         if (_date) {
@@ -836,6 +842,16 @@ const TestComponentsBody = () => {
                                     <AccordionDetails>{fuckingText}</AccordionDetails>
                                 </Accordion>
                             ))}
+                        </div>
+                    </div>
+
+                    <div>
+                        <h1 style={{marginBottom: 15}}>Input Autosize</h1>
+                        <div style={{width: 500, overflow: 'hidden'}}>
+                            <TableVariable value={variable} onChange={onChangeVariable} required />
+                        </div>
+                        <div style={{width: 500, overflow: 'hidden'}}>
+                            <TableVariable value={variable} onChange={onChangeVariable} required />
                         </div>
                     </div>
                 </div>

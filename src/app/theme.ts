@@ -380,6 +380,13 @@ export const theme = createTheme({
                     }
                 }
             }
+        },
+        MuiPopover: {
+            styleOverrides: {
+                paper: {
+                    // boxShadow: 'none'
+                }
+            }
         }
     }
 })

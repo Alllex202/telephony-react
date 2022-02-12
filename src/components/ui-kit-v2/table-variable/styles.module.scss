@@ -1,0 +1,45 @@
+.wrapper {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0 8px 0 0;
+
+  .input {
+    width: 400px;
+    padding: 10px;
+    font: var(--font-body-bold);
+    outline : none;
+    border: 1px solid var(--trasparent);
+    background-color: var(--trasparent);
+    transition: .25s background-color;
+    border-radius: 5px;
+
+    &:hover, &:focus {
+      background-color: var(--grey-50);
+    }
+  }
+}
+
+.text {
+  display: inline-block;
+  height: 28px;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  padding: 4px;
+  font: var(--font-body-bold);
+  background-color: var(--variable-fill);
+  color: var(--variable-text);
+  border-radius: 4px;
+  transition: .25s background-color;
+  cursor: pointer;
+
+  &.disabled {
+    cursor: default;
+  }
+
+  &:not(.disabled):hover {
+    background-color: var(--variable-fill-hover);
+  }
+}
