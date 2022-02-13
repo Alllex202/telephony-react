@@ -9,7 +9,7 @@ export interface TimeModel {
 export interface StatsCommonModel {
     totalDialings: number
     averageNumberOfCallsPerDialing: number
-    averageDialingDuration: TimeModel
+    averageDialingsDuration: TimeModel
     averageCallDuration: TimeModel
 }
 

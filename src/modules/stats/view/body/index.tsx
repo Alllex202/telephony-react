@@ -45,7 +45,7 @@ const StatsBody = () => {
                                 Средняя продолжительность обзванивания
                             </div>
                             <div className={stylesCard.bigBlackFont}>
-                                {formatTimeObject(common.data?.averageDialingDuration)}
+                                {formatTimeObject(common.data?.averageDialingsDuration)}
                             </div>
                         </div>
                         <div className={stylesCard.body} />
