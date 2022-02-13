@@ -11,7 +11,6 @@ import {FetchStatuses} from 'shared/types'
 import {ExtraPieChartPartModel} from 'store/calling/view'
 import {compare, getColor, getNumber} from 'shared/utils'
 import {handlerError} from 'shared/middleware'
-import {fakeChart, fakePieChartStats} from 'shared/data'
 
 interface ExtraStatsPieChartModel extends StatsPieChartModel {
     parts: ExtraPieChartPartModel[]
@@ -116,9 +115,7 @@ export const getStatsPieChart = () => (dispatch: Dispatch) => {
     dispatch(setLoading({type: 'pieChart'}))
     _getStatsPieChart()
         .then((res) => {
-            // todo remove fake data
-            // dispatch(setPieChartResult(res.data))
-            dispatch(setPieChart(fakePieChartStats))
+            dispatch(setPieChart(res.data))
             dispatch(setSuccess({type: 'pieChart'}))
         })
         .catch(
@@ -137,9 +134,7 @@ export const getStatsChart = () => (dispatch: Dispatch) => {
     dispatch(setLoading({type: 'chart'}))
     _getStatsChart()
         .then((res) => {
-            // todo remove fake data
-            // dispatch(setChartResult(res.data))
-            dispatch(setChart(fakeChart))
+            dispatch(setChart(res.data))
             dispatch(setSuccess({type: 'chart'}))
         })
         .catch(

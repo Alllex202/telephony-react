@@ -18,8 +18,6 @@ import {
 import {FetchStatuses, IdKey, PageSettings, RequestPageTypes} from 'shared/types'
 import {handlerError} from 'shared/middleware'
 import {compare, getColor, getNumber} from 'shared/utils'
-import {fakeChart} from 'shared/data'
-import {fakePieChartCallingView} from 'shared/data/'
 import {RootState} from 'store/index'
 
 export interface ExtraPieChartPartModel extends PieChartPartModel {
@@ -264,9 +262,7 @@ export const getCallingResultChartById = (id: IdKey) => (dispatch: Dispatch) => 
     dispatch(setLoading({type: 'chart'}))
     getCallingResultChart(id)
         .then((res) => {
-            // todo фейковые данные убрать
-            // dispatch(setChart(res.data))
-            dispatch(setChart(fakeChart))
+            dispatch(setChart(res.data))
             dispatch(setSuccess({type: 'chart'}))
         })
         .catch(
@@ -285,9 +281,7 @@ export const getCallingResultPieChartById = (id: IdKey) => (dispatch: Dispatch) 
     dispatch(setLoading({type: 'pieChart'}))
     getCallingResultPieChart(id)
         .then((res) => {
-            // todo фейковые данные убрать
-            // dispatch(setPieChart(res.data))
-            dispatch(setPieChart(fakePieChartCallingView))
+            dispatch(setPieChart(res.data))
             dispatch(setSuccess({type: 'pieChart'}))
         })
         .catch(
