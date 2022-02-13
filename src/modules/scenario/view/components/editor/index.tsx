@@ -62,8 +62,6 @@ const ScenarioEditor = React.memo(() => {
             y: e.clientY - reactFlowBounds.top
         })
 
-        console.log(e, reactFlowBounds, nodeType, position)
-
         dispatch(addNode({nodeType: nodeType as NodeTypes, position}))
     }
 
