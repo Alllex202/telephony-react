@@ -38,6 +38,10 @@ input, textarea {
   display: none;
 }
 
+.v-hidden {
+  visibility: hidden;
+}
+
 // clears the 'X' from Internet Explorer
 input[type=search]::-ms-clear,
 input[type=search]::-ms-reveal {

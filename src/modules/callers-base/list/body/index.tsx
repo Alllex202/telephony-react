@@ -40,9 +40,14 @@ const CallersBaseListBody = () => {
             </div>
 
             <div className={bodyStyles.footer}>
-                {!isLastPage && (statuses.isSuccess || statuses.isError) && (
-                    <BtnSecondary onClick={loadNextPage}>Показать больше</BtnSecondary>
-                )}
+                <BtnSecondary
+                    className={
+                        !isLastPage && (statuses.isSuccess || statuses.isError) ? '' : 'v-hidden'
+                    }
+                    onClick={loadNextPage}
+                >
+                    Показать больше
+                </BtnSecondary>
             </div>
         </>
     )

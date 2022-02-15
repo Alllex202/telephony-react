@@ -11,6 +11,7 @@ import {getCallingsPage, resetCallingStates as clearData} from 'store/calling/li
 import {RequestPageTypes} from 'shared/types'
 import {ExpandMoreRounded} from '@mui/icons-material'
 import BtnSecondary from 'components/ui-kit-v2/btn-secondary'
+import {classNames} from 'shared/utils'
 
 type Props = {
     callingStatus: CallingStatusTypes
@@ -58,11 +59,15 @@ const CallingSection = ({callingStatus}: Props) => {
                             <CallingCard key={el.id} data={el} callingStatus={callingStatus} />
                         ))}
                     </div>
-                    {!isLastPage && !statuses.isLoading && (
-                        <BtnSecondary className={styles.more} onClick={loadNextPage}>
-                            Показать больше
-                        </BtnSecondary>
-                    )}
+                    <BtnSecondary
+                        className={classNames(
+                            styles.more,
+                            !isLastPage && !statuses.isLoading ? '' : 'v-hidden'
+                        )}
+                        onClick={loadNextPage}
+                    >
+                        Показать больше
+                    </BtnSecondary>
                 </AccordionDetails>
             </Accordion>
         </>

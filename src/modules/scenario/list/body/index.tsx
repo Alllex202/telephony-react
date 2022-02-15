@@ -6,6 +6,7 @@ import ScenarioCard from './components/card'
 import {useSelectorApp} from 'shared/hoocks'
 import {RequestPageTypes} from 'shared/types'
 import BtnSecondary from 'components/ui-kit-v2/btn-secondary'
+import {classNames} from 'shared/utils'
 
 const ScenarioListBody = () => {
     const dispatch = useDispatch()
@@ -40,11 +41,15 @@ const ScenarioListBody = () => {
             </div>
 
             <div className={bodyStyles.footer}>
-                {!isLastPage && (statuses.isSuccess || statuses.isError) && (
-                    <BtnSecondary className={bodyStyles.more} onClick={loadNextPage}>
-                        Показать больше
-                    </BtnSecondary>
-                )}
+                <BtnSecondary
+                    className={classNames(
+                        bodyStyles.more,
+                        !isLastPage && (statuses.isSuccess || statuses.isError) ? '' : 'v-hidden'
+                    )}
+                    onClick={loadNextPage}
+                >
+                    Показать больше
+                </BtnSecondary>
             </div>
         </>
     )
