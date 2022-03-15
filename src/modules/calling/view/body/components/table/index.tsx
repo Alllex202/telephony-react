@@ -104,7 +104,7 @@ const CallingViewTable = () => {
         if (columnIndex - 1 < tableHeader.data.extra.length) {
             const variable = rowDate.extra[columnIndex - 1]
 
-            if (!variable.valid) {
+            if (!variable.isValid) {
                 classNameCellList.push(styles.invalidCell)
             }
 
@@ -116,7 +116,7 @@ const CallingViewTable = () => {
         } else {
             const variable = rowDate.original[columnIndex - tableHeader.data.extra.length - 1]
 
-            if (!variable.valid) {
+            if (!variable.isValid) {
                 classNameCellList.push(styles.invalidCell)
             }
 

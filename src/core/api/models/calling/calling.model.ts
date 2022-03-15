@@ -80,8 +80,8 @@ export interface CallingResultTableHeaderDataModel {
 export interface CallingResultTableBodyDataModel {
     id: IdKey
     created: number
-    phoneColumn: boolean
-    valid: boolean
+    isPhoneColumn: boolean
+    isValid: boolean
     value: string
 }
 

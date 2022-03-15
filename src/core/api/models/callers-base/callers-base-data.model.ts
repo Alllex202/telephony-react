@@ -10,6 +10,6 @@ export interface CallersBaseDataColumnModel {
     id: number
     created: number
     value: string
-    valid: boolean
-    phoneColumn: boolean
+    isValid: boolean
+    isPhoneColumn: boolean
 }

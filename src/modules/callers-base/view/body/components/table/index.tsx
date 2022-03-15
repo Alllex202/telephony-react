@@ -140,7 +140,7 @@ const CallersBaseViewTable = () => {
 
         const rowDate = data[rowIndex - 1]
 
-        if (rowDate && rowDate.variables.some((el) => !el.valid)) {
+        if (rowDate && rowDate.variables.some((el) => !el.isValid)) {
             classNameCellList.push(styles.invalidRow)
         }
 
@@ -159,7 +159,7 @@ const CallersBaseViewTable = () => {
         }
 
         const variable = rowDate.variables[columnIndex - 1]
-        if (!variable.valid) {
+        if (!variable.isValid) {
             classNameCellList.push(styles.invalidCell)
         }
 
